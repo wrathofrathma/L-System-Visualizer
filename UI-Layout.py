@@ -5,6 +5,16 @@ import tkinter as tk
 
 fields = ('Axiom', 'Production Rules', 'Angle (degrees)', 'Iterations')
 
+def get_Axiom(entries):
+  '''
+  This function input checks the input for Axiom
+  Input: entries is an array collected from makeform
+  Ouput: valid input
+  '''
+  axiom = ((entries['Axiom'].get()))
+  axiom=int(axiom)+1
+  entries['Axiom'].delete(0,tk.END)
+  entries['Axiom'].insert(0,axiom)
 def makeform(root, fields):
   ''' 
   This function makes the input for the application
@@ -31,13 +41,13 @@ def makeform(root, fields):
     entries[field] = entry
   return entries
 
-
 if __name__ == '__main__':
   root = tk.Tk()
   entries = makeform(root, fields)
   frame = tk.Frame(width=200, height=200)
   frame.pack()
-  b1 = tk.Button(root, text='Generate L-System')
+  b1 = tk.Button(root, text='Generate L-System', 
+                 command = (lambda e = entries: get_Axiom(e)))
   b1.pack(side=tk.LEFT)
   b2 = tk.Button(root, text='Quit', command = root.quit)
   b2.pack(side=tk.RIGHT)
