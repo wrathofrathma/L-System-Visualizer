@@ -1,21 +1,27 @@
 import tkinter as tk
-
 ''' Author(s): Lela Bones and Stephanie Warman
     file: UI-Layout.py '''
 
 fields = ('Axiom', 'Production Rules', 'Angle (degrees)', 'Iterations')
 alphabet = ('F','f','+','-')
 err_mess = 'invalid'
+
 def get_Axiom(entries):
   '''
   This function input checks the input for axiom
   Input: entries is an array collected from makeform
   Ouput: invalid if not valid input
   '''
-  axiom = ((entries['Axiom'].get()))
-  if not axiom in alphabet:
-    entries['Axiom'].delete(0,tk.END)
-    entries['Axiom'].insert(0,err_mess )
+  axiom = entries['Axiom'].get()
+  for ch in axiom:
+    if not ch in alphabet:
+      entries['Axiom'].delete(0,tk.END)
+      entries['Axiom'].insert(0,err_mess )
+      error = tk.Button(root, text='X')
+      error.pack(side=tk.RIGHT)
+     
+     # root.after(10, entries['Axiom'].config(background=dfault_col))
+      
 def get_ProdRules(entries):
   '''
   This function input checks the input for production rules
@@ -44,7 +50,7 @@ def get_Angle(entries):
     entries['Iterations'].delete(0,tk.END)
     entries['Iterations'].insert(0,err_mess)
     return
-  if angle <= 0 or angle >= 360:
+  if angle <= -360 or angle >= 360:
     entries['Angle (degrees)'].delete(0,tk.END)
     entries['Angle (degrees)'].insert(0,err_mess)
 def get_Iter(entries):
@@ -82,7 +88,7 @@ def makeform(root, fields):
     row = tk.Frame(root)
     label = tk.Label(row, width=22, text=field+": ", anchor='w')
     entry = tk.Entry(row)
-    entry.insert(0, "0")
+    entry.insert(0, "")
     row.pack(side=tk.TOP,
             fill=tk.X,
             padx=5,
@@ -92,6 +98,7 @@ def makeform(root, fields):
             expand=tk.YES,
             fill=tk.X)
     entries[field] = entry
+  
   return entries
 
 if __name__ == '__main__':
