@@ -1,11 +1,30 @@
 import tkinter as tk
+import time
 ''' Author(s): Lela Bones and Stephanie Warman
     file: UI-Layout.py '''
 
 fields = ('Axiom', 'Production Rules', 'Angle (degrees)', 'Iterations')
 alphabet = ('F','f','+','-')
 err_mess = 'invalid'
+flash_delay = 500  # msec between colour change
+flash_colours = ('black', 'red') # Two colours to swap between
 
+def flashColor(object, color_index,init_time):
+  if time.time()-init_time <2:
+    object.config(foreground = flash_colours[color_index])
+    root.after(flash_delay, flashColor, object, 1 - color_index, init_time)
+  else:
+    object.config(foreground = flash_colours[0])
+def clear_box(object, init_time):
+  if time.time()-init_time<2:
+    root.after(flash_delay, clear_box, object, init_time)
+  else:
+    object.delete(0,tk.END)
+def print_invalid(object):
+  object.delete(0,tk.END)
+  object.insert(0,err_mess)
+  flashColor(object,0, time.time())
+  clear_box(object,time.time())
 def get_Axiom(entries):
   '''
   This function input checks the input for axiom
@@ -15,11 +34,8 @@ def get_Axiom(entries):
   axiom = entries['Axiom'].get()
   for ch in axiom:
     if not ch in alphabet:
-      entries['Axiom'].delete(0,tk.END)
-      entries['Axiom'].insert(0,err_mess )
-      error = tk.Button(root, text='X')
-      error.pack(side=tk.RIGHT)
-     
+      print_invalid(entries['Axiom'])
+    
      # root.after(10, entries['Axiom'].config(background=dfault_col))
       
 def get_ProdRules(entries):
@@ -31,13 +47,11 @@ def get_ProdRules(entries):
   prodRule = ((entries['Production Rules'].get()))
   prodRule=prodRule.replace(' ','')
   if not '->' in prodRule or prodRule[1]=='>' or prodRule[len(prodRule)-1]=='>':
-    entries['Production Rules'].delete(0,tk.END)
-    entries['Production Rules'].insert(0,err_mess )
+     print_invalid(entries['Production Rules'])
   tmp_prodRule = prodRule.replace('->','')
   for ch in tmp_prodRule:
     if not ch in alphabet:
-      entries['Production Rules'].delete(0,tk.END)
-      entries['Production Rules'].insert(0,err_mess )
+      print_invalid(entries['Production Rules'])
 def get_Angle(entries):
   '''
   This function input checks the input for angle
@@ -47,12 +61,10 @@ def get_Angle(entries):
   try:
     angle = (float(entries['Angle (degrees)'].get()))
   except: 
-    entries['Iterations'].delete(0,tk.END)
-    entries['Iterations'].insert(0,err_mess)
+    print_invalid(entries['Angle (degrees)'])
     return
   if angle <= -360 or angle >= 360:
-    entries['Angle (degrees)'].delete(0,tk.END)
-    entries['Angle (degrees)'].insert(0,err_mess)
+    print_invalid(entries['Angle (degrees)'])
 def get_Iter(entries):
   '''
   This function input checks the input for iterations
@@ -62,12 +74,10 @@ def get_Iter(entries):
   try:
     iterat = (int(entries['Iterations'].get()))
   except: 
-    entries['Iterations'].delete(0,tk.END)
-    entries['Iterations'].insert(0,err_mess)
+    print_invalid(entries['Iterations'])
     return
   if iterat <= 0:
-    entries['Iterations'].delete(0,tk.END)
-    entries['Iterations'].insert(0,err_mess)
+   print_invalid(entries['Iterations'])
 
 def check_inputs(entries):
   get_Axiom(entries)
