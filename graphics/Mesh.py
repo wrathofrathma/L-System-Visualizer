@@ -1,5 +1,4 @@
 from OpenGL import GL
-from OpenGL.GL import shaders
 import numpy as np
 from graphics.Drawable import *
 
@@ -13,4 +12,6 @@ class Mesh(Drawable):
 
     # TODO Fix the framerate on this. Seems to only update when PyQT wants us to.
     def draw(self):
+        if(self.update):
+            updateGPU()
         print("Drawing??")

@@ -1,5 +1,4 @@
 from OpenGL import GL
-from OpenGL.GL import shaders
 import numpy as np
 
 class Drawable():
@@ -11,10 +10,24 @@ class Drawable():
         self.vNorm=1 # Shader vertex normal position
         self.vColor=2 # Shader vertex color position
         self.uModel = GL.GLuint(0) # Shader position of the model matrix
-        self.vertices = np.array()
+        self.vertices = np.array() # Vertices of our mesh
+        self.shader = None # Shader object
+        self.update = True # Update flag for updating our GPU data. Called in our draw function.
 
     def draw(self):
         pass
 
     def updateGPU(self):
-        pass
+        self.update=False
+
+
+    def cleanup(self):
+        GL.glDeleteVertexArrays(1, self.VAO)
+        GL.glDeleteBuffers(1, self.VBO)
+
+    def setShader(self, shader):
+        self.shader = shader
+
+    def setVertices(self, vertices):
+        self.vertices = vertices
+        self.update=True
