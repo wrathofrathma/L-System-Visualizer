@@ -2,7 +2,7 @@ from OpenGL import GL
 from OpenGL.GL import shaders
 from graphics.Drawable import *
 from graphics.Mesh import *
-
+from graphics.Shader import *
 
 import numpy as np
 from PyQt5.QtWidgets import *
@@ -48,7 +48,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         GL.glEnable(GL.GL_DEPTH_TEST)
         GL.glDepthFunc(GL.GL_LESS)
 
-    def toggleWireframe():
+    def toggleWireframe(self):
         if(self.wireframe):
             GL.glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
             self.wireframe = False
@@ -58,8 +58,12 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
     # Cleanup code for OpenGL. We need to cleanup our mesh objects and shaders from GPU memory or it'll leak.
     def cleanup(self):
-        pass
+        self.mesh.cleanup()
 
+    def loadShaders(self):
+        self.shader = Shader("assets/shaders/Default.vs", "assets/shaders/Default.fs")
+
+        print("Yeah bitch")
 app = QApplication([])
 window = QWidget()
 layout = QVBoxLayout()
@@ -73,4 +77,6 @@ layout.addWidget(ogl)
 
 window.setLayout(layout)
 window.show()
+ogl.loadShaders()
+
 app.exec_()
