@@ -15,7 +15,7 @@ class Shader:
         print("Length of vertex code: " + str(len(self.vertex_code)))
         print("Length of frag code: " + str(len(self.fragment_code)))
         self.vertex_id = self.createShader(self.vertex_code, GL_VERTEX_SHADER)
-        self.fragment_id = self.createShader(self.vertex_code, GL_FRAGMENT_SHADER)
+        self.fragment_id = self.createShader(self.fragment_code, GL_FRAGMENT_SHADER)
         self.m_program = self.createShaderProgram(self.vertex_id, self.fragment_id)
     # Loads a shader file.
     # Input - string containing shader code, shader type
@@ -28,7 +28,7 @@ class Shader:
             return shader_id
         else:
             glDeleteShader(shader_id)
-            raise RuntimeError("Issue with the shader program")
+            raise RuntimeError("Issue with the shader creation")
     # Binds the shaders together and creates a useable shader program
     def createShaderProgram(self, vertex, frag):
         m_program = glCreateProgram()
@@ -40,13 +40,13 @@ class Shader:
              # Set up uniform variables
             return m_program
         else:
-                glDetachShader(m_program, self.vertex_id)
-                glDeleteShader(self.vertex_id)
-                glDetachShader(m_program, self.fragment_id)
-                glDeleteShader(self.fragment_id)
-                glDeleteProgram(m_program)
-                raise RuntimeError("Issue linking the shader together")
-                return None
+            glDetachShader(m_program, self.vertex_id)
+            glDeleteShader(self.vertex_id)
+            glDetachShader(m_program, self.fragment_id)
+            glDeleteShader(self.fragment_id)
+            glDeleteProgram(m_program)
+            raise RuntimeError("Issue linking the shader together")
+            return None
 
     # Binds the shader program for use
     def bind(self):
@@ -64,6 +64,8 @@ class Shader:
         else:
             print("Checking shader errors")
             if(glGetShaderiv(shader_id, flag)!=GL_TRUE):
+                print(glGetShaderiv(shader_id, flag))
+
                 info = glGetShaderInfoLog(shader_id)
                 print(error_message + " : " + info)
                 return False
