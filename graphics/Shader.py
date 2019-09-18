@@ -12,8 +12,7 @@ class Shader:
             self.vertex_code = "".join(f.readlines()[0:])
         with open(fragment, "r") as f:
             self.fragment_code = "".join(f.readlines()[0:])
-        print("Length of vertex code: " + str(len(self.vertex_code)))
-        print("Length of frag code: " + str(len(self.fragment_code)))
+
         self.vertex_id = self.createShader(self.vertex_code, GL_VERTEX_SHADER)
         self.fragment_id = self.createShader(self.fragment_code, GL_FRAGMENT_SHADER)
         self.m_program = self.createShaderProgram(self.vertex_id, self.fragment_id)

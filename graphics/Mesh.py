@@ -8,10 +8,10 @@ from graphics.Drawable import *
 
 class Mesh(Drawable):
     def __init__(self):
-        super(Drawable, self).__init__()
+        super().__init__()
 
     # TODO Fix the framerate on this. Seems to only update when PyQT wants us to.
     def draw(self):
         if(self.update):
-            updateGPU()
+            self.updateGPU()
         print("Drawing??")
