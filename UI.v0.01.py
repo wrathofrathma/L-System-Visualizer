@@ -13,6 +13,7 @@ class CustomLineEdit(QtWidgets.QLineEdit):
     def clear_box(self):
       if self.text() == error_message:
         self.setText('')
+        self.setStyleSheet("color: black;")
 class UIWidget(QWidget): 
   
   def __init__(self):
@@ -86,25 +87,25 @@ class UIWidget(QWidget):
     itersInput = self.itersEdit.text()
     string = 0
     if not axiomInput in alphabet:
-      #self.axiomEdit.setStyleSheet("color: red;")
+      self.axiomEdit.setStyleSheet("color: red;")
       self.axiomEdit.setText(error_message) 
       valid_input = 0
       
     if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
-      #self.prodrulesEdit.setStyleSheet("color: red;")
+      self.prodrulesEdit.setStyleSheet("color: red;")
       self.prodrulesEdit.setText(error_message)
       valid_input = 0
     tmp_prodRule = prodInput.replace('->','')
     for ch in tmp_prodRule:
       if not ch in alphabet:
-        #self.prodrulesEdit.setStyleSheet("color: red;")
+        self.prodrulesEdit.setStyleSheet("color: red;")
         self.prodrulesEdit.setText(error_message)
         valid_input = 0
     
     try:
       angleInput = float(angleInput)
     except: 
-      #self.angleEdit.setStyleSheet("color: red;")
+      self.angleEdit.setStyleSheet("color: red;")
       self.angleEdit.setText("X")
       valid_input=0
       string = 1 #is a string 
@@ -117,26 +118,26 @@ class UIWidget(QWidget):
     try:
       itersInput = int(itersInput)
     except: 
-      #self.itersEdit.setStyleSheet("color: red;")
+      self.itersEdit.setStyleSheet("color: red;")
       self.itersEdit.setText(error_message)
       valid_input = 0
       string = 1 #is a string
     if not string: 
       if itersInput <= 0:
-        #self.itersEdit.setStyleSheet("color: red;")
+        self.itersEdit.setStyleSheet("color: red;")
         self.itersEdit.setText(error_message)
         valid_input = 0
     return valid_input
   def genLSys(self):
-    self.inputCheck()
-    axiomInput = self.axiomEdit.text()
-    prodInput = self.prodrulesEdit.text()
-    angleInput = self.angleEdit.text()
-    itersInput = self.itersEdit.text()
-    print("Axiom: ", axiomInput)
-    print("Productions: ", prodInput)
-    print("Angle: ", angleInput)
-    print("Iterations: ", itersInput)
+    if self.inputCheck():
+      axiomInput = self.axiomEdit.text()
+      prodInput = self.prodrulesEdit.text()
+      angleInput = self.angleEdit.text()
+      itersInput = self.itersEdit.text()
+      print("Axiom: ", axiomInput)
+      print("Productions: ", prodInput)
+      print("Angle: ", angleInput)
+      print("Iterations: ", itersInput)
  
 
 if __name__ == '__main__':
