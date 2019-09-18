@@ -2,16 +2,17 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QLineEdit, QTextE
 import sys
 from PyQt5 import QtWidgets, QtCore
 alphabet = ["F","f","-","+"]
-
+error_message = "X"
 class CustomLineEdit(QtWidgets.QLineEdit):
-
     clicked = QtCore.pyqtSignal()
-
     def __init__(self):
         super().__init__()
 
     def mousePressEvent(self, QMouseEvent):
         self.clicked.emit()
+    def clear_box(self):
+      if self.text() == error_message:
+        self.setText('')
 class UIWidget(QWidget): 
   
   def __init__(self):
@@ -39,13 +40,14 @@ class UIWidget(QWidget):
     """
      #creates the text box for each label
     self.axiomEdit = CustomLineEdit()
-    self.axiomEdit.clicked.connect(self.axiomEdit.clear)
+    self.axiomEdit.clicked.connect(lambda: self.axiomEdit.clear_box())
     self.prodrulesEdit = CustomLineEdit()
-    self.prodrulesEdit.clicked.connect(self.prodrulesEdit.clear)
+    self.prodrulesEdit.clicked.connect(lambda: self.prodrulesEdit.clear_box())
     self.angleEdit = CustomLineEdit()
-    self.angleEdit.clicked.connect(self.angleEdit.clear)
+    self.angleEdit.clicked.connect(lambda: self.angleEdit.clear_box())
     self.itersEdit = CustomLineEdit()
-    self.itersEdit.clicked.connect(self.itersEdit.clear)
+    self.itersEdit.clicked.connect(lambda: self.itersEdit.clear_box())
+    
     #creates a grid for the layout
     grid = QGridLayout()
     grid.setSpacing(20)
@@ -85,18 +87,18 @@ class UIWidget(QWidget):
     string = 0
     if not axiomInput in alphabet:
       #self.axiomEdit.setStyleSheet("color: red;")
-      self.axiomEdit.setText("X") 
+      self.axiomEdit.setText(error_message) 
       valid_input = 0
       
     if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
       #self.prodrulesEdit.setStyleSheet("color: red;")
-      self.prodrulesEdit.setText("X")
+      self.prodrulesEdit.setText(error_message)
       valid_input = 0
     tmp_prodRule = prodInput.replace('->','')
     for ch in tmp_prodRule:
       if not ch in alphabet:
         #self.prodrulesEdit.setStyleSheet("color: red;")
-        self.prodrulesEdit.setText("X")
+        self.prodrulesEdit.setText(error_message)
         valid_input = 0
     
     try:
@@ -109,20 +111,20 @@ class UIWidget(QWidget):
     if not string:
       if angleInput <= -360 or angleInput >= 360:
         #self.angleEdit.setStyleSheet("color: red;")
-        self.angleEdit.setText("X")
+        self.angleEdit.setText(error_message)
         valid_input = 0
       
     try:
       itersInput = int(itersInput)
     except: 
       #self.itersEdit.setStyleSheet("color: red;")
-      self.itersEdit.setText("X")
+      self.itersEdit.setText(error_message)
       valid_input = 0
       string = 1 #is a string
     if not string: 
       if itersInput <= 0:
         #self.itersEdit.setStyleSheet("color: red;")
-        self.itersEdit.setText("X")
+        self.itersEdit.setText(error_message)
         valid_input = 0
     return valid_input
   def genLSys(self):
