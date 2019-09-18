@@ -2,9 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QLineEdit, QTextE
 import sys
 from PyQt5 import QtWidgets, QtCore
 alphabet = ["F","f","-","+"]
-def clearBox(box):
-  box.setText('')
-  box.setStyleSheet("color: black;")
+
 class CustomLineEdit(QtWidgets.QLineEdit):
 
     clicked = QtCore.pyqtSignal()
