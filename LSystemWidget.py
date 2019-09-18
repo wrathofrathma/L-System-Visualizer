@@ -43,7 +43,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
     # CAlled once before resizeGL and paintGL.
     def initializeGL(self):
-
+        self.loadShaders()
         GL.glClearColor(self.color[0], self.color[1], self.color[2], self.color[3])
         GL.glEnable(GL.GL_DEPTH_TEST)
         GL.glDepthFunc(GL.GL_LESS)
@@ -77,6 +77,5 @@ layout.addWidget(ogl)
 
 window.setLayout(layout)
 window.show()
-ogl.loadShaders()
 
 app.exec_()

@@ -9,9 +9,9 @@ class Shader:
         self.fragment_fname = fragment
         # Load filenames to a string
         with open(vertex, "r") as f:
-            self.vertex_code = "".join(f.readlines()[1:])
+            self.vertex_code = "".join(f.readlines()[0:])
         with open(fragment, "r") as f:
-            self.fragment_code = "".join(f.readlines()[1:])
+            self.fragment_code = "".join(f.readlines()[0:])
         print("Length of vertex code: " + str(len(self.vertex_code)))
         print("Length of frag code: " + str(len(self.fragment_code)))
         self.vertex_id = self.createShader(self.vertex_code, GL_VERTEX_SHADER)
@@ -59,7 +59,7 @@ class Shader:
             if(glGetProgramiv(shader_id, flag)!=GL_TRUE):
                 print(glGetProgramiv(shader_id, flag))
                 info = glGetProgramInfoLog(shader_id)
-                print(error_message + " : " + info)
+                print(error_message + " : " + str(info))
                 return False
         else:
             print("Checking shader errors")
@@ -67,7 +67,7 @@ class Shader:
                 print(glGetShaderiv(shader_id, flag))
 
                 info = glGetShaderInfoLog(shader_id)
-                print(error_message + " : " + info)
+                print(error_message + " : " + str(info))
                 return False
         return True
 
