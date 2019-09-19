@@ -1,7 +1,7 @@
 class pointer_class: 
   #this class holds position and angle
-  def __init__(self):
-    self.pos= (0,0)
+  def __init__(self, pos = (0,0)):
+    self.pos= pos
     self.angle = 0
   def print_info(self):
     print("Position = ",self.pos)
