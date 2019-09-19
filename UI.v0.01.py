@@ -111,7 +111,7 @@ class UIWidget(QWidget):
       string = 1 #is a string 
     if not string:
       if angleInput <= -360 or angleInput >= 360:
-        #self.angleEdit.setStyleSheet("color: red;")
+        self.angleEdit.setStyleSheet("color: red;")
         self.angleEdit.setText(error_message)
         valid_input = 0
       
