@@ -90,7 +90,7 @@ class UIWidget(QWidget):
       self.axiomEdit.setStyleSheet("color: red;")
       self.axiomEdit.setText(error_message) 
       valid_input = 0
-      
+    prodInput=prodInput.replace(' ','')
     if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
       self.prodrulesEdit.setStyleSheet("color: red;")
       self.prodrulesEdit.setText(error_message)
