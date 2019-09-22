@@ -1,7 +1,7 @@
 from OpenGL import GL
 from OpenGL.GL import shaders
 from graphics.Drawable import *
-from graphics.Mesh import *
+from LContainer import *
 from graphics.Shader import *
 
 import numpy as np
@@ -23,14 +23,18 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         self.color = np.array([0.0, 0.3, 0.0, 1.0])
         self.wireframe=True
-        self.mesh = Mesh()
+        self.meshes = LContainer()
+        self.meshes.add_vertex(np.array([0.0,0.0]))
+        self.meshes.add_vertex(np.array([0.0,1.0]))
+        self.meshes.add_vertex(np.array([1.0,1.0]))
+
     # Virtual functions inherited by QOpenGLWidget
 
     # Called whenever we want to update the widget
     def paintGL(self):
         GL.glClearColor(self.color[0], self.color[1], self.color[2], self.color[3])
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
-        self.mesh.draw()
+        self.meshes.draw()
         self.printOpenGLErrors()
 
     # Catch opengl errors between every draw.
@@ -58,24 +62,26 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
     # Cleanup code for OpenGL. We need to cleanup our mesh objects and shaders from GPU memory or it'll leak.
     def cleanup(self):
-        self.mesh.cleanup()
+        self.meshes.cleanup()
 
     def loadShaders(self):
         self.shader = Shader("assets/shaders/Default.vs", "assets/shaders/Default.fs")
 
         print("Yeah bitch")
-app = QApplication([])
-window = QWidget()
-layout = QVBoxLayout()
 
-l1 = QLabel('Label 1')
-l2 = QLabel('Label 2')
-ogl = LSystemDisplayWidget()
-#layout.addWidget(l1)
-layout.addWidget(ogl)
-#layout.addWidget(l2)
+if __name__ == "__main__":
+    app = QApplication([])
+    window = QWidget()
+    layout = QVBoxLayout()
 
-window.setLayout(layout)
-window.show()
+    l1 = QLabel('Label 1')
+    l2 = QLabel('Label 2')
+    ogl = LSystemDisplayWidget()
+    #layout.addWidget(l1)
+    layout.addWidget(ogl)
+    #layout.addWidget(l2)
 
-app.exec_()
+    window.setLayout(layout)
+    window.show()
+
+    app.exec_()

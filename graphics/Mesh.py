@@ -14,4 +14,4 @@ class Mesh(Drawable):
     def draw(self):
         if(self.update):
             self.updateGPU()
-        print("Drawing??")
+        print("Drawing Update")
