@@ -40,14 +40,13 @@ class Quad(Drawable):
         indice_size = ArrayDatatype.arrayByteCount(self.indices)
         print("Loading vertices & indices of size: " + str(vertice_size) + " " + str(indice_size))
         self.shader.bind()
-        self.update=False
 
         glBindVertexArray(self.VAO)
         # Load indices
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self.EBO)
         print("test 1")
-
+        # NoneType object is not callable???
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indice_size, self.indices, GL_DYNAMIC_DRAW)
         print("test 2")
         # Allocate space for data
@@ -61,6 +60,7 @@ class Quad(Drawable):
         # Unbind buffers
         glBindBuffer(GL_ARRAY_BUFFER, 0)
         glBindVertexArray(0)
+        self.update=False
         print("[ INFO ] Finished update")
 
     def setDimensions(self, dims):
@@ -72,5 +72,5 @@ class Quad(Drawable):
         z = self.dims[2]
         w = self.dims[3]
 
-        self.vertices = np.array([x/2.0, y/2.0, z/2.0, -y/2.0, -z/2.0, -w/2.0, -x/2.0, w/2.0])
-        self.indices = np.array([0,1,3,1,2,3])
+        self.vertices = np.array([x/2.0, y/2.0, z/2.0, -y/2.0, -z/2.0, -w/2.0, -x/2.0, w/2.0], dtype=np.float32)
+        self.indices = np.array([0,1,3,1,2,3], dtype=np.uint32)
