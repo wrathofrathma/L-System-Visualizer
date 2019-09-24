@@ -22,7 +22,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
         super(LSystemDisplayWidget, self).__init__(parent)
 
-        self.color = np.array([0.0, 0.3, 0.0, 1.0])
+        self.color = np.array([0.0, 0.0, 0.0, 1.0])
         self.wireframe=True
         #self.meshes = LContainer()
         self.quad = Quad()
@@ -53,7 +53,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.loadShaders()
         GL.glClearColor(self.color[0], self.color[1], self.color[2], self.color[3])
         GL.glEnable(GL.GL_DEPTH_TEST)
-        GL.glDepthFunc(GL.GL_LESS)
+        #GL.glDepthFunc(GL.GL_LESS)
         # Testing mesh stuff.
         self.quad.setShader(self.shader)
         #self.mesh = Mesh()

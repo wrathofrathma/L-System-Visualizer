@@ -1,7 +1,7 @@
-from OpenGL.GL import GLuint, glDeleteBuffers, glGenBuffers
+from OpenGL.GL import GLuint, glDeleteBuffers, glGenBuffers, GL_ARRAY_BUFFER
 from OpenGL.raw.GL.ARB.vertex_array_object import glGenVertexArrays, glBindVertexArray, glDeleteVertexArrays
 
-from OpenGL.arrays import ArrayDatatype
+from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
 
 class Drawable():
@@ -29,16 +29,19 @@ class Drawable():
     def updateGPU(self):
         print("[ ERROR ] Define the update function.")
 
+    # Should only ever be called when we know self.vertices exists so our vbo has a valid data
     def init_ogl(self):
         print("[ INFO ] Initializing Drawable OpenGL buffers.")
         glGenVertexArrays(1,self.VAO)
-        glGenBuffers(1, self.VBO)
-        glGenBuffers(1, self.EBO)
+        #glGenBuffers(1, self.VBO)
+        self.VBO = vbo.VBO(np.zeros(1), target = GL_ARRAY_BUFFER)
+        #glGenBuffers(1, self.EBO)
         self.initialized=True
     # Deletes the data from the GPU. Should be the same for 2D & 3D
     def cleanup(self):
         GL.glDeleteVertexArrays(1, self.VAO)
-        GL.glDeleteBuffers(1, self.VBO)
+        #GL.glDeleteBuffers(1, self.VBO)
+        self.VBO.delete()
 
     def setShader(self, shader):
         self.shader = shader
