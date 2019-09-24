@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QLineEdit, QTextEdit, QGridLayout, QApplication, QLabel
 import sys
 from PyQt5 import QtWidgets, QtCore
+from LSystemWidget import *
+
 alphabet = ["F","f","-","+"]
 error_message = "X"
 class CustomLineEdit(QtWidgets.QLineEdit):
@@ -144,5 +146,8 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ui = UIWidget()
     ui.show()
+    graphix = LSystemDisplayWidget()
+    graphix.show()
     sys.exit(app.exec_())
+
 
