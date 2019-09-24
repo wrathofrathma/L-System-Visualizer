@@ -1,62 +1,67 @@
-from OpenGL import GL
 from OpenGL.GL import *
+
+from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
-from graphics.Drawable import *
 
-# OpenGL Mesh class.
-# Drawing line by line with thousands of objects would take significantly longer periods of time than just deleting/reallocating memory and uploading a new
-# mesh.
-
-class Mesh(Drawable):
+class Mesh():
     def __init__(self):
-        super().__init__()
+        self.initialized=False
+        self.update=True
+        self.vertices = []
 
-    # TODO Fix the framerate on this. Seems to only update when PyQT wants us to.
-    def draw(self):
-        if(len(self.vertices)==0):
-            print("[ ERROR ] Empty vertices")
-            return 0
-        if(self.update):
-            self.updateGPU()
-        if(self.shader!=None):
-            # Bind shader & VAO
-            self.shader.bind()
-            glBindVertexArray(self.VAO)
-            # Draw
-            print(len(self.vertices) / 2)
-            glDrawArrays(GL_TRIANGLES, 0, 3)
-            # Unbind shader & VAO
-            glUseProgram(0)
-            glBindVertexArray(0)
-
-        print("Drawing Update")
-
-
-    def updateGPU(self):
-        print("[ INFO ] Updating GPU")
+    def init_ogl(self):
         if(self.shader==None):
-            print("[ ERROR ] Shader not set, aborting update.")
-            return
+            print("[ ERROR ] Shader not set for our mesh.")
+            exit(1)
         if(len(self.vertices)==0):
-            print("[ ERROR ] Vertice count = 0, aborting update.")
-            return
+            print("[ ERROR ] Attempting to initialize an object with no vertices.")
+            exit(1)
 
-        # Get sizes of things
-        vertice_size = ArrayDatatype.arrayByteCount(self.vertices)
+        # Setting up the triangle & uploading to GPU
+        glUseProgram(self.shader)
+        self.VBO = vbo.VBO(self.vertices, target=GL_ARRAY_BUFFER)
+        self.initialized=True
+        self.update=False # if we just initialized, we don't need to upload to gpu
 
-        self.shader.bind()
+    def set_shader(self, shader):
+        self.shader = shader
+
+    def set_vertices(self, vertices):
+        self.vertices = vertices
+        self.update = True
+
+    def draw(self):
+        if(self.initialized==False):
+            self.init_ogl()
+        if(self.update):
+            self.update_gpu()
+        # Binding VBO object
+        self.VBO.bind()
+        # Explaining to the GPU how to use the data.
+        # Telling it that the VBO contains an array of vertices
+        glEnableClientState(GL_VERTEX_ARRAY)
+        # Telling the GPU the structure and type of data
+        glVertexPointer(2, GL_FLOAT, 0, self.VBO)
+        # Drawing
+        glDrawArrays(GL_TRIANGLES, 0, int(len(self.vertices) / 2.0))
+        #Unbinding everything
+        self.VBO.unbind()
+        glDisableClientState(GL_VERTEX_ARRAY)
+        shaders.glUseProgram(0)
+
+    def cleanup(self):
+        self.VBO.delete()
+
+    def update_gpu(self):
         self.update=False
 
-        glBindVertexArray(self.VAO)
-        # Allocate space for data
-        glBindBuffer(GL_ARRAY_BUFFER, self.VBO)
-        # Upload data
-        glBufferData(GL_ARRAY_BUFFER, vertice_size, self.vertices, GL_DYNAMIC_DRAW)
+        if(self.shader==None):
+            print("[ ERROR ] Shader not set for our mesh.")
+            exit(1)
 
-        # Tell opengl how to work this data
-        glVertexAttribPointer(self.vPos, 2, GL_FLOAT, GL_FALSE, 0, None)
-        glEnableVertexAttribArray(self.vPos)
-        # Unbind buffers
-        glBindBuffer(GL_ARRAY_BUFFER, 0)
-        glBindVertexArray(0)
-        print("[ INFO ] Finished update")
+        glUseProgram(self.shader)
+        self.VBO.bind()
+        self.VBO.set_array(self.vertices)
+        self.VBO.copy_data()
+        self.VBO.unbind()
+        glUseProgram(0)
