@@ -5,7 +5,7 @@ from graphics.Drawable import *
 class Quad(Drawable):
     def __init__(self):
         super().__init__()
-        self.EBO = glGenBuffers(1)
+        #self.EBO = glGenBuffers(1)
         self.dims = [1,1,1,1]
         self.generateQuad()
 
@@ -21,12 +21,15 @@ class Quad(Drawable):
             glBindVertexArray(self.VAO)
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self.EBO)
             # Draw
-            glDrawElements(GL_TRIANGLES, len(self.indices). GL_UNSIGNED_INT, 0)
+            print("Drawing")
+            glDrawElements(GL_POINTS, len(self.indices), GL_UNSIGNED_INT, 0)
             # Unbind shader & VAO
             glUseProgram(0)
             glBindVertexArray(0)
 
     def updateGPU(self):
+        if(self.initialized==False):
+            self.init_ogl()
         print("[ INFO ] Updating GPU")
         if(self.shader==None):
             print("[ ERROR ] Shader not set, aborting update.")

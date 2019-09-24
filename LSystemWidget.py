@@ -24,7 +24,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         self.color = np.array([0.0, 0.3, 0.0, 1.0])
         self.wireframe=True
-        self.meshes = LContainer()
+        #self.meshes = LContainer()
         self.quad = Quad()
     # Virtual functions inherited by QOpenGLWidget
 
@@ -32,7 +32,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def paintGL(self):
         GL.glClearColor(self.color[0], self.color[1], self.color[2], self.color[3])
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
-        print("Number of meshes: " + str(len(self.meshes.meshes)))
+        #print("Number of meshes: " + str(len(self.meshes.meshes)))
         #self.meshes.draw()
         #self.mesh.draw()
         self.quad.draw()
@@ -81,12 +81,12 @@ class LSystemDisplayWidget(QOpenGLWidget):
     # Cleanup code for OpenGL. We need to cleanup our mesh objects and shaders from GPU memory or it'll leak.
     def cleanup(self):
         print("[ INFO ] Cleaning up display widget memory.")
-        self.meshes.cleanup()
+        #self.meshes.cleanup()
 
     def loadShaders(self):
         print("[ INFO ] Loading shaders...")
         self.shader = Shader("assets/shaders/Default.vs", "assets/shaders/Default.fs")
-        self.meshes.setShader(self.shader)
+        #self.meshes.setShader(self.shader)
         print("[ INFO ] Shaders loaded.")
 
 if __name__ == "__main__":
