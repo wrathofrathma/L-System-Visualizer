@@ -31,6 +31,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.VBO.unbind()
         glDisableClientState(GL_VERTEX_ARRAY)
         shaders.glUseProgram(0)
+
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))
         glViewport(0,0,w,h)
@@ -61,7 +62,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
     def cleanup(self):
         print("[ INFO ] Cleaning up display widget memory.")
-        glDeleteVertexArrays(1,self.VAO)
         self.VBO.delete()
 
 if __name__ == "__main__":

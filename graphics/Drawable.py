@@ -6,22 +6,14 @@ import numpy as np
 
 class Drawable():
     def __init__(self):
-        # We can't initialize our VAO here because we don't have a valid context if we create meshes outside of the 3 primary QT widget functions.
-        self.VAO = GLuint(0)
-        #glGenVertexArrays(1,self.VAO) # VertexArrayObject
-        #self.VBO = glGenBuffers(1)
-        self.VBO = GLuint(0)
-        self.EBO = GLuint(0)
-         # Vertex buffer ID
-        self.vPos=0  # Shader vertex data position
-        self.vColor=1 # Shader vertex color position
-        self.vNorm=2 # Shader vertex normal position. For 3D Lighting later.
 
-        self.uModel = GLuint(0) # Shader position of the model matrix. For later when we do 3D meshes and rotations.
+        self.vPos=0  # Shader vertex data position
+        self.VBO = GLuint(0)
         self.vertices = np.array([]) # Placeholder for vertices of our mesh
         self.shader = None # Shader object
         self.update = True # Update flag for updating our GPU data. Called in our draw function.
         self.initialized = False
+
     def draw(self):
         print("[ ERROR ] Define the draw function.")
 
@@ -31,16 +23,12 @@ class Drawable():
 
     # Should only ever be called when we know self.vertices exists so our vbo has a valid data
     def init_ogl(self):
-        print("[ INFO ] Initializing Drawable OpenGL buffers.")
-        glGenVertexArrays(1,self.VAO)
-        #glGenBuffers(1, self.VBO)
+        print("[ INFO ] Initializing OpenGL VBO.")
         self.VBO = vbo.VBO(np.zeros(1), target = GL_ARRAY_BUFFER)
-        #glGenBuffers(1, self.EBO)
         self.initialized=True
+
     # Deletes the data from the GPU. Should be the same for 2D & 3D
     def cleanup(self):
-        GL.glDeleteVertexArrays(1, self.VAO)
-        #GL.glDeleteBuffers(1, self.VBO)
         self.VBO.delete()
 
     def setShader(self, shader):
