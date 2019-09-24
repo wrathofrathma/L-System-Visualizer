@@ -1,7 +1,7 @@
-# OpenGL testing using built in VBO & shader convenience classes
+# OpenGL testing using only built in shader class.
 from OpenGL.GL import shaders
 from OpenGL.GL import *
-
+import ctypes
 from PyQt5.QtWidgets import *
 # from OpenGL.GL import GLuint, glDeleteBuffers, glGenBuffers, GL_ARRAY_BUFFER
 # from OpenGL.raw.GL.ARB.vertex_array_object import glGenVertexArrays, glBindVertexArray, glDeleteVertexArrays
@@ -19,18 +19,14 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glClear(GL_COLOR_BUFFER_BIT)
 
         # Binding VBO object
-        self.VBO.bind()
-        # Explaining to the GPU how to use the data.
-        # Telling it that the VBO contains an array of vertices
-        glEnableClientState(GL_VERTEX_ARRAY)
-        # Telling the GPU the structure and type of data
-        glVertexPointer(2, GL_FLOAT, 0, self.VBO)
+        glUseProgram(self.shader)
+        glBindVertexArray(self.VAO)
         # Drawing
         glDrawArrays(GL_TRIANGLES, 0, 3)
         #Unbinding everything
-        self.VBO.unbind()
         glDisableClientState(GL_VERTEX_ARRAY)
         shaders.glUseProgram(0)
+
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))
         glViewport(0,0,w,h)
@@ -54,15 +50,26 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         glUseProgram(self.shader)
         # Setting up the triangle & uploading to GPU
+        self.VAO = GLuint(0)
+        glGenVertexArrays(1, self.VAO)
+        self.VBO = GLuint(0)
+        glGenBuffers(1, self.VBO)
         self.vertices = np.array([0.0,0.0,0.5,0.5,0.0,0.5], dtype=np.float32)
-        self.VBO = vbo.VBO(self.vertices, target=GL_ARRAY_BUFFER)
 
+        glBindVertexArray(self.VAO)
+        glBindBuffer(GL_ARRAY_BUFFER, self.VBO)
+        glBufferData(GL_ARRAY_BUFFER, self.vertices, GL_STATIC_DRAW)
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, ctypes.cast(0, ctypes.c_void_p))
+        glEnableVertexAttribArray(0)
+
+        glBindVertexArray(0)
+        glUseProgram(0)
 
 
     def cleanup(self):
         print("[ INFO ] Cleaning up display widget memory.")
         glDeleteVertexArrays(1,self.VAO)
-        self.VBO.delete()
+        glDeleteBuffers(1, self.VBO)
 
 if __name__ == "__main__":
     app = QApplication([])
