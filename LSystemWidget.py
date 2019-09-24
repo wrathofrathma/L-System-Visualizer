@@ -22,7 +22,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
         super(LSystemDisplayWidget, self).__init__(parent)
 
-        self.color = np.array([0.0, 0.0, 0.0, 1.0])
+        self.color = np.array([1.0, 0.8, 0.9, .5])
         self.wireframe=True
         #self.meshes = LContainer()
         self.quad = Quad()
