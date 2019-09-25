@@ -43,7 +43,9 @@ class Mesh():
         # Telling the GPU the structure and type of data
         glVertexPointer(2, GL_FLOAT, 0, self.VBO)
         # Drawing
-        glDrawArrays(GL_TRIANGLES, 0, int(len(self.vertices) / 2.0))
+        print("Hello I'm drawing: " + str(self.vertices))
+
+        glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) / 2.0))
         #Unbinding everything
         self.VBO.unbind()
         glDisableClientState(GL_VERTEX_ARRAY)
@@ -65,3 +67,6 @@ class Mesh():
         self.VBO.copy_data()
         self.VBO.unbind()
         glUseProgram(0)
+
+    def get_vertices(self):
+        return self.vertices
