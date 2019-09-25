@@ -9,10 +9,12 @@ from PyQt5.QtWidgets import *
 from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
 
+from time import time
 
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
         super(LSystemDisplayWidget, self).__init__(parent)
+        self.start = time()
 
     def paintGL(self):
         glClearColor(0.0,0.0,0.0,0.0)
@@ -20,6 +22,10 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         # Binding VBO object
         glUseProgram(self.shader)
+        end = time()
+        elapsed = end-self.start
+        print("Time: " + str(elapsed))
+        glUniform1f(self.time_loc, elapsed)
         glBindVertexArray(self.VAO)
         # Drawing
         glDrawArrays(GL_TRIANGLES, 0, 3)
@@ -61,6 +67,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glBufferData(GL_ARRAY_BUFFER, self.vertices, GL_STATIC_DRAW)
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, ctypes.cast(0, ctypes.c_void_p))
         glEnableVertexAttribArray(0)
+
+        # Get uniform loc
+        self.time_loc = glGetUniformLocation(self.shader, "time")
 
         glBindVertexArray(0)
         glUseProgram(0)

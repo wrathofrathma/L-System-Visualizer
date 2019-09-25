@@ -16,9 +16,10 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.bgcolor = np.array([1.0, 0.8, 0.9, .5])
 
     def paintGL(self):
-        glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
+        glClearColor(0.0,0.0,0.0,0.0)
         glClear(GL_COLOR_BUFFER_BIT)
 
+        shaders.glUseProgram(self.shader)
         # Binding VBO object
         self.VBO.bind()
         # Explaining to the GPU how to use the data.
@@ -54,7 +55,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # fragment = shaders.compileShader(fc, GL_FRAGMENT_SHADER)
         # self.shader = shaders.compileProgram(vertex,fragment)
         self.loadShaders()
-        
+
         glUseProgram(self.shader)
         # Setting up the triangle & uploading to GPU
         self.vertices = np.array([0.0,0.0,0.5,0.5,0.0,0.5], dtype=np.float32)
