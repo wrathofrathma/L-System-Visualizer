@@ -2,7 +2,7 @@ def lgen(axioms, rules, it):
     '''
     Takes in an axiom set of rules and number of iterations and generates the new string
     '''
-    
+
     for _ in range(it):
         newaxi=''
         for axiom in axioms:
@@ -15,13 +15,13 @@ def lgen(axioms, rules, it):
 
 rules = {"F":"F+F--F+F"}
 
-print(lgen('F',rules,3))
+#print(lgen('F',rules,5))
 
-def stackgen(rules):
+def stackgen(axi,rules, it):
     '''
     Takes in the generated string and makes it into a stack
     '''
-    axi= lgen('F',rules,2)
+    axi= lgen(axi,rules,it)
     stack = []
     it=0
     for _ in range(len(axi)):
@@ -29,5 +29,5 @@ def stackgen(rules):
         it=it+1
     return stack
 
-val = stackgen(rules)
-print(val.pop())
+#val = stackgen(rules)
+#print(val.pop())

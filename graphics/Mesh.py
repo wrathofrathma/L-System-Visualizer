@@ -22,6 +22,7 @@ class Mesh():
         self.VBO = vbo.VBO(self.vertices, target=GL_ARRAY_BUFFER)
         self.initialized=True
         self.update=False # if we just initialized, we don't need to upload to gpu
+        glUseProgram(0)
 
     def set_shader(self, shader):
         self.shader = shader
@@ -35,6 +36,7 @@ class Mesh():
             self.init_ogl()
         if(self.update):
             self.update_gpu()
+        #glUseProgram(self.shader)
         # Binding VBO object
         self.VBO.bind()
         # Explaining to the GPU how to use the data.
@@ -43,13 +45,11 @@ class Mesh():
         # Telling the GPU the structure and type of data
         glVertexPointer(2, GL_FLOAT, 0, self.VBO)
         # Drawing
-        print("Hello I'm drawing: " + str(self.vertices))
-
         glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) / 2.0))
         #Unbinding everything
         self.VBO.unbind()
         glDisableClientState(GL_VERTEX_ARRAY)
-        shaders.glUseProgram(0)
+        glUseProgram(0)
 
     def cleanup(self):
         self.VBO.delete()
