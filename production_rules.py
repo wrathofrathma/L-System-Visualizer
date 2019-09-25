@@ -9,12 +9,15 @@ def Ff(obj):
   y = obj.pos[1]
   #calculate new position
   obj.pos = (x+math.cos(obj.angle),y+math.sin(obj.angle))
-
-def rotation(obj,clockwise):
-  #input:pointer_class object and bool clockwise 
-  #output: updates pointer class angle
-  if clockwise==1:
-    obj.angle = obj.angle - math.pi/4
-  else:
-    obj.angle = obj.angle + math.pi/4
+  return obj.pos
+def plus(obj):
+  #input:pointer_class object 
+  #output: updates pointer class angle clockwise
+  obj.angle = obj.angle - math.pi/4
+  return obj.angle
+def minus(obj):
+  #input:pointer_class object 
+  #output: updates pointer class angle counter-clockwise
+  obj.angle = obj.angle + math.pi/4
+  return obj.angle
   
