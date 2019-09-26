@@ -10,24 +10,7 @@ import numpy as np
 from graphics.Mesh import *
 from time import time
 
-# TODO List
-#########################################
-# Why the fuck aren't our shaders being used.
-# Get mesh container working
-# Get splitting working with array indexing - Also change it so we don't need vertices to initialize the mesh, just return false.
-# Create a camera
-# Track the edges of the mesh in terms of our viewspace so we can zoom out with the camera if need be.
-# Fix color shader
-# Change all my print statements to raise exceptions
-# Add more try/except blocks
-# Documentation
-#
-# On program init check available thread num.
-# Remove iterations from lgen and have it gen a tokenized list
-# Use threads to recursively gen production string
-# Use threads to gen vertices
-# Merge UI and graphix
-# Add multiple prod rules
+
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
         super(LSystemDisplayWidget, self).__init__(parent)
