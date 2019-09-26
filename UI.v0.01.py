@@ -99,7 +99,15 @@ class UIWidget(QWidget):
         self.axiomEdit.setStyleSheet("color: red;")
         self.axiomEdit.setText(error_message)
         valid_input = 0
+    print("prodInput = ", prodInput)
     prodInput=prodInput.replace(' ','')
+    print("prodInput = ", prodInput)
+    prodInputarr = prodInput.split("->")
+    #TODO make this work for more than one prod rule
+    if not prodInputarr[0] == axiomInput:
+        self.prodrulesEdit.setStyleSheet("color: red;")
+        self.prodrulesEdit.setText(error_message)
+        valid_input = 0
     if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
       self.prodrulesEdit.setStyleSheet("color: red;")
       self.prodrulesEdit.setText(error_message)
@@ -143,8 +151,9 @@ class UIWidget(QWidget):
   def genRuleDict(self, prodRules):
       rules = {}
       for rule in prodRules:
-          pr = rule.replace("->"," ")
-          pr = pr.split(' ')
+          rule = rule.replace(" ","")
+          pr = rule.replace("->",":")
+          pr = pr.split(':')
           rules[pr[0]]=pr[1]
       return rules
 
