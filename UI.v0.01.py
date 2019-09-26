@@ -1,11 +1,12 @@
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QLineEdit, QTextEdit, QGridLayout, QApplication, QLabel
 import sys
 from PyQt5 import QtWidgets, QtCore
-from LSystemWidget import *
 import numpy as np
-from Lsystem import *
-from stack_loop import *
 from math import pi
+from lsystem.LSystemWidget import *
+from lsystem.Lsystem import *
+from lsystem.stack_loop import *
+
 
 alphabet = ["F","f","-","+"]
 error_message = "X"

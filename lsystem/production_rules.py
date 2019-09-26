@@ -1,6 +1,6 @@
 # Placeholder for future production rule functions
 import math
-from pointer_class import *
+from lsystem.pointer_class import *
 
 def Ff(obj, angle):
   #input: a pointer_class object

@@ -2,3 +2,5 @@
 *__pycache__
 .todo
 .gitignore
+test/
+test/*

@@ -107,8 +107,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         else:
             print("")
         self.bgcolor = color
-import Lsystem as ls
-import stack_loop as sl
+import lsystem.Lsystem as ls
+import lsystem.stack_loop as sl
 import math
 
 def gen_koch_snowflake():

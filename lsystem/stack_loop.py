@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from pointer_class import *
-from production_rules import *
+from lsystem.pointer_class import *
+from lsystem.production_rules import *
 
 funcdict = {
   'F': Ff,
