@@ -2,6 +2,10 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QLineEdit, QTextE
 import sys
 from PyQt5 import QtWidgets, QtCore
 from LSystemWidget import *
+import numpy as np
+from Lsystem import *
+from stack_loop import *
+from math import pi
 
 alphabet = ["F","f","-","+"]
 error_message = "X"
@@ -16,17 +20,18 @@ class CustomLineEdit(QtWidgets.QLineEdit):
       if self.text() == error_message:
         self.setText('')
         self.setStyleSheet("color: black;")
-class UIWidget(QWidget): 
-  
+class UIWidget(QWidget):
+
   def __init__(self):
     super(UIWidget, self).__init__()
     self.initUI()
-
+    self.graphix = LSystemDisplayWidget()
+    self.graphix.show()
   def initUI(self):
-    
+
     #renames the window
     self.setWindowTitle('L-Systems Generator')
-    
+
     #creates the labels for each text box
     self.axiom = QLabel('Axiom')
     self.prodrules = QLabel('Production Rules')
@@ -50,7 +55,7 @@ class UIWidget(QWidget):
     self.angleEdit.clicked.connect(lambda: self.angleEdit.clear_box())
     self.itersEdit = CustomLineEdit()
     self.itersEdit.clicked.connect(lambda: self.itersEdit.clear_box())
-    
+
     #creates a grid for the layout
     grid = QGridLayout()
     grid.setSpacing(20)
@@ -67,12 +72,12 @@ class UIWidget(QWidget):
 
     grid.addWidget(self.iters, 4, 0)
     grid.addWidget(self.itersEdit, 4, 1)
-    
+
     #makes the lsys generator button
     lsysbutton = QPushButton("Generate L System", self)
     grid.addWidget(lsysbutton, 8, 0)
     lsysbutton.clicked.connect(self.genLSys)
-    
+
     #make the exit button
     exitbutton = QPushButton("Exit", self)
     grid.addWidget(exitbutton, 8, 1)
@@ -90,7 +95,7 @@ class UIWidget(QWidget):
     string = 0
     if not axiomInput in alphabet:
       self.axiomEdit.setStyleSheet("color: red;")
-      self.axiomEdit.setText(error_message) 
+      self.axiomEdit.setText(error_message)
       valid_input = 0
     prodInput=prodInput.replace(' ','')
     if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
@@ -103,28 +108,28 @@ class UIWidget(QWidget):
         self.prodrulesEdit.setStyleSheet("color: red;")
         self.prodrulesEdit.setText(error_message)
         valid_input = 0
-    
+
     try:
       angleInput = float(angleInput)
-    except: 
+    except:
       self.angleEdit.setStyleSheet("color: red;")
       self.angleEdit.setText("X")
       valid_input=0
-      string = 1 #is a string 
+      string = 1 #is a string
     if not string:
       if angleInput <= -360 or angleInput >= 360:
         self.angleEdit.setStyleSheet("color: red;")
         self.angleEdit.setText(error_message)
         valid_input = 0
-      
+
     try:
       itersInput = int(itersInput)
-    except: 
+    except:
       self.itersEdit.setStyleSheet("color: red;")
       self.itersEdit.setText(error_message)
       valid_input = 0
       string = 1 #is a string
-    if not string: 
+    if not string:
       if itersInput <= 0:
         self.itersEdit.setStyleSheet("color: red;")
         self.itersEdit.setText(error_message)
@@ -140,14 +145,25 @@ class UIWidget(QWidget):
       print("Productions: ", prodInput)
       print("Angle: ", angleInput)
       print("Iterations: ", itersInput)
- 
-
+      prodInput=prodInput.replace("->",' ')
+      prods = prodInput.split(' ')
+      rules = {prods[0]:prods[1]}
+      angleInput = float(angleInput)
+      angleInput = angleInput*pi/180.0
+      it = int(itersInput)
+      s = lgen(axiomInput, rules, it)
+      print(s)
+      verts = readStack(s,(0,0),angleInput)
+      verts = np.array(verts, dtype=np.float32)
+      verts = verts.reshape(verts.shape[0],verts.shape[1])
+      verts = normalize_coordinates(verts)
+      print(verts)
+      self.graphix.add_vertices(verts)
+      self.graphix.update()
+      
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ui = UIWidget()
     ui.show()
-    graphix = LSystemDisplayWidget()
-    graphix.show()
+
     sys.exit(app.exec_())
-
-
