@@ -11,16 +11,15 @@ funcdict = {
 }
 
 #l = ['F','f','+','-','F']
-def readStack(stack, starting_pt):
+def readStack(stack, starting_pt, angle):
   """
   Input list of strings (F, +, -)
-  Output List of new vertices 
+  Output List of new vertices
   """
   vertices = []
   obj = pointer_class(starting_pt[0],starting_pt[1])
   for i in range(len(stack)):
-    funcdict[stack[i]](obj)
+    funcdict[stack[i]](obj, angle)
     vertices.append(obj.pos)
   vertices = list(dict.fromkeys(vertices)) # remove duplicates
   return vertices
-
