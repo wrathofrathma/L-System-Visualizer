@@ -135,32 +135,48 @@ class UIWidget(QWidget):
         self.itersEdit.setText(error_message)
         valid_input = 0
     return valid_input
+
+  #Probably doesn't need self as a param, can just be static.
+  # Generates a rule dictionary from an array of production rule strings taken from the UI
+  def genRuleDict(self, prodRules):
+      rules = {}
+      for rule in prodRules:
+          pr = rule.replace("->"," ")
+          pr = pr.split(' ')
+          rules[pr[0]]=pr[1]
+      return rules
+
   def genLSys(self):
     if self.inputCheck():
       axiomInput = self.axiomEdit.text()
-      prodInput = self.prodrulesEdit.text()
+      prodInput = [self.prodrulesEdit.text()] #changed to array
       angleInput = self.angleEdit.text()
       itersInput = self.itersEdit.text()
       print("Axiom: ", axiomInput)
-      print("Productions: ", prodInput)
+      print("Productions: ")
+      for prod in prodInput:
+          print(prod)
       print("Angle: ", angleInput)
       print("Iterations: ", itersInput)
-      prodInput=prodInput.replace("->",' ')
-      prods = prodInput.split(' ')
-      rules = {prods[0]:prods[1]}
-      angleInput = float(angleInput)
-      angleInput = angleInput*pi/180.0
+      # Format input for use
+      rules=self.genRuleDict(prodInput)
+      angle = float(angleInput)
+      angle = angle*pi/180.0 # degrees to radians
       it = int(itersInput)
+      # Generates full production string
       s = lgen(axiomInput, rules, it)
       print(s)
-      verts = readStack(s,(0,0),angleInput)
+      # Generates vertices
+      verts = readStack(s,(0,0),angle)
+      # Converts to usable normalized coordinates
       verts = np.array(verts, dtype=np.float32)
       verts = verts.reshape(verts.shape[0],verts.shape[1])
       verts = normalize_coordinates(verts)
       print(verts)
+      # Sets verts on graphics widget and draws
       self.graphix.add_vertices(verts)
       self.graphix.update()
-      
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ui = UIWidget()
