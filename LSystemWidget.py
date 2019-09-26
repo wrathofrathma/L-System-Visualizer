@@ -21,7 +21,13 @@ from time import time
 # Change all my print statements to raise exceptions
 # Add more try/except blocks
 # Documentation
-
+#
+# On program init check available thread num.
+# Remove iterations from lgen and have it gen a tokenized list
+# Use threads to recursively gen production string
+# Use threads to gen vertices
+# Merge UI and graphix
+# Add multiple prod rules
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
         super(LSystemDisplayWidget, self).__init__(parent)
