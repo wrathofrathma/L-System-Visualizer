@@ -1,7 +1,8 @@
 # Placeholder for future production rule functions
 import math
 from pointer_class import *
-def Ff(obj):
+
+def Ff(obj, angle):
   #input: a pointer_class object
   #output: updates pointer class position
   #seperates the position into coordinates
@@ -10,14 +11,14 @@ def Ff(obj):
   #calculate new position
   obj.pos = (x+math.cos(obj.angle),y+math.sin(obj.angle))
   return obj.pos
-def plus(obj):
-  #input:pointer_class object 
+def plus(obj, angle):
+  #input:pointer_class object
   #output: updates pointer class angle clockwise
-  obj.angle = obj.angle - math.pi/4
+  obj.angle = obj.angle - angle
   return obj.angle
-def minus(obj):
-  #input:pointer_class object 
+
+def minus(obj, angle):
+  #input:pointer_class object
   #output: updates pointer class angle counter-clockwise
-  obj.angle = obj.angle + math.pi/4
+  obj.angle = obj.angle + angle
   return obj.angle
-  
