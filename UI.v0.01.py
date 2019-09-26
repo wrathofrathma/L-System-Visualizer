@@ -93,10 +93,11 @@ class UIWidget(QWidget):
     angleInput = self.angleEdit.text()
     itersInput = self.itersEdit.text()
     string = 0
-    if not axiomInput in alphabet:
-      self.axiomEdit.setStyleSheet("color: red;")
-      self.axiomEdit.setText(error_message)
-      valid_input = 0
+    for ch in axiomInput:
+      if not axiomInput in alphabet:
+        self.axiomEdit.setStyleSheet("color: red;")
+        self.axiomEdit.setText(error_message)
+        valid_input = 0
     prodInput=prodInput.replace(' ','')
     if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
       self.prodrulesEdit.setStyleSheet("color: red;")
