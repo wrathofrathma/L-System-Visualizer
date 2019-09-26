@@ -30,7 +30,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.mesh = Mesh()
         #self.meshes = []
         #self.meshes.append(Mesh())
-
+        verts = gen_koch_snowflake()
+        self.mesh.set_vertices(verts)
         # vertices = np.array([
         # 0.2,0.2,
         # 0.7,0.7,
@@ -119,7 +120,35 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.bgcolor = color
 import Lsystem as ls
 import stack_loop as sl
+import math
 
+def gen_koch_snowflake():
+    #Generating vertices for Koch's snowflake
+    rules = {"F":"F+F--F+F"}
+    angle = math.pi/4
+    s = ls.lgen('F', rules, 5)
+    v = sl.readStack(s, (1,0), angle)
+    v = np.array(v,dtype=np.float32)
+    v = v.reshape(v.shape[0]*v.shape[1])
+    v = normalize_coordinates(v)
+    return v
+
+def gen_matt_fractal():
+    angle = math.pi/2
+    rules = {"F":"F+F-F-F+F"}
+    s = ls.lgen('F', rules, 6)
+    v = sl.readStack(s,(0,0), angle)
+    v = np.array(v,dtype=np.float32)
+    print(v)
+    print(v.shape)
+    v = v.reshape(v.shape[0]*v.shape[1])
+    print(v)
+    v = v/v.max()
+    v=v-0.5
+
+def normalize_coordinates(coords):
+    coords = coords/coords.max()
+    return coords
 if __name__ == "__main__":
     app = QApplication([])
     window = QWidget()
@@ -134,26 +163,11 @@ if __name__ == "__main__":
 
     window.setLayout(layout)
     window.show()
-    # vertices = np.array([
-    # -0.1,-0.1,
-    # 1.0,1.0,
-    # 0.0,0.5,
-    # 0.1,0.1], dtype=np.float32)
-    # Generating vertices for Koch's snowflake
-    s = ls.lgen('F', ls.rules, 5)
-    print(s)
-    v = sl.readStack(s, (1,0))
-    print(v)
-    v = np.array(v,dtype=np.float32)
-    print(v)
-    print(v.shape)
-    v = v.reshape(v.shape[0]*v.shape[1])
-    print(v)
-    v = v/v.max()
-    print(v)
-    v=v-0.5
-    v=v*-1
 
-    ogl.add_vertices(v)
+
+
+    verts = gen_koch_snowflake()
+    print(verts)
+    ogl.add_vertices(verts)
     app.exec_()
     ogl.cleanup()
