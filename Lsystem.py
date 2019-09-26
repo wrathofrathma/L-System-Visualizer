@@ -13,9 +13,7 @@ def lgen(axioms, rules, it):
         axioms = newaxi
     return axioms
 
-rules = {"F":"F+F--F+F"}
 
-#print(lgen('F',rules,5))
 
 def stackgen(axi,rules, it):
     '''
@@ -29,5 +27,8 @@ def stackgen(axi,rules, it):
         it=it+1
     return stack
 
-#val = stackgen(rules)
-#print(val.pop())
+if __name__ == "__main__":
+    rules = {"F":"F+F--F+F"}
+    print(lgen('F',rules,5))
+    val = stackgen(rules)
+    print(val.pop())
