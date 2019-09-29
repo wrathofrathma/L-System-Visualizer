@@ -28,6 +28,8 @@ class UIWidget(QWidget):
   def __init__(self):
     super(UIWidget, self).__init__()
     self.prods = 1
+    self.prodrulesEdit = []
+    self.prodrules = []
     self.initUI()
   def initUI(self):
 
@@ -39,18 +41,19 @@ class UIWidget(QWidget):
     
     #creates the labels for each text box
     self.axiom = QLabel('Axiom')
-    self.prodrules = QLabel('Production Rule ' + str(self.prods))
+    self.prodrules.append(QLabel('Production Rule ' + str(self.prods)))
     self.angle = QLabel('Angles(degrees)')
     self.iters = QLabel('Iterations')
 
     #creates the text box for each label
     self.axiomEdit = CustomLineEdit()
-    self.prodrulesEdit = CustomLineEdit()
+    self.prodrulesEdit.append(CustomLineEdit())
     self.angleEdit = CustomLineEdit()
     self.itersEdit = CustomLineEdit()
     
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
+   
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
     self.lsysbutton.clicked.connect(self.genLSys)
@@ -61,8 +64,8 @@ class UIWidget(QWidget):
     #Adding widgets to window
     self.layout.addWidget(self.axiom, 1, 0)
     self.layout.addWidget(self.axiomEdit, 1, 1, 1, 3)
-    self.layout.addWidget(self.prodrules, 2, 0)
-    self.layout.addWidget(self.prodrulesEdit, 2, 1, 1, 1)
+    self.layout.addWidget(self.prodrules[0], 2, 0)
+    self.layout.addWidget(self.prodrulesEdit[0], 2, 1, 1, 1)
     self.layout.addWidget(self.prodPlus, 2, 2, 1, 2)
     self.layout.addWidget(self.angle, 6, 0)
     self.layout.addWidget(self.angleEdit, 6, 1, 1, 3)
@@ -149,10 +152,23 @@ class UIWidget(QWidget):
   def moreProds(self):
     self.prods = self.prods + 1
     if self.prods < 5:
-      newprodRule = QLabel("Production Rule " + str(self.prods))
-      newprodrulesEdit = CustomLineEdit()
-      self.layout.addWidget(newprodRule, self.prods+1, 0)
-      self.layout.addWidget(newprodrulesEdit, self.prods+1, 1, 1, 3)
+      self.prodrules.append(QLabel("Production Rule " + str(self.prods)))
+      self.prodrulesEdit.append(CustomLineEdit())
+      self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
+      self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 1)
+      
+      self.prodMinus = QPushButton("-", self)
+      self.prodMinus.clicked.connect(self.lessProds)
+      self.layout.addWidget(self.prodMinus, self.prods+1, 2, 1, 2)
+
+
+  def lessProds(self):
+    #self.prods = self.prods - 1
+    #if self.prods > 1:
+      #self.layout.removeWidget(self.prodrules[self.prods-1])
+      #self.layout.removeWidget(newprodrulesEdit[self.prods-1])
+      #self.layout.removeWidget(self.prodMinus)
+    print("Maybe someday will delete something")
 
   def genLSys(self):
     if self.inputCheck():
