@@ -10,6 +10,7 @@ from lsystem.stack_loop import *
 
 alphabet = ["F","f","-","+"]
 error_message = "X"
+
 class CustomLineEdit(QtWidgets.QLineEdit):
     clicked = QtCore.pyqtSignal()
     def __init__(self):
@@ -21,72 +22,60 @@ class CustomLineEdit(QtWidgets.QLineEdit):
       if self.text() == error_message:
         self.setText('')
         self.setStyleSheet("color: black;")
+
 class UIWidget(QWidget):
 
   def __init__(self):
     super(UIWidget, self).__init__()
+    self.prods = 1
     self.initUI()
-    self.graphix = LSystemDisplayWidget()
-    self.graphix.show()
   def initUI(self):
 
+    self.graphix = LSystemDisplayWidget()
     #renames the window
     self.setWindowTitle('L-Systems Generator')
-
+    
+    self.layout = QGridLayout()
+    
     #creates the labels for each text box
     self.axiom = QLabel('Axiom')
-    self.prodrules = QLabel('Production Rules')
+    self.prodrules = QLabel('Production Rule ' + str(self.prods))
     self.angle = QLabel('Angles(degrees)')
     self.iters = QLabel('Iterations')
 
-    """
     #creates the text box for each label
-    self.axiomEdit = QLineEdit()
-    self.axiomEdit.clicked.connect(self.clearBox(self.axiomEdit))
-    self.prodrulesEdit = QLineEdit()
-    self.angleEdit = QLineEdit()
-    self.itersEdit = QLineEdit()
-    """
-     #creates the text box for each label
     self.axiomEdit = CustomLineEdit()
-    self.axiomEdit.clicked.connect(lambda: self.axiomEdit.clear_box())
     self.prodrulesEdit = CustomLineEdit()
-    self.prodrulesEdit.clicked.connect(lambda: self.prodrulesEdit.clear_box())
     self.angleEdit = CustomLineEdit()
-    self.angleEdit.clicked.connect(lambda: self.angleEdit.clear_box())
     self.itersEdit = CustomLineEdit()
-    self.itersEdit.clicked.connect(lambda: self.itersEdit.clear_box())
-
-    #creates a grid for the layout
-    grid = QGridLayout()
-    grid.setSpacing(20)
-
-    #adds the labels and textboxes into the grid
-    grid.addWidget(self.axiom, 1, 0)
-    grid.addWidget(self.axiomEdit, 1, 1)
-
-    grid.addWidget(self.prodrules, 2, 0)
-    grid.addWidget(self.prodrulesEdit, 2, 1)
-
-    grid.addWidget(self.angle, 3, 0)
-    grid.addWidget(self.angleEdit, 3, 1)
-
-    grid.addWidget(self.iters, 4, 0)
-    grid.addWidget(self.itersEdit, 4, 1)
-
+    
+    self.prodPlus = QPushButton("+", self)
+    self.prodPlus.clicked.connect(self.moreProds)
     #makes the lsys generator button
-    lsysbutton = QPushButton("Generate L System", self)
-    grid.addWidget(lsysbutton, 8, 0)
-    lsysbutton.clicked.connect(self.genLSys)
-
-    #make the exit button
-    exitbutton = QPushButton("Exit", self)
-    grid.addWidget(exitbutton, 8, 1)
-    exitbutton.clicked.connect(exit)
-
-    #loads the grid into the layout
-    self.setLayout(grid)
-
+    self.lsysbutton = QPushButton("Generate L System", self)
+    self.lsysbutton.clicked.connect(self.genLSys)
+    
+    self.exitbutton = QPushButton("Exit", self)
+    self.exitbutton.clicked.connect(exit)
+    
+    #Adding widgets to window
+    self.layout.addWidget(self.axiom, 1, 0)
+    self.layout.addWidget(self.axiomEdit, 1, 1, 1, 3)
+    self.layout.addWidget(self.prodrules, 2, 0)
+    self.layout.addWidget(self.prodrulesEdit, 2, 1, 1, 1)
+    self.layout.addWidget(self.prodPlus, 2, 2, 1, 2)
+    self.layout.addWidget(self.angle, 6, 0)
+    self.layout.addWidget(self.angleEdit, 6, 1, 1, 3)
+    self.layout.addWidget(self.iters, 7, 0)
+    self.layout.addWidget(self.itersEdit, 7, 1, 1, 3)
+    self.layout.addWidget(self.graphix, 8, 1, 1, -1)
+    self.layout.addWidget(self.lsysbutton, 9, 0)
+    self.layout.addWidget(self.exitbutton, 9, 1, -1, -1)
+    
+    self.setLayout(self.layout)
+    self.setGeometry(500, 500, 500, 500)
+    self.show()
+  
   def inputCheck(self):
     valid_input = 1
     axiomInput = self.axiomEdit.text()
@@ -157,6 +146,14 @@ class UIWidget(QWidget):
           rules[pr[0]]=pr[1]
       return rules
 
+  def moreProds(self):
+    self.prods = self.prods + 1
+    if self.prods < 5:
+      newprodRule = QLabel("Production Rule " + str(self.prods))
+      newprodrulesEdit = CustomLineEdit()
+      self.layout.addWidget(newprodRule, self.prods+1, 0)
+      self.layout.addWidget(newprodrulesEdit, self.prods+1, 1, 1, 3)
+
   def genLSys(self):
     if self.inputCheck():
       axiomInput = self.axiomEdit.text()
@@ -191,6 +188,4 @@ class UIWidget(QWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ui = UIWidget()
-    ui.show()
-
     sys.exit(app.exec_())
