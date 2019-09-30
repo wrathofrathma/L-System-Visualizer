@@ -46,7 +46,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Shader ID: " + str(self.shader))
         # self.shader = 4
         #self.meshes[-1].set_shader(self.shader)
-        glLineWidth(5)
+    #    glLineWidth(5)
         self.mesh.set_shader(self.shader)
         # vertices = np.array([
         # 0.2,0.2,
