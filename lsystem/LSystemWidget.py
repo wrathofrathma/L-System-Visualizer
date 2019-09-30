@@ -80,10 +80,11 @@ class LSystemDisplayWidget(QOpenGLWidget):
         #self.meshes.cleanup()
 
         # Detaching shaders and deleting shader program
-        glDetachShader(self.shader, self.vs)
-        shaders.glDeleteShader(self.vs)
-        glDetachShader(self.shader, self.fs)
-        shaders.glDeleteShader(self.fs)
+        #glDetachShader(self.shader, self.vs)
+        #glDetachShader(self.shader, self.fs)
+        glDeleteShader(self.vs)
+
+        glDeleteShader(self.fs)
         glDeleteProgram(self.shader)
 
     # Adds vertices to whatever the active mesh is.

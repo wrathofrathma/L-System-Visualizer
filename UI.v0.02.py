@@ -59,7 +59,7 @@ class UIWidget(QWidget):
     self.lsysbutton.clicked.connect(self.genLSys)
 
     self.exitbutton = QPushButton("Exit", self)
-    self.exitbutton.clicked.connect(exit)
+    self.exitbutton.clicked.connect(self.cleanup)
 
     #Adding widgets to window
     self.layout.addWidget(self.axiom, 1, 0)
@@ -79,6 +79,11 @@ class UIWidget(QWidget):
     self.setGeometry(500, 500, 500, 500)
     self.show()
 
+  def cleanup(self):
+      print("[ INFO ] Exiting...")
+      self.graphix.cleanup()
+      
+      exit()
   def inputCheck(self):
     valid_input = 1
     axiomInput = self.axiomEdit.text()
