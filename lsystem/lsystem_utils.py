@@ -31,14 +31,12 @@ def generate_lsystem(grammar):
     grammar['angle'] = grammar['angle'] * math.pi/180.0 # Convert to radians.
     # Generate full production string.
     s = lgen(grammar['axiom'], grammar['rules'], grammar['iterations'])
-    print(s)
     # Generate vertices
     verts = readStack(s, (0,0), grammar['angle'])
     # Converts to usable normalized coordinates
     verts = np.array(verts, dtype=np.float32)
     verts = verts.reshape(verts.shape[0],verts.shape[1])
     verts = normalize_coordinates(verts)
-    print(verts)
     return verts
 
 # Returns a given lsystem's vertices & grammar from the dict. Or returns None.
@@ -51,6 +49,7 @@ def get_saved_lsystem(key):
         verts = generate_lsystem(grammar)
         return (verts, grammar)
     else:
+        print("[ ERROR ] No L-System loaded with key: " + str(key))
         return None
 
 # Loads predefined & saved lsystems from file.

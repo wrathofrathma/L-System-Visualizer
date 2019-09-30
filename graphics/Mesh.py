@@ -36,7 +36,7 @@ class Mesh():
             self.init_ogl()
         if(self.update):
             self.update_gpu()
-        #glUseProgram(self.shader)
+        shaders.glUseProgram(self.shader)
         # Binding VBO object
         self.VBO.bind()
         # Explaining to the GPU how to use the data.
@@ -49,7 +49,7 @@ class Mesh():
         #Unbinding everything
         self.VBO.unbind()
         glDisableClientState(GL_VERTEX_ARRAY)
-        glUseProgram(0)
+        shaders.glUseProgram(0)
 
     def cleanup(self):
         self.VBO.delete()

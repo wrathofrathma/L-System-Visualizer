@@ -21,17 +21,10 @@ class LSystemDisplayWidget(QOpenGLWidget):
         #self.meshes.append(Mesh())
         verts = get_saved_lsystem('Cantor Set')[0]
         self.mesh.set_vertices(verts)
-        # vertices = np.array([
-        # 0.2,0.2,
-        # 0.7,0.7,
-        # 0.2,0.7,
-        # 0.2,0.2], dtype=np.float32)
-        #
-        # self.mesh.set_vertices(vertices)
 
     def paintGL(self):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
-        glClear(GL_COLOR_BUFFER_BIT)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         #for mesh in self.meshes:
         self.mesh.draw()
@@ -44,19 +37,12 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Initializing OpenGL...")
         self.loadShaders()
         print("[ INFO ] Shader ID: " + str(self.shader))
-        # self.shader = 4
         #self.meshes[-1].set_shader(self.shader)
     #    glLineWidth(5)
+        # glEnable(GL_DEPTH_TEST)
+        # glDepthFunc(GL_LEQUAL)
         self.mesh.set_shader(self.shader)
-        # vertices = np.array([
-        # 0.2,0.2,
-        # 0.7,0.7,
-        # 0.2,0.7,
-        # 0.2,0.2], dtype=np.float32)
-        #
-        #
-        #
-        # self.mesh.set_vertices(vertices)
+
 
     def loadShaders(self):
         print("[ INFO ] Loading shaders...")
@@ -119,13 +105,8 @@ if __name__ == "__main__":
     ogl = LSystemDisplayWidget()
     layout.addWidget(ogl)
 
-
-
     window.setLayout(layout)
     window.show()
-
-
-
 
     app.exec_()
     ogl.cleanup()
