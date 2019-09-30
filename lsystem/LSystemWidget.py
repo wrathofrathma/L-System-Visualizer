@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import *
 from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
 
-from graphics.Mesh import *
+from lsystem.Mesh import *
 from time import time
 from lsystem.lsystem_utils import *
 from PIL import Image
@@ -62,7 +62,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Shaders loaded to graphics card.")
 
     # Saves a screenshot of the current OpenGL buffer to a given filename.
-    # MUST have a file extension for now. 
+    # MUST have a file extension for now.
     def screenshot(self, filename):
         print("[ INFO ] Saving screenshot to filename " + str(filename) + "...")
         size = self.size()
