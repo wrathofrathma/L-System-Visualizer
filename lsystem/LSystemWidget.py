@@ -10,6 +10,7 @@ import numpy as np
 from graphics.Mesh import *
 from time import time
 from lsystem.lsystem_utils import *
+from PIL import Image
 
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
@@ -59,6 +60,17 @@ class LSystemDisplayWidget(QOpenGLWidget):
         except Exception as err:
             print("[ ERROR ] Caught an exception: " + str(err))
         print("[ INFO ] Shaders loaded to graphics card.")
+
+    # Saves a screenshot of the current OpenGL buffer to a given filename.
+    # MUST have a file extension for now. 
+    def screenshot(self, filename):
+        print("[ INFO ] Saving screenshot to filename " + str(filename) + "...")
+        size = self.size()
+        pixels = glReadPixels(0,0, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
+        image = Image.frombytes("RGB", (size.width(), size.height()), pixels)
+        image = image.transpose(Image.FLIP_TOP_BOTTOM)
+        image.save(filename)
+        print("[ INFO ] Saved.")
 
     def cleanup(self):
         print("[ INFO ] Cleaning up display widget memory.")
