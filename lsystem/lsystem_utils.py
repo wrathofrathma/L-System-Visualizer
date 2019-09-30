@@ -25,6 +25,9 @@ from lsystem.stack_loop import *
 # 'angle' : the angle in degrees(integer)
 # 'iterations' : number of iterations(integer)
 saved_lsystems = {}
+# predefined areas to keep the files.
+predef_file = "lsystem/predefined_lsystems.json"
+saved_file = "lsystems/saved_lsystems.json"
 
 def generate_lsystem(grammar):
     print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
@@ -38,6 +41,22 @@ def generate_lsystem(grammar):
     verts = verts.reshape(verts.shape[0],verts.shape[1])
     verts = normalize_coordinates(verts)
     return verts
+
+# Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
+# Overwrites any previous lsystem defined with the same key.
+def save_lsystem(key, grammar):
+    # Check if the file exists.
+    if(os.path.exists(saved_file)):
+        # If it does, then load all saved data and replace/insert the new data to the dict.
+        with open(saved_file, "r") as sfile:
+            saved = json.load(sfile)
+            saved[key] = grammar
+    else:
+        # if it doesn't exist, we just create a new dict
+        saved = {key : grammar}
+    # Then overwrite the file.
+    with open(saved_file,"w") as sfile:
+        json.dump(saved, sfile, indent=2)
 
 # Returns a given lsystem's vertices & grammar from the dict. Or returns None.
 # The return type is a tuple, (verts, grammar)
@@ -55,9 +74,7 @@ def get_saved_lsystem(key):
 # Loads predefined & saved lsystems from file.
 def load_saved_lsystems():
     print("[ INFO ] Loading saved L-Systems from disk...")
-    # predefined areas to keep the files.
-    predef_file = "lsystem/predefined_lsystems.json"
-    saved_file = "lsystems/saved_lsystems.json"
+
 
     # Check if the file exists.
     if(os.path.exists(predef_file)):
