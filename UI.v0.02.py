@@ -47,10 +47,13 @@ class UIWidget(QWidget):
 
     #creates the text box for each label
     self.axiomEdit = CustomLineEdit()
+    self.axiomEdit.clicked.connect(lambda: self.axiomEdit.clear_box())
     self.prodrulesEdit.append(CustomLineEdit())
-    self.angleEdit = CustomLineEdit()
-    self.itersEdit = CustomLineEdit()
 
+    self.angleEdit = CustomLineEdit()
+    self.angleEdit.clicked.connect(lambda: self.angleEdit.clear_box())
+    self.itersEdit = CustomLineEdit()
+    self.itersEdit.clicked.connect(lambda: self.itersEdit.clear_box())
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
 
@@ -82,7 +85,7 @@ class UIWidget(QWidget):
   def cleanup(self):
       print("[ INFO ] Exiting...")
       self.graphix.cleanup()
-      
+
       exit()
   def inputCheck(self):
     valid_input = 1
@@ -95,18 +98,26 @@ class UIWidget(QWidget):
         self.axiomEdit.setStyleSheet("color: red;")
         self.axiomEdit.setText(error_message)
         valid_input = 0
-
+    axiomInProd = 0
+    for prod in self.prodrulesEdit:
+      prodInput=prod.text()
+      prodInput=prodInput.replace(' ','')
+      prodInputarr = prodInput.split("->")
+      try:
+        if prodInputarr[0] == axiomInput:
+          axiomInProd = 1
+      except:
+        axiomInProd =0
+    if not axiomInProd:
+      self.axiomEdit.setStyleSheet("color: red;")
+      self.axiomEdit.setText(error_message)
+      valid_input = 0
     #TODO make this work for more than one prod rule
     for prod in self.prodrulesEdit:
       prodInput = prod.text()
-      print("prodInput = ", prodInput)
       prodInput=prodInput.replace(' ','')
-      print("prodInput = ", prodInput)
       prodInputarr = prodInput.split("->")
-      if not prodInputarr[0] == axiomInput:
-        prod.setStyleSheet("color: red;")
-        prod.setText(error_message)
-        valid_input = 0
+
       if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
         prod.setStyleSheet("color: red;")
         prod.setText(error_message)
@@ -163,6 +174,7 @@ class UIWidget(QWidget):
     if self.prods < len(alphabet) + 1:
       self.prodrules.append(QLabel("Production Rule " + str(self.prods)))
       self.prodrulesEdit.append(CustomLineEdit())
+      self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
       self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 1)
 
