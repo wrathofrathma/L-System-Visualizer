@@ -82,7 +82,6 @@ class UIWidget(QWidget):
   def inputCheck(self):
     valid_input = 1
     axiomInput = self.axiomEdit.text()
-    prodInput = self.prodrulesEdit.text()
     angleInput = self.angleEdit.text()
     itersInput = self.itersEdit.text()
     string = 0
@@ -91,20 +90,23 @@ class UIWidget(QWidget):
         self.axiomEdit.setStyleSheet("color: red;")
         self.axiomEdit.setText(error_message)
         valid_input = 0
-    print("prodInput = ", prodInput)
-    prodInput=prodInput.replace(' ','')
-    print("prodInput = ", prodInput)
-    prodInputarr = prodInput.split("->")
     #TODO make this work for more than one prod rule
-    if not prodInputarr[0] == axiomInput:
-        self.prodrulesEdit.setStyleSheet("color: red;")
-        self.prodrulesEdit.setText(error_message)
+    for prod in self.prodrulesEdit:
+      prodInput = prod.text()
+      print("prodInput = ", prodInput)
+      prodInput=prodInput.replace(' ','')
+      print("prodInput = ", prodInput)
+      prodInputarr = prodInput.split("->")
+      if not prodInputarr[0] == axiomInput:
+        prod.setStyleSheet("color: red;")
+        prod.setText(error_message)
         valid_input = 0
-    if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
-      self.prodrulesEdit.setStyleSheet("color: red;")
-      self.prodrulesEdit.setText(error_message)
-      valid_input = 0
-    tmp_prodRule = prodInput.replace('->','')
+      if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
+        prod.setStyleSheet("color: red;")
+        prod.setText(error_message)
+        valid_input = 0
+      tmp_prodRule = prodInput.replace('->','')
+    
     for ch in tmp_prodRule:
       if not ch in alphabet:
         self.prodrulesEdit.setStyleSheet("color: red;")
@@ -141,13 +143,14 @@ class UIWidget(QWidget):
   #Probably doesn't need self as a param, can just be static.
   # Generates a rule dictionary from an array of production rule strings taken from the UI
   def genRuleDict(self, prodRules):
-      rules = {}
-      for rule in prodRules:
-          rule = rule.replace(" ","")
-          pr = rule.replace("->",":")
-          pr = pr.split(':')
-          rules[pr[0]]=pr[1]
-      return rules
+    rules = {}
+    for rule in prodRules:
+      rule = rule.text()
+      rule = rule.replace(" ","")
+      pr = rule.replace("->",":")
+      pr = pr.split(':')
+      rules[pr[0]]=pr[1]
+    return rules
 
   def moreProds(self):
     self.prods = self.prods + 1
@@ -173,17 +176,17 @@ class UIWidget(QWidget):
   def genLSys(self):
     if self.inputCheck():
       axiomInput = self.axiomEdit.text()
-      prodInput = [self.prodrulesEdit.text()] #changed to array
+      #prodInput = [self.prodrulesEdit.text()] #changed to array
       angleInput = self.angleEdit.text()
       itersInput = self.itersEdit.text()
       print("Axiom: ", axiomInput)
       print("Productions: ")
-      for prod in prodInput:
-          print(prod)
+      #for prod in prodInput:
+      #    print(prod)
       print("Angle: ", angleInput)
       print("Iterations: ", itersInput)
       # Format input for use
-      rules=self.genRuleDict(prodInput)
+      rules=self.genRuleDict(self.prodrulesEdit)
       angle = float(angleInput)
       angle = angle*pi/180.0 # degrees to radians
       it = int(itersInput)
