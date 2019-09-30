@@ -10,6 +10,7 @@ from lsystem.stack_loop import *
 # This file for now is acting as a catch-all utility file.
 # At the moment the most important definitions are
 # saved_lsystems - Global dictionary definition of loaded lsystems.
+# save_lsystem - Save an lsystem to the user defined json file.
 # load_saved_lsystems() - Loads the saved & predefined lsystems from file into grammar dictionary.
 # get_saved_lsystem(key) - Returns a loaded lsystem from the dictionary.
 # generate_lsystem(grammar) - Generates the vertices of a given lsystem
