@@ -27,8 +27,8 @@ from lsystem.stack_loop import *
 # 'iterations' : number of iterations(integer)
 saved_lsystems = {}
 # predefined areas to keep the files.
-predef_file = "lsystem/predefined_lsystems.json"
-saved_file = "lsystems/saved_lsystems.json"
+predef_file = "assets/lsystems/predefined_lsystems.json"
+saved_file = "assets/lsystems/saved_lsystems.json"
 
 def generate_lsystem(grammar):
     print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
