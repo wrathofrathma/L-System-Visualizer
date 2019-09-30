@@ -4,8 +4,7 @@ from PyQt5 import QtWidgets, QtCore
 import numpy as np
 from math import pi
 from lsystem.LSystemWidget import *
-from lsystem.Lsystem import *
-from lsystem.stack_loop import *
+from lsystem.lsystem_utils import *
 
 
 alphabet = ["F","f","-","+"]
@@ -30,15 +29,16 @@ class UIWidget(QWidget):
     self.prods = 1
     self.prodrulesEdit = []
     self.prodrules = []
+    load_saved_lsystems()
     self.initUI()
   def initUI(self):
 
     self.graphix = LSystemDisplayWidget()
     #renames the window
     self.setWindowTitle('L-Systems Generator')
-    
+
     self.layout = QGridLayout()
-    
+
     #creates the labels for each text box
     self.axiom = QLabel('Axiom')
     self.prodrules.append(QLabel('Production Rule ' + str(self.prods)))
@@ -50,17 +50,17 @@ class UIWidget(QWidget):
     self.prodrulesEdit.append(CustomLineEdit())
     self.angleEdit = CustomLineEdit()
     self.itersEdit = CustomLineEdit()
-    
+
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
-   
+
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
     self.lsysbutton.clicked.connect(self.genLSys)
-    
+
     self.exitbutton = QPushButton("Exit", self)
     self.exitbutton.clicked.connect(exit)
-    
+
     #Adding widgets to window
     self.layout.addWidget(self.axiom, 1, 0)
     self.layout.addWidget(self.axiomEdit, 1, 1, 1, 3)
@@ -74,11 +74,11 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.graphix, 8, 1, 1, -1)
     self.layout.addWidget(self.lsysbutton, 9, 0)
     self.layout.addWidget(self.exitbutton, 9, 1, -1, -1)
-    
+
     self.setLayout(self.layout)
     self.setGeometry(500, 500, 500, 500)
     self.show()
-  
+
   def inputCheck(self):
     valid_input = 1
     axiomInput = self.axiomEdit.text()
@@ -106,7 +106,7 @@ class UIWidget(QWidget):
         prod.setText(error_message)
         valid_input = 0
       tmp_prodRule = prodInput.replace('->','')
-    
+
     for ch in tmp_prodRule:
       if not ch in alphabet:
         self.prodrulesEdit.setStyleSheet("color: red;")
@@ -159,7 +159,7 @@ class UIWidget(QWidget):
       self.prodrulesEdit.append(CustomLineEdit())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
       self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 1)
-      
+
       self.prodMinus = QPushButton("-", self)
       self.prodMinus.clicked.connect(self.lessProds)
       self.layout.addWidget(self.prodMinus, self.prods+1, 2, 1, 2)
@@ -187,19 +187,9 @@ class UIWidget(QWidget):
       print("Iterations: ", itersInput)
       # Format input for use
       rules=self.genRuleDict(self.prodrulesEdit)
-      angle = float(angleInput)
-      angle = angle*pi/180.0 # degrees to radians
-      it = int(itersInput)
-      # Generates full production string
-      s = lgen(axiomInput, rules, it)
-      print(s)
-      # Generates vertices
-      verts = readStack(s,(0,0),angle)
-      # Converts to usable normalized coordinates
-      verts = np.array(verts, dtype=np.float32)
-      verts = verts.reshape(verts.shape[0],verts.shape[1])
-      verts = normalize_coordinates(verts)
-      print(verts)
+      # Generate rule grammar dictionary.
+      grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput)}
+      verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
       self.graphix.add_vertices(verts)
       self.graphix.update()

@@ -9,7 +9,7 @@ import numpy as np
 
 from graphics.Mesh import *
 from time import time
-
+from lsystem.lsystem_utils import *
 
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
@@ -19,7 +19,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.mesh = Mesh()
         #self.meshes = []
         #self.meshes.append(Mesh())
-        verts = gen_koch_snowflake()
+        verts = get_saved_lsystem('Cantor Set')[0]
         self.mesh.set_vertices(verts)
         # vertices = np.array([
         # 0.2,0.2,
@@ -107,37 +107,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         else:
             print("")
         self.bgcolor = color
-import lsystem.Lsystem as ls
-import lsystem.stack_loop as sl
-import math
 
-def gen_koch_snowflake():
-    #Generating vertices for Koch's snowflake
-    rules = {"F":"F+F--F+F"}
-    angle = math.pi/4
-    s = ls.lgen('F', rules, 5)
-    v = sl.readStack(s, (1,0), angle)
-    v = np.array(v,dtype=np.float32)
-    v = v.reshape(v.shape[0]*v.shape[1])
-    v = normalize_coordinates(v)
-    return v
 
-def gen_matt_fractal():
-    angle = math.pi/2
-    rules = {"F":"F+F-F-F+F"}
-    s = ls.lgen('F', rules, 6)
-    v = sl.readStack(s,(0,0), angle)
-    v = np.array(v,dtype=np.float32)
-    print(v)
-    print(v.shape)
-    v = v.reshape(v.shape[0]*v.shape[1])
-    print(v)
-    v = v/v.max()
-    v=v-0.5
-
-def normalize_coordinates(coords):
-    coords = coords/coords.max()
-    return coords
 if __name__ == "__main__":
     app = QApplication([])
     window = QWidget()
@@ -155,8 +126,6 @@ if __name__ == "__main__":
 
 
 
-    verts = gen_koch_snowflake()
-    print(verts)
-    ogl.add_vertices(verts)
+
     app.exec_()
     ogl.cleanup()
