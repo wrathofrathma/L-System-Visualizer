@@ -95,6 +95,7 @@ class UIWidget(QWidget):
         self.axiomEdit.setStyleSheet("color: red;")
         self.axiomEdit.setText(error_message)
         valid_input = 0
+
     #TODO make this work for more than one prod rule
     for prod in self.prodrulesEdit:
       prodInput = prod.text()
@@ -112,11 +113,11 @@ class UIWidget(QWidget):
         valid_input = 0
       tmp_prodRule = prodInput.replace('->','')
 
-    for ch in tmp_prodRule:
-      if not ch in alphabet:
-        self.prodrulesEdit.setStyleSheet("color: red;")
-        self.prodrulesEdit.setText(error_message)
-        valid_input = 0
+      for ch in tmp_prodRule:
+        if not ch in alphabet:
+          prod.setStyleSheet("color: red;")
+          prod.setText(error_message)
+          valid_input = 0
 
     try:
       angleInput = float(angleInput)
@@ -159,7 +160,7 @@ class UIWidget(QWidget):
 
   def moreProds(self):
     self.prods = self.prods + 1
-    if self.prods < 5:
+    if self.prods < len(alphabet) + 1:
       self.prodrules.append(QLabel("Production Rule " + str(self.prods)))
       self.prodrulesEdit.append(CustomLineEdit())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
