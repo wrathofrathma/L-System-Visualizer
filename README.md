@@ -14,11 +14,11 @@ Clone the repository, then run the following line of code in the main directory:
 `python UI.v0.01.py`
 
 ### Contributers
-- Chris Arausa
-- Lela Bones
-- Matt Rovine
-- Matt Tibebe
-- Stephanie Warman
+- Chris Arausa @wrathofrathma
+- Lela Bones @lelatbones
+- Matt Rovine @battblairro
+- Matt Tibebe @mattythats
+- Stephanie Warman @swarman2
 
 ### Requirements
 numpy
