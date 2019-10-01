@@ -31,22 +31,29 @@ predef_file = "assets/lsystems/predefined_lsystems.json"
 saved_file = "assets/lsystems/saved_lsystems.json"
 
 def generate_lsystem(grammar):
-    print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
-    grammar['angle'] = grammar['angle'] * math.pi/180.0 # Convert to radians.
-    # Generate full production string.
-    s = lgen(grammar['axiom'], grammar['rules'], grammar['iterations'])
-    # Generate vertices
-    s = split(s,'f')
-    vertsArray =[]
-    vertsArray.append(readStack(s[0], (0,0), grammar['angle']))
-    for i in range (1,len(s)):
-        vertsArray.append(readStack(s[i],verts[i-1][-1], grammar['angle']))
-    # Converts to usable normalized coordinates
-    for verts in vertsArray:
-      verts = np.array(verts, dtype=np.float32)
-      verts = verts.reshape(verts.shape[0],verts.shape[1])
-      verts = normalize_coordinates(verts)
-    return vertsArray #returns an array of arrays of vertices
+  print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
+  grammar['angle'] = grammar['angle'] * math.pi/180.0 # Convert to radians.
+  # Generate full production string.
+  s = lgen(grammar['axiom'], grammar['rules'], grammar['iterations'])
+  # Generate vertics
+  """
+  s = s.split('f')
+  vertsArray =[]
+  vertsArray.append(readStack(s[0], (0,0), grammar['angle']))
+  for i in range (1,len(s)):
+    vertsArray.append(readStack(s[i],verts[i-1][-1], grammar['angle']))
+  # Converts to usable normalized coordinates
+  for verts in vertsArray:
+    verts = np.array(verts, dtype=np.float32)
+    verts = verts.reshape(verts.shape[0],verts.shape[1])
+    verts = normalize_coordinates(verts)
+  return vertsArray #returns an array of arrays of vertices
+  """
+  verts = readStack(s,(0,0),grammar['angle'])
+  verts = np.array(verts, dtype=np.float32)
+  verts = verts.reshape(verts.shape[0],verts.shape[1])
+  verts = normalize_coordinates(verts)
+  return verts
 
 # Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
 # Overwrites any previous lsystem defined with the same key.

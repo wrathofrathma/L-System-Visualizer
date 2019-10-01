@@ -9,7 +9,6 @@ funcdict = {
   '+': plus,
   '-': minus
 }
-
 #l = ['F','f','+','-','F']
 def readStack(stack, starting_pt, angle):
   """

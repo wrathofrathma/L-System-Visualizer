@@ -62,7 +62,7 @@ class UIWidget(QWidget):
 
     self.kochs = QPushButton('Kochs Example')
     self.kochs.clicked.connect(lambda: self.genExample('Koch Snowflake'))
-    
+
     self.cantor = QPushButton('Cantor Set Example')
     self.cantor.clicked.connect(lambda: self.genExample('Cantor Set'))
 
@@ -100,7 +100,7 @@ class UIWidget(QWidget):
 
       exit()
   def inputCheck(self):
-    '''  This function checks the input 
+    '''  This function checks the input
          Returns 1 if valid
          Returns 0 otherwise '''
     valid_input = 1
@@ -193,7 +193,7 @@ class UIWidget(QWidget):
       self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
       self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 1)
-     
+
       if self.minuses is not None:
         #remove last minueses
         self.layout.removeWidget(self.minuses)
@@ -245,7 +245,7 @@ class UIWidget(QWidget):
       grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput)}
       verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
-      self.graphix.set_vertices(verts)
+      self.graphix.set_vertices(verts[0])
       self.graphix.update()
 
   def genExample(self, example):
