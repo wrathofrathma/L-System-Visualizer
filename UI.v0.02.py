@@ -249,7 +249,11 @@ class UIWidget(QWidget):
       self.graphix.update()
 
   def genExample(self, example):
-    verts, grammar = get_saved_lsystem(example)
+    (verts, grammar) = get_saved_lsystem(example)
+    self.axiomEdit.setText(grammar['axiom'])
+    self.prodrulesEdit[0].setText(str(grammar['rules']))
+    print(grammar["angle"])
+    self.itersEdit.setText(str(grammar['iterations']))
     print(example)
 
 
