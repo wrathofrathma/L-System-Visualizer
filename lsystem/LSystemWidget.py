@@ -111,6 +111,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
             mesh.cleanup()
         self.meshes.clear()
         self.meshes.append(Mesh())
+        self.meshes[-1].set_shader(self.shader)
 
     # Sets the background color of the OpenGL widget.
     def set_bg_color(self, color):
