@@ -93,13 +93,25 @@ class LSystemDisplayWidget(QOpenGLWidget):
         if(len(self.meshes)<(mesh_num-1)):
             print("[ ERROR ] Can't set vertices of mesh. Invalid indice number.")
         self.meshes[mesh_num].set_vertices(vertices)
-    
+
     #
     #     vs = self.meshes[mesh_num].get_vertices()
     #     vs = np.append(vs, vertices)
     #     self.meshes[mesh_num].set_vertices(vs)
     #
 
+    # Cleanups & empties all the mesh.
+    def clear_mesh(self):
+        for mesh in self.meshes:
+            mesh.cleanup()
+        self.meshes.clear()
+
+    # Splits the mesh and creates a new mesh at the end.
+    # returns the index of the new mesh.
+    def split_mesh(self):
+        self.meshes.append(Mesh())
+        return len(self.meshes)-1
+    
     def set_bg_color(self, color):
         if(len(color)==4):
             self.bgcolor = np.array(color, dtype=np.float32)
