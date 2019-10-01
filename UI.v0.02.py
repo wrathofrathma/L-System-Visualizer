@@ -257,7 +257,9 @@ class UIWidget(QWidget):
     #self.prodrulesEdit[0].setText(str(grammar['rules']))
     self.angleEdit.setText(str(grammar["angle"]))
     self.itersEdit.setText(str(grammar['iterations']))
-    print(example)
+    self.genLSys()
+    #print(example)
+
 
 
 if __name__ == '__main__':
