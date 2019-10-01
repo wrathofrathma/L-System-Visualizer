@@ -11,28 +11,31 @@ alphabet = ["F","f","-","+"]
 error_message = "X"
 
 class CustomLineEdit(QtWidgets.QLineEdit):
-    clicked = QtCore.pyqtSignal()
-    def __init__(self):
-        super().__init__()
+  ''' Class that enables clicking in a text box '''
+  clicked = QtCore.pyqtSignal()
+  def __init__(self):
+    super().__init__()
 
-    def mousePressEvent(self, QMouseEvent):
-        self.clicked.emit()
-    def clear_box(self):
-      if self.text() == error_message:
-        self.setText('')
-        self.setStyleSheet("color: black;")
+  def mousePressEvent(self, QMouseEvent):
+    self.clicked.emit()
+  def clear_box(self):
+    if self.text() == error_message:
+      self.setText('')
+      self.setStyleSheet("color: black;")
 
 class UIWidget(QWidget):
-
+  ''' Class that holds all of the widgets for viewing '''
   def __init__(self):
+    ''' Initializes class and variables '''
     super(UIWidget, self).__init__()
     self.prods = 1
     self.prodrulesEdit = []
+    self.minuses = None
     self.prodrules = []
     load_saved_lsystems()
     self.initUI()
   def initUI(self):
-
+    ''' Creates and adds all widgets in the viewport and sets the layout  '''
     self.graphix = LSystemDisplayWidget()
     #renames the window
     self.setWindowTitle('L-Systems Generator')
@@ -83,11 +86,15 @@ class UIWidget(QWidget):
     self.show()
 
   def cleanup(self):
+      ''' This function cleans the graphics '''
       print("[ INFO ] Exiting...")
       self.graphix.cleanup()
 
       exit()
   def inputCheck(self):
+    '''  This function checks the input 
+         Returns 1 if valid
+         Returns 0 otherwise '''
     valid_input = 1
     axiomInput = self.axiomEdit.text()
     angleInput = self.angleEdit.text()
@@ -170,28 +177,49 @@ class UIWidget(QWidget):
     return rules
 
   def moreProds(self):
-    self.prods = self.prods + 1
-    if self.prods < len(alphabet) + 1:
+    ''' Creates more productions when + button is clicked '''
+    if self.prods < len(alphabet):
+      self.prods = self.prods + 1
       self.prodrules.append(QLabel("Production Rule " + str(self.prods)))
       self.prodrulesEdit.append(CustomLineEdit())
       self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
       self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 1)
+     
+      if self.minuses is not None:
+        #remove last minueses
+        self.layout.removeWidget(self.minuses)
+        self.minuses.deleteLater()
+        self.minuses = None
 
-      self.prodMinus = QPushButton("-", self)
-      self.prodMinus.clicked.connect(self.lessProds)
-      self.layout.addWidget(self.prodMinus, self.prods+1, 2, 1, 2)
-
+      self.minuses = QPushButton("-", self)
+      self.minuses.clicked.connect(self.lessProds)
+      self.layout.addWidget(self.minuses, self.prods+1, 2, 1, 2)
 
   def lessProds(self):
-    #self.prods = self.prods - 1
-    #if self.prods > 1:
-      #self.layout.removeWidget(self.prodrules[self.prods-1])
-      #self.layout.removeWidget(newprodrulesEdit[self.prods-1])
-      #self.layout.removeWidget(self.prodMinus)
-    print("Maybe someday will delete something")
+    ''' Removes productions when - button is clicked '''
+    if self.prods > 1:
+      #remove last widget prodrules
+      self.layout.removeWidget(self.prodrules[-1])
+      self.prodrules[-1].deleteLater()
+      self.prodrules.pop()
+      #remove last widget prodrulesEdit
+      self.layout.removeWidget(self.prodrulesEdit[-1])
+      self.prodrulesEdit[-1].deleteLater()
+      self.prodrulesEdit.pop()
+      #remove last minueses
+      self.layout.removeWidget(self.minuses)
+      self.minuses.deleteLater()
+      self.minuses = None
+      self.prods = self.prods - 1
+    if self.prods > 1:
+      self.minuses = QPushButton("-", self)
+      self.minuses.clicked.connect(self.lessProds)
+      self.layout.addWidget(self.minuses, self.prods+1, 2, 1, 2)
+
 
   def genLSys(self):
+    ''' If the input is valid, iterates through productions and sends to graphics to be drawn '''
     if self.inputCheck():
       axiomInput = self.axiomEdit.text()
       #prodInput = [self.prodrulesEdit.text()] #changed to array
