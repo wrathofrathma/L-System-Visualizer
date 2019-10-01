@@ -246,6 +246,7 @@ class UIWidget(QWidget):
 
       verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
+      self.graphix.clear_mesh()
       self.graphix.set_vertices(verts)
       self.graphix.update()
 
