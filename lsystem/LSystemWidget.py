@@ -1,4 +1,3 @@
-# OpenGL testing using built in VBO & shader convenience classes
 from OpenGL.GL import shaders
 from OpenGL.GL import *
 
@@ -12,19 +11,22 @@ from time import time
 from lsystem.lsystem_utils import *
 from PIL import Image
 
+# LSystem visualization widget.
+
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
         super(LSystemDisplayWidget, self).__init__(parent)
+        # Background color
         self.bgcolor = np.array([0.0, 0.0, 0.0, 0.0])
+        # Time, used for color shader shenanigans
         self.start_time = time()
+        # Mesh initialization & starting stuff.
         self.meshes = []
         self.meshes.append(Mesh())
         verts = get_saved_lsystem('Cantor Set')[0]
         self.meshes[0].set_vertices(verts)
-        vert2=get_saved_lsystem('Koch Snowflake')[0]
-        self.meshes.append(Mesh())
-        self.meshes[-1].set_vertices(vert2)
 
+    # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -32,33 +34,38 @@ class LSystemDisplayWidget(QOpenGLWidget):
         for mesh in self.meshes:
             mesh.draw()
 
+    # Called when the OpenGL widget resizes.
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))
         glViewport(0,0,w,h)
 
+    # OpenGL initialization
     def initializeGL(self):
         print("[ INFO ] Initializing OpenGL...")
         self.loadShaders()
         print("[ INFO ] Shader ID: " + str(self.shader))
     #    glLineWidth(5)
-
+        # Set the shader for every mesh
         for mesh in self.meshes:
             mesh.set_shader(self.shader)
 
 
     def loadShaders(self):
+        # Load the shader files into a string.
         print("[ INFO ] Loading shaders...")
         with open("assets/shaders/Default.vs","r") as f:
             vc = "".join(f.readlines()[0:])
         with open("assets/shaders/Default.fs","r") as f:
             fc = "".join(f.readlines()[0:])
         print("[ INFO ] Loaded shader code...")
-
         try:
+            # Compile hte shaders on the graphics card.
             self.vs = shaders.compileShader(vc, GL_VERTEX_SHADER)
             self.fs = shaders.compileShader(fc, GL_FRAGMENT_SHADER)
+            # Link them together & compile them as a program.
             self.shader = shaders.compileProgram(self.vs, self.fs)
         except Exception as err:
+            # Absolute lack of error checking. Madlads.
             print("[ ERROR ] Caught an exception: " + str(err))
         print("[ INFO ] Shaders loaded to graphics card.")
 
@@ -67,18 +74,21 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def screenshot(self, filename):
         print("[ INFO ] Saving screenshot to filename " + str(filename) + "...")
         size = self.size()
+        # Read all of the pixels into an array.
         pixels = glReadPixels(0,0, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
+        # Create an image from Python Image Library.
         image = Image.frombytes("RGB", (size.width(), size.height()), pixels)
+        # FLip that bitch.
         image = image.transpose(Image.FLIP_TOP_BOTTOM)
         image.save(filename)
         print("[ INFO ] Saved.")
 
+    # Cleanups all shader memory & mesh data.
     def cleanup(self):
         print("[ INFO ] Cleaning up display widget memory.")
 
         # Cleaning up mesh memory on GPU
-        for mesh in self.meshes:
-            mesh.cleanup()
+        self.clear_mesh()
 
         # Detaching shaders and deleting shader program
         #glDetachShader(self.shader, self.vs)
@@ -88,24 +98,21 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glDeleteShader(self.fs)
         glDeleteProgram(self.shader)
 
-    # Sets the vertices of the mesh specified by mesh_num.
+    # Sets the vertices of the last mesh in the array.
+    # split=True creates a new mesh before setting the vertices.
     def set_vertices(self, vertices, split=False):
         if(split):
             self.meshes.append(Mesh())
         self.meshes[-1].set_vertices(vertices)
 
+    # Cleans up the mesh memory on the GPU and clears the array of them.
     def clear_mesh(self):
         for mesh in self.meshes:
             mesh.cleanup()
         self.meshes.clear()
         self.meshes.append(Mesh())
 
-    #
-    #     vs = self.meshes[mesh_num].get_vertices()
-    #     vs = np.append(vs, vertices)
-    #     self.meshes[mesh_num].set_vertices(vs)
-    #
-
+    # Sets the background color of the OpenGL widget.
     def set_bg_color(self, color):
         if(len(color)==4):
             self.bgcolor = np.array(color, dtype=np.float32)
