@@ -209,7 +209,7 @@ class UIWidget(QWidget):
       grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput)}
       verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
-      self.graphix.add_vertices(verts)
+      self.graphix.set_vertices(verts)
       self.graphix.update()
 
 if __name__ == '__main__':

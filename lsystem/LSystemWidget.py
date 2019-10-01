@@ -17,18 +17,20 @@ class LSystemDisplayWidget(QOpenGLWidget):
         super(LSystemDisplayWidget, self).__init__(parent)
         self.bgcolor = np.array([0.0, 0.0, 0.0, 0.0])
         self.start_time = time()
-        self.mesh = Mesh()
-        #self.meshes = []
-        #self.meshes.append(Mesh())
+        self.meshes = []
+        self.meshes.append(Mesh())
         verts = get_saved_lsystem('Cantor Set')[0]
-        self.mesh.set_vertices(verts)
+        self.meshes[0].set_vertices(verts)
+        vert2=get_saved_lsystem('Koch Snowflake')[0]
+        self.meshes.append(Mesh())
+        self.meshes[-1].set_vertices(vert2)
 
     def paintGL(self):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        #for mesh in self.meshes:
-        self.mesh.draw()
+        for mesh in self.meshes:
+            mesh.draw()
 
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))
@@ -38,11 +40,10 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Initializing OpenGL...")
         self.loadShaders()
         print("[ INFO ] Shader ID: " + str(self.shader))
-        #self.meshes[-1].set_shader(self.shader)
     #    glLineWidth(5)
-        # glEnable(GL_DEPTH_TEST)
-        # glDepthFunc(GL_LEQUAL)
-        self.mesh.set_shader(self.shader)
+
+        for mesh in self.meshes:
+            mesh.set_shader(self.shader)
 
 
     def loadShaders(self):
@@ -76,8 +77,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Cleaning up display widget memory.")
 
         # Cleaning up mesh memory on GPU
-        self.mesh.cleanup()
-        #self.meshes.cleanup()
+        for mesh in self.meshes:
+            mesh.cleanup()
 
         # Detaching shaders and deleting shader program
         #glDetachShader(self.shader, self.vs)
@@ -87,11 +88,12 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glDeleteShader(self.fs)
         glDeleteProgram(self.shader)
 
-    # Adds vertices to whatever the active mesh is.
-    def add_vertices(self, vertices, mesh_num=0):
-        self.mesh.set_vertices(vertices)
-    #     if(len(self.meshes)<(mesh_num-1)):
-    #         print("[ ERROR ] Can't add vertices to mesh. Invalid indice number.")
+    # Sets the vertices of the mesh specified by mesh_num.
+    def set_vertices(self, vertices, mesh_num=0):
+        if(len(self.meshes)<(mesh_num-1)):
+            print("[ ERROR ] Can't set vertices of mesh. Invalid indice number.")
+        self.meshes[mesh_num].set_vertices(vertices)
+    
     #
     #     vs = self.meshes[mesh_num].get_vertices()
     #     vs = np.append(vs, vertices)
