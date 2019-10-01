@@ -89,11 +89,16 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glDeleteProgram(self.shader)
 
     # Sets the vertices of the mesh specified by mesh_num.
-    def set_vertices(self, vertices, mesh_num=0):
-        if(len(self.meshes)<(mesh_num-1)):
-            print("[ ERROR ] Can't set vertices of mesh. Invalid indice number.")
-        self.meshes[mesh_num].set_vertices(vertices)
+    def set_vertices(self, vertices, split=False):
+        if(split):
+            self.meshes.append(Mesh())
+        self.meshes[-1].set_vertices(vertices)
 
+    def clear_mesh(self):
+        for mesh in self.meshes:
+            mesh.cleanup()
+        self.meshes.clear()
+        self.meshes.append(Mesh())
 
     #
     #     vs = self.meshes[mesh_num].get_vertices()
