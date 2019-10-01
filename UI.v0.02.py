@@ -243,16 +243,19 @@ class UIWidget(QWidget):
       rules=self.genRuleDict(self.prodrulesEdit)
       # Generate rule grammar dictionary.
       grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput)}
+
       verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
-      self.graphix.set_vertices(verts[0])
+      self.graphix.set_vertices(verts)
       self.graphix.update()
 
   def genExample(self, example):
     (verts, grammar) = get_saved_lsystem(example)
     self.axiomEdit.setText(grammar['axiom'])
-    self.prodrulesEdit[0].setText(str(grammar['rules']))
-    print(grammar["angle"])
+    for key,val in grammar['rules'].items():
+      self.prodrulesEdit[0].setText(key+"->"+val)
+    #self.prodrulesEdit[0].setText(str(grammar['rules']))
+    self.angleEdit.setText(str(grammar["angle"]))
     self.itersEdit.setText(str(grammar['iterations']))
     print(example)
 

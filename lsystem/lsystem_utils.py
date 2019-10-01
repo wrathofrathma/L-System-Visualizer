@@ -4,6 +4,7 @@ import math
 import numpy as np
 import json
 import os
+import copy
 from lsystem.Lsystem import *
 from lsystem.stack_loop import *
 
@@ -31,10 +32,13 @@ predef_file = "assets/lsystems/predefined_lsystems.json"
 saved_file = "assets/lsystems/saved_lsystems.json"
 
 def generate_lsystem(grammar):
+  grammar_copy= copy.deepcopy(grammar)
   print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
-  grammar['angle'] = grammar['angle'] * math.pi/180.0 # Convert to radians.
+  print("test1  ",grammar_copy['angle'])
+  grammar_copy['angle'] = grammar_copy['angle'] * math.pi/180.0 # Convert to radians.
+  print("test2  ",grammar_copy['angle'])
   # Generate full production string.
-  s = lgen(grammar['axiom'], grammar['rules'], grammar['iterations'])
+  s = lgen(grammar_copy['axiom'], grammar_copy['rules'], grammar_copy['iterations'])
   # Generate vertics
   """
   s = s.split('f')
@@ -49,7 +53,7 @@ def generate_lsystem(grammar):
     verts = normalize_coordinates(verts)
   return vertsArray #returns an array of arrays of vertices
   """
-  verts = readStack(s,(0,0),grammar['angle'])
+  verts = readStack(s,(0,0),grammar_copy['angle'])
   verts = np.array(verts, dtype=np.float32)
   verts = verts.reshape(verts.shape[0],verts.shape[1])
   verts = normalize_coordinates(verts)
