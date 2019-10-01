@@ -60,6 +60,12 @@ class UIWidget(QWidget):
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
 
+    self.kochs = QPushButton('Kochs Example')
+    self.kochs.clicked.connect(lambda: self.genExample('Koch Snowflake'))
+    
+    self.cantor = QPushButton('Cantor Set Example')
+    self.cantor.clicked.connect(lambda: self.genExample('Cantor Set'))
+
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
     self.lsysbutton.clicked.connect(self.genLSys)
@@ -77,9 +83,11 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.angleEdit, 6, 1, 1, 3)
     self.layout.addWidget(self.iters, 7, 0)
     self.layout.addWidget(self.itersEdit, 7, 1, 1, 3)
-    self.layout.addWidget(self.graphix, 8, 1, 1, -1)
-    self.layout.addWidget(self.lsysbutton, 9, 0)
-    self.layout.addWidget(self.exitbutton, 9, 1, -1, -1)
+    self.layout.addWidget(self.kochs, 8, 0, 1, 1)
+    self.layout.addWidget(self.cantor, 9, 0, 1, 1)
+    self.layout.addWidget(self.graphix, 8, 1, 5, -1)
+    self.layout.addWidget(self.lsysbutton, 11, 0, 1, 1)
+    self.layout.addWidget(self.exitbutton, 12, 0, -1, 1)
 
     self.setLayout(self.layout)
     self.setGeometry(500, 500, 500, 500)
@@ -239,6 +247,11 @@ class UIWidget(QWidget):
       # Sets verts on graphics widget and draws
       self.graphix.set_vertices(verts)
       self.graphix.update()
+
+  def genExample(self, example):
+    verts, grammar = get_saved_lsystem(example)
+    print(example)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
