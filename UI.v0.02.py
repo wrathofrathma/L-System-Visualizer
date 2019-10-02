@@ -109,11 +109,14 @@ class UIWidget(QWidget):
     itersInput = self.itersEdit.text()
     string = 0
     for ch in axiomInput:
-      if not axiomInput in alphabet:
+      if not ch in alphabet:
+        print("[ ERROR ] ",ch," not in alphabet")
         self.axiomEdit.setStyleSheet("color: red;")
         self.axiomEdit.setText(error_message)
         valid_input = 0
     axiomInProd = 0
+    '''
+    #This makes sure the axiom is in the production rules
     for prod in self.prodrulesEdit:
       prodInput=prod.text()
       prodInput=prodInput.replace(' ','')
@@ -127,6 +130,7 @@ class UIWidget(QWidget):
       self.axiomEdit.setStyleSheet("color: red;")
       self.axiomEdit.setText(error_message)
       valid_input = 0
+    '''
     #TODO make this work for more than one prod rule
     for prod in self.prodrulesEdit:
       prodInput = prod.text()
@@ -182,6 +186,13 @@ class UIWidget(QWidget):
       pr = rule.replace("->",":")
       pr = pr.split(':')
       rules[pr[0]]=pr[1]
+    '''
+    THIS PART IS NOT CONTEXT SENSITIVE
+    '''
+    for letter in alphabet:
+      if not letter in list(rules.keys()):
+        rules[letter] = letter
+    print(rules)
     return rules
 
   def moreProds(self):
