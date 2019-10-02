@@ -37,7 +37,7 @@ def readStack(stack, starting_pt, angle):
     Ff(mesh_arr[-1],angle) #move little f
     vertices.append(mesh_arr[-1].pos) #append starting position
     for i in range(len(s[j])):
-      funcdict[stack[i]](mesh_arr[-1], angle)
+      funcdict[s[j][i]](mesh_arr[-1], angle)
       vertices.append(mesh_arr[-1].pos)
     vertices = list(dict.fromkeys(vertices)) # remove duplicates
     vert_arr.append([vertices])
