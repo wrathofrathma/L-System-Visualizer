@@ -45,7 +45,7 @@ class Mesh():
         # Telling the GPU the structure and type of data
         glVertexPointer(2, GL_FLOAT, 0, self.VBO)
         # Drawing
-        glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) / 2.0))
+        glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) ))#/ 2.0))
         #Unbinding everything
         self.VBO.unbind()
         glDisableClientState(GL_VERTEX_ARRAY)
