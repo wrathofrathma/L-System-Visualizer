@@ -24,7 +24,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.meshes = []
         self.meshes.append(Mesh())
         verts = get_saved_lsystem('Cantor Set')[0]
-        self.meshes[0].set_vertices(verts)
+        self.meshes[0].set_vertices(verts[0])
+
 
     # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):

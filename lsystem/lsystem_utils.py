@@ -34,9 +34,7 @@ saved_file = "assets/lsystems/saved_lsystems.json"
 def generate_lsystem(grammar):
   grammar_copy= copy.deepcopy(grammar)
   print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
-  print("test1  ",grammar_copy['angle'])
   grammar_copy['angle'] = grammar_copy['angle'] * math.pi/180.0 # Convert to radians.
-  print("test2  ",grammar_copy['angle'])
   # Generate full production string.
   s = lgen(grammar_copy['axiom'], grammar_copy['rules'], grammar_copy['iterations'])
   # Generate vertics
@@ -53,11 +51,27 @@ def generate_lsystem(grammar):
     verts = normalize_coordinates(verts)
   return vertsArray #returns an array of arrays of vertices
   """
+
+  verts_arr_temp = readStack(s,(0,0),grammar_copy['angle'])
+  verts_arr = []
+  for verts in verts_arr_temp:
+    verts = np.array(verts, dtype=np.float32)
+    #print(verts)
+    rows = len(verts)
+    #verts = verts.reshape(len(verts),2)
+    verts = normalize_coordinates(verts)
+    verts_arr.append(verts)
+  """
+
   verts = readStack(s,(0,0),grammar_copy['angle'])
+  print(verts)
   verts = np.array(verts, dtype=np.float32)
   verts = verts.reshape(verts.shape[0],verts.shape[1])
   verts = normalize_coordinates(verts)
-  return verts
+  print(verts)
+  """
+  print("test")
+  return verts_arr
 
 # Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
 # Overwrites any previous lsystem defined with the same key.
