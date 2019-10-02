@@ -18,7 +18,6 @@ def readStack(stack, starting_pt, angle):
   vert_arr = []
   mesh_arr =[]
   s = stack.split('f')
-
   #set up the first object (mesh)
   mesh_arr.append(pointer_class(starting_pt[0],starting_pt[1]))
 
@@ -26,8 +25,10 @@ def readStack(stack, starting_pt, angle):
   vertices.append((mesh_arr[0].pos[0],mesh_arr[0].pos[1])) #append starting position
   for i in range(len(s[0])):
     funcdict[stack[i]](mesh_arr[0], angle)
-    vertices.append(mesh_arr[0].pos)
-  vertices = list(dict.fromkeys(vertices)) # remove duplicates
+    if s[0][i] == 'F':
+      vertices.append(mesh_arr[0].pos)
+#  print(vertices)
+  #vertices = list(dict.fromkeys(vertices)) # remove duplicates
   vert_arr.append(vertices)
 
   #for each little f create a new mesh with the starting position and angle initialized from the previous mesh
@@ -38,7 +39,8 @@ def readStack(stack, starting_pt, angle):
     vertices.append(mesh_arr[-1].pos) #append starting position
     for i in range(len(s[j])):
       funcdict[s[j][i]](mesh_arr[-1], angle)
-      vertices.append(mesh_arr[-1].pos)
-    vertices = list(dict.fromkeys(vertices)) # remove duplicates
+      if s[j][i] == 'F':
+        vertices.append(mesh_arr[-1].pos)
+    #vertices = list(dict.fromkeys(vertices)) # remove duplicates
     vert_arr.append([vertices])
   return vert_arr
