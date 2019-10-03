@@ -192,7 +192,6 @@ class UIWidget(QWidget):
     for letter in alphabet:
       if not letter in list(rules.keys()):
         rules[letter] = letter
-    print(rules)
     return rules
 
   def closeEvent(self, event):
