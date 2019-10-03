@@ -71,7 +71,7 @@ class UIWidget(QWidget):
     self.lsysbutton.clicked.connect(self.genLSys)
 
     self.exitbutton = QPushButton("Exit", self)
-    self.exitbutton.clicked.connect(self.cleanup)
+    self.exitbutton.clicked.connect(self.closeEvent)
 
     #Adding widgets to window
     self.layout.addWidget(self.axiom, 1, 0)
@@ -93,12 +93,6 @@ class UIWidget(QWidget):
     self.setGeometry(500, 500, 500, 500)
     self.show()
 
-  def cleanup(self):
-      ''' This function cleans the graphics '''
-      print("[ INFO ] Exiting...")
-      self.graphix.cleanup()
-
-      exit()
   def inputCheck(self):
     '''  This function checks the input
          Returns 1 if valid
@@ -195,7 +189,9 @@ class UIWidget(QWidget):
     return rules
 
   def closeEvent(self, event):
-      self.cleanup()
+      print("[ INFO ] Exiting...")
+      self.graphix.cleanup()
+      exit()
 
   def moreProds(self):
     ''' Creates more productions when + button is clicked '''
