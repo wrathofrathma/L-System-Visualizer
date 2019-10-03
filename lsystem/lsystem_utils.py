@@ -54,12 +54,14 @@ def generate_lsystem(grammar):
 
   verts_arr_temp = readStack(s,(0,0),grammar_copy['angle'])
   verts_arr = []
+  m = map(max,verts_arr_temp)
+  m=max(max(m))
   for verts in verts_arr_temp:
     verts = np.array(verts, dtype=np.float32)
     #print(verts)
     rows = len(verts)
     #verts = verts.reshape(len(verts),2)
-    verts = normalize_coordinates(verts)
+    verts = normalize_coordinates(verts,m)
     verts_arr.append(verts)
   """
 
@@ -125,6 +127,8 @@ def load_saved_lsystems():
 
 # Normalizes the coordinates such that the largest vertice bound is 1 or -1.
 # We will remove this later when we have proper scaling/zooming.
-def normalize_coordinates(coords):
-    coords = coords/coords.max()
+def normalize_coordinates(coords,m=0):
+    if m == 0:
+        m=coords.max()
+    coords = coords/m
     return coords
