@@ -278,4 +278,6 @@ class UIWidget(QWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ui = UIWidget()
-    sys.exit(app.exec_())
+    r = app.exec_()
+    ui.cleanup()
+    sys.exit(r) 
