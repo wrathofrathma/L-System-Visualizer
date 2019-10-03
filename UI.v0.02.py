@@ -73,6 +73,9 @@ class UIWidget(QWidget):
     self.exitbutton = QPushButton("Exit", self)
     self.exitbutton.clicked.connect(self.cleanup)
 
+    self.screenshotbutton = QPushButton("Save a photo of your L System", self);
+    self.screenshotbutton.clicked.connect(lambda: self.takeScreenshot());
+
     #Adding widgets to window
     self.layout.addWidget(self.axiom, 1, 0)
     self.layout.addWidget(self.axiomEdit, 1, 1, 1, 3)
@@ -86,7 +89,8 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.kochs, 8, 0, 1, 1)
     self.layout.addWidget(self.cantor, 9, 0, 1, 1)
     self.layout.addWidget(self.graphix, 8, 1, 5, -1)
-    self.layout.addWidget(self.lsysbutton, 11, 0, 1, 1)
+    self.layout.addWidget(self.lsysbutton, 10, 0, 1, 1)
+    self.layout.addWidget(self.screenshotbutton, 11, 0, 1, 1)
     self.layout.addWidget(self.exitbutton, 12, 0, -1, 1)
 
     self.setLayout(self.layout)
@@ -272,6 +276,9 @@ class UIWidget(QWidget):
     self.itersEdit.setText(str(grammar['iterations']))
     self.genLSys()
     #print(example)
+
+  def takeScreenshot(self):
+    self.graphix.screenshot()
 
 
 
