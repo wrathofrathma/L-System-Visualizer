@@ -12,6 +12,8 @@ from lsystem.lsystem_utils import *
 from PIL import Image
 from lsystem.graphics.SphericalCamera import *
 
+import time #temp?
+
 # LSystem visualization widget.
 
 class LSystemDisplayWidget(QOpenGLWidget):
@@ -20,7 +22,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # Background color
         self.bgcolor = np.array([0.0, 0.0, 0.0, 0.0])
         # Time, used for color shader shenanigans
-        self.start_time = time()
+        #if you remove import time then drop "time."
+        self.start_time = time.time()
         # Mesh initialization & starting stuff.
         self.meshes = []
         self.meshes.append(Mesh())
@@ -77,12 +80,17 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Shaders loaded to graphics card.")
 
     # Saves a screenshot of the current OpenGL buffer to a given filename.
-    # MUST have a file extension for now.
-    def screenshot(self, filename):
+    def screenshot(self):
+        t = time.localtime(time.time())
+        print(str(t.tm_hour) + ":" + str(t.tm_min) + ":" + str(t.tm_sec))
+        if(t.tm_sec < 10):
+            filename = str(t.tm_hour)+str(t.tm_min)+str(0)+str(t.tm_sec)+".png"
+        else:
+            filename = str(t.tm_hour)+str(t.tm_min)+str(t.tm_sec)+".png"
         print("[ INFO ] Saving screenshot to filename " + str(filename) + "...")
         size = self.size()
         # Read all of the pixels into an array.
-        pixels = glReadPixels(0,0, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
+        pixels = glReadPixels(225,20, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
         # Create an image from Python Image Library.
         image = Image.frombytes("RGB", (size.width(), size.height()), pixels)
         # FLip that bitch.
