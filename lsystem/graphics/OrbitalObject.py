@@ -29,7 +29,7 @@ class OrbitalObject(SpatialObject):
         self.r+=num
         if(self.r<0.000001):
             self.r=0.000001
-        setPosition(self.r, self.theta, self.psi)
+        self.setPosition(self.r, self.theta, self.psi)
 
     def addPsi(self,num):
         self.psi+=num
@@ -37,7 +37,7 @@ class OrbitalObject(SpatialObject):
             self.psi=90
         if(self.psi<-90):
             self.psi=-90
-        setPosition(self.r, self.theta, self.psi)
+        self.setPosition(self.r, self.theta, self.psi)
 
     def setPsi(self, num):
         self.psi=num
@@ -45,13 +45,13 @@ class OrbitalObject(SpatialObject):
             self.psi=90
         if(self.psi<-90):
             self.psi=-90
-        setPosition(self.r, self.theta, self.psi)
+        self.setPosition(self.r, self.theta, self.psi)
 
     def setR(self, num):
         self.r = num
         if(self.r<0.000001):
             self.r=0.000001
-        setPosition(self.r, self.theta, self.psi)
+        self.setPosition(self.r, self.theta, self.psi)
 
     def setTheta(self, num):
         self.num=num
@@ -59,7 +59,7 @@ class OrbitalObject(SpatialObject):
             self.theta-=360
         while(self.theta<0):
             self.theta+=360
-        setPosition(self.r, self.theta, self.psi)
+        self.setPosition(self.r, self.theta, self.psi)
 
     def getTheta(self):
         return self.theta
