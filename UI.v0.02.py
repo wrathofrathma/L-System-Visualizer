@@ -280,4 +280,5 @@ if __name__ == '__main__':
     ui = UIWidget()
     r = app.exec_()
     ui.cleanup()
-    sys.exit(r) 
+    sys.exit() 
+    
