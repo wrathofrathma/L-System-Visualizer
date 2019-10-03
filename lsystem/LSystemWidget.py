@@ -2,7 +2,7 @@ from OpenGL.GL import shaders
 from OpenGL.GL import *
 
 from PyQt5.QtWidgets import *
-
+from PyQt5.QtCore import Qt
 from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
 
@@ -39,6 +39,17 @@ class LSystemDisplayWidget(QOpenGLWidget):
         for mesh in self.meshes:
             mesh.draw()
 
+    # Triggered when the mouse is pressed in the opengl frame.
+    def mousePressEvent(self, event):
+        if(event.button()==Qt.LeftButton):
+            self.camera.addR(-0.2)
+            self.update()
+        elif(event.button()==Qt.RightButton):
+            self.camera.addR(0.2)
+            self.update()
+    # Triggered only when the mouse is dragged in the opengl frame with the mouse down(on my machine)
+    def mouseMoveEvent(self, event):
+        pass
     # Called when the OpenGL widget resizes.
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))
