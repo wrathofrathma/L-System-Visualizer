@@ -3,8 +3,11 @@ from lsystem.graphics.OrbitalObject import *
 
 class SphericalCamera(Camera, OrbitalObject):
     def __init__(self, width, height):
-        super().__init__()
+        Camera.__init__(self)
+        OrbitalObject.__init__(self)
         self.resize(width, height)
+        self.addTheta(90)
+        self.updateView()
 
     # updates the view matrix for the current position and line of sight to the origin
     def updateView(self):

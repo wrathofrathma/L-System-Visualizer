@@ -11,7 +11,5 @@ out vec4 frag_pos; // Our vertex position in model coordinates.
 
 void main(){
   frag_pos = model * vec4(vpos, 0.0, 1.0);
-  //gl_Position = proj * view * model * vec4(vpos,0.0,1.0);
-  //gl_Position = model * vec4(vpos, 0.0, 1.0);
-  gl_Position = vec4(vpos,0.0,1.0);
+  gl_Position = proj * view * model * vec4(vpos,0.0,1.0);
 }

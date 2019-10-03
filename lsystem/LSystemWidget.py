@@ -34,7 +34,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-
+        self.camera.update()
         self.camera.applyUpdate(self.shader)
         for mesh in self.meshes:
             mesh.draw()
@@ -111,7 +111,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         if(split):
             self.meshes.append(Mesh())
             self.meshes[-1].set_shader(self.shader)
-            
+
         self.meshes[-1].set_vertices(vertices)
 
     # Cleans up the mesh memory on the GPU and clears the array of them.

@@ -11,7 +11,7 @@ class Mesh(QuaternionObject):
         self.initialized=False
         self.update=True
         self.vertices = []
-
+        self.translate([-0.5, 0, 0])
     def init_ogl(self):
         if(self.shader==None):
             print("[ ERROR ] Shader not set for our mesh.")

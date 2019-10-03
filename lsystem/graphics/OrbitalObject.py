@@ -6,7 +6,7 @@ from math import cos, sin, pi
 class OrbitalObject(SpatialObject):
     def __init__(self):
         super().__init__()
-        self.r = 10
+        self.r = 2
         self.theta = 0
         self.psi = 0
         self.deg = pi / 180.0
@@ -71,7 +71,7 @@ class OrbitalObject(SpatialObject):
         return self.psi
 
     def getFacing(self):
-        eye = vec3(self.r*cos(self.psi*self.deg)*cos(self.theta*self.deg),r*sin(self.psi*self.deg),self.r*cos(self.psi*self.deg)*sin(self.theta*self.deg))
+        eye = vec3(self.r*cos(self.psi*self.deg)*cos(self.theta*self.deg),self.r*sin(self.psi*self.deg),self.r*cos(self.psi*self.deg)*sin(self.theta*self.deg))
         center = vec3(0)
         up = vec3(0,1,0)
         return lookAt(eye,center,up)

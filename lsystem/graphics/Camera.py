@@ -14,7 +14,6 @@ class Camera:
 
         self.view = glm.mat4(0)
         self.projection = glm.mat4(0)
-
         self.updateProjection()
 
     def updateProjection(self):
@@ -32,9 +31,7 @@ class Camera:
         glUseProgram(shader)
         glUniformMatrix4fv(glGetUniformLocation(shader, "view"), 1, GL_FALSE, glm.value_ptr(self.view))
         glUniformMatrix4fv(glGetUniformLocation(shader, "proj"), 1, GL_FALSE, glm.value_ptr(self.projection))
-        print("View & Proj matrices")
-        print(self.view)
-        print(self.projection)
+
         # Comment out later for lighting calcs.
         #glUniformMatrix4fv(glGetUniformLocation(shader, "camera_pos"), 1, GL_FALSE, glm.value_ptr(self.position))
         glUseProgram(0)
