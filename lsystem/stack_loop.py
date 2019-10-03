@@ -42,5 +42,8 @@ def readStack(stack, starting_pt, angle):
       if s[j][i] == 'F':
         vertices.append(mesh_arr[-1].pos)
     #vertices = list(dict.fromkeys(vertices)) # remove duplicates
-    vert_arr.append([vertices])
+    vert_arr.append(vertices)
+    for vert in vert_arr:
+      if len(vert)==1:
+        vert_arr.remove(vert)
   return vert_arr
