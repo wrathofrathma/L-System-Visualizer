@@ -2,13 +2,16 @@ from OpenGL.GL import *
 
 from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
+from lsystem.graphics.QuaternionObject import *
+from glm import value_ptr
 
-class Mesh():
+class Mesh(QuaternionObject):
     def __init__(self):
+        super().__init__()
         self.initialized=False
         self.update=True
         self.vertices = []
-
+        self.translate([-0.5, 0, 0])
     def init_ogl(self):
         if(self.shader==None):
             print("[ ERROR ] Shader not set for our mesh.")
@@ -36,7 +39,12 @@ class Mesh():
             self.init_ogl()
         if(self.update):
             self.update_gpu()
-        #glUseProgram(self.shader)
+        shaders.glUseProgram(self.shader)
+        # Generate model matrix
+        self.generateModelMatrix()
+        # Update uniforms on shader.
+        glUniformMatrix4fv(glGetUniformLocation(self.shader, "model"), 1, GL_FALSE, value_ptr(self.model_matrix))
+
         # Binding VBO object
         self.VBO.bind()
         # Explaining to the GPU how to use the data.
@@ -45,11 +53,11 @@ class Mesh():
         # Telling the GPU the structure and type of data
         glVertexPointer(2, GL_FLOAT, 0, self.VBO)
         # Drawing
-        glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) / 2.0))
+        glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) ))#/ 2.0))
         #Unbinding everything
         self.VBO.unbind()
         glDisableClientState(GL_VERTEX_ARRAY)
-        glUseProgram(0)
+        shaders.glUseProgram(0)
 
     def cleanup(self):
         self.VBO.delete()

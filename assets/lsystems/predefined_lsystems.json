@@ -1,0 +1,20 @@
+{
+  "Koch Snowflake" : {
+    "rules" : { "F" : "F+F--F+F" },
+    "angle" : 60,
+    "axiom" : "F",
+    "iterations" : 5
+  },
+  "Cantor Set" : {
+    "rules" : { "F" : "F+F-F-F+F" },
+    "angle" : 90,
+    "axiom" : "F",
+    "iterations" : 5
+  },
+  "Koch Curve" : {
+    "rules": { "F" : "F+F-F-F+F"},
+    "angle": 90,
+    "axiom": "-F",
+    "iterations": 5
+  }
+}
