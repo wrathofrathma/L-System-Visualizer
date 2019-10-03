@@ -23,9 +23,4 @@ Clone the repository, then run the following line of code in the main directory:
 - Matt Tibebe @mattythats
 - Stephanie Warman @swarman2
 
-### Requirements
-numpy
-pyOpenGL
-PyQT5
-
 
