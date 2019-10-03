@@ -6,10 +6,11 @@ from PyQt5.QtWidgets import *
 from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
 
-from lsystem.Mesh import *
+from lsystem.graphics.Mesh import *
 from time import time
 from lsystem.lsystem_utils import *
 from PIL import Image
+from lsystem.graphics.SphericalCamera import *
 
 # LSystem visualization widget.
 
@@ -26,12 +27,15 @@ class LSystemDisplayWidget(QOpenGLWidget):
         verts = get_saved_lsystem('Cantor Set')[0]
         self.meshes[0].set_vertices(verts[0])
 
-
+        self.camera = SphericalCamera(800,600)
+        #self.camera.r = -4
     # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+
+        self.camera.applyUpdate(self.shader)
         for mesh in self.meshes:
             mesh.draw()
 
@@ -39,6 +43,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))
         glViewport(0,0,w,h)
+        self.camera.resize(w,h)
 
     # OpenGL initialization
     def initializeGL(self):
@@ -66,8 +71,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
             # Link them together & compile them as a program.
             self.shader = shaders.compileProgram(self.vs, self.fs)
         except Exception as err:
-            # Absolute lack of error checking. Madlads.
             print("[ ERROR ] Caught an exception: " + str(err))
+            exit(1) # Can't proceed without working shaders.
+
         print("[ INFO ] Shaders loaded to graphics card.")
 
     # Saves a screenshot of the current OpenGL buffer to a given filename.

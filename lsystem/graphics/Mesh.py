@@ -2,9 +2,12 @@ from OpenGL.GL import *
 
 from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
+from lsystem.graphics.QuaternionObject import *
+from glm import value_ptr
 
-class Mesh():
+class Mesh(QuaternionObject):
     def __init__(self):
+        super().__init__()
         self.initialized=False
         self.update=True
         self.vertices = []
@@ -37,6 +40,11 @@ class Mesh():
         if(self.update):
             self.update_gpu()
         shaders.glUseProgram(self.shader)
+        # Generate model matrix
+        self.generateModelMatrix()
+        # Update uniforms on shader.
+        glUniformMatrix4fv(glGetUniformLocation(self.shader, "model"), 1, GL_FALSE, value_ptr(self.model_matrix))
+
         # Binding VBO object
         self.VBO.bind()
         # Explaining to the GPU how to use the data.
