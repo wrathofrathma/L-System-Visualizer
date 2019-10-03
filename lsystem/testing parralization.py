@@ -20,31 +20,32 @@ def axigen(axioms, rules):
     axioms = newaxi
     return axioms
 
-def axigenq(axioms, rules, que):
+def axigenq(axioms, rules):
     newaxi=''
-    for axiom in axioms:
+    for axiom in axioms[0]:
         if axiom in rules:
             newaxi += rules[axiom]
         else:
             newaxi += axiom
-    que[0]+=newaxi
+
+    axioms[0] = newaxi
 
 def lgen(axioms, rules, it):
     '''
     Takes in an axiom set of rules and number of iterations and generates the new string
     '''
-    que = [axioms]
     for _ in range(it):
         if (len(axioms)>1):
-            axi1,axi2 = que[0][:int(len(que[0])/2)], que[0][int(len(que[0])/2):]
+            axi1,axi2=[''],['']
+            axi1[0],axi2[0] = axioms[:int(len(axioms)/2)], axioms[int(len(axioms)/2):]
             #if(len(axioms)%2==0):
             #    axi1,axi2 = axioms[:len(axioms)//2], axioms[:len(axioms)//2]
             #else:
             #    axi1,axi2 = axioms[:len(axioms)//2], axioms[:(len(axioms)//2)+1]
 
 
-            thread1 = threading.Thread(target=axigenq, args=(axi1,rules,que))
-            thread2 = threading.Thread(target=axigenq, args=(axi2,rules,que))
+            thread1 = threading.Thread(target=axigenq, args=(axi1,rules))
+            thread2 = threading.Thread(target=axigenq, args=(axi2,rules))
 
 
 
@@ -54,12 +55,13 @@ def lgen(axioms, rules, it):
 
             thread1.join()
             thread2.join()
-
+            axioms=axi1[0]+axi2[0]
 
         else:
             axioms=axigen(axioms, rules)
-    print(que[0])
-    return que[0]
+    print(axioms)
+    return axioms
 
 rules = {"F":"F+F--F+F"}
-lgen("FFF", rules, 4)
+lgen("FFF", rules, 1)
+lgen("FFF", rules, 2)
