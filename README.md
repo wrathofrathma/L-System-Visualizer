@@ -11,7 +11,8 @@ Better graphics
 
 ### Running the Application
 Clone the repository, then run the following line of code in the main directory:
-`python UI.v0.01.py`
+```pip install -r requirements.txt```
+```python UI.v0.01.py```
 
 ### Contributers
 - Chris Arausa @wrathofrathma
