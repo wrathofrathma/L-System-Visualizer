@@ -110,6 +110,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def set_vertices(self, vertices, split=False):
         if(split):
             self.meshes.append(Mesh())
+            self.meshes[-1].set_shader(self.shader)
+            
         self.meshes[-1].set_vertices(vertices)
 
     # Cleans up the mesh memory on the GPU and clears the array of them.
