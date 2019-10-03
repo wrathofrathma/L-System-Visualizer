@@ -195,6 +195,9 @@ class UIWidget(QWidget):
     print(rules)
     return rules
 
+  def closeEvent(self, event):
+      self.cleanup()
+
   def moreProds(self):
     ''' Creates more productions when + button is clicked '''
     if self.prods < len(alphabet):
@@ -279,6 +282,4 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ui = UIWidget()
     r = app.exec_()
-    ui.cleanup()
-    sys.exit() 
-    
+    sys.exit()
