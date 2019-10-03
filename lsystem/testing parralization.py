@@ -23,18 +23,17 @@ def axigen(axioms, rules):
 def axigenq(axioms, rules, que):
     newaxi=''
     for axiom in axioms:
-
         if axiom in rules:
             newaxi += rules[axiom]
         else:
             newaxi += axiom
-    axioms = newaxi
-    que.append(axioms)
+    que[0]+=newaxi
 
 def lgen(axioms, rules, it):
     '''
     Takes in an axiom set of rules and number of iterations and generates the new string
     '''
+    que = ['']
     for _ in range(it):
         if (len(axioms)>1):
             axi1,axi2 = axioms[:len(axioms)//2], axioms[:len(axioms)//2]
@@ -43,7 +42,7 @@ def lgen(axioms, rules, it):
             else:
                 axi1,axi2 = axioms[:len(axioms)//2], axioms[:(len(axioms)//2)+1]
 
-            que = []
+
             thread1 = threading.Thread(target=axigenq, args=(axi1,rules,que))
             thread2 = threading.Thread(target=axigenq, args=(axi2,rules,que))
 
@@ -54,19 +53,15 @@ def lgen(axioms, rules, it):
 
 
             thread1.join()
-            axi1=que.pop()
-
             thread2.join()
-            axi2=que.pop()
-
-            axioms = axi1+axi2
 
 
         else:
             axioms=axigen(axioms, rules)
 
-    
-    return axioms
+    print(que[0])
+    return que[0]
 
 rules = {"F":"F+F--F+F"}
 lgen("FFF", rules, 2)
+lgen("FFF", rules, 5)
