@@ -61,6 +61,7 @@ def generate_lsystem(grammar):
     #print(verts)
     rows = len(verts)
     #verts = verts.reshape(len(verts),2)
+    verts = verts.reshape(verts.shape[0]*verts.shape[1])
     verts = normalize_coordinates(verts,m)
     verts_arr.append(verts)
   """
@@ -72,7 +73,6 @@ def generate_lsystem(grammar):
   verts = normalize_coordinates(verts)
   print(verts)
   """
-  print("test")
   return verts_arr
 
 # Saves a given lsystem to disk to "lsystem/saved_lsystems.json"

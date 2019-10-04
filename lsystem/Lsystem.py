@@ -49,11 +49,11 @@ def lgen(axioms, rules, it):
 
         else:
             axioms=axigen(axioms, rules)
-    print(axioms)
+    #print(axioms)
     return axioms
 '''
 def stackgen(axi,rules, it):
-    
+
     Takes in the generated string and makes it into a stack
 
     axi= lgen(axi,rules,it)

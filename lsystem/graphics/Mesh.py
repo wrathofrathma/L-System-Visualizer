@@ -4,13 +4,14 @@ from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
 from lsystem.graphics.QuaternionObject import *
 from glm import value_ptr
-
+import random as rand
 class Mesh(QuaternionObject):
     def __init__(self):
         super().__init__()
         self.initialized=False
         self.update=True
         self.vertices = []
+        self.colors = []
         self.translate([-0.5, 0, 0])
     def init_ogl(self):
         if(self.shader==None):
@@ -24,8 +25,19 @@ class Mesh(QuaternionObject):
         glUseProgram(self.shader)
         self.VBO = vbo.VBO(self.vertices, target=GL_ARRAY_BUFFER)
         self.initialized=True
-        self.update=False # if we just initialized, we don't need to upload to gpu
+        self.update=True
         glUseProgram(0)
+
+    def generate_colors(self):
+        # Each vertex needs a color.
+        print("Generating colors.")
+        self.colors = []
+        for v in range(len(self.vertices)):
+            self.colors.append(rand.randint(0,255)/255.0)
+            self.colors.append(rand.randint(0,255)/255.0)
+            self.colors.append(rand.randint(0,255)/255.0)
+            self.colors.append(0)
+        self.colors = np.array(self.colors, dtype=np.float32)
 
     def set_shader(self, shader):
         self.shader = shader
@@ -48,15 +60,21 @@ class Mesh(QuaternionObject):
         # Binding VBO object
         self.VBO.bind()
         # Explaining to the GPU how to use the data.
-        # Telling it that the VBO contains an array of vertices
-        glEnableClientState(GL_VERTEX_ARRAY)
-        # Telling the GPU the structure and type of data
-        glVertexPointer(2, GL_FLOAT, 0, self.VBO)
-        # Drawing
-        glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) ))#/ 2.0))
+        #Enable shader positional variables
+        glEnableVertexAttribArray(0)
+        glEnableVertexAttribArray(1)
+        # Tell GLSL how our data is structured
+        # Vertices are in position 0, size of 2 floats, padding of 0, at self.VBO
+        glVertexAttribPointer(0, 2, GL_FLOAT, False, 0, self.VBO)
+        # Colors are in position 1, size of 4 floats, padding of 0, and at the end of the vertice array.
+        glVertexAttribPointer(1, 4, GL_FLOAT, True, 0, self.VBO+self.vertices.nbytes)
+
+         # Drawing
+        glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) /2.0))#/ 2.0))
         #Unbinding everything
         self.VBO.unbind()
         glDisableClientState(GL_VERTEX_ARRAY)
+        glDisableClientState(GL_COLOR_ARRAY)
         shaders.glUseProgram(0)
 
     def cleanup(self):
@@ -68,10 +86,20 @@ class Mesh(QuaternionObject):
         if(self.shader==None):
             print("[ ERROR ] Shader not set for our mesh.")
             exit(1)
+        # Generate colors if they don't exist.
+        print("Colors: " + str(len(self.colors)))
+        if(len(self.colors)==0):
+            self.generate_colors()
+        print("Colors: " + str(len(self.colors)))
+
+        data = [] # Verts + colors
+        data+=self.vertices.tolist()
+        data+=self.colors.tolist()
+        data=np.array(data, dtype=np.float32)
 
         glUseProgram(self.shader)
         self.VBO.bind()
-        self.VBO.set_array(self.vertices)
+        self.VBO.set_array(data)
         self.VBO.copy_data()
         self.VBO.unbind()
         glUseProgram(0)
