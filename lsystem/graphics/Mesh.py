@@ -28,6 +28,15 @@ class Mesh(QuaternionObject):
         self.update=True
         glUseProgram(0)
 
+    # uses built in numpy array functions to detect the max/min X&Y values so we can center the mesh on display.
+    # Returns 2 tuples, for maxes and mins.
+    def detect2DEdges(self):
+        v = np.array(self.vertices)
+        v = v.reshape(int(v.shape[0]/2), 2)
+        xs = v[:,0] # numpy 2d array slicing to get the xs
+        ys = v[:,1] # Same but for ys.
+        return (xs.max(), ys.max()), (xs.min(),ys.min())
+
     def generate_colors(self):
         # Each vertex needs a color.
         self.colors = []

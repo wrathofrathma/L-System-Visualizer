@@ -60,8 +60,8 @@ class QuaternionObject:
         rotMatrix = self.getRotationMatrix()
         scaleMatrix = scale(mat4(1.0), self.current_scale)
         self.model_matrix = transMatrix * rotMatrix * scaleMatrix
-        return mat4(1)
-        #return self.model_matrix
+        #return mat4(1)
+        return self.model_matrix
 
     def scale(self,s):
         self.current_scale*=s

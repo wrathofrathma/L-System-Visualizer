@@ -11,6 +11,7 @@ from time import time
 from lsystem.lsystem_utils import *
 from PIL import Image
 from lsystem.graphics.SphericalCamera import *
+from lsystem.graphics.FreeCamera import *
 
 # LSystem visualization widget.
 
@@ -26,9 +27,11 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.meshes.append(Mesh())
         verts = get_saved_lsystem('Cantor Set')[0]
         self.meshes[0].set_vertices(verts[0])
-
+        self.keep_centered = True # Boolean for whether to center the mesh after resizes.
+        #self.camera = FreeCamera(800,600)
         self.camera = SphericalCamera(800,600)
-        #self.camera.r = -4
+        self.camera.r = -4
+        # self.camera.updateView()
     # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
@@ -56,6 +59,13 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glViewport(0,0,w,h)
         self.camera.resize(w,h)
 
+        if(self.keep_centered):
+            self.center_mesh()
+
+    # Defines whether to keep the mesh centered in the view after resizes.
+    def center_on_resize(self, val):
+        self.keep_centered = val
+
     # OpenGL initialization
     def initializeGL(self):
         print("[ INFO ] Initializing OpenGL...")
@@ -65,7 +75,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # Set the shader for every mesh
         for mesh in self.meshes:
             mesh.set_shader(self.shader)
-
 
     def loadShaders(self):
         # Load the shader files into a string.
@@ -116,6 +125,24 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glDeleteShader(self.fs)
         glDeleteProgram(self.shader)
 
+    # Centers the mesh in the view
+    def center_mesh(self):
+        # Well, since we have multiple meshes, we need the mins and maxes of all of them before slicing.
+        maxes=[]
+        mins= []
+        for mesh in self.meshes:
+            ma, mi = mesh.detect2DEdges()
+            maxes.append(ma)
+            mins.append(mi)
+        # this should create 2, (n,2) dimension numpy arrays.
+        maxes = np.array(maxes)
+        mins = np.array(mins)
+        max_x = maxes[:,0].max()
+        max_y = maxes[:,1].max()
+        min_x = mins[:,0].min()
+        min_y = mins[:,1].min()
+
+        print("Min_x: %3.2f, Max_x: %3.2f, Min_y: %3.2f, Max_y: %3.2f" % (min_x, max_x,min_y, max_y))
     # Sets the vertices of the last mesh in the array.
     # split=True creates a new mesh before setting the vertices.
     def set_vertices(self, vertices, split=False):
