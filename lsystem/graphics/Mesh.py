@@ -30,7 +30,6 @@ class Mesh(QuaternionObject):
 
     def generate_colors(self):
         # Each vertex needs a color.
-        print("Generating colors.")
         self.colors = []
         for v in range(len(self.vertices)):
             self.colors.append(rand.randint(0,255)/255.0)
@@ -87,10 +86,8 @@ class Mesh(QuaternionObject):
             print("[ ERROR ] Shader not set for our mesh.")
             exit(1)
         # Generate colors if they don't exist.
-        print("Colors: " + str(len(self.colors)))
         if(len(self.colors)==0):
             self.generate_colors()
-        print("Colors: " + str(len(self.colors)))
 
         data = [] # Verts + colors
         data+=self.vertices.tolist()
