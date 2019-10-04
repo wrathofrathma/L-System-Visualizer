@@ -102,6 +102,10 @@ class UIWidget(QWidget):
     angleInput = self.angleEdit.text()
     itersInput = self.itersEdit.text()
     string = 0
+    if len(axiomInput)==0:
+      self.axiomEdit.setStyleSheet("color: red;")
+      self.axiomEdit.setText(error_message)
+      valid_input = 0
     for ch in axiomInput:
       if not ch in alphabet:
         print("[ ERROR ] ",ch," not in alphabet")
@@ -261,6 +265,11 @@ class UIWidget(QWidget):
       self.graphix.update()
 
   def genExample(self, example):
+    self.axiomEdit.clear_box()
+    for p in self.prodrulesEdit:
+      p.clear_box()
+    self.angleEdit.clear_box()
+    self.itersEdit.clear_box()
     (verts, grammar) = get_saved_lsystem(example)
     self.axiomEdit.setText(grammar['axiom'])
     for key,val in grammar['rules'].items():
