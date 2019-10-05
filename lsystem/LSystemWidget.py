@@ -32,6 +32,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         self.camera = SphericalCamera(800,600)
         #self.camera.r = -4
+        
     # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
@@ -82,15 +83,20 @@ class LSystemDisplayWidget(QOpenGLWidget):
     # Saves a screenshot of the current OpenGL buffer to a given filename.
     def screenshot(self):
         t = time.localtime(time.time())
-        print(str(t.tm_hour) + ":" + str(t.tm_min) + ":" + str(t.tm_sec))
+        hour = str(t.tm_hour)
+        minute = str(t.tm_min)
+        second = str(t.tm_sec)
         if(t.tm_sec < 10):
-            filename = str(t.tm_hour)+str(t.tm_min)+str(0)+str(t.tm_sec)+".png"
-        else:
-            filename = str(t.tm_hour)+str(t.tm_min)+str(t.tm_sec)+".png"
+            second = "0" + second
+        if(t.tm_min < 10):
+            minute = "0" + minute
+        if(t.tm_hour < 10):
+            hour = "0" + hour
+        filename = hour+minute+second+".png"
         print("[ INFO ] Saving screenshot to filename " + str(filename) + "...")
         size = self.size()
         # Read all of the pixels into an array.
-        pixels = glReadPixels(225,20, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
+        pixels = glReadPixels(self.x(),self.y()-(.8*self.y()), size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
         # Create an image from Python Image Library.
         image = Image.frombytes("RGB", (size.width(), size.height()), pixels)
         # FLip that bitch.
