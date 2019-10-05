@@ -34,7 +34,7 @@ saved_file = "assets/lsystems/saved_lsystems.json"
 def generate_lsystem(grammar):
   grammar_copy= copy.deepcopy(grammar)
   print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
-  grammar_copy['angle'] = grammar_copy['angle'] * math.pi/180.0 # Convert to radians.
+  #grammar_copy['angle'] = grammar_copy['angle'] * math.pi/180.0 # Convert to radians.
   # Generate full production string.
   s = lgen(grammar_copy['axiom'], grammar_copy['rules'], grammar_copy['iterations'])
   # Generate vertics
