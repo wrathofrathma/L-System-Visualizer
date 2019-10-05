@@ -37,16 +37,21 @@ def readStack(stack, starting_pt, angle):
     trig_dict[pos_angles[i]] = (cos_arr[i],sin_arr[i])
   #TODO change pointer class poistion to regular list?
   vertices.append(starting_pt) #append starting position
-  prev_point = starting_pt
-  prev_angle = 0
+  new_point = starting_pt
+  new_angle = 0
   print("[ INFO ] Finished calcuating angles (",round(time()-t,3),"s )")
   t = time()
   print("[ INFO ] Finding vertices...")
   for i in range(len(s[0])):
-    new_point,new_angle = funcdict[stack[i]](prev_point, prev_angle, trig_dict)
+    #new_point,new_angle = funcdict[stack[i]](prev_point, prev_angle, trig_dict)
     if s[0][i] == 'F':
+      new_point = (new_point[0]+trig_dict[new_angle][0],new_point[1]+trig_dict[new_angle][1])
       vertices.append(new_point)
-    prev_point, prev_angle = new_point, new_angle
+    elif s[0][i] == '+':
+        new_angle = (new_angle - trig_dict['angle'])%360
+    elif s[0][i] == '-':
+      new_angle = (new_angle + trig_dict['angle'])%360
+    #prev_point, prev_angle = new_point, new_angle
 #  print(vertices)
   #vertices = list(dict.fromkeys(vertices)) # remove duplicates
   vert_arr.append(vertices)
@@ -55,13 +60,16 @@ def readStack(stack, starting_pt, angle):
   for j in range(1,len(s)):
     vertices = []
     #mesh_arr.append(pointer_class(mesh_arr[-1].pos[0],mesh_arr[-1].pos[1],mesh_arr[-1].angle))
-    prev_point, prev_angle = Ff(prev_point,prev_angle,angle) #move little f
-    vertices.append(prev_point) #append starting position
+    new_point = (new_point[0]+trig_dict[new_angle][0],new_point[1]+trig_dict[new_angle][1])
+    vertices.append(new_point) #append starting position
     for i in range(len(s[j])):
-      new_point, new_angle = funcdict[s[j][i]](prev_point, prev_angle, trig_dict)
       if s[j][i] == 'F':
+        new_point = (new_point[0]+trig_dict[new_angle][0],new_point[1]+trig_dict[new_angle][1])
         vertices.append(new_point)
-      prev_point, prev_angle = new_point, new_angle
+      elif s[j][i] == '+':
+          new_angle = (new_angle - trig_dict['angle'])%360
+      elif s[j][i] == '-':
+        new_angle = (new_angle + trig_dict['angle'])%360
     #vertices = list(dict.fromkeys(vertices)) # remove duplicates
     vert_arr.append(vertices)
   print("[ INFO ] Finshed finding vertices (",round(time()-t,3),"s )")
