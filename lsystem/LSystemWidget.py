@@ -28,9 +28,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         verts = get_saved_lsystem('Cantor Set')[0]
         self.meshes[0].set_vertices(verts[0])
         self.keep_centered = True # Boolean for whether to center the mesh after resizes.
-        #self.camera = FreeCamera(800,600)
-        self.camera = SphericalCamera(800,600)
-        self.camera.r = -4
+        self.camera = FreeCamera(800,600)
+        #self.camera = SphericalCamera(800,600)
+        #self.camera.r = -4
         # self.camera.updateView()
     # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):
@@ -42,14 +42,41 @@ class LSystemDisplayWidget(QOpenGLWidget):
         for mesh in self.meshes:
             mesh.draw()
 
+
     # Triggered when the mouse is pressed in the opengl frame.
     def mousePressEvent(self, event):
         if(event.button()==Qt.LeftButton):
-            self.camera.addR(-0.2)
-            self.update()
+            self.zoomOnMouse((event.pos()))
+
         elif(event.button()==Qt.RightButton):
-            self.camera.addR(0.2)
+            # Zoom in
+            self.camera.translate([0,0,0.2])
             self.update()
+        elif(event.button()==Qt.MidButton):
+            self.resetCamera()
+    # Converts a qt mouse position event coordinates to opengl coordinates
+    # aka top left from(0,0) to bottom left being (-1,-1) and top right being (1,1)
+    def qtPosToOGL(self, pos):
+        # Subtract 1/2 the screen w/h from the pos.
+        qpos = np.array([pos.x(), pos.y()])
+        wsize = np.array([self.size().width(), self.size().height()])
+        print("Qpos : " + str(qpos))
+        print("Wsize: " + str(wsize))
+        return qpos - wsize
+
+    def zoomOnMouse(self, pos):
+        print("zooming on mouse pos: " + str(pos))
+        print("OpengL window size: " + str((self.size())))
+        print("Mouse Pos to OGL: " + str(self.qtPosToOGL(pos)))
+        self.camera.translate([0,0,-0.2])
+        self.update()
+
+    # Resets camera to default position & orientation
+    def resetCamera(self):
+        self.camera.setPosition([0,0,1])
+        self.camera.setOrientation(0)
+        self.update()
+
     # Triggered only when the mouse is dragged in the opengl frame with the mouse down(on my machine)
     def mouseMoveEvent(self, event):
         pass

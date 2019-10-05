@@ -43,6 +43,11 @@ class QuaternionObject:
         rotation = self.getRotationQuat()
         return conjugate(rotation) * vec3(0,0,1)
 
+    def setPosition(self, pos):
+        self.position = vec3(pos)
+
+    def setOrientation(self, o):
+        self.orientation = vec3(o)
     # Translates the object according to the passed vector.
     # offset - Vector containing direction to translate our object. Accepted types are numpy array, glm::vec3, and python list with 3 floats.
     def translate(self, offset, relative=True):
