@@ -93,10 +93,12 @@ class LSystemDisplayWidget(QOpenGLWidget):
         if(t.tm_hour < 10):
             hour = "0" + hour
         filename = hour+minute+second+".png"
+        #TODO: give user filename control
         print("[ INFO ] Saving screenshot to filename " + str(filename) + "...")
         size = self.size()
         # Read all of the pixels into an array.
-        pixels = glReadPixels(self.x(),self.y()-(.8*self.y()), size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
+        topLeft = self.geometry().topLeft()
+        pixels = glReadPixels(topLeft.x(), topLeft.y()-(self.frameGeometry().y()), size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
         # Create an image from Python Image Library.
         image = Image.frombytes("RGB", (size.width(), size.height()), pixels)
         # FLip that bitch.
