@@ -71,6 +71,8 @@ class UIWidget(QWidget):
     self.lsysbutton.clicked.connect(self.genLSys)
 
     self.exitbutton = QPushButton("Exit", self)
+    self.exitbutton.setShortcut('Ctrl+Q')
+    self.exitbutton.setStatusTip('Exit application')
     self.exitbutton.clicked.connect(self.closeEvent)
 
     #Adding widgets to window
@@ -91,7 +93,7 @@ class UIWidget(QWidget):
 
     self.setLayout(self.layout)
     self.setGeometry(500, 500, 500, 500)
-    self.show()
+    #self.show()
 
   def inputCheck(self):
     '''  This function checks the input
@@ -280,10 +282,35 @@ class UIWidget(QWidget):
     self.genLSys()
     #print(example)
 
+class MyWindow(QMainWindow):
+  def __init__(self, parent=None):
+    super(MyWindow, self).__init__(parent=parent)
+    self.left = 500
+    self.top = 500
+    self.width = 500
+    self.height = 500
+    self.initWindow()
+  def initWindow(self):
+    self.setGeometry(self.left, self.top, self.width, self.height)
+
+    mainMenu = self.menuBar()
+    fileMenu = mainMenu.addMenu('File')
+    self.ui_widget = UIWidget()
+    self.setCentralWidget(self.ui_widget)
+
+    saveMenu = QMenu('Save', self)
+    saveAct = QAction('Take a Screenshot', self)
+    saveAct.setShortcut('Ctrl+S')
+    saveAct.triggered.connect(lambda: self.ui_widget.graphix.screenshot('Test.png'))
+    saveMenu.addAction(saveAct)
+    fileMenu.addMenu(saveMenu)
+    helpMenu = mainMenu.addMenu('Help')
+    self.show()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ui = UIWidget()
+    display = MyWindow()
+
     r = app.exec_()
     sys.exit()
