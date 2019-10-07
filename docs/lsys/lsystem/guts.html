@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>internals Documentation &#8212; L-System Generator 12/10/19 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="graphics Documentation" href="graphics/drw.html" />
+    <link rel="prev" title="UI Documentation" href="../interface.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-Lsystem">
+<span id="internals-documentation"></span><h1>internals Documentation<a class="headerlink" href="#module-Lsystem" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="Lsystem.lgen">
+<code class="sig-prename descclassname">Lsystem.</code><code class="sig-name descname">lgen</code><span class="sig-paren">(</span><em class="sig-param">axioms</em>, <em class="sig-param">rules</em>, <em class="sig-param">it</em><span class="sig-paren">)</span><a class="headerlink" href="#Lsystem.lgen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes in an axiom set of rules and number of iterations and generates the new string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Lsystem.stackgen">
+<code class="sig-prename descclassname">Lsystem.</code><code class="sig-name descname">stackgen</code><span class="sig-paren">(</span><em class="sig-param">axi</em>, <em class="sig-param">rules</em>, <em class="sig-param">it</em><span class="sig-paren">)</span><a class="headerlink" href="#Lsystem.stackgen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes in the generated string and makes it into a stack</p>
+</dd></dl>
+
+<hr class="docutils" />
+<span class="target" id="module-LSystemWidget"></span><dl class="class">
+<dt id="LSystemWidget.LSystemDisplayWidget">
+<em class="property">class </em><code class="sig-prename descclassname">LSystemWidget.</code><code class="sig-name descname">LSystemDisplayWidget</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="LSystemWidget.LSystemDisplayWidget.cleanup">
+<code class="sig-name descname">cleanup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LSystemWidget.LSystemDisplayWidget.clear_mesh">
+<code class="sig-name descname">clear_mesh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget.clear_mesh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LSystemWidget.LSystemDisplayWidget.initializeGL">
+<code class="sig-name descname">initializeGL</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget.initializeGL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LSystemWidget.LSystemDisplayWidget.loadShaders">
+<code class="sig-name descname">loadShaders</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget.loadShaders" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LSystemWidget.LSystemDisplayWidget.paintGL">
+<code class="sig-name descname">paintGL</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget.paintGL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LSystemWidget.LSystemDisplayWidget.resizeGL">
+<code class="sig-name descname">resizeGL</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">int</em>, <em class="sig-param">int</em><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget.resizeGL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LSystemWidget.LSystemDisplayWidget.screenshot">
+<code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget.screenshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LSystemWidget.LSystemDisplayWidget.set_bg_color">
+<code class="sig-name descname">set_bg_color</code><span class="sig-paren">(</span><em class="sig-param">color</em><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget.set_bg_color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LSystemWidget.LSystemDisplayWidget.set_vertices">
+<code class="sig-name descname">set_vertices</code><span class="sig-paren">(</span><em class="sig-param">vertices</em>, <em class="sig-param">split=False</em><span class="sig-paren">)</span><a class="headerlink" href="#LSystemWidget.LSystemDisplayWidget.set_vertices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<span class="target" id="module-pointer_class"></span><dl class="class">
+<dt id="pointer_class.pointer_class">
+<em class="property">class </em><code class="sig-prename descclassname">pointer_class.</code><code class="sig-name descname">pointer_class</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">angle=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pointer_class.pointer_class" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pointer_class.pointer_class.print_info">
+<code class="sig-name descname">print_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pointer_class.pointer_class.print_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<span class="target" id="module-production_rules"></span><dl class="function">
+<dt id="production_rules.Ff">
+<code class="sig-prename descclassname">production_rules.</code><code class="sig-name descname">Ff</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">angle</em><span class="sig-paren">)</span><a class="headerlink" href="#production_rules.Ff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="production_rules.minus">
+<code class="sig-prename descclassname">production_rules.</code><code class="sig-name descname">minus</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">angle</em><span class="sig-paren">)</span><a class="headerlink" href="#production_rules.minus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="production_rules.plus">
+<code class="sig-prename descclassname">production_rules.</code><code class="sig-name descname">plus</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">angle</em><span class="sig-paren">)</span><a class="headerlink" href="#production_rules.plus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<hr class="docutils" />
+<span class="target" id="module-stack_loop"></span><dl class="function">
+<dt id="stack_loop.readStack">
+<code class="sig-prename descclassname">stack_loop.</code><code class="sig-name descname">readStack</code><span class="sig-paren">(</span><em class="sig-param">stack</em>, <em class="sig-param">starting_pt</em>, <em class="sig-param">angle</em><span class="sig-paren">)</span><a class="headerlink" href="#stack_loop.readStack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input list of strings (F, +, -)
+Output List of new vertices</p>
+</dd></dl>
+
+<hr class="docutils" />
+<span class="target" id="module-lsystem_utils"></span><dl class="function">
+<dt id="lsystem_utils.generate_lsystem">
+<code class="sig-prename descclassname">lsystem_utils.</code><code class="sig-name descname">generate_lsystem</code><span class="sig-paren">(</span><em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem_utils.generate_lsystem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem_utils.get_saved_lsystem">
+<code class="sig-prename descclassname">lsystem_utils.</code><code class="sig-name descname">get_saved_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem_utils.get_saved_lsystem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem_utils.load_saved_lsystems">
+<code class="sig-prename descclassname">lsystem_utils.</code><code class="sig-name descname">load_saved_lsystems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem_utils.load_saved_lsystems" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem_utils.normalize_coordinates">
+<code class="sig-prename descclassname">lsystem_utils.</code><code class="sig-name descname">normalize_coordinates</code><span class="sig-paren">(</span><em class="sig-param">coords</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem_utils.normalize_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem_utils.save_lsystem">
+<code class="sig-prename descclassname">lsystem_utils.</code><code class="sig-name descname">save_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem_utils.save_lsystem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">L-System Generator</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../interface.html">UI Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">internals Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphics/drw.html">graphics Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../interface.html" title="previous chapter">UI Documentation</a></li>
+      <li>Next: <a href="graphics/drw.html" title="next chapter">graphics Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Lela Bones, Matt Rovine, Chris Arausa, Stephanie Warman, Matthew Tibebe.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/lsys/lsystem/guts.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
