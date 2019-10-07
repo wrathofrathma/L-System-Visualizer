@@ -33,7 +33,8 @@ class UIWidget(QWidget):
     self.minuses = None
     self.prodrules = []
     load_saved_lsystems()
-    self.initUI()
+    self.initUI(
+            )
   def initUI(self):
     ''' Creates and adds all widgets in the viewport and sets the layout  '''
     self.graphix = LSystemDisplayWidget()
@@ -94,6 +95,7 @@ class UIWidget(QWidget):
     self.setLayout(self.layout)
     self.setGeometry(500, 500, 500, 500)
     #self.show()
+
 
   def inputCheck(self):
     '''  This function checks the input
@@ -291,6 +293,7 @@ class MyWindow(QMainWindow):
     self.height = 500
     self.initWindow()
   def initWindow(self):
+    
     self.setGeometry(self.left, self.top, self.width, self.height)
 
     mainMenu = self.menuBar()
@@ -301,16 +304,25 @@ class MyWindow(QMainWindow):
     saveMenu = QMenu('Save', self)
     saveAct = QAction('Take a Screenshot', self)
     saveAct.setShortcut('Ctrl+S')
-    saveAct.triggered.connect(lambda: self.ui_widget.graphix.screenshot('Test.png'))
+    saveAct.triggered.connect(lambda: self.saveFile())
     saveMenu.addAction(saveAct)
     fileMenu.addMenu(saveMenu)
     helpMenu = mainMenu.addMenu('Help')
     self.show()
 
+  def saveFile(self):
+    options = QFileDialog.Options()
+    fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()", options=options)
+    if fileName:
+        self.ui_widget.graphix.screenshot(fileName + ".png")
+
+  def closeEvent(self, event):
+      print("[ INFO ] Exiting...")
+      self.ui_widget.graphix.cleanup()
+      exit()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     display = MyWindow()
-
     r = app.exec_()
-    sys.exit()
+    sys.exit(r)
