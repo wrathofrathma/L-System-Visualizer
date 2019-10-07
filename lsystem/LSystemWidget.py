@@ -128,8 +128,17 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def screenshot(self, filename):
         print("[ INFO ] Saving screenshot to filename " + str(filename) + "...")
         size = self.size()
+        pos_x = self.pos().x() # Starts from the left. Which is fine.
+        pos_y = self.pos().y() # Starts from the top...so we need to convert this to start from the bottom.
+        # So it should be...parent_size - pos_y + open_gl_height
+        # Going to do some ghetto stuff and pray the parent is always the  top-level, or else this won't work.
+        parent = self.parentWidget()
+        psize = np.array([parent.size().width(), parent.size().height()])
+        pos_y += size.height()
+        pos_y = psize[1] - pos_y
+
         # Read all of the pixels into an array.
-        pixels = glReadPixels(0,0, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
+        pixels = glReadPixels(pos_x,pos_y, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
         # Create an image from Python Image Library.
         image = Image.frombytes("RGB", (size.width(), size.height()), pixels)
         # FLip that bitch.
