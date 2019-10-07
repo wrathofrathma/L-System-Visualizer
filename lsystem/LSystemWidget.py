@@ -75,8 +75,14 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.update()
 
     # Triggered only when the mouse is dragged in the opengl frame with the mouse down(on my machine)
+    def mousePressEvent(self, event):
+        self.oldx = event.pos().x()
+        self.oldy = event.pos().y()
+
     def mouseMoveEvent(self, event):
+        self.newx = event.pos()
         print(event.pos())
+    
     # Called when the OpenGL widget resizes.
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))

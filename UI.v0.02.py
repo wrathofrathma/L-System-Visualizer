@@ -336,7 +336,7 @@ class MyWindow(QMainWindow):
     if fileName:
         self.ui_widget.graphix.screenshot(fileName + ".png")
 
-  def closeEvent(self):
+  def closeEvent(self, event=None):
       print("[ INFO ] Exiting...")
       self.ui_widget.graphix.cleanup()
       exit()
