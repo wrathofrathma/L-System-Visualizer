@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>UI Documentation &#8212; L-System Generator 12/10/19 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="internals Documentation" href="lsystem/guts.html" />
+    <link rel="prev" title="Welcome to L-System Generator’s documentation!" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-UI">
+<span id="ui-documentation"></span><h1>UI Documentation<a class="headerlink" href="#module-UI" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="UI.CustomLineEdit">
+<em class="property">class </em><code class="sig-prename descclassname">UI.</code><code class="sig-name descname">CustomLineEdit</code><a class="headerlink" href="#UI.CustomLineEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class that enables clicking in a text box</p>
+<dl class="method">
+<dt id="UI.CustomLineEdit.clear_box">
+<code class="sig-name descname">clear_box</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UI.CustomLineEdit.clear_box" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="UI.CustomLineEdit.clicked">
+<code class="sig-name descname">clicked</code><a class="headerlink" href="#UI.CustomLineEdit.clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="UI.CustomLineEdit.mousePressEvent">
+<code class="sig-name descname">mousePressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#UI.CustomLineEdit.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="class">
+<dt id="UI.UIWidget">
+<em class="property">class </em><code class="sig-prename descclassname">UI.</code><code class="sig-name descname">UIWidget</code><a class="headerlink" href="#UI.UIWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class that holds all of the widgets for viewing</p>
+<dl class="method">
+<dt id="UI.UIWidget.closeEvent">
+<code class="sig-name descname">closeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">QCloseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#UI.UIWidget.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="UI.UIWidget.genExample">
+<code class="sig-name descname">genExample</code><span class="sig-paren">(</span><em class="sig-param">example</em><span class="sig-paren">)</span><a class="headerlink" href="#UI.UIWidget.genExample" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="UI.UIWidget.genLSys">
+<code class="sig-name descname">genLSys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UI.UIWidget.genLSys" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the input is valid, iterates through productions and sends to graphics to be drawn</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="UI.UIWidget.genRuleDict">
+<code class="sig-name descname">genRuleDict</code><span class="sig-paren">(</span><em class="sig-param">prodRules</em><span class="sig-paren">)</span><a class="headerlink" href="#UI.UIWidget.genRuleDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="UI.UIWidget.initUI">
+<code class="sig-name descname">initUI</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UI.UIWidget.initUI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds all widgets in the viewport and sets the layout</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="UI.UIWidget.inputCheck">
+<code class="sig-name descname">inputCheck</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UI.UIWidget.inputCheck" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function checks the input
+Returns 1 if valid
+Returns 0 otherwise</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="UI.UIWidget.lessProds">
+<code class="sig-name descname">lessProds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UI.UIWidget.lessProds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes productions when - button is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="UI.UIWidget.moreProds">
+<code class="sig-name descname">moreProds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UI.UIWidget.moreProds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates more productions when + button is clicked</p>
+</dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="class">
+<dt id="UI.MyWindow">
+<em class="property">class </em><code class="sig-prename descclassname">UI.</code><code class="sig-name descname">MyWindow</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="headerlink" href="#UI.MyWindow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="UI.MyWindow.closeEvent">
+<code class="sig-name descname">closeEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">QCloseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#UI.MyWindow.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="UI.MyWindow.initWindow">
+<code class="sig-name descname">initWindow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UI.MyWindow.initWindow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="UI.MyWindow.saveFile">
+<code class="sig-name descname">saveFile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UI.MyWindow.saveFile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">L-System Generator</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">UI Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lsystem/guts.html">internals Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lsystem/graphics/drw.html">graphics Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">Welcome to L-System Generator’s documentation!</a></li>
+      <li>Next: <a href="lsystem/guts.html" title="next chapter">internals Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Lela Bones, Matt Rovine, Chris Arausa, Stephanie Warman, Matthew Tibebe.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/lsys/interface.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
