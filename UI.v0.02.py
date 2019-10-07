@@ -70,12 +70,12 @@ class UIWidget(QWidget):
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
     self.lsysbutton.clicked.connect(self.genLSys)
-
+    '''
     self.exitbutton = QPushButton("Exit", self)
     self.exitbutton.setShortcut('Ctrl+Q')
     self.exitbutton.setStatusTip('Exit application')
     self.exitbutton.clicked.connect(self.closeEvent)
-
+    '''
     #Adding widgets to window
     self.layout.addWidget(self.axiom, 1, 0)
     self.layout.addWidget(self.axiomEdit, 1, 1, 1, 3)
@@ -89,8 +89,8 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.kochs, 8, 0, 1, 1)
     self.layout.addWidget(self.cantor, 9, 0, 1, 1)
     self.layout.addWidget(self.graphix, 8, 1, 5, -1)
-    self.layout.addWidget(self.lsysbutton, 11, 0, 1, 1)
-    self.layout.addWidget(self.exitbutton, 12, 0, -1, 1)
+    self.layout.addWidget(self.lsysbutton, 112, 0, 1, -1)
+    #self.layout.addWidget(self.exitbutton, 12, 0, -1, 1)
 
     self.setLayout(self.layout)
     self.setGeometry(500, 500, 500, 500)
@@ -298,6 +298,10 @@ class MyWindow(QMainWindow):
 
     mainMenu = self.menuBar()
     fileMenu = mainMenu.addMenu('File')
+    viewMenu = mainMenu.addMenu('View')
+    helpMenu = mainMenu.addMenu('Help')
+    
+    
     self.ui_widget = UIWidget()
     self.setCentralWidget(self.ui_widget)
 
@@ -306,8 +310,24 @@ class MyWindow(QMainWindow):
     saveAct.setShortcut('Ctrl+S')
     saveAct.triggered.connect(lambda: self.saveFile())
     saveMenu.addAction(saveAct)
+    
+    exitAction = QAction('Exit', self)
+    exitAction.setShortcut('Ctrl+Q')
+    exitAction.triggered.connect(lambda: self.closeEvent())
+
+    zoomIn = QAction('Zoom In', self)
+    zoomIn.setShortcut('Ctrl++')
+    zoomIn.triggered.connect(lambda: self.ui_widget.graphix.zoomIN())
+    
+    zoomOut = QAction('Zoom Out', self)
+    zoomOut.setShortcut('Ctrl+-')
+    zoomOut.triggered.connect(lambda: self.ui_widget.graphix.zoomOUT())
+
     fileMenu.addMenu(saveMenu)
-    helpMenu = mainMenu.addMenu('Help')
+    fileMenu.addAction(exitAction)
+    viewMenu.addAction(zoomIn)
+    viewMenu.addAction(zoomOut)
+
     self.show()
 
   def saveFile(self):

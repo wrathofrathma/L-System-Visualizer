@@ -42,7 +42,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         for mesh in self.meshes:
             mesh.draw()
 
-
+    '''
     # Triggered when the mouse is pressed in the opengl frame.
     def mousePressEvent(self, event):
         if(event.button()==Qt.LeftButton):
@@ -54,6 +54,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
             self.update()
         elif(event.button()==Qt.MidButton):
             self.resetCamera()
+    '''
     # Converts a qt mouse position event coordinates to opengl coordinates
     # aka top left from(0,0) to bottom left being (-1,-1) and top right being (1,1)
     def qtPosToOGL(self, pos):
@@ -64,11 +65,16 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("Wsize: " + str(wsize))
         return qpos - wsize
 
-    def zoomOnMouse(self, pos):
-        print("zooming on mouse pos: " + str(pos))
-        print("OpengL window size: " + str((self.size())))
-        print("Mouse Pos to OGL: " + str(self.qtPosToOGL(pos)))
+    def zoomIN(self):
+        print("zooming in")
+        #print("OpengL window size: " + str((self.size())))
+        #print("Mouse Pos to OGL: " + str(self.qtPosToOGL(pos)))
         self.camera.translate([0,0,-0.2])
+        self.update()
+
+    def zoomOUT(self):
+        print("zooming out")
+        self.camera.translate([0,0,0.2])
         self.update()
 
     # Resets camera to default position & orientation
