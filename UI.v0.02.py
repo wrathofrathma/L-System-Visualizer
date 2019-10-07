@@ -312,7 +312,7 @@ class MyWindow(QMainWindow):
 
   def saveFile(self):
     options = QFileDialog.Options()
-    fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()", options=options)
+    fileName, _ = QFileDialog.getSaveFileName(self,"Save Screenshot", options=options)
     if fileName:
         self.ui_widget.graphix.screenshot(fileName + ".png")
 
