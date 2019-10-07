@@ -19,9 +19,8 @@ def readStack(stack, starting_pt, angle):
   vert_arr = []
   mesh_arr =[]
   s = stack.split('f')
-
-  #set up the first object (mesh)
-#  mesh_arr.append(pointer_class(starting_pt[0],starting_pt[1]))
+  #Set up a dictionary of all the possible angles and calculate the sin and cos of those angles ahead of time
+  #WARNING currently rounding all angles to 5 digits, may not be exact enough
   trig_dict = dict()
   trig_dict['angle'] = angle
   it =0
@@ -29,13 +28,19 @@ def readStack(stack, starting_pt, angle):
   t = time()
   print("[ INFO ] Calculating angles")
   while it < 360:
-    pos_angles = np.append(pos_angles,it)
+    pos_angles = np.append(pos_angles,round(it,5))
     it+=angle
+  #if the angle doesn't divide evenly into 360, find the negative angles mod 360 too
+  if it != 360:
+    it = 360
+    while it > angle:
+      it-=angle
+      pos_angles = np.append(pos_angles, round(it,5))
+  print("angle dictionary = ",pos_angles)
   sin_arr = np.sin(np.array(pos_angles)*np.pi/180.)
   cos_arr = np.cos(np.array(pos_angles)*np.pi/180.)
   for i in range(len(pos_angles)):
     trig_dict[pos_angles[i]] = (cos_arr[i],sin_arr[i])
-  #TODO change pointer class poistion to regular list?
   vertices.append(starting_pt) #append starting position
   new_point = starting_pt
   new_angle = 0
@@ -48,9 +53,9 @@ def readStack(stack, starting_pt, angle):
       new_point = (new_point[0]+trig_dict[new_angle][0],new_point[1]+trig_dict[new_angle][1])
       vertices.append(new_point)
     elif s[0][i] == '+':
-        new_angle = (new_angle - trig_dict['angle'])%360
+        new_angle = round((new_angle - angle)%360,5)
     elif s[0][i] == '-':
-      new_angle = (new_angle + trig_dict['angle'])%360
+      new_angle = round((new_angle + angle)%360,5)
     #prev_point, prev_angle = new_point, new_angle
 #  print(vertices)
   #vertices = list(dict.fromkeys(vertices)) # remove duplicates
