@@ -42,19 +42,10 @@ class LSystemDisplayWidget(QOpenGLWidget):
         for mesh in self.meshes:
             mesh.draw()
 
-    '''
     # Triggered when the mouse is pressed in the opengl frame.
-    def mousePressEvent(self, event):
-        if(event.button()==Qt.LeftButton):
-            self.zoomOnMouse((event.pos()))
+    # def mousePressEvent(self, event):
+    #     print("Press: " + str(event.pos()))
 
-        elif(event.button()==Qt.RightButton):
-            # Zoom in
-            self.camera.translate([0,0,0.2])
-            self.update()
-        elif(event.button()==Qt.MidButton):
-            self.resetCamera()
-    '''
     # Converts a qt mouse position event coordinates to opengl coordinates
     # aka top left from(0,0) to bottom left being (-1,-1) and top right being (1,1)
     def qtPosToOGL(self, pos):
@@ -85,7 +76,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
     # Triggered only when the mouse is dragged in the opengl frame with the mouse down(on my machine)
     def mouseMoveEvent(self, event):
-        pass
+        print(event.pos())
     # Called when the OpenGL widget resizes.
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))
