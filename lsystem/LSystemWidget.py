@@ -133,9 +133,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # So it should be...parent_size - pos_y + open_gl_height
         # Going to do some ghetto stuff and pray the parent is always the  top-level, or else this won't work.
         parent = self.parentWidget()
-        psize = np.array([parent.size().width(), parent.size().height()])
+        pheight = parent.size().height()
         pos_y += size.height()
-        pos_y = psize[1] - pos_y
+        pos_y = pheight - pos_y
 
         # Read all of the pixels into an array.
         pixels = glReadPixels(pos_x,pos_y, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
