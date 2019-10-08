@@ -80,9 +80,16 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.oldy = event.pos().y()
 
     def mouseMoveEvent(self, event):
-        self.newx = event.pos()
-        print(event.pos())
-    
+        self.newx = event.pos().x()
+        self.newy = event.pos().y()
+        xdiff = (self.oldx-self.newx) * .001
+        ydiff = (self.oldy-self.newy) * -.001
+        self.camera.translate([xdiff, ydiff, 0])
+        self.update()
+        self.oldx = self.newx
+        self.oldy = self.newy
+        print(xdiff, ydiff)
+
     # Called when the OpenGL widget resizes.
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))
