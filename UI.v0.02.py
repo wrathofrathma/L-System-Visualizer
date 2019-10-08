@@ -316,7 +316,7 @@ class MyWindow(QMainWindow):
     exitAction.triggered.connect(lambda: self.closeEvent())
 
     zoomIn = QAction('Zoom In', self)
-    zoomIn.setShortcut('Ctr++')
+    zoomIn.setShortcut('Ctrl++')
     zoomIn.triggered.connect(lambda: self.ui_widget.graphix.zoomIN())
     
     zoomOut = QAction('Zoom Out', self)
