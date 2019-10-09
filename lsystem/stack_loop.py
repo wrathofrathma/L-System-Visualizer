@@ -81,15 +81,19 @@ def readStack(stack, starting_pt, angle):
   pos_angles= []
   t = time()
   print("[ INFO ] Calculating angles")
-  while it < 360:
-    pos_angles = np.append(pos_angles,round(it,5))
-    it+=angle
-  #if the angle doesn't divide evenly into 360, find the negative angles mod 360 too
-  if it != 360:
-    it = 360
-    while it > angle:
-      it-=angle
-      pos_angles = np.append(pos_angles, round(it,5))
+  if angle != 0:
+    while it < 360:
+      pos_angles = np.append(pos_angles,round(it,5))
+      it+=angle
+      #if the angle doesn't divide evenly into 360, find the negative angles mod 360 too
+    if it != 360:
+      it = 360
+      while it > angle:
+        it-=angle
+        pos_angles = np.append(pos_angles, round(it,5))
+  else:
+    pos_angles =np.append(pos_angles,0)
+
   print("angle dictionary = ",pos_angles)
   sin_arr = np.sin(np.array(pos_angles)*np.pi/180.)
   cos_arr = np.cos(np.array(pos_angles)*np.pi/180.)
