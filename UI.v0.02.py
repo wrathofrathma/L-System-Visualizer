@@ -7,7 +7,7 @@ from lsystem.LSystemWidget import *
 from lsystem.lsystem_utils import *
 
 
-alphabet = ["F","f","-","+"]
+alphabet = ["F","f","-","+","[","]"]
 error_message = "X"
 
 class CustomLineEdit(QtWidgets.QLineEdit):
@@ -293,15 +293,15 @@ class MyWindow(QMainWindow):
     self.height = 500
     self.initWindow()
   def initWindow(self):
-    
+
     self.setGeometry(self.left, self.top, self.width, self.height)
 
     mainMenu = self.menuBar()
     fileMenu = mainMenu.addMenu('File')
     viewMenu = mainMenu.addMenu('View')
     helpMenu = mainMenu.addMenu('Help')
-    
-    
+
+
     self.ui_widget = UIWidget()
     self.setCentralWidget(self.ui_widget)
 
@@ -310,7 +310,7 @@ class MyWindow(QMainWindow):
     saveAct.setShortcut('Ctrl+S')
     saveAct.triggered.connect(lambda: self.saveFile())
     saveMenu.addAction(saveAct)
-    
+
     exitAction = QAction('Exit', self)
     exitAction.setShortcut('Ctrl+Q')
     exitAction.triggered.connect(lambda: self.closeEvent())
@@ -318,7 +318,7 @@ class MyWindow(QMainWindow):
     zoomIn = QAction('Zoom In', self)
     zoomIn.setShortcut('Ctrl++')
     zoomIn.triggered.connect(lambda: self.ui_widget.graphix.zoomIN())
-    
+
     zoomOut = QAction('Zoom Out', self)
     zoomOut.setShortcut('Ctrl+-')
     zoomOut.triggered.connect(lambda: self.ui_widget.graphix.zoomOUT())
