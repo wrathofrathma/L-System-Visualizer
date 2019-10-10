@@ -106,7 +106,7 @@ def readStack(stack, starting_pt, angle):
   for str in s:
     if str[0]=='f':
       #move little f
-      curr_state[0] = (curr_state[0][0]+trig_dict[curr_state[1]][0],curr_state[0][1]+trig_dict[curr_state[1]][1])
+      curr_state = ((curr_state[0][0]+trig_dict[curr_state[1]][0],curr_state[0][1]+trig_dict[curr_state[1]][1]),currAngle)
       str.replace('f','')
     elif str[0]=='[':
       saved_states.append(curr_state)
