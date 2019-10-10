@@ -181,20 +181,52 @@ class UIWidget(QWidget):
   #Probably doesn't need self as a param, can just be static.
   # Generates a rule dictionary from an array of production rule strings taken from the UI
   def genRuleDict(self, prodRules):
-    rules = {}
-    for rule in prodRules:
-      rule = rule.text()
-      rule = rule.replace(" ","")
-      pr = rule.replace("->",":")
-      pr = pr.split(':')
-      rules[pr[0]]=pr[1]
-    '''
-    THIS PART IS NOT CONTEXT SENSITIVE
-    '''
-    for letter in alphabet:
-      if not letter in list(rules.keys()):
-        rules[letter] = letter
-    return rules
+    non_det = 0
+    if non_det == 0:
+      rules = {}
+      for rule in prodRules:
+        rule = rule.text()
+        rule = rule.replace(" ","")
+        pr = rule.replace("->",":")
+        pr = pr.split(':')
+        rules[pr[0]] = pr[1]
+      '''
+      THIS PART IS NOT CONTEXT SENSITIVE
+      '''
+      for letter in alphabet:
+        if not letter in list(rules.keys()):
+          rules[letter] = letter
+      return rules
+    elif non_det == 1:
+      #formats production rules as
+      """
+      {"F": [[p,rule],[p,rule]], "f":[[p,rule],[p,rule]] ... }
+      """
+      rules = {}
+      for r in alphabet:
+        rules[r]=[]
+      for rule in prodRules:
+        rule = rule.text()
+        rule = rule.replace(" ","")
+        pr = rule.replace("->",":")
+        pr = pr.split(':')
+        rules[pr[0]].append([0,pr[1]])
+      '''
+      THIS PART IS NOT CONTEXT SENSITIVE
+      '''
+
+      for key in rules.keys():
+        #r is random array of prob that add to 1
+        l=len(rules[key])
+        r = [rand.random() for i in range(1,l+1)]
+        s = sum(r)
+        r = [ i/s for i in r ]
+        for i in range(l):
+          rules[key][i][0] = r[i]
+      for letter in alphabet:
+        if len(rules[letter])==0:
+          rules[letter].append([1,letter])
+      return rules
 
   def closeEvent(self, event):
       print("[ INFO ] Exiting...")
