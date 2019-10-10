@@ -41,13 +41,9 @@ class Mesh(QuaternionObject):
         # Each vertex needs a color.
         self.colors = []
         for v in range(len(self.vertices)):
-            # self.colors.append(rand.randint(0,255)/255.0)
-            # self.colors.append(rand.randint(0,255)/255.0)
-            # self.colors.append(rand.randint(0,255)/255.0)
-            self.colors.append(1)
-            self.colors.append(1)
-            self.colors.append(1)
-
+            self.colors.append(rand.randint(0,255)/255.0)
+            self.colors.append(rand.randint(0,255)/255.0)
+            self.colors.append(rand.randint(0,255)/255.0)
             self.colors.append(0)
         self.colors = np.array(self.colors, dtype=np.float32)
 

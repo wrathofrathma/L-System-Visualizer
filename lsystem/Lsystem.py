@@ -28,12 +28,6 @@ def lgen(axioms, rules, it):
         if (len(axioms)>1):
             axi1,axi2=[''],['']
             axi1[0],axi2[0] = axioms[:int(len(axioms)/2)], axioms[int(len(axioms)/2):]
-            #if(len(axioms)%2==0):
-            #    axi1,axi2 = axioms[:len(axioms)//2], axioms[:len(axioms)//2]
-            #else:
-            #    axi1,axi2 = axioms[:len(axioms)//2], axioms[:(len(axioms)//2)+1]
-
-
             thread1 = threading.Thread(target=axigenq, args=(axi1,rules))
             thread2 = threading.Thread(target=axigenq, args=(axi2,rules))
 
@@ -49,24 +43,4 @@ def lgen(axioms, rules, it):
 
         else:
             axioms=axigen(axioms, rules)
-    #print(axioms)
     return axioms
-'''
-def stackgen(axi,rules, it):
-
-    Takes in the generated string and makes it into a stack
-
-    axi= lgen(axi,rules,it)
-    stack = []
-    it=0
-    for _ in range(len(axi)):
-        stack.append(axi[it])
-        it=it+1
-    return stack
-
-if __name__ == "__main__":
-    rules = {"F":"F+F--F+F"}
-    print(lgen('F',rules,5))
-    val = stackgen(rules)
-    print(val.pop())
-'''

@@ -38,12 +38,7 @@ def lgen(axioms, rules, it):
         if (len(axioms)>1):
             axi1,axi2=[''],['']
             axi1[0],axi2[0] = axioms[:int(len(axioms)/2)], axioms[int(len(axioms)/2):]
-            #if(len(axioms)%2==0):
-            #    axi1,axi2 = axioms[:len(axioms)//2], axioms[:len(axioms)//2]
-            #else:
-            #    axi1,axi2 = axioms[:len(axioms)//2], axioms[:(len(axioms)//2)+1]
-
-
+            
             thread1 = threading.Thread(target=axigenq, args=(axi1,rules))
             thread2 = threading.Thread(target=axigenq, args=(axi2,rules))
 

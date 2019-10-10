@@ -38,8 +38,6 @@ class UIWidget(QWidget):
   def initUI(self):
     ''' Creates and adds all widgets in the viewport and sets the layout  '''
     self.graphix = LSystemDisplayWidget()
-    #renames the window
-    self.setWindowTitle('L-Systems Generator')
 
     self.layout = QGridLayout()
 
@@ -70,12 +68,7 @@ class UIWidget(QWidget):
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
     self.lsysbutton.clicked.connect(self.genLSys)
-    '''
-    self.exitbutton = QPushButton("Exit", self)
-    self.exitbutton.setShortcut('Ctrl+Q')
-    self.exitbutton.setStatusTip('Exit application')
-    self.exitbutton.clicked.connect(self.closeEvent)
-    '''
+    
     #Adding widgets to window
     self.layout.addWidget(self.axiom, 1, 0)
     self.layout.addWidget(self.axiomEdit, 1, 1, 1, 3)
@@ -90,11 +83,9 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.cantor, 9, 0, 1, 1)
     self.layout.addWidget(self.graphix, 8, 1, 5, -1)
     self.layout.addWidget(self.lsysbutton, 112, 0, 1, -1)
-    #self.layout.addWidget(self.exitbutton, 12, 0, -1, 1)
 
     self.setLayout(self.layout)
     self.setGeometry(500, 500, 500, 500)
-    #self.show()
 
 
   def inputCheck(self):
@@ -117,22 +108,6 @@ class UIWidget(QWidget):
         self.axiomEdit.setText(error_message)
         valid_input = 0
     axiomInProd = 0
-    '''
-    #This makes sure the axiom is in the production rules
-    for prod in self.prodrulesEdit:
-      prodInput=prod.text()
-      prodInput=prodInput.replace(' ','')
-      prodInputarr = prodInput.split("->")
-      try:
-        if prodInputarr[0] == axiomInput:
-          axiomInProd = 1
-      except:
-        axiomInProd =0
-    if not axiomInProd:
-      self.axiomEdit.setStyleSheet("color: red;")
-      self.axiomEdit.setText(error_message)
-      valid_input = 0
-    '''
     #TODO make this work for more than one prod rule
     for prod in self.prodrulesEdit:
       prodInput = prod.text()
@@ -247,13 +222,10 @@ class UIWidget(QWidget):
     ''' If the input is valid, iterates through productions and sends to graphics to be drawn '''
     if self.inputCheck():
       axiomInput = self.axiomEdit.text()
-      #prodInput = [self.prodrulesEdit.text()] #changed to array
       angleInput = self.angleEdit.text()
       itersInput = self.itersEdit.text()
       print("Axiom: ", axiomInput)
       print("Productions: ")
-      #for prod in prodInput:
-      #    print(prod)
       print("Angle: ", angleInput)
       print("Iterations: ", itersInput)
       # Format input for use
@@ -278,11 +250,9 @@ class UIWidget(QWidget):
     self.axiomEdit.setText(grammar['axiom'])
     for key,val in grammar['rules'].items():
       self.prodrulesEdit[0].setText(key+"->"+val)
-    #self.prodrulesEdit[0].setText(str(grammar['rules']))
     self.angleEdit.setText(str(grammar["angle"]))
     self.itersEdit.setText(str(grammar['iterations']))
     self.genLSys()
-    #print(example)
 
 class MyWindow(QMainWindow):
   def __init__(self, parent=None):
@@ -295,6 +265,8 @@ class MyWindow(QMainWindow):
   def initWindow(self):
 
     self.setGeometry(self.left, self.top, self.width, self.height)
+
+    self.setWindowTitle("L-System Generator")
 
     mainMenu = self.menuBar()
     fileMenu = mainMenu.addMenu('File')
@@ -316,7 +288,8 @@ class MyWindow(QMainWindow):
     exitAction.triggered.connect(lambda: self.closeEvent())
 
     zoomIn = QAction('Zoom In', self)
-    zoomIn.setShortcut('Ctrl++')
+    #zoomIn.setShortcut('Ctrl++')
+    zoomIn.setShortcut('Ctrl+=')
     zoomIn.triggered.connect(lambda: self.ui_widget.graphix.zoomIN())
 
     zoomOut = QAction('Zoom Out', self)

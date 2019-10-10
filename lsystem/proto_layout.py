@@ -35,8 +35,6 @@ def get_Axiom(entries):
   for ch in axiom:
     if not ch in alphabet:
       print_invalid(entries['Axiom'])
-    
-     # root.after(10, entries['Axiom'].config(background=dfault_col))
       
 def get_ProdRules(entries):
   '''

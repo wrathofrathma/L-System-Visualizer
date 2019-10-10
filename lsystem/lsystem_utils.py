@@ -34,24 +34,10 @@ saved_file = "assets/lsystems/saved_lsystems.json"
 def generate_lsystem(grammar):
   grammar_copy= copy.deepcopy(grammar)
   print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
-  #grammar_copy['angle'] = grammar_copy['angle'] * math.pi/180.0 # Convert to radians.
   # Generate full production string.
   s = lgen(grammar_copy['axiom'], grammar_copy['rules'], grammar_copy['iterations'])
+  
   # Generate vertics
-  """
-  s = s.split('f')
-  vertsArray =[]
-  vertsArray.append(readStack(s[0], (0,0), grammar['angle']))
-  for i in range (1,len(s)):
-    vertsArray.append(readStack(s[i],verts[i-1][-1], grammar['angle']))
-  # Converts to usable normalized coordinates
-  for verts in vertsArray:
-    verts = np.array(verts, dtype=np.float32)
-    verts = verts.reshape(verts.shape[0],verts.shape[1])
-    verts = normalize_coordinates(verts)
-  return vertsArray #returns an array of arrays of vertices
-  """
-
   verts_arr_temp = readStack(s,(0,0),grammar_copy['angle'])
   verts_arr = []
   m = map(max,verts_arr_temp)
@@ -64,15 +50,7 @@ def generate_lsystem(grammar):
     verts = verts.reshape(verts.shape[0]*verts.shape[1])
     verts = normalize_coordinates(verts,m)
     verts_arr.append(verts)
-  """
-
-  verts = readStack(s,(0,0),grammar_copy['angle'])
-  print(verts)
-  verts = np.array(verts, dtype=np.float32)
-  verts = verts.reshape(verts.shape[0],verts.shape[1])
-  verts = normalize_coordinates(verts)
-  print(verts)
-  """
+    
   return verts_arr
 
 # Saves a given lsystem to disk to "lsystem/saved_lsystems.json"

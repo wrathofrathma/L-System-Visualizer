@@ -29,9 +29,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.meshes[0].set_vertices(verts[0])
         self.keep_centered = True # Boolean for whether to center the mesh after resizes.
         self.camera = FreeCamera(800,600)
-        #self.camera = SphericalCamera(800,600)
-        #self.camera.r = -4
-        # self.camera.updateView()
     # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
@@ -41,10 +38,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.camera.applyUpdate(self.shader)
         for mesh in self.meshes:
             mesh.draw()
-
-    # Triggered when the mouse is pressed in the opengl frame.
-    # def mousePressEvent(self, event):
-    #     print("Press: " + str(event.pos()))
 
     # Converts a qt mouse position event coordinates to opengl coordinates
     # aka top left from(0,0) to bottom left being (-1,-1) and top right being (1,1)
@@ -58,8 +51,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
     def zoomIN(self):
         print("zooming in")
-        #print("OpengL window size: " + str((self.size())))
-        #print("Mouse Pos to OGL: " + str(self.qtPosToOGL(pos)))
         self.camera.translate([0,0,-0.2])
         self.update()
 
@@ -108,7 +99,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Initializing OpenGL...")
         self.loadShaders()
         print("[ INFO ] Shader ID: " + str(self.shader))
-    #    glLineWidth(5)
         # Set the shader for every mesh
         for mesh in self.meshes:
             mesh.set_shader(self.shader)
@@ -163,9 +153,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # Cleaning up mesh memory on GPU
         self.clear_mesh()
 
-        # Detaching shaders and deleting shader program
-        #glDetachShader(self.shader, self.vs)
-        #glDetachShader(self.shader, self.fs)
         glDeleteShader(self.vs)
 
         glDeleteShader(self.fs)
