@@ -5,6 +5,7 @@ from lsystem.production_rules import *
 import numpy as np
 from time import time
 import copy
+import json
 funcdict = {
   'F': Ff,
   '+': plus,
@@ -22,6 +23,8 @@ def readsubstring(string, starting_pt, start_angle, trig_dict):
   new_angle = start_angle # initalize starting angle
   vertContainer.append(new_point) # append first point
   for i in range(len(string)):
+    if not new_angle in trig_dict.keys():
+      trig_dict[new_angle]=[math.cos(new_angle),math.sin(new_angle)]
     if string[i] == 'F':
       new_point = (new_point[0]+trig_dict[new_angle][0],new_point[1]+trig_dict[new_angle][1])
       vertContainer.append(new_point)
@@ -83,23 +86,28 @@ def readStack(stack, starting_pt, angle):
   print("[ INFO ] Calculating angles")
   if angle != 0:
     while it < 360:
+      if it == math.floor(it):
+        print(it)
       pos_angles = np.append(pos_angles,round(it,5))
       it+=angle
-      #if the angle doesn't divide evenly into 360, find the negative angles mod 360 too
-    if it != 360:
-      it = 360
-      while it > angle:
-        it-=angle
-        pos_angles = np.append(pos_angles, round(it,5))
+
+
+  #if the angle doesn't divide evenly into 360, find the negative angles mod 360 too
+  if it != 360:
+    it = 360
+    while it > angle:
+      it-=angle
+      pos_angles = np.append(pos_angles, round(it,5))
+
   else:
     pos_angles =np.append(pos_angles,0)
+
 
   print("angle dictionary = ",pos_angles)
   sin_arr = np.sin(np.array(pos_angles)*np.pi/180.)
   cos_arr = np.cos(np.array(pos_angles)*np.pi/180.)
   for i in range(len(pos_angles)):
     trig_dict[pos_angles[i]] = (cos_arr[i],sin_arr[i])
-
   new_point = starting_pt #new point initalized to starting point
   curr_state=(starting_pt, 0)
   #for each little f create a new mesh with the starting position and angle initialized from the previous mesh
