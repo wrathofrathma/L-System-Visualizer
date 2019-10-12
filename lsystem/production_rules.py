@@ -11,6 +11,19 @@ def Ff(pos,prev_angle, trig_dict):
   #calculate new position
   pos = (x+trig_dict[prev_angle][0],y+trig_dict[prev_angle][1])
   return pos, prev_angle
+
+def Hh(pos,prev_angle, trig_dict):
+  #input: a pointer_class object
+  #output: updates pointer class position
+  #seperates the position into coordinates
+  x = pos[0]
+  y = pos[1]
+  #calculate new position
+  pos = (x+(trig_dict[prev_angle][0]/2),y+(trig_dict[prev_angle][1]/2))
+  print(pos)
+  return pos, prev_angle
+
+
 def plus(pos,prev_angle, trig_dict):
   #input:pointer_class object
   #output: updates pointer class angle clockwise

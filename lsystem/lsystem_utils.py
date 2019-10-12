@@ -51,7 +51,6 @@ def generate_lsystem(grammar):
     verts = normalize_coordinates(verts)
   return vertsArray #returns an array of arrays of vertices
   """
-
   verts_arr_temp = readStack(s,(0,0),grammar_copy['angle'])
   verts_arr = []
   m = map(max,verts_arr_temp)

@@ -7,7 +7,9 @@ from lsystem.LSystemWidget import *
 from lsystem.lsystem_utils import *
 
 
-alphabet = ["F","f","-","+","[","]"]
+alphabet = ["F","f","H","h","-","+","[","]"]
+ctrl_char = ['A','B','C','D','E','G','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+alphabet = alphabet + ctrl_char
 error_message = "X"
 
 class CustomLineEdit(QtWidgets.QLineEdit):
@@ -69,6 +71,7 @@ class UIWidget(QWidget):
 
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
+    self.lsysbutton.setShortcut('Ctrl+Return')
     self.lsysbutton.clicked.connect(self.genLSys)
     '''
     self.exitbutton = QPushButton("Exit", self)
@@ -181,52 +184,20 @@ class UIWidget(QWidget):
   #Probably doesn't need self as a param, can just be static.
   # Generates a rule dictionary from an array of production rule strings taken from the UI
   def genRuleDict(self, prodRules):
-    non_det = 0
-    if non_det == 0:
-      rules = {}
-      for rule in prodRules:
-        rule = rule.text()
-        rule = rule.replace(" ","")
-        pr = rule.replace("->",":")
-        pr = pr.split(':')
-        rules[pr[0]] = pr[1]
-      '''
-      THIS PART IS NOT CONTEXT SENSITIVE
-      '''
-      for letter in alphabet:
-        if not letter in list(rules.keys()):
-          rules[letter] = letter
-      return rules
-    elif non_det == 1:
-      #formats production rules as
-      """
-      {"F": [[p,rule],[p,rule]], "f":[[p,rule],[p,rule]] ... }
-      """
-      rules = {}
-      for r in alphabet:
-        rules[r]=[]
-      for rule in prodRules:
-        rule = rule.text()
-        rule = rule.replace(" ","")
-        pr = rule.replace("->",":")
-        pr = pr.split(':')
-        rules[pr[0]].append([0,pr[1]])
-      '''
-      THIS PART IS NOT CONTEXT SENSITIVE
-      '''
-
-      for key in rules.keys():
-        #r is random array of prob that add to 1
-        l=len(rules[key])
-        r = [rand.random() for i in range(1,l+1)]
-        s = sum(r)
-        r = [ i/s for i in r ]
-        for i in range(l):
-          rules[key][i][0] = r[i]
-      for letter in alphabet:
-        if len(rules[letter])==0:
-          rules[letter].append([1,letter])
-      return rules
+    rules = {}
+    for rule in prodRules:
+      rule = rule.text()
+      rule = rule.replace(" ","")
+      pr = rule.replace("->",":")
+      pr = pr.split(':')
+      rules[pr[0]]=pr[1]
+    '''
+    THIS PART IS NOT CONTEXT SENSITIVE
+    '''
+    for letter in alphabet:
+      if not letter in list(rules.keys()):
+        rules[letter] = letter
+    return rules
 
   def closeEvent(self, event):
       print("[ INFO ] Exiting...")
@@ -324,6 +295,7 @@ class MyWindow(QMainWindow):
     self.width = 500
     self.height = 500
     self.initWindow()
+    self.setWindowTitle("L-System Vizualiser")
   def initWindow(self):
 
     self.setGeometry(self.left, self.top, self.width, self.height)
@@ -355,10 +327,31 @@ class MyWindow(QMainWindow):
     zoomOut.setShortcut('Ctrl+-')
     zoomOut.triggered.connect(lambda: self.ui_widget.graphix.zoomOUT())
 
+    symbolGlossary = QMenu('Glossary', self)
+    bigF = QAction('F : Draw a line of unit length',self)
+    littleF = QAction('f : Move in a line unit length',self)
+    bigH = QAction('H : Draw a line of half unit length',self)
+    littleH = QAction('h : Move in a line of unit length',self)
+    plus = QAction('+ : Turn clockwise by angle',self)
+    minus = QAction('- : Turn counter-clockwise by angle',self)
+    leftB = QAction('[ : Start a branch',self)
+    rightB = QAction('] : End a branch',self)
+    ctrl = QAction('A-E, G, I-Z : Control characters to direct the flow of evolution',self)
+    symbolGlossary.addAction(bigF)
+    symbolGlossary.addAction(littleF)
+    symbolGlossary.addAction(bigH)
+    symbolGlossary.addAction(littleH)
+    symbolGlossary.addAction(plus)
+    symbolGlossary.addAction(minus)
+    symbolGlossary.addAction(leftB)
+    symbolGlossary.addAction(rightB)
+    symbolGlossary.addAction(ctrl)
+
     fileMenu.addMenu(saveMenu)
     fileMenu.addAction(exitAction)
     viewMenu.addAction(zoomIn)
     viewMenu.addAction(zoomOut)
+    helpMenu.addMenu(symbolGlossary)
 
     self.show()
 
