@@ -29,6 +29,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.meshes[0].set_vertices(verts[0])
         self.keep_centered = True # Boolean for whether to center the mesh after resizes.
         self.camera = FreeCamera(800,600)
+        self.translation_speed = 0.01
+        self.zoom_level = 100.0
         #self.camera = SphericalCamera(800,600)
         #self.camera.r = -4
         # self.camera.updateView()
@@ -57,16 +59,26 @@ class LSystemDisplayWidget(QOpenGLWidget):
         return qpos - wsize
 
     def zoomIN(self):
-        print("zooming in")
         #print("OpengL window size: " + str((self.size())))
         #print("Mouse Pos to OGL: " + str(self.qtPosToOGL(pos)))
+        # Check the camera position relative to the origin.
+        if(self.camera.position[2]-0.2<=0):
+            print("[ INFO ] Cannot zoom in any further without losing sight.")
+            return
+        # Now let's update our zoom level.
+        self.zoom_level += 20
         self.camera.translate([0,0,-0.2])
+        print("Camera Z coord "+str(self.camera.position[2]))
+        print("Zoom level: " + str(self.getZoomLevel()))
         self.update()
 
     def zoomOUT(self):
         print("zooming out")
         self.camera.translate([0,0,0.2])
         self.update()
+
+    def getZoomLevel(self):
+        return self.zoom_level
 
     # Resets camera to default position & orientation
     def resetCamera(self):
@@ -75,19 +87,24 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.update()
 
     # Triggered only when the mouse is dragged in the opengl frame with the mouse down(on my machine)
+    # We store hte mouse position here, to be used in teh mouse move event.
     def mousePressEvent(self, event):
-        self.oldx = event.pos().x()
-        self.oldy = event.pos().y()
+        self.mouse_last_x = event.pos().x()
+        self.mouse_last_y = event.pos().y()
 
     def mouseMoveEvent(self, event):
-        self.newx = event.pos().x()
-        self.newy = event.pos().y()
-        xdiff = (self.oldx-self.newx) * .001
-        ydiff = (self.oldy-self.newy) * -.001
+        # Store current mouse position
+        self.mouse_x = event.pos().x()
+        self.mouse_y = event.pos().y()
+
+
+        xdiff = (self.mouse_last_x-self.mouse_x) * .001
+        ydiff = (self.mouse_last_y-self.mouse_y) * -.001
         self.camera.translate([xdiff, ydiff, 0])
         self.update()
-        self.oldx = self.newx
-        self.oldy = self.newy
+
+        self.mouse_last_x = self.mouse_x
+        self.mouse_last_y = self.mouse_y
         print(xdiff, ydiff)
 
     # Called when the OpenGL widget resizes.
@@ -116,9 +133,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def loadShaders(self):
         # Load the shader files into a string.
         print("[ INFO ] Loading shaders...")
-        with open("assets/shaders/Default.vs","r") as f:
+        with open("assets/shaders/2DShader.vs","r") as f:
             vc = "".join(f.readlines()[0:])
-        with open("assets/shaders/Default.fs","r") as f:
+        with open("assets/shaders/2DShader.fs","r") as f:
             fc = "".join(f.readlines()[0:])
         print("[ INFO ] Loaded shader code...")
         try:

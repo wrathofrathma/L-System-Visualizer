@@ -299,6 +299,7 @@ class UIWidget(QWidget):
       for i in range(1,len(verts)):
         self.graphix.set_vertices(verts[i],1) #split = true
       self.graphix.update()
+      self.graphix.resetCamera()
 
   def genExample(self, example):
     self.axiomEdit.clear_box()
