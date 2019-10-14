@@ -7,9 +7,7 @@ from lsystem.LSystemWidget import *
 from lsystem.lsystem_utils import *
 
 
-alphabet = ["F","f","H","h","-","+","[","]", "|"]
-ctrl_char = ['A','B','C','D','E','G','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-alphabet = alphabet + ctrl_char
+alphabet = ["F","f","-","+","[","]"]
 error_message = "X"
 
 class CustomLineEdit(QtWidgets.QLineEdit):
@@ -71,7 +69,6 @@ class UIWidget(QWidget):
 
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
-    self.lsysbutton.setShortcut('Ctrl+Return')
     self.lsysbutton.clicked.connect(self.genLSys)
     '''
     self.exitbutton = QPushButton("Exit", self)
@@ -295,7 +292,6 @@ class MyWindow(QMainWindow):
     self.width = 500
     self.height = 500
     self.initWindow()
-    self.setWindowTitle("L-System Vizualiser")
   def initWindow(self):
 
     self.setGeometry(self.left, self.top, self.width, self.height)
@@ -327,31 +323,10 @@ class MyWindow(QMainWindow):
     zoomOut.setShortcut('Ctrl+-')
     zoomOut.triggered.connect(lambda: self.ui_widget.graphix.zoomOUT())
 
-    symbolGlossary = QMenu('Glossary', self)
-    bigF = QAction('F : Draw a line of unit length',self)
-    littleF = QAction('f : Move in a line unit length',self)
-    bigH = QAction('H : Draw a line of half unit length',self)
-    littleH = QAction('h : Move in a line of unit length',self)
-    plus = QAction('+ : Turn clockwise by angle',self)
-    minus = QAction('- : Turn counter-clockwise by angle',self)
-    leftB = QAction('[ : Start a branch',self)
-    rightB = QAction('] : End a branch',self)
-    ctrl = QAction('A-E, G, I-Z : Control characters to direct the flow of evolution',self)
-    symbolGlossary.addAction(bigF)
-    symbolGlossary.addAction(littleF)
-    symbolGlossary.addAction(bigH)
-    symbolGlossary.addAction(littleH)
-    symbolGlossary.addAction(plus)
-    symbolGlossary.addAction(minus)
-    symbolGlossary.addAction(leftB)
-    symbolGlossary.addAction(rightB)
-    symbolGlossary.addAction(ctrl)
-
     fileMenu.addMenu(saveMenu)
     fileMenu.addAction(exitAction)
     viewMenu.addAction(zoomIn)
     viewMenu.addAction(zoomOut)
-    helpMenu.addMenu(symbolGlossary)
 
     self.show()
 
