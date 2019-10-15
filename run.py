@@ -6,8 +6,18 @@ from math import pi
 from lsystem.LSystemWidget import *
 from lsystem.lsystem_utils import *
 
-
-alphabet = ["F","f","-","+","[","]"]
+"""
+F(and G) draws a unit length line
+f(and g) moves forward a unit length
+H draws a half length line
+h moves forward half a unit length
+- turns counter-clockwise
++ turns clockwise
+[ starts branch
+] ends branch
+"""
+alphabet = ["F","f","G","g","H","h","-","+","[","]"]
+ctrl_char = ['A','B','C','D','E','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 error_message = "X"
 
 class CustomLineEdit(QtWidgets.QLineEdit):
@@ -77,7 +87,7 @@ class UIWidget(QWidget):
     scrollArea.setWidget(widget)
     self.layout_examples = QVBoxLayout(widget)
 
-    for i, key in enumerate(saved_lsystems): 
+    for i, key in enumerate(saved_lsystems):
      self.examples.append(QPushButton(key))
      self.examples[i].clicked.connect(lambda state, x=key: self.genExample(str(x)))
      self.layout_examples.addWidget(self.examples[i])
@@ -129,7 +139,7 @@ class UIWidget(QWidget):
       self.axiomEdit.setText(error_message)
       valid_input = 0
     for ch in axiomInput:
-      if not ch in alphabet:
+      if not (ch in alphabet or ch in ctrl_char):
         print("[ ERROR ] ",ch," not in alphabet")
         self.axiomEdit.setStyleSheet("color: red;")
         self.axiomEdit.setText(error_message)
@@ -164,7 +174,7 @@ class UIWidget(QWidget):
       tmp_prodRule = prodInput.replace('->','')
 
       for ch in tmp_prodRule:
-        if not ch in alphabet:
+        if not (ch in alphabet or ch in ctrl_char):
           prod.setStyleSheet("color: red;")
           prod.setText(error_message)
           valid_input = 0
@@ -207,6 +217,8 @@ class UIWidget(QWidget):
         rule = rule.replace(" ","")
         pr = rule.replace("->",":")
         pr = pr.split(':')
+        pr[1] = pr[1].replace("g","f")
+        pr[1] = pr[1].replace("G","F")
         rules[pr[0]] = pr[1]
       '''
       THIS PART IS NOT CONTEXT SENSITIVE
@@ -332,7 +344,7 @@ class UIWidget(QWidget):
 
     while self.prods > len(grammar['rules']):
       self.lessProds()
-        
+
     for i, key in enumerate(grammar['rules']):
       value = grammar['rules'][key]
       self.prodrulesEdit[i].setText(key+"->"+value)
