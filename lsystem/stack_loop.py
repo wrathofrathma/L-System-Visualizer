@@ -28,10 +28,16 @@ def readsubstring(string, starting_pt, start_angle, trig_dict):
     if string[i] == 'F':
       new_point = (new_point[0]+trig_dict[new_angle][0],new_point[1]+trig_dict[new_angle][1])
       vertContainer.append(new_point)
+    elif string[i] == 'H':
+      new_point = (new_point[0]+(trig_dict[new_angle][0]/2),new_point[1]+(trig_dict[new_angle][1]/2))
+      vertContainer.append(new_point)
     elif string[i] == '+':
         new_angle = round((new_angle - trig_dict['angle'])%360,5)
     elif string[i] == '-':
       new_angle = round((new_angle + trig_dict['angle'])%360,5)
+    elif string[i] == '|':
+      new_angle = round((new_angle+180)%360,5)
+      new_trig_dict['angle'] = new_angle
   #print("new_angle = ",new_angle)
   return new_angle, vertContainer # returns angle that string left off on and array of vertices
 
@@ -116,6 +122,10 @@ def readStack(stack, starting_pt, angle):
       if not curr_state[1] in trig_dict.keys():
         trig_dict[curr_state[1]]=[math.cos(curr_state[1]),math.sin(curr_state[1])]
       curr_state = ((curr_state[0][0]+trig_dict[curr_state[1]][0],curr_state[0][1]+trig_dict[curr_state[1]][1]),currAngle)
+      str.replace('f','')
+    elif str[0] == 'h':
+      #move little h
+      curr_state = ((curr_state[0][0]+(trig_dict[curr_state[1]][0]/2),curr_state[0][1]+(trig_dict[curr_state[1]][1]/2)),currAngle)
       str.replace('f','')
     elif str[0]=='[':
       saved_states.append(curr_state)
