@@ -23,23 +23,37 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.bgcolor = np.array([0.0, 0.0, 0.0, 0.0])
         # Time, used for color shader shenanigans
         self.start_time = time()
-        # Mesh initialization & starting stuff.
+        # Mesh container
         self.meshes = []
-        #self.meshes.append(Mesh())
-        #verts = get_saved_lsystem('Cantor Set')[0]
-        #self.meshes[0].set_vertices(verts[0])
         self.keep_centered = True # Boolean for whether to center the mesh after resizes.
-        #self.camera = FreeCamera(800,600)
+
+        # Camera initialization
         self.camera = SphericalCamera(800,600)
         self.camera.r = 2
-        # self.camera.updateView()
         self.active_shader = None
-        self.dimensionality = 2
+        self.dimensionality = 2 # Dimensionality of the LSystem being displayed....probably will get rid of this later?
+
+        # Threaded timer that refreshes the OpenGL widget. Without this it only updates when we click or trigger an event.
+        self.fps = 30.0
         timer = QTimer(self)
         timer.timeout.connect(self.update)
-        timer.start(1/60.0)
-        self.axis = Axis()
+        timer.start(1/self.fps)
 
+        # DEBUG and utility stuff.
+        # 3D Axis & a plane mesh for visual clarity while I implement zooming into a point.
+        self.axis = Axis()
+        self.plane = Mesh(3)
+        pv = np.array([
+        -1, -1, 0,
+        -1, 1, 0,
+        1, 1, 0,
+        1, -1, 0,
+        -1, -1, 0
+        ], dtype=np.float32)
+        self.plane.set_vertices(pv)
+        self.plane.translate([0.5,0,0])
+
+    # Do I really need this? Meh. I was feeling it before but now it feels fat.
     def setDimensions(self, d):
         if(d!=2 and d!=3):
             print("[ ERROR ] Dimensionality being set to something other than 2d or 3d.")
@@ -53,20 +67,22 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def paintGL(self):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
+        # Update the camera data
         self.camera.update()
+        # Upload the updates to both shaders.
         self.camera.applyUpdate(self.shader2D)
         self.camera.applyUpdate(self.shader3D)
-        glUseProgram(self.active_shader)
-        glUniform1f(glGetUniformLocation(self.active_shader, "time"), time()-self.start_time)
+        # Update the shader uniform variables.
+        glUseProgram(self.shader2D)
+        glUniform1f(glGetUniformLocation(self.shader2D, "time"), time()-self.start_time)
+        glUseProgram(self.shader3D)
+        glUniform1f(glGetUniformLocation(self.shader3D, "time"), time()-self.start_time)
+
         for mesh in self.meshes:
             mesh.draw()
         glUseProgram(0)
         self.axis.draw()
-
-    # Triggered when the mouse is pressed in the opengl frame.
-    # def mousePressEvent(self, event):
-    #     print("Press: " + str(event.pos()))
+        self.plane.draw()
 
     # Converts a qt mouse position event coordinates to opengl coordinates
     # aka top left from(0,0) to bottom left being (-1,-1) and top right being (1,1)
@@ -88,12 +104,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
         return self.toNormalizedDeviceCoordinates(qpos)
 
     def zoomIN(self):
-        #print("OpengL window size: " + str((self.size())))
-        #print("Mouse Pos to OGL: " + str(self.qtPosToOGL(pos)))
-        # Check the camera position relative to the origin.
-        # Now let's update our zoom level.
-        #self.camera.translate([0,0,-0.2])
-        #print("Camera Z coord "+str(self.camera.position[2]))
         self.camera.addR(-0.2)
         print("Radius: " + str(self.camera.getR()))
 
@@ -107,8 +117,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
     # Resets camera to default position & orientation
     def resetCamera(self):
-        # self.camera.setPosition([0,0,1])
-        # self.camera.setOrientation(0)
         self.camera.theta = 90
         self.camera.psi = 0
         self.camera.r = 2
@@ -141,17 +149,11 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # Get the radius
         radius = self.camera.getR()
 
-        # Clamp between -1 & 1 to get a vectorized representation of the direction without the acceleration...?
-        # xdiff = max(-1, min(xdiff, 1))
-        # ydiff = max(-1, min(ydiff, 1))
-
         self.camera.addTheta(xdiff)
         self.camera.addPsi(ydiff)
         self.update()
         self.mouse_last_x = self.mouse_x
         self.mouse_last_y = self.mouse_y
-        #print(xdiff, ydiff)
-        # print("Camera pos: " + str(self.camera.position))
 
     # Called when the OpenGL widget resizes.
     def resizeGL(self, w, h):
@@ -174,7 +176,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     #    glLineWidth(5)
         # Set the shader for every mesh
         self.axis.set_shader(self.shader3D)
-
+        self.plane.set_shader(self.shader3D)
         for mesh in self.meshes:
             mesh.set_shader(self.active_shader)
 
