@@ -6,7 +6,7 @@
     "iterations" : 5
   },
   "Cantor Set" : {
-    "rules" : { "F" : "F+F-F-F+F" },
+    "rules" : { "F" : "FfF","f" : "fff"},
     "angle" : 90,
     "axiom" : "F",
     "iterations" : 5
