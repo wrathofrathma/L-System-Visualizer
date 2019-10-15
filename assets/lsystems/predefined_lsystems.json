@@ -5,10 +5,10 @@
     "axiom" : "F",
     "iterations" : 5
   },
-  "Cantor Set" : {
-    "rules" : { "F" : "FfF","f" : "fff"},
-    "angle" : 90,
-    "axiom" : "F",
+  "Sierpinski Triangle" : {
+    "rules" : { "F" : "F-G+F+G-F","G" : "GG"},
+    "angle" : 120,
+    "axiom" : "F-G-G",
     "iterations" : 5
   },
   "Koch Curve" : {
@@ -22,5 +22,12 @@
     "angle": 90,
     "axiom": "F",
     "iterations": 4
+  },
+    "Cantor Set" : {
+    "rules" : { "F" : "FfF","f" : "fff"},
+    "angle" : 90,
+    "axiom" : "F",
+    "iterations" : 5
   }
+ 
 }
