@@ -30,6 +30,7 @@ class UIWidget(QWidget):
     super(UIWidget, self).__init__()
     self.prods = 1
     self.prodrulesEdit = []
+    self.examples = []
     self.minuses = None
     self.prodrules = []
     load_saved_lsystems()
@@ -60,30 +61,37 @@ class UIWidget(QWidget):
     self.itersEdit.clicked.connect(lambda: self.itersEdit.clear_box())
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
-    
 
-    self.kochs = QPushButton('Kochs Example')
-    self.kochs.clicked.connect(lambda: self.genExample('Koch Snowflake'))
-
-    #self.cantor = QPushButton('Cantor Set Example')
-    #self.cantor.clicked.connect(lambda: self.genExample('Cantor Set'))
+    self.cantor = QPushButton('Cantor Set Example')
+    self.cantor.clicked.connect(lambda: self.genExample('Cantor Set'))
 
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
     self.lsysbutton.clicked.connect(self.genLSys)
+    
     scrollArea = QtWidgets.QScrollArea()
     scrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+    scrollArea.setWidgetResizable(True)
     
+    self.layout_examples = QVBoxLayout()
+
+    for i, key in enumerate(saved_lsystems): 
+     self.examples.append(QPushButton(key))
+     self.examples[i].clicked.connect(lambda state, x=key: self.genExample(str(x)))
+     self.layout_examples.addWidget(self.examples[i])
+     
+
+    scrollArea.setLayout(self.layout_examples)
     '''
     self.exitbutton = QPushButton("Exit", self)
     self.exitbutton.setShortcut('Ctrl+Q')
     self.exitbutton.setStatusTip('Exit application')
     self.exitbutton.clicked.connect(self.closeEvent)
     '''
-    scrollArea = QtWidgets.QScrollArea()
-    scrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-    scrollArea.setWidgetResizable(True)
-    scrollArea.setWidget(self.kochs)
+    #scrollArea = QtWidgets.QScrollArea()
+    #scrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+    #scrollArea.setWidgetResizable(True)
+    #scrollArea.setWidget(self.kochs)
 
     #Adding widgets to window
     self.layout.addWidget(self.axiom, 1, 0)
@@ -95,11 +103,11 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.angleEdit, 6, 1, 1, 3)
     self.layout.addWidget(self.iters, 7, 0)
     self.layout.addWidget(self.itersEdit, 7, 1, 1, 3)
-    self.layout.addWidget(scrollArea, 8, 0, 3, 1)
+    self.layout.addWidget(scrollArea, 8, 0, 1, 1)
     #self.layout.addWidget(self.kochs, 8, 0, 1, 1)
     #self.layout.addWidget(self.cantor, 9, 0, 1, 1)
     self.layout.addWidget(self.graphix, 8, 1, 5, -1)
-    self.layout.addWidget(self.lsysbutton, 112, 0, 1, -1)
+    self.layout.addWidget(self.lsysbutton, 15, 0, 1, -1)
     #self.layout.addWidget(self.exitbutton, 12, 0, -1, 1)
 
     self.setLayout(self.layout)

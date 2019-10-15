@@ -19,7 +19,7 @@
   },
   "Piano Curve" : {
     "rules": {"F" : "FF+F+F+FF+F+F-F"},
-    "angles": 90,
+    "angle": 90,
     "axiom": "F",
     "iterations": 4
   }
