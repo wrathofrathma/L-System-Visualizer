@@ -36,7 +36,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.dimensionality = 2
         timer = QTimer(self)
         timer.timeout.connect(self.update)
-        timer.start(1)
+        timer.start(1/60.0)
 
     def setDimensions(self, d):
         if(d!=2 and d!=3):
