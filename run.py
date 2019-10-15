@@ -68,20 +68,21 @@ class UIWidget(QWidget):
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
     self.lsysbutton.clicked.connect(self.genLSys)
+    widget = QWidget()
     
     scrollArea = QtWidgets.QScrollArea()
     scrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
     scrollArea.setWidgetResizable(True)
-    
-    self.layout_examples = QVBoxLayout()
+    scrollArea.setFixedHeight(100) 
+    scrollArea.setWidget(widget)
+    self.layout_examples = QVBoxLayout(widget)
 
     for i, key in enumerate(saved_lsystems): 
      self.examples.append(QPushButton(key))
      self.examples[i].clicked.connect(lambda state, x=key: self.genExample(str(x)))
      self.layout_examples.addWidget(self.examples[i])
-     
+    self.layout_examples.addStretch(1)
 
-    scrollArea.setLayout(self.layout_examples)
     '''
     self.exitbutton = QPushButton("Exit", self)
     self.exitbutton.setShortcut('Ctrl+Q')
