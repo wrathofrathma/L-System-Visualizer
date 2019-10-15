@@ -97,7 +97,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def resetCamera(self):
         # self.camera.setPosition([0,0,1])
         # self.camera.setOrientation(0)
-        self.camera.theta = 0
+        self.camera.theta = 90
         self.camera.psi = 0
         self.camera.r = 2
         self.update()
