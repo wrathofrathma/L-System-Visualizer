@@ -28,11 +28,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         verts = get_saved_lsystem('Cantor Set')[0]
         self.meshes[0].set_vertices(verts[0])
         self.keep_centered = True # Boolean for whether to center the mesh after resizes.
-        self.camera = FreeCamera(800,600)
-        self.translation_speed = 0.01
-        self.zoom_level = 100.0
-        #self.camera = SphericalCamera(800,600)
-        #self.camera.r = -4
+        #self.camera = FreeCamera(800,600)
+        self.camera = SphericalCamera(800,600)
+        self.camera.r = 2
         # self.camera.updateView()
         self.active_shader = None
         self.dimensionality = 2
@@ -65,36 +63,44 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # Subtract 1/2 the screen w/h from the pos.
         qpos = np.array([pos.x(), pos.y()])
         wsize = np.array([self.size().width(), self.size().height()])
-        print("Qpos : " + str(qpos))
-        print("Wsize: " + str(wsize))
         return qpos - wsize
+
+    # Not sure if we'll ever need these NDC conversions, but prepping.
+    # Converts a mouse position to normalized device coordinates. Assumes the pos is a tuple, list, or np array of size 2.
+    def toNormalizedDeviceCoordinates(self, pos):
+        wsize = np.array([self.size().width(), self.size().height()])
+        return (pos[0] / wsize[0], 1-pos[1]/wsize[1])
+
+    # Converts a Qt event to normalized device coordinates.
+    def qtPosToNDC(self, pos):
+        qpos = np.array([pos.x(), pos.y()])
+        return self.toNormalizedDeviceCoordinates(qpos)
 
     def zoomIN(self):
         #print("OpengL window size: " + str((self.size())))
         #print("Mouse Pos to OGL: " + str(self.qtPosToOGL(pos)))
         # Check the camera position relative to the origin.
-        if(self.camera.position[2]-0.2<=0):
-            print("[ INFO ] Cannot zoom in any further without losing sight.")
-            return
         # Now let's update our zoom level.
-        self.zoom_level += 20
-        self.camera.translate([0,0,-0.2])
-        print("Camera Z coord "+str(self.camera.position[2]))
-        print("Zoom level: " + str(self.getZoomLevel()))
+        #self.camera.translate([0,0,-0.2])
+        #print("Camera Z coord "+str(self.camera.position[2]))
+        self.camera.addR(-0.2)
+        print("Radius: " + str(self.camera.getR()))
+
         self.update()
 
     def zoomOUT(self):
-        print("zooming out")
-        self.camera.translate([0,0,0.2])
+        self.camera.addR(0.2)
+        #print("Camera Z coord "+str(self.camera.position[2]))
+        print("Radius: " + str(self.camera.getR()))
         self.update()
-
-    def getZoomLevel(self):
-        return self.zoom_level
 
     # Resets camera to default position & orientation
     def resetCamera(self):
-        self.camera.setPosition([0,0,1])
-        self.camera.setOrientation(0)
+        # self.camera.setPosition([0,0,1])
+        # self.camera.setOrientation(0)
+        self.camera.theta = 0
+        self.camera.psi = 0
+        self.camera.r = 2
         self.update()
 
     # Triggered only when the mouse is dragged in the opengl frame with the mouse down(on my machine)
@@ -108,15 +114,24 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.mouse_x = event.pos().x()
         self.mouse_y = event.pos().y()
 
+        # Find the mouse delta
+        xdiff = (self.mouse_last_x-self.mouse_x)
+        ydiff = (self.mouse_last_y-self.mouse_y)
 
-        xdiff = (self.mouse_last_x-self.mouse_x) * .001
-        ydiff = (self.mouse_last_y-self.mouse_y) * -.001
-        self.camera.translate([xdiff, ydiff, 0])
+        # Get the radius
+        radius = self.camera.getR()
+
+        # Clamp between -1 & 1 to get a vectorized representation of the direction without the acceleration...?
+        # xdiff = max(-1, min(xdiff, 1))
+        # ydiff = max(-1, min(ydiff, 1))
+
+        self.camera.addTheta(xdiff)
+        self.camera.addPsi(ydiff)
         self.update()
-
         self.mouse_last_x = self.mouse_x
         self.mouse_last_y = self.mouse_y
         print(xdiff, ydiff)
+        # print("Camera pos: " + str(self.camera.position))
 
     # Called when the OpenGL widget resizes.
     def resizeGL(self, w, h):
