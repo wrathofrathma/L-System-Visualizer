@@ -137,7 +137,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.update()
         self.mouse_last_x = self.mouse_x
         self.mouse_last_y = self.mouse_y
-        print(xdiff, ydiff)
+        #print(xdiff, ydiff)
         # print("Camera pos: " + str(self.camera.position))
 
     # Called when the OpenGL widget resizes.
