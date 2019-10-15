@@ -32,7 +32,7 @@ def readsubstring(string, starting_pt, start_angle, trig_dict):
         new_angle = round((new_angle - trig_dict['angle'])%360,5)
     elif string[i] == '-':
       new_angle = round((new_angle + trig_dict['angle'])%360,5)
-  print("new_angle = ",new_angle)
+  #print("new_angle = ",new_angle)
   return new_angle, vertContainer # returns angle that string left off on and array of vertices
 
 def readStack(stack, starting_pt, angle):
@@ -87,8 +87,6 @@ def readStack(stack, starting_pt, angle):
   print("[ INFO ] Calculating angles")
   if angle != 0:
     while it < 360:
-      if it == math.floor(it):
-        print(it)
       pos_angles = np.append(pos_angles,round(it,5))
       it+=angle
 
@@ -104,7 +102,7 @@ def readStack(stack, starting_pt, angle):
     pos_angles =np.append(pos_angles,0)
 
 
-  print("angle dictionary = ",pos_angles)
+  #print("angle dictionary = ",pos_angles)
   sin_arr = np.sin(np.array(pos_angles)*np.pi/180.)
   cos_arr = np.cos(np.array(pos_angles)*np.pi/180.)
   for i in range(len(pos_angles)):
@@ -130,5 +128,5 @@ def readStack(stack, starting_pt, angle):
     vert_arr.append(vertices)
     curr_state = (vertices[-1],currAngle)
   print("[ INFO ] Finshed finding vertices (",round(time()-t,3),"s )")
-  print("vert_arr = ",vert_arr)
+  #print("vert_arr = ",vert_arr)
   return vert_arr
