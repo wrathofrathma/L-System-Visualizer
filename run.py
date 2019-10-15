@@ -68,7 +68,7 @@ class UIWidget(QWidget):
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
     self.lsysbutton.clicked.connect(self.genLSys)
-    
+
     widget = QWidget()
     scrollArea = QtWidgets.QScrollArea()
     scrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
