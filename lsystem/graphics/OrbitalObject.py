@@ -10,12 +10,16 @@ class OrbitalObject(SpatialObject):
         self.theta = 0
         self.psi = 0
         self.deg = pi / 180.0
+        self.origin = vec3(0)
 
     def setPosition(self, r, theta, psi):
         self.r = r
         self.theta = theta
         self.psi = psi
         self.position = vec3(r*cos(psi*self.deg)*cos(theta*self.deg),r*sin(psi*self.deg),r*cos(psi*self.deg)*sin(theta*self.deg))
+
+    def setOrigin(self, origin):
+        self.origin = vec3(origin)
 
     def addTheta(self, num):
         self.theta += num
@@ -72,6 +76,6 @@ class OrbitalObject(SpatialObject):
 
     def getFacing(self):
         eye = vec3(self.r*cos(self.psi*self.deg)*cos(self.theta*self.deg),self.r*sin(self.psi*self.deg),self.r*cos(self.psi*self.deg)*sin(self.theta*self.deg))
-        center = vec3(0)
+        center = self.origin
         up = vec3(0,1,0)
         return lookAt(eye,center,up)
