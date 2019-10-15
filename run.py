@@ -62,18 +62,18 @@ class UIWidget(QWidget):
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
 
-    self.cantor = QPushButton('Cantor Set Example')
-    self.cantor.clicked.connect(lambda: self.genExample('Cantor Set'))
+    #self.cantor = QPushButton('Cantor Set Example')
+    #self.cantor.clicked.connect(lambda: self.genExample('Cantor Set'))
 
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
     self.lsysbutton.clicked.connect(self.genLSys)
-    widget = QWidget()
     
+    widget = QWidget()
     scrollArea = QtWidgets.QScrollArea()
     scrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
     scrollArea.setWidgetResizable(True)
-    scrollArea.setFixedHeight(100) 
+    scrollArea.setFixedWidth(150)
     scrollArea.setWidget(widget)
     self.layout_examples = QVBoxLayout(widget)
 
@@ -100,15 +100,15 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.prodrules[0], 2, 0)
     self.layout.addWidget(self.prodrulesEdit[0], 2, 1, 1, 1)
     self.layout.addWidget(self.prodPlus, 2, 2, 1, 2)
-    self.layout.addWidget(self.angle, 6, 0)
-    self.layout.addWidget(self.angleEdit, 6, 1, 1, 3)
-    self.layout.addWidget(self.iters, 7, 0)
-    self.layout.addWidget(self.itersEdit, 7, 1, 1, 3)
-    self.layout.addWidget(scrollArea, 8, 0, 1, 1)
+    self.layout.addWidget(self.angle, 10, 0)
+    self.layout.addWidget(self.angleEdit, 10, 1, 1, 3)
+    self.layout.addWidget(self.iters, 11, 0)
+    self.layout.addWidget(self.itersEdit, 11, 1, 1, 3)
+    self.layout.addWidget(scrollArea, 12, 0, 1, 1)
     #self.layout.addWidget(self.kochs, 8, 0, 1, 1)
     #self.layout.addWidget(self.cantor, 9, 0, 1, 1)
-    self.layout.addWidget(self.graphix, 8, 1, 5, -1)
-    self.layout.addWidget(self.lsysbutton, 15, 0, 1, -1)
+    self.layout.addWidget(self.graphix, 12, 1, 5, -1)
+    self.layout.addWidget(self.lsysbutton, 20, 0, 1, -1)
     #self.layout.addWidget(self.exitbutton, 12, 0, -1, 1)
 
     self.setLayout(self.layout)
@@ -253,9 +253,6 @@ class UIWidget(QWidget):
 
   def moreProds(self):
     ''' Creates more productions when + button is clicked '''
-    scrollbar = self.QScrollBar(orientation=Qt.Horizontal)
-    scrollbar.setRange(0, 100)
-    self.layout.addWidget(scrollbar, 8, 0)
     if self.prods < len(alphabet):
       self.prods = self.prods + 1
       self.prodrules.append(QLabel("Production Rule " + str(self.prods)))
