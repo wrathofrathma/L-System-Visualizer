@@ -34,13 +34,24 @@ class LSystemDisplayWidget(QOpenGLWidget):
         #self.camera = SphericalCamera(800,600)
         #self.camera.r = -4
         # self.camera.updateView()
+        self.active_shader = None
+        self.dimensionality = 2
+    def setDimensions(self, d):
+        if(d!=2 and d!=3):
+            print("[ ERROR ] Dimensionality being set to something other than 2d or 3d.")
+        self.dimensionality=d
+        if(d==2):
+            self.active_shader=self.shader2D
+        else:
+            self.active_shader=self.shader3D
+
     # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):
         glClearColor(self.bgcolor[0], self.bgcolor[1], self.bgcolor[2], self.bgcolor[3])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         self.camera.update()
-        self.camera.applyUpdate(self.shader)
+        self.camera.applyUpdate(self.active_shader)
         for mesh in self.meshes:
             mesh.draw()
 
@@ -124,11 +135,11 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def initializeGL(self):
         print("[ INFO ] Initializing OpenGL...")
         self.loadShaders()
-        print("[ INFO ] Shader ID: " + str(self.shader))
+        print("[ INFO ] Shader ID: " + str(self.active_shader))
     #    glLineWidth(5)
         # Set the shader for every mesh
         for mesh in self.meshes:
-            mesh.set_shader(self.shader)
+            mesh.set_shader(self.active_shader)
 
     def loadShaders(self):
         # Load the shader files into a string.
@@ -137,17 +148,36 @@ class LSystemDisplayWidget(QOpenGLWidget):
             vc = "".join(f.readlines()[0:])
         with open("assets/shaders/2DShader.fs","r") as f:
             fc = "".join(f.readlines()[0:])
-        print("[ INFO ] Loaded shader code...")
+
+        print("[ INFO ] Loaded 2D shader code...")
         try:
             # Compile hte shaders on the graphics card.
-            self.vs = shaders.compileShader(vc, GL_VERTEX_SHADER)
-            self.fs = shaders.compileShader(fc, GL_FRAGMENT_SHADER)
+            self.vs2 = shaders.compileShader(vc, GL_VERTEX_SHADER)
+            self.fs2 = shaders.compileShader(fc, GL_FRAGMENT_SHADER)
             # Link them together & compile them as a program.
-            self.shader = shaders.compileProgram(self.vs, self.fs)
+            self.shader2D = shaders.compileProgram(self.vs2, self.fs2)
+
         except Exception as err:
             print("[ ERROR ] Caught an exception: " + str(err))
             exit(1) # Can't proceed without working shaders.
 
+        # 3D Shaders
+        with open("assets/shaders/3DShader.vs","r") as f:
+            vc = "".join(f.readlines()[0:])
+        with open("assets/shaders/3DShader.fs","r") as f:
+            fc = "".join(f.readlines()[0:])
+        print("[ INFO ] Loaded 3D shader code...")
+        try:
+            # Compile hte shaders on the graphics card.
+            self.vs3 = shaders.compileShader(vc, GL_VERTEX_SHADER)
+            self.fs3 = shaders.compileShader(fc, GL_FRAGMENT_SHADER)
+            # Link them together & compile them as a program.
+            self.shader3D = shaders.compileProgram(self.vs3, self.fs3)
+
+        except Exception as err:
+            print("[ ERROR ] Caught an exception: " + str(err))
+            exit(1) # Can't proceed without working shaders.
+        self.active_shader=self.shader2D
         print("[ INFO ] Shaders loaded to graphics card.")
 
     # Saves a screenshot of the current OpenGL buffer to a given filename.
@@ -183,11 +213,14 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # Detaching shaders and deleting shader program
         #glDetachShader(self.shader, self.vs)
         #glDetachShader(self.shader, self.fs)
-        glDeleteShader(self.vs)
+        glDeleteShader(self.vs2)
 
-        glDeleteShader(self.fs)
-        glDeleteProgram(self.shader)
+        glDeleteShader(self.fs2)
+        glDeleteProgram(self.shader2D)
+        glDeleteShader(self.vs3)
 
+        glDeleteShader(self.fs3)
+        glDeleteProgram(self.shader3D)
     # Centers the mesh in the view
     def center_mesh(self):
         # Well, since we have multiple meshes, we need the mins and maxes of all of them before slicing.
@@ -211,7 +244,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def set_vertices(self, vertices, split=False):
         if(split):
             self.meshes.append(Mesh())
-            self.meshes[-1].set_shader(self.shader)
+            self.meshes[-1].set_shader(self.active_shader)
 
         self.meshes[-1].set_vertices(vertices)
 
@@ -221,7 +254,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
             mesh.cleanup()
         self.meshes.clear()
         self.meshes.append(Mesh())
-        self.meshes[-1].set_shader(self.shader)
+        self.meshes[-1].set_shader(self.active_shader)
 
     # Sets the background color of the OpenGL widget.
     def set_bg_color(self, color):

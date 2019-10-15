@@ -6,13 +6,15 @@ from lsystem.graphics.QuaternionObject import *
 from glm import value_ptr
 import random as rand
 class Mesh(QuaternionObject):
-    def __init__(self):
+    def __init__(self, dimensions=2):
         super().__init__()
         self.initialized=False
         self.update=True
         self.vertices = []
         self.colors = []
+        self.dimensions=dimensions
         self.translate([-0.5, 0, 0])
+
     def init_ogl(self):
         if(self.shader==None):
             print("[ ERROR ] Shader not set for our mesh.")
@@ -77,12 +79,13 @@ class Mesh(QuaternionObject):
         glEnableVertexAttribArray(1)
         # Tell GLSL how our data is structured
         # Vertices are in position 0, size of 2 floats, padding of 0, at self.VBO
-        glVertexAttribPointer(0, 2, GL_FLOAT, False, 0, self.VBO)
+        glVertexAttribPointer(0, self.dimensions, GL_FLOAT, False, 0, self.VBO)
         # Colors are in position 1, size of 4 floats, padding of 0, and at the end of the vertice array.
         glVertexAttribPointer(1, 4, GL_FLOAT, True, 0, self.VBO+self.vertices.nbytes)
 
          # Drawing
-        glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) /2.0))#/ 2.0))
+        glDrawArrays(GL_LINE_STRIP, 0, int(len(self.vertices) /self.dimensions))
+
         #Unbinding everything
         self.VBO.unbind()
         glDisableClientState(GL_VERTEX_ARRAY)
