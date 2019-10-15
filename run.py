@@ -327,8 +327,15 @@ class UIWidget(QWidget):
     self.itersEdit.clear_box()
     (verts, grammar) = get_saved_lsystem(example)
     self.axiomEdit.setText(grammar['axiom'])
-    for key,val in grammar['rules'].items():
-      self.prodrulesEdit[0].setText(key+"->"+val)
+    while self.prods < len(grammar['rules']):
+      self.moreProds()
+
+    while self.prods > len(grammar['rules']):
+      self.lessProds()
+        
+    for i, key in enumerate(grammar['rules']):
+      value = grammar['rules'][key]
+      self.prodrulesEdit[i].setText(key+"->"+value)
     #self.prodrulesEdit[0].setText(str(grammar['rules']))
     self.angleEdit.setText(str(grammar["angle"]))
     self.itersEdit.setText(str(grammar['iterations']))
@@ -343,6 +350,7 @@ class MyWindow(QMainWindow):
     self.width = 500
     self.height = 500
     self.initWindow()
+
   def initWindow(self):
 
     self.setGeometry(self.left, self.top, self.width, self.height)
