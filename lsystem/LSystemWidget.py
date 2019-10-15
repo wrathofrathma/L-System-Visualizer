@@ -24,9 +24,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.start_time = time()
         # Mesh initialization & starting stuff.
         self.meshes = []
-        self.meshes.append(Mesh())
-        verts = get_saved_lsystem('Cantor Set')[0]
-        self.meshes[0].set_vertices(verts[0])
+        #self.meshes.append(Mesh())
+        #verts = get_saved_lsystem('Cantor Set')[0]
+        #self.meshes[0].set_vertices(verts[0])
         self.keep_centered = True # Boolean for whether to center the mesh after resizes.
         #self.camera = FreeCamera(800,600)
         self.camera = SphericalCamera(800,600)
@@ -34,6 +34,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # self.camera.updateView()
         self.active_shader = None
         self.dimensionality = 2
+
     def setDimensions(self, d):
         if(d!=2 and d!=3):
             print("[ ERROR ] Dimensionality being set to something other than 2d or 3d.")
@@ -50,8 +51,11 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         self.camera.update()
         self.camera.applyUpdate(self.active_shader)
+        glUseProgram(self.active_shader)
+        glUniform1f(glGetUniformLocation(self.active_shader, "time"), time()-self.start_time)
         for mesh in self.meshes:
             mesh.draw()
+
     # Triggered when the mouse is pressed in the opengl frame.
     # def mousePressEvent(self, event):
     #     print("Press: " + str(event.pos()))
@@ -246,6 +250,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
     # Centers the mesh in the view
     def center_mesh(self):
         # Well, since we have multiple meshes, we need the mins and maxes of all of them before slicing.
+        if(len(self.meshes)==0):
+            return
         maxes=[]
         mins= []
         for mesh in self.meshes:
