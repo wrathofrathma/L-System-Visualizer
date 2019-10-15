@@ -52,6 +52,13 @@ class LSystemDisplayWidget(QOpenGLWidget):
         ], dtype=np.float32)
         self.plane.set_vertices(pv)
         self.plane.translate([0.5,0,0])
+        self.origin_axis = Axis()
+        self.origin_axis.scale(0.03)
+        self.casted_ray = Mesh(3)
+        rv = np.array([0,0,0,1,0,0])
+        self.casted_ray.set_vertices(rv)
+        self.casted_ray.translate([0.5,0,0])
+
 
     # Do I really need this? Meh. I was feeling it before but now it feels fat.
     def setDimensions(self, d):
@@ -77,12 +84,14 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glUniform1f(glGetUniformLocation(self.shader2D, "time"), time()-self.start_time)
         glUseProgram(self.shader3D)
         glUniform1f(glGetUniformLocation(self.shader3D, "time"), time()-self.start_time)
-
-        for mesh in self.meshes:
-            mesh.draw()
-        glUseProgram(0)
+        # Draw the scene.
         self.axis.draw()
         self.plane.draw()
+        self.origin_axis.draw()
+        self.casted_ray.draw()
+        for mesh in self.meshes:
+            mesh.draw()
+
 
     # Converts a qt mouse position event coordinates to opengl coordinates
     # aka top left from(0,0) to bottom left being (-1,-1) and top right being (1,1)
@@ -96,7 +105,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     # Converts a mouse position to normalized device coordinates. Assumes the pos is a tuple, list, or np array of size 2.
     def toNormalizedDeviceCoordinates(self, pos):
         wsize = np.array([self.size().width(), self.size().height()])
-        return (pos[0] / wsize[0], 1-pos[1]/wsize[1])
+        return (pos[0] / wsize[0]*2-1, 1-pos[1]/wsize[1]*2)
 
     # Converts a Qt event to normalized device coordinates.
     def qtPosToNDC(self, pos):
@@ -130,7 +139,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("(%s,%s)" % (self.mouse_last_x, self.mouse_last_y))
         print("NDC %s" % (str(self.qtPosToNDC(event.pos()))))
         if(event.button()==Qt.RightButton):
-            ray = getMouseRaycast((self.mouse_last_x, self.mouse_last_y), self.camera.getProjection(), self.camera.getView())
+            ray = getMouseRaycast(self.qtPosToNDC(event.pos()), self.camera.getProjection(), self.camera.getView())
+            ray-=self.camera.position
+            self.casted_ray.set_vertices(np.array([self.camera.position[0], self.camera.position[1], self.camera.position[2], ray[0],ray[1],ray[2]]))
             #origin = ray - self.camera.getR()
             print("Raycast dir: " + str(ray))
             print("CAmera coordinates: " + str(self.camera.position))
@@ -176,6 +187,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
     #    glLineWidth(5)
         # Set the shader for every mesh
         self.axis.set_shader(self.shader3D)
+        self.origin_axis.set_shader(self.shader3D)
+        self.casted_ray.set_shader(self.shader3D)
         self.plane.set_shader(self.shader3D)
         for mesh in self.meshes:
             mesh.set_shader(self.active_shader)
