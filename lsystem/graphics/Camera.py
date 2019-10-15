@@ -22,6 +22,8 @@ class Camera:
     def getView(self):
         return self.view
 
+    def getProjection(self):
+        return self.projection
     def resize(self, width, height):
         self.width = width
         self.height = height

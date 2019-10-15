@@ -12,7 +12,7 @@ from lsystem.lsystem_utils import *
 from PIL import Image
 from lsystem.graphics.SphericalCamera import *
 from lsystem.graphics.FreeCamera import *
-
+from lsystem.graphics.RayCasting import *
 # LSystem visualization widget.
 
 class LSystemDisplayWidget(QOpenGLWidget):
@@ -52,7 +52,6 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.camera.applyUpdate(self.active_shader)
         for mesh in self.meshes:
             mesh.draw()
-
     # Triggered when the mouse is pressed in the opengl frame.
     # def mousePressEvent(self, event):
     #     print("Press: " + str(event.pos()))
@@ -108,6 +107,14 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def mousePressEvent(self, event):
         self.mouse_last_x = event.pos().x()
         self.mouse_last_y = event.pos().y()
+        print("(%s,%s)" % (self.mouse_last_x, self.mouse_last_y))
+        print("NDC %s" % (str(self.qtPosToNDC(event.pos()))))
+        if(event.button()==Qt.RightButton):
+            ray = getMouseRaycast((self.mouse_last_x, self.mouse_last_y), self.camera.getProjection(), self.camera.getView())
+            #origin = ray - self.camera.getR()
+            print("Raycast dir: " + str(ray))
+
+            #self.camera.setOrigin(origin)
 
     def mouseMoveEvent(self, event):
         # Store current mouse position
