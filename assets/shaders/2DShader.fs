@@ -2,7 +2,7 @@
 
 in vec4 frag_color;
 out vec4 FragColor;
-in vec4 frag_pos
+in vec4 frag_pos;
 uniform float time;
 
 void main(){

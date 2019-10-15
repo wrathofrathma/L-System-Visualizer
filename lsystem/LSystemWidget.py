@@ -13,6 +13,7 @@ from PIL import Image
 from lsystem.graphics.SphericalCamera import *
 from lsystem.graphics.FreeCamera import *
 from lsystem.graphics.RayCasting import *
+from lsystem.graphics.Axis import *
 # LSystem visualization widget.
 
 class LSystemDisplayWidget(QOpenGLWidget):
@@ -37,6 +38,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         timer = QTimer(self)
         timer.timeout.connect(self.update)
         timer.start(1/60.0)
+        self.axis = Axis()
 
     def setDimensions(self, d):
         if(d!=2 and d!=3):
@@ -53,11 +55,14 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         self.camera.update()
-        self.camera.applyUpdate(self.active_shader)
+        self.camera.applyUpdate(self.shader2D)
+        self.camera.applyUpdate(self.shader3D)
         glUseProgram(self.active_shader)
         glUniform1f(glGetUniformLocation(self.active_shader, "time"), time()-self.start_time)
         for mesh in self.meshes:
             mesh.draw()
+        glUseProgram(0)
+        self.axis.draw()
 
     # Triggered when the mouse is pressed in the opengl frame.
     # def mousePressEvent(self, event):
@@ -120,7 +125,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
             ray = getMouseRaycast((self.mouse_last_x, self.mouse_last_y), self.camera.getProjection(), self.camera.getView())
             #origin = ray - self.camera.getR()
             print("Raycast dir: " + str(ray))
-
+            print("CAmera coordinates: " + str(self.camera.position))
+            print("Camera R: " + str(self.camera.getR()))
             #self.camera.setOrigin(origin)
 
     def mouseMoveEvent(self, event):
@@ -167,6 +173,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Shader ID: " + str(self.active_shader))
     #    glLineWidth(5)
         # Set the shader for every mesh
+        self.axis.set_shader(self.shader3D)
+
         for mesh in self.meshes:
             mesh.set_shader(self.active_shader)
 
