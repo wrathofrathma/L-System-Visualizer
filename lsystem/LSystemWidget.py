@@ -2,7 +2,7 @@ from OpenGL.GL import shaders
 from OpenGL.GL import *
 
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
 
@@ -34,6 +34,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # self.camera.updateView()
         self.active_shader = None
         self.dimensionality = 2
+        timer = QTimer(self)
+        timer.timeout.connect(self.update)
+        timer.start(1)
 
     def setDimensions(self, d):
         if(d!=2 and d!=3):

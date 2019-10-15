@@ -11,5 +11,5 @@ void main(){
 
   float r = mod(time, 1);
   //FragColor = mix(c1,c2,0.5);
-  FragColor = frag_color;
+  FragColor = frag_color*r;
 }
