@@ -126,7 +126,7 @@ def readStack(stack, starting_pt, angle):
     elif str[0] == 'h':
       #move little h
       curr_state = ((curr_state[0][0]+(trig_dict[curr_state[1]][0]/2),curr_state[0][1]+(trig_dict[curr_state[1]][1]/2)),currAngle)
-      str.replace('f','')
+      str.replace('h','')
     elif str[0]=='[':
       saved_states.append(curr_state)
       str.replace('[','')
