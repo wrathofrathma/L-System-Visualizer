@@ -112,7 +112,7 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.prodrulesEdit[0], 2, 1, 1, 1)
     self.layout.addWidget(self.prodPlus, 2, 2, 1, 2)
     self.layout.addWidget(self.angle, 10, 0)
-    self.layout.addWidget(self.angleEdit, 10, 1, 1, 1)
+    self.layout.addWidget(self.angleEdit, 10, 1, 1, 3)
     #turning increment label/textbox
     self.layout.addWidget(self.iters, 11, 0)
     self.layout.addWidget(self.itersEdit, 11, 1, 1, 3)
