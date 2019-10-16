@@ -15,8 +15,9 @@ h moves forward half a unit length
 + turns clockwise
 [ starts branch
 ] ends branch
+| reverses direction
 """
-alphabet = ["F","f","G","g","H","h","-","+","[","]"]
+alphabet = ["F","f","G","g","H","h","-","+","[","]","|"]
 ctrl_char = ['A','B','C','D','E','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 error_message = "X"
 
@@ -111,7 +112,8 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.prodrulesEdit[0], 2, 1, 1, 1)
     self.layout.addWidget(self.prodPlus, 2, 2, 1, 2)
     self.layout.addWidget(self.angle, 10, 0)
-    self.layout.addWidget(self.angleEdit, 10, 1, 1, 3)
+    self.layout.addWidget(self.angleEdit, 10, 1, 1, 1)
+    #turning increment label/textbox
     self.layout.addWidget(self.iters, 11, 0)
     self.layout.addWidget(self.itersEdit, 11, 1, 1, 3)
     self.layout.addWidget(scrollArea, 12, 0, 1, 1)

@@ -37,7 +37,7 @@ def readsubstring(string, starting_pt, start_angle, trig_dict):
       new_angle = round((new_angle + trig_dict['angle'])%360,5)
     elif string[i] == '|':
       new_angle = round((new_angle+180)%360,5)
-      new_trig_dict['angle'] = new_angle
+      trig_dict['angle'] = new_angle
   #print("new_angle = ",new_angle)
   return new_angle, vertContainer # returns angle that string left off on and array of vertices
 
@@ -57,11 +57,12 @@ def readStack(stack, starting_pt, angle):
     indexStartb = stack[1:].find('[') #index of staring bracket
     indexEndb = stack[1:].find(']') #index of end bracket
     indexf = stack[1:].find('f') #index of little f
-    if max([indexStartb, indexEndb, indexf]) == -1:
+    indexh = stack[1:].find('h') #index of little h
+    if max([indexStartb, indexEndb, indexf, indexh]) == -1:
       s.append(stack)
       stack = []
     else:
-      nextbreak = min(i for i in [indexStartb, indexEndb, indexf] if i >=0)
+      nextbreak = min(i for i in [indexStartb, indexEndb, indexf, indexh] if i >=0)
       s.append(stack[0:nextbreak+1])
       stack = stack[nextbreak+1:]
   """
@@ -115,7 +116,7 @@ def readStack(stack, starting_pt, angle):
     trig_dict[pos_angles[i]] = (cos_arr[i],sin_arr[i])
   new_point = starting_pt #new point initalized to starting point
   curr_state=(starting_pt, 0)
-  #for each little f create a new mesh with the starting position and angle initialized from the previous mesh
+  #for each little f/h create a new mesh with the starting position and angle initialized from the previous mesh
   for str in s:
     if str[0]=='f':
       #move little f
@@ -125,6 +126,8 @@ def readStack(stack, starting_pt, angle):
       str.replace('f','')
     elif str[0] == 'h':
       #move little h
+      if not curr_state[1] in trig_dict.keys():
+        trig_dict[curr_state[1]]=[math.cos(curr_state[1]),math.sin(curr_state[1])]
       curr_state = ((curr_state[0][0]+(trig_dict[curr_state[1]][0]/2),curr_state[0][1]+(trig_dict[curr_state[1]][1]/2)),currAngle)
       str.replace('h','')
     elif str[0]=='[':
