@@ -46,6 +46,8 @@ def readStack(stack, starting_pt, angle):
   Input list of strings (F, +, -)
   Output List of new vertices
   """
+  stack = stack.replace("G","F")
+  stack = stack.replace("g","f")
   vertices = []
   vert_arr = []
   mesh_arr =[]

@@ -261,8 +261,6 @@ class UIWidget(QWidget):
         rule = rule.replace(" ","")
         pr = rule.replace("->",":")
         pr = pr.split(':')
-        pr[1] = pr[1].replace("g","f")
-        pr[1] = pr[1].replace("G","F")
         rules[pr[0]] = pr[1]
       '''
       THIS PART IS NOT CONTEXT SENSITIVE
