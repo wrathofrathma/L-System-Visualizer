@@ -84,6 +84,7 @@ class UIWidget(QWidget):
     widget = QWidget()
     scrollArea = QtWidgets.QScrollArea()
     scrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+    scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
     scrollArea.setWidgetResizable(True)
     scrollArea.setFixedWidth(150)
     scrollArea.setWidget(widget)
