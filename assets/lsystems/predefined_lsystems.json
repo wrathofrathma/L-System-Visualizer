@@ -17,11 +17,47 @@
     "axiom": "-F",
     "iterations": 5
   },
+  "Koch Snowflake" :{
+    "rules":{"F":"F-F++F-F","X":"FF"},
+    "angle":60,
+    "axiom":"F++F++F",
+    "iterations":5
+  },
+  "Koch Island":{
+    "rules":{"F":"F+FF-FF-F-F+F+FF-F-F+F+FF+FF-F"},
+    "angle":90,
+    "axiom":"F-F-F-F",
+    "iterations":2
+  },
   "Piano Curve" : {
     "rules": {"F" : "FF+F+F+FF+F+F-F"},
     "angle": 90,
     "axiom": "F",
     "iterations": 4
+  },
+  "Dragon Curve" : {
+    "rules" : {"X":"X+YF+","Y":"-FX-Y"},
+    "angle" : 90,
+    "axiom" : "FX",
+    "iterations": 10
+  },
+  "Hilbert Curve":{
+    "rules" : {"A": "-BF+AFA+FB-","B":"+AF-BFB-FA+"},
+    "angle":90,
+    "axiom":"A",
+    "iterations": 5
+  },
+  "Tree Example":{
+    "rules":{"F":"FF","X":"F+[-F-XF-X][+FF][--XF[+X]][++F-X]"},
+    "angle":25,
+    "axiom":"--X",
+    "iterations":3
+  },
+  "Islands and Lakes":{
+    "rules":{"F":"F+f-FF+F+FF+Ff+FF-f+FF-F-FF-Ff-FFF","f":"ffffff"},
+    "angle":90,
+    "axiom":"F+F+F+F",
+    "iterations":2
   },
     "Cantor Set" : {
     "rules" : { "F" : "FfF","f" : "fff"},
@@ -29,5 +65,5 @@
     "axiom" : "F",
     "iterations" : 5
   }
- 
+
 }
