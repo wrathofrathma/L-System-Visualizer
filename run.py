@@ -385,7 +385,8 @@ class UIWidget(QWidget):
       p.clear_box()
     self.angleEdit.clear_box()
     self.itersEdit.clear_box()
-    (verts, grammar) = get_saved_lsystem(example)
+    #(verts, grammar) = get_saved_lsystem(example)
+    grammar = get_saved_lsystem(example)
     self.axiomEdit.setText(grammar['axiom'])
     while self.prods < len(grammar['rules']):
       self.moreProds()
