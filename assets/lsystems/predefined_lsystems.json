@@ -1,10 +1,5 @@
 {
-  "Koch Snowflake" : {
-    "rules" : { "F" : "F+F--F+F" },
-    "angle" : 60,
-    "axiom" : "F",
-    "iterations" : 5
-  },
+
   "Sierpinski Triangle" : {
     "rules" : { "F" : "F-G+F+G-F","G" : "GG"},
     "angle" : 120,
@@ -18,7 +13,7 @@
     "iterations": 5
   },
   "Koch Snowflake" :{
-    "rules":{"F":"F-F++F-F","X":"FF"},
+    "rules":{"F":"F-F++F-F"},
     "angle":60,
     "axiom":"F++F++F",
     "iterations":5
@@ -60,7 +55,7 @@
     "iterations":2
   },
     "Cantor Set" : {
-    "rules" : { "F" : "FfF","f" : "fff","X":"-f+"},
+    "rules" : { "F" : "FfF","f" : "fff","X":"-f+1"},
     "angle" : 90,
     "axiom" : "XF",
     "iterations" : 5
