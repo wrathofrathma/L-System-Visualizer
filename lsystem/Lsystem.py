@@ -12,7 +12,7 @@ def weightedrand(weights):
         print("error")
     
     rand = random.randint(0,99)
-    print(rand)
+    #print(rand)
     it = 0
     for weight in weights:
         wei = weight * 100
@@ -31,28 +31,29 @@ def weightedrand(weights):
 def axigen(axioms, rules):
      newaxi=''
      strn = ""
-     #print (rules)
+     print (rules)
 
      for i in rules:
          nurules = {}
          temp = rules[i]
-         #print(i)
-         #print(rules[i])
+         print(i)
+         print(rules[i])
          for it in temp:
              weights = []
              ntemp = it
              weights.append(ntemp[0])
              strn += ntemp[1]
              strn += "~"
-         #print(strn)    
+         print(strn)    
          strn = strn[:-1] 
-         #print(strn)
+         print(strn)
          nurules[i] = strn
-         #print(nurules)
+         print(nurules)
              
      for axiom in axioms:
-        #print(axiom)
-        #print(axioms)
+        print(axiom)
+        print(axioms)
+        print(nurules)
         
         if axiom in nurules:
             temp = nurules[axiom]
@@ -78,19 +79,20 @@ def axigenq(axioms, rules):
 
      for i in rules:
          weights = []
+         strn= ""
          temp = rules[i]
-         #print(i)
-         #print(temp)
+         print(i)
+         print(temp)
          for it in temp:
              ntemp = it
              weights.append(ntemp[0])
              strn += ntemp[1]
              strn += "~"
-         #print(strn)    
+         print(strn)    
          strn = strn[:-1] 
-         #print(strn)
+         print(strn)
          nurules[i] = strn
-         #print(nurules)
+         print(nurules)
     
      for axiom in axioms[0]:
         if axiom in nurules:
@@ -141,7 +143,7 @@ def lgen(axioms, rules, it):
     return axioms
 
 rules = {}
-rules["F"]= [[.6,"F-F+"],[.4,"F-F"]]
+rules["F"]= [[.6,"F-f+"],[.4,"F-F"]]
 rules["H"]= [[.5,"H+h"],[.5,"H-H"]]
 print(rules)
 #weights = [.4,.2,.4]
