@@ -55,7 +55,7 @@
     "iterations":2
   },
     "Cantor Set" : {
-    "rules" : { "F" : "FfF","f" : "fff","X":"-f+1"},
+    "rules" : { "F" : "FfF","f" : "fff","X":"-f+"},
     "angle" : 90,
     "axiom" : "XF",
     "iterations" : 5
