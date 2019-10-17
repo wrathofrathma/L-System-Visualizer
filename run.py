@@ -65,6 +65,7 @@ class UIWidget(QWidget):
     self.axiomEdit = CustomLineEdit()
     self.axiomEdit.clicked.connect(lambda: self.axiomEdit.clear_box())
     self.prodrulesEdit.append(CustomLineEdit())
+    self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box())
 
     self.angleEdit = CustomLineEdit()
     self.angleEdit.clicked.connect(lambda: self.angleEdit.clear_box())
@@ -131,6 +132,7 @@ class UIWidget(QWidget):
     '''  This function checks the input
          Returns 1 if valid
          Returns 0 otherwise '''
+    ctrl_char_lhs=[] #control chars that are on the left hand side of a rule
     valid_input = 1
     axiomInput = self.axiomEdit.text()
     angleInput = self.angleEdit.text()
@@ -174,13 +176,52 @@ class UIWidget(QWidget):
         prod.setText(error_message)
         valid_input = 0
       tmp_prodRule = prodInput.replace('->','')
-
+      stack = []
+      prevCh=''
       for ch in tmp_prodRule:
+        if ch == '[':
+          stack.append(ch)
+        if ch == ']':
+          if prevCh =='[':
+              print("[ ERROR ] Branches should be non-empty")
+              prod.setStyleSheet("color: red;")
+              prod.setText(error_message)
+              valid_input = 0
+          if len(stack)==0:
+            print("[ ERROR ] Each production rule must have balanced brackets")
+            prod.setStyleSheet("color: red;")
+            prod.setText(error_message)
+            valid_input = 0
+          else:
+            stack.pop()
         if not (ch in alphabet or ch in ctrl_char):
           prod.setStyleSheet("color: red;")
           prod.setText(error_message)
           valid_input = 0
-
+        prevCh=ch
+      if len(stack)!=0:
+        print("[ ERROR ] Each production rule must have balanced brackets")
+        prod.setStyleSheet("color: red;")
+        prod.setText(error_message)
+        valid_input = 0
+      tmp_prodRule = prodInput.split('->')
+      for ch in tmp_prodRule[0]:
+        if ch in ctrl_char:
+          ctrl_char_lhs.append(ch)
+    for prod in self.prodrulesEdit:
+      tmp_prodRule = prodInput.split('->')
+      for ch in tmp_prodRule[1]:
+        if ch in ctrl_char and not ch in ctrl_char_lhs:
+          print("[ ERROR ] Control characters must be the key to a rule")
+          prod.setStyleSheet("color: red;")
+          prod.setText(error_message)
+          valid_input = 0
+    for ch in axiomInput:
+      if ch in ctrl_char and not ch in ctrl_char_lhs:
+        print("[ ERROR ] Control characters must be the key to a rule")
+        self.axiomEdit.setStyleSheet("color: red;")
+        self.axiomEdit.setText(error_message)
+        valid_input = 0
     try:
       angleInput = float(angleInput)
     except:
