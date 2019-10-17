@@ -4,7 +4,6 @@ import random
 random.seed()
 def weightedrand(weights):
     sums = 0
-    
     numlist = []
     for weight in weights:
         sums = sums + weight
@@ -31,16 +30,16 @@ def weightedrand(weights):
 
 def axigen(axioms, rules):
      newaxi=''
-     weights = []
-     nurules = {}
      strn = ""
      #print (rules)
 
      for i in rules:
+         nurules = {}
          temp = rules[i]
          #print(i)
          #print(rules[i])
          for it in temp:
+             weights = []
              ntemp = it
              weights.append(ntemp[0])
              strn += ntemp[1]
@@ -78,6 +77,7 @@ def axigenq(axioms, rules):
      #print (rules)
 
      for i in rules:
+         weights = []
          temp = rules[i]
          #print(i)
          #print(temp)
@@ -140,11 +140,12 @@ def lgen(axioms, rules, it):
     
     return axioms
 
-#rules = {}
-#rules["F"]= [[1,"F-F+"]]
-#print(rules)
+rules = {}
+rules["F"]= [[.6,"F-F+"],[.4,"F-F"]]
+rules["H"]= [[.5,"H+h"],[.5,"H-H"]]
+print(rules)
 #weights = [.4,.2,.4]
-#print(lgen("F", rules, 10))
+print(lgen("FH", rules, 10))
 
 '''
 def stackgen(axi,rules, it):
