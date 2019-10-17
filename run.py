@@ -253,7 +253,7 @@ class UIWidget(QWidget):
   #Probably doesn't need self as a param, can just be static.
   # Generates a rule dictionary from an array of production rule strings taken from the UI
   def genRuleDict(self, prodRules):
-    non_det = 0
+    non_det = 1
     if non_det == 0:
       rules = {}
       for rule in prodRules:
@@ -277,8 +277,14 @@ class UIWidget(QWidget):
       {"F": [[p,rule],[p,rule]], "f":[[p,rule],[p,rule]] ... }
       """
       rules = {}
-      for r in alphabet:
-        rules[r]=[]
+      #for r in alphabet:
+      #  rules[r]=[]
+      for rule in prodRules:
+        rule = rule.text()
+        rule = rule.replace(" ","")
+        pr = rule.replace("->",":")
+        pr = pr.split(':')
+        rules[pr[0]]=[]
       for rule in prodRules:
         rule = rule.text()
         rule = rule.replace(" ","")
@@ -297,9 +303,9 @@ class UIWidget(QWidget):
         r = [ i/s for i in r ]
         for i in range(l):
           rules[key][i][0] = r[i]
-      for letter in alphabet:
-        if len(rules[letter])==0:
-          rules[letter].append([1,letter])
+      #for letter in alphabet:
+      #  if len(rules[letter])==0:
+      #    rules[letter].append([1,letter])
       return rules
 
   def closeEvent(self, event):
