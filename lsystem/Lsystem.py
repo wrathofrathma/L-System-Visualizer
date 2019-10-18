@@ -3,14 +3,15 @@ import random
 
 random.seed()
 def weightedrand(weights):
+    #print("weights = ",weights)
     sums = 0
     numlist = []
     for weight in weights:
         sums = sums + weight
-        
+
     if sums != 1:
         print("error")
-    
+
     rand = random.randint(0,99)
     #print(rand)
     it = 0
@@ -19,42 +20,43 @@ def weightedrand(weights):
         num = int(wei)
         for i in range(num):
             numlist.append(it)
-        
+
         it= it+1
+    #print("numlist = ",numlist)
     #print(numlist)
-    it= numlist[rand]    
+    it= numlist[rand]
     #print(it)
+
     return it
-        
 
 
 def axigen(axioms, rules):
      newaxi=''
      strn = ""
-     print (rules)
-
-     for i in rules:
-         nurules = {}
+     #print (rules)
+     nurules = {}
+     for i in rules.keys():
          temp = rules[i]
-         print(i)
-         print(rules[i])
+         #print(i)
+         #print(rules[i])
+         weights = []
          for it in temp:
-             weights = []
              ntemp = it
              weights.append(ntemp[0])
              strn += ntemp[1]
              strn += "~"
-         print(strn)    
-         strn = strn[:-1] 
-         print(strn)
+         #print(strn)
+         #print("weights in axigen = ",weights)
+         strn = strn[:-1]
+         #print(strn)
          nurules[i] = strn
-         print(nurules)
-             
+         #print(nurules)
+
      for axiom in axioms:
-        print(axiom)
-        print(axioms)
-        print(nurules)
-        
+        #print(axiom)
+        #print(axioms)
+        #print(nurules)
+
         if axiom in nurules:
             temp = nurules[axiom]
             if '~' in temp:
@@ -67,10 +69,11 @@ def axigen(axioms, rules):
         else:
             newaxi += axiom
 
-     axioms = newaxi   
+     axioms = newaxi
      return axioms
 
 def axigenq(axioms, rules):
+     #print("in axigenq")
      newaxi=''
      weights = []
      nurules = {}
@@ -81,19 +84,19 @@ def axigenq(axioms, rules):
          weights = []
          strn= ""
          temp = rules[i]
-         print(i)
-         print(temp)
+         #print(i)
+         #print(temp)
          for it in temp:
              ntemp = it
              weights.append(ntemp[0])
              strn += ntemp[1]
              strn += "~"
-         print(strn)    
-         strn = strn[:-1] 
-         print(strn)
+         #print(strn)
+         strn = strn[:-1]
+         #print(strn)
+         #print(nurules)
          nurules[i] = strn
-         print(nurules)
-    
+
      for axiom in axioms[0]:
         if axiom in nurules:
             temp = nurules[axiom]
@@ -114,7 +117,7 @@ def lgen(axioms, rules, it):
     Takes in an axiom set of rules and number of iterations and generates the new string
     '''
     for _ in range(it):
-   
+
         if (len(axioms)>1):
             axi1,axi2=[''],['']
             axi1[0],axi2[0] = axioms[:int(len(axioms)/2)], axioms[int(len(axioms)/2):]
@@ -139,19 +142,19 @@ def lgen(axioms, rules, it):
 
         else:
             axioms=axigen(axioms, rules)
-    
+
     return axioms
 
-rules = {}
-rules["F"]= [[.6,"F-f+"],[.4,"F-F"]]
-rules["H"]= [[.5,"H+h"],[.5,"H-H"]]
-print(rules)
+#rules = {}
+#rules["F"]= [[.6,"F-f+"],[.4,"F-F"]]
+#rules["H"]= [[.5,"H+h"],[.5,"H-H"]]
+#print(rules)
 #weights = [.4,.2,.4]
-print(lgen("FH", rules, 10))
+#print(lgen("FH", rules, 10))
 
 '''
 def stackgen(axi,rules, it):
-    
+
     Takes in the generated string and makes it into a stack
 
     axi= lgen(axi,rules,it)
