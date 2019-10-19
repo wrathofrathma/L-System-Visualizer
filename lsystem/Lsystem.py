@@ -1,6 +1,6 @@
 import threading
 import random
-
+import copy
 random.seed()
 def weightedrand(weights):
     #print("weights = ",weights)
@@ -31,48 +31,101 @@ def weightedrand(weights):
 
 
 def axigen(axioms, rules):
-     newaxi=''
-     strn = ""
-     #print (rules)
-     nurules = {}
-     for i in rules.keys():
-         temp = rules[i]
-         #print(i)
-         #print(rules[i])
-         weights = []
-         for it in temp:
-             ntemp = it
-             weights.append(ntemp[0])
-             strn += ntemp[1]
-             strn += "~"
-         #print(strn)
-         #print("weights in axigen = ",weights)
-         strn = strn[:-1]
-         #print(strn)
-         nurules[i] = strn
-         #print(nurules)
-
-     for axiom in axioms:
-        #print(axiom)
-        #print(axioms)
+    newaxi=''
+    strn = ""
+    #print (rules)
+    newrules = {}
+    for i in rules.keys():
+        #print("i = ",i)
+        temp = rules[i]
+        #print("temp = ",temp)
+        #print(i)
+        #print(rules[i])
+        weights = []
+        strn =""
+        for it in temp:
+            #print("ntemp = ",it)
+            ntemp = it
+            weights.append(ntemp[0])
+            strn += ntemp[1]
+            strn += "~"
+        #print(strn)
+        #print("weights in axigen = ",weights)
+        strn = strn[:-1]
+        #print(strn)
+        newrules[i] = strn
         #print(nurules)
+    #print("new rules = ",newrules)
+    """
+    str_temp is the current string
+    it will be used to keep track of what parts of the string still need proccessing
 
-        if axiom in nurules:
-            temp = nurules[axiom]
-            if '~' in temp:
-               ar = temp.split('~')
-               #print(ar)
-               rand=weightedrand(weights)
-               newaxi += ar[rand]
-            else:
-               newaxi += temp
+    Context free implimentation idea:
+    1. sort the keys from longest to shortest
+    2. say the key is length n, if the first n letters of the string match the key, add rule[key] to the new string
+    3a.if the first n letters ever match a key remove the first n letters of the string
+    3b.default rule: a letter goes to itself
+    """
+    str_temp = copy.deepcopy(axioms)
+    maxKeyLength = max(rules.keys())
+    rules =copy.deepcopy(list(rules.keys()))
+    #sort the keys from longest to shortest
+    for j in range(len(rules)):
+      m = j
+      for i in range(j+1,len(rules)):
+          if len(rules[m])<len(rules[i]):
+              m = i
+      temp = rules[j]
+      rules[j]=rules[m]
+      rules[m] = temp
+    while len(str_temp)>0:
+      found = 0
+      for rule in rules:
+          #print("rule = ",rule)
+          if rule == str_temp[:len(rule)]:
+              temp = newrules[rule]
+              if '~' in temp:
+                 ar = temp.split('~')
+                 #print(ar)
+                 rand=weightedrand(weights)
+                 newaxi += ar[rand]
+              else:
+                newaxi+=temp
+              #print("og string = ",str_temp)
+              #print("temp = ",temp)
+              #print("new axi = ",newaxi)
+              str_temp =str_temp[len(rule):]
+              #print("new string = ",str_temp)
+              found = 1
+              break;
+      #default rule is a letter goes to itself
+      if found == 0:
+          newaxi+=str_temp[0]
+          str_temp=str_temp[1:]
+    """
+    for axiom in axioms:
+    #print(axiom)
+    #print(axioms)
+    #print(nurules)
+
+    if axiom in nurules:
+        temp = nurules[axiom]
+        if '~' in temp:
+           ar = temp.split('~')
+           #print(ar)
+           rand=weightedrand(weights)
+           newaxi += ar[rand]
         else:
-            newaxi += axiom
+           newaxi += temp
+    else:
+        newaxi += axiom
+    """
+    axioms = newaxi
 
-     axioms = newaxi
-     return axioms
+    return axioms
 
 def axigenq(axioms, rules):
+
      #print("in axigenq")
      newaxi=''
      weights = []
@@ -97,6 +150,7 @@ def axigenq(axioms, rules):
          #print(nurules)
          nurules[i] = strn
 
+
      for axiom in axioms[0]:
         if axiom in nurules:
             temp = nurules[axiom]
@@ -113,12 +167,17 @@ def axigenq(axioms, rules):
      axioms[0] = newaxi
 
 def lgen(axioms, rules, it):
+    #print("rules = ",rules)
     '''
     Takes in an axiom set of rules and number of iterations and generates the new string
     '''
+    if max(list(rules.keys()))==1:
+        context_free = 1
+    else:
+        context_free=0
     for _ in range(it):
 
-        if (len(axioms)>1):
+        if (len(axioms)>1) and context_free:
             axi1,axi2=[''],['']
             axi1[0],axi2[0] = axioms[:int(len(axioms)/2)], axioms[int(len(axioms)/2):]
             #if(len(axioms)%2==0):
@@ -142,7 +201,7 @@ def lgen(axioms, rules, it):
 
         else:
             axioms=axigen(axioms, rules)
-
+    print("string = ",axioms)
     return axioms
 
 #rules = {}
