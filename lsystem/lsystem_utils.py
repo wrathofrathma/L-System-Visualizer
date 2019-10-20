@@ -98,8 +98,9 @@ def save_lsystem(key, grammar):
 def get_saved_lsystem(key):
     if key in saved_lsystems:
         grammar = saved_lsystems[key]
-        verts = generate_lsystem(grammar)
-        return (verts, grammar)
+        #verts = generate_lsystem(grammar)
+        #return (verts, grammar)
+        return grammar
     else:
         print("[ ERROR ] No L-System loaded with key: " + str(key))
         return None

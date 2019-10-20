@@ -42,10 +42,13 @@ def readsubstring(string, starting_pt, start_angle, trig_dict):
   return new_angle, vertContainer # returns angle that string left off on and array of vertices
 
 def readStack(stack, starting_pt, angle):
+  #print("stack = ",stack)
   """
   Input list of strings (F, +, -)
   Output List of new vertices
   """
+  stack = stack.replace("G","F")
+  stack = stack.replace("g","f")
   vertices = []
   vert_arr = []
   mesh_arr =[]
