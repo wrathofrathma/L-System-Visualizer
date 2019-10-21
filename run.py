@@ -5,10 +5,10 @@ from lsystem.myUI import *
 class MyWindow(QMainWindow):
   def __init__(self, parent=None):
     super(MyWindow, self).__init__(parent=parent)
-    self.left = 1000
-    self.top = 1000
-    self.width = 1000
-    self.height = 1000
+    self.left = 500
+    self.top = 500
+    self.width = 500
+    self.height = 500
     self.initWindow()
 
   def initWindow(self):
