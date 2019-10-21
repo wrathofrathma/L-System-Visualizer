@@ -4,12 +4,13 @@ import copy
 import decimal
 
 def pickProd(prods):
+  prods_temp = copy.deepcopy(prods)
   rand = random.random() # generate a random number in [0,1]
-  for i, prod in enumerate(prods):
+  for i, prod in enumerate(prods_temp):
     if rand <= prod[0]:
       return prod[1]
     else:
-      prods[i+1][0]+=prod[0]
+      prods_temp[i+1][0]+=prod[0]
 
 def stringParse(strings, prodRules):
   """
