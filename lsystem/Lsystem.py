@@ -1,25 +1,15 @@
 import threading
 import random
 import copy
-random.seed()
+import decimal
 
-def weightedrand(weights):
-  numlist = []
-  if sum(weights) != 1:
-    print("Does not sum to 1")
-  rand = random.randint(0,99)
-  it = 0
-  for weight in weights:
-    wei = weight * 100
-    num = int(wei)
-    for i in range(num):
-      numlist.append(it)
-
-    it= it+1
-  it= numlist[rand]
-  return it
-
-
+def pickProd(prods):
+  rand = random.random() # generate a random number in [0,1]
+  for i, prod in enumerate(prods):
+    if rand <= prod[0]:
+      return prod[1]
+    else:
+      prods[i+1][0]+=prod[0]
 def stringParse(strings, prods):
   newstr=''
   strn = ""
@@ -35,12 +25,15 @@ def stringParse(strings, prods):
       strn += "~"
     strn = strn[:-1]
     newprods[i] = strn
+
+
+
   """
   str_temp is the current string
   it will be used to keep track of what parts of the string still need proccessing
   Context free implimentation idea:
   1. sort the keys from longest to shortest
-  2. say the key is length n, if the first n letters of the string match the key, add rule[key] to the new string
+  2. say the key is length n, if the first n letters of the string match the key, add prod[key] to the new string
   3a.if the first n letters ever match a key remove the first n letters of the string
   3b.default rule: a letter goes to itself
  """
@@ -58,19 +51,20 @@ def stringParse(strings, prods):
     prods[m] = temp
   while len(str_temp)>0:
     found = 0
-    for rule in prods:
-      if rule == str_temp[:len(rule)]:
-        temp = newprods[rule]
+    for prod in prods:
+      if prod == str_temp[:len(prod)]:
+        temp = newprods[prod]
         if '~' in temp:
           ar = temp.split('~')
+
           rand=weightedrand(weights)
           newstr += ar[rand]
         else:
           newstr+=temp
-        str_temp = str_temp[len(rule):]
+        str_temp = str_temp[len(prod):]
         found = 1
         break;
-      #default rule is a letter goes to itself
+      #default prod is a letter goes to itself
     if found == 0:
       newstr+=str_temp[0]
       str_temp=str_temp[1:]
@@ -137,7 +131,5 @@ def lThread(strings, prods, it):
 
 
 if __name__ == "__main__":
-  prods = {"F":"F+F--F+F"}
-  print(lgen('F',prods,5))
-  val = stackgen(prods)
-  print(val.pop())
+  list = [[.2,"X"],[.2,"Y"],[.6,"Z"]]
+  print(pickProd(list))
