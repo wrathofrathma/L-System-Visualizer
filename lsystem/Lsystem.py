@@ -10,25 +10,11 @@ def pickProd(prods):
       return prod[1]
     else:
       prods[i+1][0]+=prod[0]
-def stringParse(strings, prods):
-  newstr=''
-  strn = ""
-  newprods = {}
-  for i in prods.keys():
-    temp = prods[i]
-    weights = []
-    strn =""
-    for it in temp:
-      ntemp = it
-      weights.append(ntemp[0])
-      strn += ntemp[1]
-      strn += "~"
-    strn = strn[:-1]
-    newprods[i] = strn
 
-
-
+def stringParse(strings, prodRules):
   """
+  NOTE: Context sensitive reads left to right, with longest key getting priority
+
   str_temp is the current string
   it will be used to keep track of what parts of the string still need proccessing
   Context free implimentation idea:
@@ -36,71 +22,22 @@ def stringParse(strings, prods):
   2. say the key is length n, if the first n letters of the string match the key, add prod[key] to the new string
   3a.if the first n letters ever match a key remove the first n letters of the string
   3b.default rule: a letter goes to itself
- """
+  """
+  newstr=""
   str_temp = copy.deepcopy(strings)
-  maxKeyLength = max(prods.keys())
-  prods =copy.deepcopy(list(prods.keys()))
-  #sort the keys from longest to shortest
-  for j in range(len(prods)):
-    m = j
-    for i in range(j+1,len(prods)):
-      if len(prods[m])<len(prods[i]):
-        m = i
-    temp = prods[j]
-    prods[j]=prods[m]
-    prods[m] = temp
   while len(str_temp)>0:
     found = 0
-    for prod in prods:
-      if prod == str_temp[:len(prod)]:
-        temp = newprods[prod]
-        if '~' in temp:
-          ar = temp.split('~')
-
-          rand=weightedrand(weights)
-          newstr += ar[rand]
-        else:
-          newstr+=temp
-        str_temp = str_temp[len(prod):]
+    for key in sorted(prodRules, key=len, reverse=True):
+      if key == str_temp[:len(key)]:
+        newstr += pickProd(prodRules[key])
+        str_temp = str_temp[len(key):]
         found = 1
         break;
-      #default prod is a letter goes to itself
+    #default prod is a letter goes to itself
     if found == 0:
       newstr+=str_temp[0]
       str_temp=str_temp[1:]
   return newstr
-
-def multiStringParse(strings, prods):
-
-  newstr=''
-  weights = []
-  newprods = {}
-  strn = ""
-
-  for i in prods:
-    weights = []
-    strn= ""
-    temp = prods[i]
-    for it in temp:
-      ntemp = it
-      weights.append(ntemp[0])
-      strn += ntemp[1]
-      strn += "~"
-    strn = strn[:-1]
-    newprods[i] = strn
-
-  for char in strings[0]:
-    if char in newprods:
-      temp = newprods[char]
-      if '~' in temp:
-        ar = temp.split('~')
-        rand=weightedrand(weights)
-        newstr += ar[rand]
-      else:
-        newstr += temp
-    else:
-      newstr += axiom
-  strings[0] = newstr
 
 def lThread(strings, prods, it):
   '''
@@ -112,18 +49,16 @@ def lThread(strings, prods, it):
     context_free=0
   for _ in range(it):
     if (len(strings)>1) and context_free:
-      str1, str2 = [''], ['']
-      str1[0], str2[0] = strings[:int(len(strings)/2)], strings[int(len(strings)/2):]
-
-      thread1 = threading.Thread(target=multiStringParse, args=(str1,prods))
-      thread2 = threading.Thread(target=multiStringParse, args=(str2,prods))
+      str1, str2 = strings[:int(len(strings)/2)], strings[int(len(strings)/2):]
+      thread1 = threading.Thread(target=lambda x, arg1: x.put(stringParse(arg1), args=(newstr1,str1,prods)))
+      thread2 = threading.Thread(target=lambda y, arg2: y.put(stringParse(arg2), args=(newstr2,str2,prods)))
 
       thread1.start()
       thread2.start()
 
       thread1.join()
       thread2.join()
-      strings=str1[0]+str2[0]
+      strings = newstr1.get() + newstr2.get()
 
     else:
       strings=stringParse(strings, prods)
