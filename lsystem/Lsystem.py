@@ -59,7 +59,6 @@ def axigen(axioms, rules):
     """
     str_temp is the current string
     it will be used to keep track of what parts of the string still need proccessing
-
     Context free implimentation idea:
     1. sort the keys from longest to shortest
     2. say the key is length n, if the first n letters of the string match the key, add rule[key] to the new string
@@ -107,7 +106,6 @@ def axigen(axioms, rules):
     #print(axiom)
     #print(axioms)
     #print(nurules)
-
     if axiom in nurules:
         temp = nurules[axiom]
         if '~' in temp:
@@ -213,9 +211,7 @@ def lgen(axioms, rules, it):
 
 '''
 def stackgen(axi,rules, it):
-
     Takes in the generated string and makes it into a stack
-
     axi= lgen(axi,rules,it)
     stack = []
     it=0
@@ -223,10 +219,9 @@ def stackgen(axi,rules, it):
         stack.append(axi[it])
         it=it+1
     return stack
-
 if __name__ == "__main__":
     rules = {"F":"F+F--F+F"}
     print(lgen('F',rules,5))
     val = stackgen(rules)
     print(val.pop())
-'''
+'''''
