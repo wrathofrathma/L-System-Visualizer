@@ -375,6 +375,8 @@ class UIWidget(QWidget):
     self.itersEdit.setText(str(grammar['iterations']))
     self.genLSys()
     #print(example)
+#TODO: Make a radio button for toggle of 2d/3d 
+#TODO: Make settings for buttons
 
 class PopupSettings(QWidget):
   def __init__(self):

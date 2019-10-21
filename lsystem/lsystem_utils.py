@@ -1,11 +1,9 @@
-import lsystem.Lsystem as ls
-import lsystem.stack_loop as sl
 import math
 import numpy as np
 import json
 import os
 import copy
-from lsystem.Lsystem import *
+from lsystem.parsing import *
 from lsystem.stack_loop import *
 
 # This file for now is acting as a catch-all utility file.
