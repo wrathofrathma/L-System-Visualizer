@@ -35,7 +35,7 @@ def generate_lsystem(grammar):
   # Generate full production string.
   s = lThread(grammar_copy['axiom'], grammar_copy['rules'], grammar_copy['iterations'])
   # Generate vertics
-  verts_arr_temp = readStack(s,(0,0),grammar_copy['angle'])
+  verts_arr_temp = readStack(s,(0,0),grammar_copy['angle'], grammar_copy['turnAngle'])
   verts_arr = []
   m = map(max,verts_arr_temp)
   m=max(max(m))

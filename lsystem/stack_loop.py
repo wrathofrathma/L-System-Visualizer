@@ -12,7 +12,7 @@ funcdict = {
   '-': minus
 }
 #l = ['F','f','+','-','F']
-def readsubstring(string, starting_pt, start_angle, trig_dict):
+def readsubstring(string, starting_pt, start_angle, turnAngle, trig_dict):
   """
   Input: readsubstring takes in a string, a starking point, the starting angle,
   the dictinary of angles and their trig values and an empty array
@@ -37,11 +37,15 @@ def readsubstring(string, starting_pt, start_angle, trig_dict):
       new_angle = round((new_angle + trig_dict['angle'])%360,5)
     elif string[i] == '|':
       new_angle = round((new_angle+180)%360,5)
-      trig_dict['angle'] = new_angle
-  #print("new_angle = ",new_angle)
-  return new_angle, vertContainer # returns angle that string left off on and array of vertices
+    elif string[i] == '(':
+      start_angle = round((start_angle - turnAngle)%360,5)
+      new_angle = round((new_angle - turnAngle)%360,5)
+    elif string[i] == ')':
+      start_angle = round((start_angle + turnAngle)%360,5)
+      new_angle = round((new_angle + turnAngle)%360,5)
+  return new_angle, vertContainer, start_angle # returns angle that string left off on, array of vertices, and the new angle
 
-def readStack(stack, starting_pt, angle):
+def readStack(stack, starting_pt, angle, turnAngle):
   #print("stack = ",stack)
   """
   Input list of strings (F, +, -)
@@ -113,25 +117,25 @@ def readStack(stack, starting_pt, angle):
 
 
   #print("angle dictionary = ",pos_angles)
-  sin_arr = np.sin(np.array(pos_angles)*np.pi/180.)
-  cos_arr = np.cos(np.array(pos_angles)*np.pi/180.)
+  sin_arr = np.sin(np.array(pos_angles)*np.pi/180)
+  cos_arr = np.cos(np.array(pos_angles)*np.pi/180)
   for i in range(len(pos_angles)):
     trig_dict[pos_angles[i]] = (cos_arr[i],sin_arr[i])
   new_point = starting_pt #new point initalized to starting point
-  curr_state=(starting_pt, 0)
+  curr_state=(starting_pt, 0, angle)
   #for each little f/h create a new mesh with the starting position and angle initialized from the previous mesh
   for str in s:
     if str[0]=='f':
       #move little f
       if not curr_state[1] in trig_dict.keys():
         trig_dict[curr_state[1]]=[math.cos(curr_state[1]),math.sin(curr_state[1])]
-      curr_state = ((curr_state[0][0]+trig_dict[curr_state[1]][0],curr_state[0][1]+trig_dict[curr_state[1]][1]),currAngle)
+      curr_state = ((curr_state[0][0]+trig_dict[curr_state[1]][0],curr_state[0][1]+trig_dict[curr_state[1]][1]),currAngle, angle)
       str.replace('f','')
     elif str[0] == 'h':
       #move little h
       if not curr_state[1] in trig_dict.keys():
         trig_dict[curr_state[1]]=[math.cos(curr_state[1]),math.sin(curr_state[1])]
-      curr_state = ((curr_state[0][0]+(trig_dict[curr_state[1]][0]/2),curr_state[0][1]+(trig_dict[curr_state[1]][1]/2)),currAngle)
+      curr_state = ((curr_state[0][0]+(trig_dict[curr_state[1]][0]/2),curr_state[0][1]+(trig_dict[curr_state[1]][1]/2)),currAngle, angle)
       str.replace('h','')
     elif str[0]=='[':
       saved_states.append(curr_state)
@@ -140,9 +144,9 @@ def readStack(stack, starting_pt, angle):
       curr_state = saved_states.pop()
       str.replace(']','')
 
-    currAngle,vertices = readsubstring(str,curr_state[0],curr_state[1],trig_dict)
+    currAngle,vertices, angle = readsubstring(str,curr_state[0],curr_state[1], turnAngle ,trig_dict)
     vert_arr.append(vertices)
-    curr_state = (vertices[-1],currAngle)
+    curr_state = (vertices[-1],currAngle, angle)
   print("[ INFO ] Finshed finding vertices (",round(time()-t,3),"s )")
   #print("vert_arr = ",vert_arr)
   return vert_arr

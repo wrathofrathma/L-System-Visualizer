@@ -16,8 +16,10 @@ h moves forward half a unit length
 [ starts branch
 ] ends branch
 | reverses direction
+( decrements the angle by a turning angle
+) increments the angle by a turning angle
 """
-alphabet = ["F","f","G","g","H","h","-","+","[","]","|"]
+alphabet = ["F","f","G","g","H","h","-","+","[","]","|", "(", ")"]
 ctrl_char = ['A','B','C','D','E','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 error_message = "X"
 
@@ -65,6 +67,7 @@ class UIWidget(QWidget):
     self.prodrules.append(QLabel('Production Rule ' + str(self.prods)))
     self.angle = QLabel('Angles(degrees)')
     self.iters = QLabel('Iterations')
+    self.turnAngle = QLabel('Turning Angle')
 
     #creates the text box for each label
     self.axiomEdit = CustomLineEdit()
@@ -78,6 +81,9 @@ class UIWidget(QWidget):
     self.itersEdit.clicked.connect(lambda: self.itersEdit.clear_box())
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
+
+    self.turnAngleEdit = CustomLineEdit()
+    self.turnAngleEdit.clicked.connect(lambda: self.turnAngleEdit.clear_box())
 
 
   def initButtons(self):
@@ -111,10 +117,12 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.prodPlus, 2, 2, 1, 2)
     self.layout.addWidget(self.angle, 10, 0)
     self.layout.addWidget(self.angleEdit, 10, 1, 1, 3)
-    self.layout.addWidget(self.iters, 11, 0)
-    self.layout.addWidget(self.itersEdit, 11, 1, 1, 3)
-    self.layout.addWidget(self.scrollArea, 12, 0, 1, 1)
-    self.layout.addWidget(self.graphix, 12, 1, 5, -1)
+    self.layout.addWidget(self.turnAngle, 11, 0)
+    self.layout.addWidget(self.turnAngleEdit, 11, 1, 1, 3)
+    self.layout.addWidget(self.iters, 12, 0)
+    self.layout.addWidget(self.itersEdit, 12, 1, 1, 3)
+    self.layout.addWidget(self.scrollArea, 13, 0, 1, 1)
+    self.layout.addWidget(self.graphix, 13, 1, 5, -1)
     self.layout.addWidget(self.lsysbutton, 20, 0, 1, -1)
 
 
@@ -126,6 +134,7 @@ class UIWidget(QWidget):
     valid_input = 1
     axiomInput = self.axiomEdit.text()
     angleInput = self.angleEdit.text()
+    turnAngleInput = self.turnAngleEdit.text()
     itersInput = self.itersEdit.text()
     string = 0
     if len(axiomInput)==0:
@@ -210,6 +219,19 @@ class UIWidget(QWidget):
         valid_input = 0
 
     try:
+      turnAngleInput = float(turnAngleInput)
+    except:
+      self.turnAngleEdit.setStyleSheet("color: red;")
+      self.turnAngleEdit.setText("X")
+      valid_input=0
+      string = 1 #is a string
+    if not string:
+      if turnAngleInput <= -360 or turnAngleInput >= 360:
+        self.turnAngleEdit.setStyleSheet("color: red;")
+        self.turnAngleEdit.setText(error_message)
+        valid_input = 0
+
+    try:
       itersInput = int(itersInput)
     except:
       self.itersEdit.setStyleSheet("color: red;")
@@ -222,7 +244,7 @@ class UIWidget(QWidget):
         self.itersEdit.setText(error_message)
         valid_input = 0
     return valid_input
-
+    
   #Probably doesn't need self as a param, can just be static.
   # Generates a rule dictionary from an array of production rule strings taken from the UI
   def genRuleDict(self, prodRules):
@@ -332,17 +354,19 @@ class UIWidget(QWidget):
       axiomInput = self.axiomEdit.text()
       #prodInput = [self.prodrulesEdit.text()] #changed to array
       angleInput = self.angleEdit.text()
+      turnAngleInput = self.turnAngleEdit.text()
       itersInput = self.itersEdit.text()
       print("Axiom: ", axiomInput)
       print("Productions: ")
       #for prod in prodInput:
       #    print(prod)
       print("Angle: ", angleInput)
+      print("Turning Angle: ", turnAngleInput)
       print("Iterations: ", itersInput)
       # Format input for use
       rules=self.genRuleDict(self.prodrulesEdit)
       # Generate rule grammar dictionary.
-      grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput)}
+      grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput)}
       verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
       self.graphix.clear_mesh()
