@@ -19,7 +19,7 @@ h moves forward half a unit length
 ( decrements the angle by a turning angle
 ) increments the angle by a turning angle
 """
-alphabet = ["F","f","G","g","H","h","-","+","[","]","|", "(", ")"]
+alphabet = ["F","f","G","g","H","h","-","+","[","]","|", "(", ")", ">", "<"]
 ctrl_char = ['A','B','C','D','E','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 error_message = "X"
 
@@ -68,6 +68,7 @@ class UIWidget(QWidget):
     self.angle = QLabel('Angles(degrees)')
     self.iters = QLabel('Iterations')
     self.turnAngle = QLabel('Turning Angle')
+    self.lineScale = QLabel('Line Scale')
 
     #creates the text box for each label
     self.axiomEdit = CustomLineEdit()
@@ -84,6 +85,9 @@ class UIWidget(QWidget):
 
     self.turnAngleEdit = CustomLineEdit()
     self.turnAngleEdit.clicked.connect(lambda: self.turnAngleEdit.clear_box())
+
+    self.lineScaleEdit = CustomLineEdit()
+    self.lineScaleEdit.clicked.connect(lambda: self.lineScaleEdit.clear_box())
 
 
   def initButtons(self):
@@ -119,10 +123,12 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.angleEdit, 10, 1, 1, 3)
     self.layout.addWidget(self.turnAngle, 11, 0)
     self.layout.addWidget(self.turnAngleEdit, 11, 1, 1, 3)
-    self.layout.addWidget(self.iters, 12, 0)
-    self.layout.addWidget(self.itersEdit, 12, 1, 1, 3)
-    self.layout.addWidget(self.scrollArea, 13, 0, 1, 1)
-    self.layout.addWidget(self.graphix, 13, 1, 5, -1)
+    self.layout.addWidget(self.lineScale, 12, 0)
+    self.layout.addWidget(self.lineScaleEdit, 12, 1, 1, 3)
+    self.layout.addWidget(self.iters, 13, 0)
+    self.layout.addWidget(self.itersEdit, 13, 1, 1, 3)
+    self.layout.addWidget(self.scrollArea, 14, 0, 1, 1)
+    self.layout.addWidget(self.graphix, 14, 1, 5, -1)
     self.layout.addWidget(self.lsysbutton, 20, 0, 1, -1)
 
 
@@ -135,6 +141,7 @@ class UIWidget(QWidget):
     axiomInput = self.axiomEdit.text()
     angleInput = self.angleEdit.text()
     turnAngleInput = self.turnAngleEdit.text()
+    lineScaleInput = self.lineScaleEdit.text()
     itersInput = self.itersEdit.text()
     string = 0
     if len(axiomInput)==0:
@@ -229,6 +236,19 @@ class UIWidget(QWidget):
       if turnAngleInput <= -360 or turnAngleInput >= 360:
         self.turnAngleEdit.setStyleSheet("color: red;")
         self.turnAngleEdit.setText(error_message)
+        valid_input = 0
+
+    try:
+      lineScaleInput = float(lineScaleInput)
+    except:
+      self.lineScaleEdit.setStyleSheet("color: red;")
+      self.lineScaleEdit.setText(error_message)
+      valid_input = 0
+      string = 1 #is a string
+    if not string:
+      if lineScaleInput <= 0:
+        self.lineScaleEdit.setStyleSheet("color: red;")
+        self.lineScaleEdit.setText(error_message)
         valid_input = 0
 
     try:
@@ -355,6 +375,7 @@ class UIWidget(QWidget):
       #prodInput = [self.prodrulesEdit.text()] #changed to array
       angleInput = self.angleEdit.text()
       turnAngleInput = self.turnAngleEdit.text()
+      lineScaleInput = self.lineScaleEdit.text()
       itersInput = self.itersEdit.text()
       print("Axiom: ", axiomInput)
       print("Productions: ")
@@ -362,11 +383,12 @@ class UIWidget(QWidget):
       #    print(prod)
       print("Angle: ", angleInput)
       print("Turning Angle: ", turnAngleInput)
+      print("Line Scale: ", lineScaleInput)
       print("Iterations: ", itersInput)
       # Format input for use
       rules=self.genRuleDict(self.prodrulesEdit)
       # Generate rule grammar dictionary.
-      grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput)}
+      grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
       verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
       self.graphix.clear_mesh()

@@ -12,7 +12,7 @@ funcdict = {
   '-': minus
 }
 #l = ['F','f','+','-','F']
-def readsubstring(string, starting_pt, start_angle, turnAngle, trig_dict):
+def readsubstring(string, starting_pt, start_angle, turnAngle, trig_dict, scale, lineScale):
   """
   Input: readsubstring takes in a string, a starking point, the starting angle,
   the dictinary of angles and their trig values and an empty array
@@ -26,10 +26,10 @@ def readsubstring(string, starting_pt, start_angle, turnAngle, trig_dict):
     if not new_angle in trig_dict.keys():
       trig_dict[new_angle]=[math.cos(new_angle),math.sin(new_angle)]
     if string[i] == 'F':
-      new_point = (new_point[0]+trig_dict[new_angle][0],new_point[1]+trig_dict[new_angle][1])
+      new_point = (new_point[0]+(scale*trig_dict[new_angle][0]),new_point[1]+(scale*trig_dict[new_angle][1]))
       vertContainer.append(new_point)
     elif string[i] == 'H':
-      new_point = (new_point[0]+(trig_dict[new_angle][0]/2),new_point[1]+(trig_dict[new_angle][1]/2))
+      new_point = (new_point[0]+(scale*trig_dict[new_angle][0]/2),new_point[1]+(scale*trig_dict[new_angle][1]/2))
       vertContainer.append(new_point)
     elif string[i] == '+':
         new_angle = round((new_angle - trig_dict['angle'])%360,5)
@@ -43,9 +43,13 @@ def readsubstring(string, starting_pt, start_angle, turnAngle, trig_dict):
     elif string[i] == ')':
       start_angle = round((start_angle + turnAngle)%360,5)
       new_angle = round((new_angle + turnAngle)%360,5)
-  return new_angle, vertContainer, start_angle # returns angle that string left off on, array of vertices, and the new angle
+    elif string[i] == '>':
+      scale *= lineScale
+    elif string[i] == '<':
+      scale /= lineScale
+  return new_angle, vertContainer, start_angle, scale # returns angle that string left off on, array of vertices, and the new angle
 
-def readStack(stack, starting_pt, angle, turnAngle):
+def readStack(stack, starting_pt, angle, turnAngle, lineScale):
   #print("stack = ",stack)
   """
   Input list of strings (F, +, -)
@@ -98,6 +102,7 @@ def readStack(stack, starting_pt, angle, turnAngle):
   it =0
   pos_angles= []
   t = time()
+  scale = float(1);
   print("[ INFO ] Calculating angles")
   if angle != 0:
     while it < 360:
@@ -122,20 +127,20 @@ def readStack(stack, starting_pt, angle, turnAngle):
   for i in range(len(pos_angles)):
     trig_dict[pos_angles[i]] = (cos_arr[i],sin_arr[i])
   new_point = starting_pt #new point initalized to starting point
-  curr_state=(starting_pt, 0, angle)
+  curr_state=(starting_pt, 0, angle, scale)
   #for each little f/h create a new mesh with the starting position and angle initialized from the previous mesh
   for str in s:
     if str[0]=='f':
       #move little f
       if not curr_state[1] in trig_dict.keys():
         trig_dict[curr_state[1]]=[math.cos(curr_state[1]),math.sin(curr_state[1])]
-      curr_state = ((curr_state[0][0]+trig_dict[curr_state[1]][0],curr_state[0][1]+trig_dict[curr_state[1]][1]),currAngle, angle)
+      curr_state = ((curr_state[0][0]+(scale*trig_dict[curr_state[1]][0]),curr_state[0][1]+(scale*trig_dict[curr_state[1]][1])),currAngle, angle, scale)
       str.replace('f','')
     elif str[0] == 'h':
       #move little h
       if not curr_state[1] in trig_dict.keys():
         trig_dict[curr_state[1]]=[math.cos(curr_state[1]),math.sin(curr_state[1])]
-      curr_state = ((curr_state[0][0]+(trig_dict[curr_state[1]][0]/2),curr_state[0][1]+(trig_dict[curr_state[1]][1]/2)),currAngle, angle)
+      curr_state = ((curr_state[0][0]+(scale*trig_dict[curr_state[1]][0]/2),curr_state[0][1]+(scale*trig_dict[curr_state[1]][1]/2)),currAngle, angle, scale)
       str.replace('h','')
     elif str[0]=='[':
       saved_states.append(curr_state)
@@ -144,9 +149,9 @@ def readStack(stack, starting_pt, angle, turnAngle):
       curr_state = saved_states.pop()
       str.replace(']','')
 
-    currAngle,vertices, angle = readsubstring(str,curr_state[0],curr_state[1], turnAngle ,trig_dict)
+    currAngle,vertices, angle, scale = readsubstring(str,curr_state[0],curr_state[1], turnAngle ,trig_dict, scale, lineScale)
     vert_arr.append(vertices)
-    curr_state = (vertices[-1],currAngle, angle)
+    curr_state = (vertices[-1],currAngle, angle, scale)
   print("[ INFO ] Finshed finding vertices (",round(time()-t,3),"s )")
   #print("vert_arr = ",vert_arr)
   return vert_arr
