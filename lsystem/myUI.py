@@ -139,7 +139,7 @@ class UIWidget(QWidget):
     for prod in self.prodrulesEdit:
       prodRule += prod.text()
     prodRule += self.axiomEdit.text()
-    print(prodRule)
+    
     if((")" in prodRule or "(" in prodRule) and self.madeAngle is False):
       self.turnAngle = QLabel('Turning Angle')
       self.turnAngleEdit = customLineEdit()
@@ -176,139 +176,6 @@ class UIWidget(QWidget):
       self.lineScale = None
       self.madeLine = False
    
-
-  def inputCheck(self):
-    '''  This function checks the input
-         Returns 1 if valid
-         Returns 0 otherwise '''
-    ctrl_char_lhs=[] #control chars that are on the left hand side of a rule
-    valid_input = 1
-    axiomInput = self.axiomEdit.text()
-    angleInput = self.angleEdit.text()
-    turnAngleInput = self.turnAngleEdit.text()
-    lineScaleInput = self.lineScaleEdit.text()
-    itersInput = self.itersEdit.text()
-    string = 0
-    if len(axiomInput)==0:
-      self.axiomEdit.setStyleSheet("color: red;")
-      self.axiomEdit.setText(error_message)
-      valid_input = 0
-    for ch in axiomInput:
-      if not (ch in alphabet or ch in ctrl_char):
-        print("[ ERROR ] ",ch," not in alphabet")
-        self.axiomEdit.setStyleSheet("color: red;")
-        self.axiomEdit.setText(error_message)
-        valid_input = 0
-    axiomInProd = 0
-
-    for prod in self.prodrulesEdit:
-      prodInput = prod.text()
-      prodInput=prodInput.replace(' ','')
-      prodInputarr = prodInput.split("->")
-
-      if not '->' in prodInput:
-        prod.setStyleSheet("color: red;")
-        prod.setText(error_message)
-        valid_input = 0
-      tmp_prodRule = prodInput.replace('->','')
-      stack = []
-      prevCh=''
-      for ch in tmp_prodRule:
-        if ch == '[':
-          stack.append(ch)
-        if ch == ']':
-          if prevCh =='[':
-              print("[ ERROR ] Branches should be non-empty")
-              prod.setStyleSheet("color: red;")
-              prod.setText(error_message)
-              valid_input = 0
-          if len(stack)==0:
-            print("[ ERROR ] Each production rule must have balanced brackets")
-            prod.setStyleSheet("color: red;")
-            prod.setText(error_message)
-            valid_input = 0
-          else:
-            stack.pop()
-        if not (ch in alphabet or ch in ctrl_char):
-          prod.setStyleSheet("color: red;")
-          prod.setText(error_message)
-          valid_input = 0
-        prevCh=ch
-      if len(stack)!=0:
-        print("[ ERROR ] Each production rule must have balanced brackets")
-        prod.setStyleSheet("color: red;")
-        prod.setText(error_message)
-        valid_input = 0
-      tmp_prodRule = prodInput.split('->')
-      for ch in tmp_prodRule[0]:
-        if ch in ctrl_char:
-          ctrl_char_lhs.append(ch)
-    for prod in self.prodrulesEdit:
-      tmp_prodRule = prodInput.split('->')
-      for ch in tmp_prodRule[1]:
-        if ch in ctrl_char and not ch in ctrl_char_lhs:
-          print("[ ERROR ] Control characters must be the key to a rule")
-          prod.setStyleSheet("color: red;")
-          prod.setText(error_message)
-          valid_input = 0
-    for ch in axiomInput:
-      if ch in ctrl_char and not ch in ctrl_char_lhs:
-        print("[ ERROR ] Control characters must be the key to a rule")
-        self.axiomEdit.setStyleSheet("color: red;")
-        self.axiomEdit.setText(error_message)
-        valid_input = 0
-    try:
-      angleInput = float(angleInput)
-    except:
-      self.angleEdit.setStyleSheet("color: red;")
-      self.angleEdit.setText("X")
-      valid_input=0
-      string = 1 #is a string
-    if not string:
-      if angleInput <= -360 or angleInput >= 360:
-        self.angleEdit.setStyleSheet("color: red;")
-        self.angleEdit.setText(error_message)
-        valid_input = 0
-
-    try:
-      turnAngleInput = float(turnAngleInput)
-    except:
-      self.turnAngleEdit.setStyleSheet("color: red;")
-      self.turnAngleEdit.setText("X")
-      valid_input=0
-      string = 1 #is a string
-    if not string:
-      if turnAngleInput <= -360 or turnAngleInput >= 360:
-        self.turnAngleEdit.setStyleSheet("color: red;")
-        self.turnAngleEdit.setText(error_message)
-        valid_input = 0
-
-    try:
-      lineScaleInput = float(lineScaleInput)
-    except:
-      self.lineScaleEdit.setStyleSheet("color: red;")
-      self.lineScaleEdit.setText(error_message)
-      valid_input = 0
-      string = 1 #is a string
-    if not string:
-      if lineScaleInput <= 0:
-        self.lineScaleEdit.setStyleSheet("color: red;")
-        self.lineScaleEdit.setText(error_message)
-        valid_input = 0
-
-    try:
-      itersInput = int(itersInput)
-    except:
-      self.itersEdit.setStyleSheet("color: red;")
-      self.itersEdit.setText(error_message)
-      valid_input = 0
-      string = 1 #is a string
-    if not string:
-      if itersInput <= 0:
-        self.itersEdit.setStyleSheet("color: red;")
-        self.itersEdit.setText(error_message)
-        valid_input = 0
-    return valid_input
 
   #Probably doesn't need self as a param, can just be static.
   # Generates a rule dictionary from an array of production rule strings taken from the UI
@@ -417,33 +284,31 @@ class UIWidget(QWidget):
 
   def genLSys(self):
     ''' If the input is valid, iterates through productions and sends to graphics to be drawn '''
-    if self.inputCheck():
-      axiomInput = self.axiomEdit.text()
-      #prodInput = [self.prodrulesEdit.text()] #changed to array
-      angleInput = self.angleEdit.text()
+    #if self.inputCheck():
+    axiomInput = self.axiomEdit.text()
+    #prodInput = [self.prodrulesEdit.text()] #changed to array
+    angleInput = self.angleEdit.text()
+    if(self.madeAngle):
       turnAngleInput = self.turnAngleEdit.text()
+    else:
+      turnAngleInput = 0
+    if(self.madeLine):
       lineScaleInput = self.lineScaleEdit.text()
-      itersInput = self.itersEdit.text()
-      print("Axiom: ", axiomInput)
-      print("Productions: ")
-      #for prod in prodInput:
-      #    print(prod)
-      print("Angle: ", angleInput)
-      print("Turning Angle: ", turnAngleInput)
-      print("Line Scale: ", lineScaleInput)
-      print("Iterations: ", itersInput)
-      # Format input for use
-      rules=self.genRuleDict(self.prodrulesEdit)
-      # Generate rule grammar dictionary.
-      grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
-      verts = generate_lsystem(grammar)
-      # Sets verts on graphics widget and draws
-      self.graphix.clear_mesh()
-      self.graphix.set_vertices(verts[0])
-      for i in range(1,len(verts)):
-        self.graphix.set_vertices(verts[i],1) #split = true
-      self.graphix.update()
-      self.graphix.resetCamera()
+    else:
+      lineScaleInput = 1
+    itersInput = self.itersEdit.text()
+    # Format input for use
+    rules=self.genRuleDict(self.prodrulesEdit)
+    # Generate rule grammar dictionary.
+    grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
+    verts = generate_lsystem(grammar)
+    # Sets verts on graphics widget and draws
+    self.graphix.clear_mesh()
+    self.graphix.set_vertices(verts[0])
+    for i in range(1,len(verts)):
+      self.graphix.set_vertices(verts[i],1) #split = true
+    self.graphix.update()
+    self.graphix.resetCamera()
 
   def genExample(self, example):
     self.axiomEdit.clear_box()
@@ -451,7 +316,6 @@ class UIWidget(QWidget):
       p.clear_box()
     self.angleEdit.clear_box()
     self.itersEdit.clear_box()
-    #(verts, grammar) = get_saved_lsystem(example)
     grammar = get_saved_lsystem(example)
     self.axiomEdit.setText(grammar['axiom'])
     while self.prods < len(grammar['rules']):
@@ -464,8 +328,10 @@ class UIWidget(QWidget):
       value = grammar['rules'][key]
       self.prodrulesEdit[i].setText(key+"->"+value)
     self.angleEdit.setText(str(grammar["angle"]))
-    self.turnAngleEdit.setText(str(grammar['turn_angle']))
-    self.lineScaleEdit.setText(str(grammar['line_scale']))
+    if(self.madeAngle):
+      self.turnAngleEdit.setText(str(grammar['turn_angle']))
+    if(self.madeLine):
+      self.lineScaleEdit.setText(str(grammar['line_scale']))
     self.itersEdit.setText(str(grammar['iterations']))
     self.genLSys()
     #print(example)
