@@ -45,6 +45,8 @@ class UIWidget(QWidget):
     self.prodrulesEdit = []
     self.examples = []
     self.minuses = None
+    self.madeAngle = False
+    self.madeLine = False
     self.prodrules = []
     load_saved_lsystems()
     self.graphix = LSystemDisplayWidget()
@@ -67,8 +69,6 @@ class UIWidget(QWidget):
     self.prodrules.append(QLabel('Production Rule ' + str(self.prods)))
     self.angle = QLabel('Angles(degrees)')
     self.iters = QLabel('Iterations')
-    self.turnAngle = QLabel('Turning Angle')
-    self.lineScale = QLabel('Line Scale')
 
     #creates the text box for each label
     self.axiomEdit = customLineEdit()
@@ -76,8 +76,9 @@ class UIWidget(QWidget):
     self.axiomEdit.clicked.connect(lambda: self.axiomEdit.clear_box())
     
     self.prodrulesEdit.append(customLineEdit())
-    self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box()) 
-    self.prodrulesEdit[-1].returnPressed.connect(self.lsysbutton.click)
+    self.prodrulesEdit[0].clicked.connect(lambda: self.prodrulesEdit[0].clear_box()) 
+    self.prodrulesEdit[0].returnPressed.connect(self.lsysbutton.click)
+    self.prodrulesEdit[0].textChanged.connect(lambda: self.showPopup())
 
     self.angleEdit = customLineEdit()
     self.angleEdit.returnPressed.connect(self.lsysbutton.click)
@@ -90,15 +91,7 @@ class UIWidget(QWidget):
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
 
-    self.turnAngleEdit = customLineEdit()
-    self.turnAngleEdit.returnPressed.connect(self.lsysbutton.click)
-    self.turnAngleEdit.clicked.connect(lambda: self.turnAngleEdit.clear_box())
-
-    self.lineScaleEdit = customLineEdit()
-    self.lineScaleEdit.returnPressed.connect(self.lsysbutton.click)
-    self.lineScaleEdit.clicked.connect(lambda: self.lineScaleEdit.clear_box())
-
-
+  
   def initButtons(self):
 
     #makes the lsys generator button
@@ -135,16 +128,53 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.prodPlus, 2, 2, 1, 2)
     self.layout.addWidget(self.angle, 10, 0)
     self.layout.addWidget(self.angleEdit, 10, 1, 1, 3)
-    self.layout.addWidget(self.turnAngle, 11, 0)
-    self.layout.addWidget(self.turnAngleEdit, 11, 1, 1, 3)
-    self.layout.addWidget(self.lineScale, 12, 0)
-    self.layout.addWidget(self.lineScaleEdit, 12, 1, 1, 3)
     self.layout.addWidget(self.iters, 13, 0)
     self.layout.addWidget(self.itersEdit, 13, 1, 1, 3)
     self.layout.addWidget(self.scrollArea, 14, 0, 1, 1)
     self.layout.addWidget(self.graphix, 14, 1, 5, -1)
     self.layout.addWidget(self.lsysbutton, 20, 0, 1, -1)
 
+  def showPopup(self):
+    prodRule = ''
+    for prod in self.prodrulesEdit:
+      prodRule += prod.text()
+    print(prodRule)
+    if((")" in prodRule or "(" in prodRule) and self.madeAngle is False):
+      self.turnAngle = QLabel('Turning Angle')
+      self.turnAngleEdit = customLineEdit()
+      self.turnAngleEdit.returnPressed.connect(self.lsysbutton.click)
+      self.turnAngleEdit.clicked.connect(lambda: self.turnAngleEdit.clear_box())
+      self.layout.addWidget(self.turnAngle, 11, 0)
+      self.layout.addWidget(self.turnAngleEdit, 11, 1, 1, 3)
+      self.madeAngle = True
+
+    if(self.madeAngle is True and not "(" in prodRule and not ")" in prodRule and self.madeAngle is True):
+      self.layout.removeWidget(self.turnAngleEdit)
+      self.layout.removeWidget(self.turnAngle)
+      self.turnAngle.deleteLater()
+      self.turnAngleEdit.deleteLater()
+      self.turnAngleEdit = None
+      self.turnAngle = None
+      self.madeAngle = False
+    
+    if((">" in prodRule or "<" in prodRule) and self.madeLine is False):
+      self.lineScale = QLabel('Line Scale')
+      self.lineScaleEdit = customLineEdit()
+      self.lineScaleEdit.returnPressed.connect(self.lsysbutton.click)
+      self.lineScaleEdit.clicked.connect(lambda: self.lineScaleEdit.clear_box())
+      self.layout.addWidget(self.lineScale, 12, 0)
+      self.layout.addWidget(self.lineScaleEdit, 12, 1, 1, 3)
+      self.madeLine = True
+    
+    if(self.madeLine is True and not "<" in prodRule and not ">" in prodRule and self.madeLine is True):
+      self.layout.removeWidget(self.lineScaleEdit)
+      self.layout.removeWidget(self.lineScale)
+      self.lineScale.deleteLater()
+      self.lineScaleEdit.deleteLater()
+      self.lineScaleEdit = None
+      self.lineScale = None
+      self.madeLine = False
+   
 
   def inputCheck(self):
     '''  This function checks the input
@@ -346,6 +376,8 @@ class UIWidget(QWidget):
       self.prods = self.prods + 1
       self.prodrules.append(QLabel("Production Rule " + str(self.prods)))
       self.prodrulesEdit.append(customLineEdit())
+      self.prodrulesEdit[self.prods-1].textChanged.connect(lambda: self.showPopup())
+      self.prodrulesEdit[-1].returnPressed.connect(self.lsysbutton.click)
       self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
       self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 1)

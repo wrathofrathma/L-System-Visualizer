@@ -2,9 +2,9 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 import sys
 from lsystem.myUI import *
 
-class MyWindow(QMainWindow):
+class myMainWindow(QMainWindow):
   def __init__(self, parent=None):
-    super(MyWindow, self).__init__(parent=parent)
+    super(myMainWindow, self).__init__(parent=parent)
     self.left = 500
     self.top = 500
     self.width = 500
@@ -72,6 +72,6 @@ class MyWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    display = MyWindow()
+    display = myMainWindow()
     r = app.exec_()
     sys.exit(r)
