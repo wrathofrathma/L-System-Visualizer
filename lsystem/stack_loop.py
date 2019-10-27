@@ -33,10 +33,8 @@ def readsubstring(string, starting_pt, start_angle, turnAngle, trig_dict, scale,
       vertContainer.append(new_point)
     elif string[i] == '+':
         new_angle = round((new_angle - trig_dict['angle'])%360,5)
-        print("turning clockwise by ",trig_dict['angle']," degrees")
     elif string[i] == '-':
       new_angle = round((new_angle + trig_dict['angle'])%360,5)
-      print("turning counter-clockwise by ",trig_dict['angle']," degrees")
     elif string[i] == '|':
       new_angle = round((new_angle+180)%360,5)
     elif string[i] == '(':
