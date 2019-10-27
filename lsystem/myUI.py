@@ -23,7 +23,7 @@ alphabet = ["F","f","G","g","H","h","-","+","[","]","|", "(", ")", ">", "<"]
 ctrl_char = ['A','B','C','D','E','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 error_message = "X"
 
-class CustomLineEdit(QtWidgets.QLineEdit):
+class customLineEdit(QtWidgets.QLineEdit):
   ''' Class that enables clicking in a text box '''
   clicked = QtCore.pyqtSignal()
   def __init__(self):
@@ -55,8 +55,8 @@ class UIWidget(QWidget):
     #renames the window
     self.setWindowTitle('L-Systems Generator')
     self.layout = QGridLayout()
-    self.initTextBoxes()
     self.initButtons()
+    self.initTextBoxes()
     self.addWidgets()
     self.setLayout(self.layout)
     self.setGeometry(500, 500, 500, 500)
@@ -71,22 +71,31 @@ class UIWidget(QWidget):
     self.lineScale = QLabel('Line Scale')
 
     #creates the text box for each label
-    self.axiomEdit = CustomLineEdit()
+    self.axiomEdit = customLineEdit()
+    self.axiomEdit.returnPressed.connect(self.lsysbutton.click)
     self.axiomEdit.clicked.connect(lambda: self.axiomEdit.clear_box())
-    self.prodrulesEdit.append(CustomLineEdit())
-    self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box())
+    
+    self.prodrulesEdit.append(customLineEdit())
+    self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box()) 
+    self.prodrulesEdit[-1].returnPressed.connect(self.lsysbutton.click)
 
-    self.angleEdit = CustomLineEdit()
+    self.angleEdit = customLineEdit()
+    self.angleEdit.returnPressed.connect(self.lsysbutton.click)
     self.angleEdit.clicked.connect(lambda: self.angleEdit.clear_box())
-    self.itersEdit = CustomLineEdit()
+
+    self.itersEdit = customLineEdit()
+    self.itersEdit.returnPressed.connect(self.lsysbutton.click)
     self.itersEdit.clicked.connect(lambda: self.itersEdit.clear_box())
+
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
 
-    self.turnAngleEdit = CustomLineEdit()
+    self.turnAngleEdit = customLineEdit()
+    self.turnAngleEdit.returnPressed.connect(self.lsysbutton.click)
     self.turnAngleEdit.clicked.connect(lambda: self.turnAngleEdit.clear_box())
 
-    self.lineScaleEdit = CustomLineEdit()
+    self.lineScaleEdit = customLineEdit()
+    self.lineScaleEdit.returnPressed.connect(self.lsysbutton.click)
     self.lineScaleEdit.clicked.connect(lambda: self.lineScaleEdit.clear_box())
 
 
@@ -94,7 +103,8 @@ class UIWidget(QWidget):
 
     #makes the lsys generator button
     self.lsysbutton = QPushButton("Generate L System", self)
-    self.lsysbutton.clicked.connect(self.genLSys)
+    self.lsysbutton.clicked.connect(self.on_lsysbutton_clicked)
+    self.lsysbutton.setAutoDefault(True)
 
     self.widget = QWidget()
     self.scrollArea = QtWidgets.QScrollArea()
@@ -110,7 +120,11 @@ class UIWidget(QWidget):
      self.examples[i].clicked.connect(lambda state, x=key: self.genExample(str(x)))
      self.layout_examples.addWidget(self.examples[i])
     self.layout_examples.addStretch(1)
-
+  
+  @QtCore.pyqtSlot()
+  def on_lsysbutton_clicked(self):
+    self.genLSys()
+  
   def addWidgets(self):
 
     #Adding widgets to window
@@ -331,7 +345,7 @@ class UIWidget(QWidget):
     if self.prods < 4:
       self.prods = self.prods + 1
       self.prodrules.append(QLabel("Production Rule " + str(self.prods)))
-      self.prodrulesEdit.append(CustomLineEdit())
+      self.prodrulesEdit.append(customLineEdit())
       self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
       self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 1)
@@ -416,31 +430,10 @@ class UIWidget(QWidget):
     for i, key in enumerate(grammar['rules']):
       value = grammar['rules'][key]
       self.prodrulesEdit[i].setText(key+"->"+value)
-    #self.prodrulesEdit[0].setText(str(grammar['rules']))
     self.angleEdit.setText(str(grammar["angle"]))
+    self.turnAngleEdit.setText(str(grammar['turn_angle']))
+    self.lineScaleEdit.setText(str(grammar['line_scale']))
     self.itersEdit.setText(str(grammar['iterations']))
     self.genLSys()
     #print(example)
-#TODO: Make a radio button for toggle of 2d/3d
-#TODO: Make settings for buttons
 
-class PopupSettings(QWidget):
-  def __init__(self):
-      super().__init__()
-
-      self.initUI()
-
-  def initUI(self):
-      self.setWindowTitle('L-systems Settings')
-
-  def closeEvent(self, event=None):
-      print("[ INFO ] Exiting...")
-      self.ui_widget.graphix.cleanup()
-      exit()
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    display = MyWindow()
-    r = app.exec_()
-    sys.exit(r)
