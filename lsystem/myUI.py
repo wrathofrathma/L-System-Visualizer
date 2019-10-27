@@ -19,20 +19,17 @@ h moves forward half a unit length
 ( decrements the angle by a turning angle
 ) increments the angle by a turning angle
 """
-alphabet = ["F","f","G","g","H","h","-","+","[","]","|", "(", ")", ">", "<"]
-ctrl_char = ['A','B','C','D','E','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-error_message = "X"
-
 class customLineEdit(QtWidgets.QLineEdit):
   ''' Class that enables clicking in a text box '''
   clicked = QtCore.pyqtSignal()
   def __init__(self):
     super().__init__()
     self.valid = True
+    self.error_message = "X"
   def mousePressEvent(self, QMouseEvent):
     self.clicked.emit()
   def clear_box(self):
-    if self.text() == error_message:
+    if self.text() == self.error_message:
       self.setText('')
       self.setStyleSheet("color: black;")
 
@@ -51,6 +48,8 @@ class UIWidget(QWidget):
     load_saved_lsystems()
     self.graphix = LSystemDisplayWidget()
     self.initUI()
+    self.alphabet = ["F","f","G","g","H","h","-","+","[","]","|", "(", ")", ">", "<"," "]
+    self.ctrl_char = ['A','B','C','D','E','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
   def initUI(self):
     ''' Creates and adds all widgets in the viewport and sets the layout  '''
