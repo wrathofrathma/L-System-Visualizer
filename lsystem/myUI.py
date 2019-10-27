@@ -49,7 +49,7 @@ class UIWidget(QWidget):
     load_saved_lsystems()
     self.graphix = LSystemDisplayWidget()
     self.initUI()
-  
+
   def initUI(self):
     ''' Creates and adds all widgets in the viewport and sets the layout  '''
     #renames the window
@@ -110,7 +110,7 @@ class UIWidget(QWidget):
      self.examples[i].clicked.connect(lambda state, x=key: self.genExample(str(x)))
      self.layout_examples.addWidget(self.examples[i])
     self.layout_examples.addStretch(1)
- 
+
   def addWidgets(self):
 
     #Adding widgets to window
@@ -155,13 +155,13 @@ class UIWidget(QWidget):
         self.axiomEdit.setText(error_message)
         valid_input = 0
     axiomInProd = 0
-    
+
     for prod in self.prodrulesEdit:
       prodInput = prod.text()
       prodInput=prodInput.replace(' ','')
       prodInputarr = prodInput.split("->")
 
-      if not '->' in prodInput or prodInput[1]=='>' or prodInput[len(prodInput)-1]=='>':
+      if not '->' in prodInput:
         prod.setStyleSheet("color: red;")
         prod.setText(error_message)
         valid_input = 0
@@ -264,7 +264,7 @@ class UIWidget(QWidget):
         self.itersEdit.setText(error_message)
         valid_input = 0
     return valid_input
-    
+
   #Probably doesn't need self as a param, can just be static.
   # Generates a rule dictionary from an array of production rule strings taken from the UI
   def genRuleDict(self, prodRules):
@@ -421,13 +421,13 @@ class UIWidget(QWidget):
     self.itersEdit.setText(str(grammar['iterations']))
     self.genLSys()
     #print(example)
-#TODO: Make a radio button for toggle of 2d/3d 
+#TODO: Make a radio button for toggle of 2d/3d
 #TODO: Make settings for buttons
 
 class PopupSettings(QWidget):
   def __init__(self):
       super().__init__()
-      
+
       self.initUI()
 
   def initUI(self):
