@@ -187,7 +187,7 @@ class UIWidget(QWidget):
         rule = rule.text()
         rule = rule.replace(" ","")
         #pr = rule.replace("->",":")
-        pr = pr.split(':')
+        pr = rule.split(':')
         rules[pr[0]] = pr[1]
       '''
       THIS PART IS NOT CONTEXT SENSITIVE
@@ -208,13 +208,13 @@ class UIWidget(QWidget):
         rule = rule.text()
         rule = rule.replace(" ","")
         #pr = rule.replace("->",":")
-        pr = pr.split(':')
+        pr = rule.split(':')
         rules[pr[0]]=[]
       for rule in prodRules:
         rule = rule.text()
         rule = rule.replace(" ","")
         #pr = rule.replace("->",":")
-        pr = pr.split(':')
+        pr = rule.split(':')
         rules[pr[0]].append([0,pr[1]])
       '''
       THIS PART IS NOT CONTEXT SENSITIVE
