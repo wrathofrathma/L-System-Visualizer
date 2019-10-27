@@ -186,7 +186,7 @@ class UIWidget(QWidget):
       for rule in prodRules:
         rule = rule.text()
         rule = rule.replace(" ","")
-        pr = rule.replace("->",":")
+        #pr = rule.replace("->",":")
         pr = pr.split(':')
         rules[pr[0]] = pr[1]
       '''
@@ -207,13 +207,13 @@ class UIWidget(QWidget):
       for rule in prodRules:
         rule = rule.text()
         rule = rule.replace(" ","")
-        pr = rule.replace("->",":")
+        #pr = rule.replace("->",":")
         pr = pr.split(':')
         rules[pr[0]]=[]
       for rule in prodRules:
         rule = rule.text()
         rule = rule.replace(" ","")
-        pr = rule.replace("->",":")
+        #pr = rule.replace("->",":")
         pr = pr.split(':')
         rules[pr[0]].append([0,pr[1]])
       '''
@@ -326,7 +326,7 @@ class UIWidget(QWidget):
 
     for i, key in enumerate(grammar['rules']):
       value = grammar['rules'][key]
-      self.prodrulesEdit[i].setText(key+"->"+value)
+      self.prodrulesEdit[i].setText(key+":"+value)
     self.angleEdit.setText(str(grammar["angle"]))
     if(self.madeAngle):
       self.turnAngleEdit.setText(str(grammar['turn_angle']))
