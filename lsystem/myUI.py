@@ -6,6 +6,7 @@ from math import pi
 from lsystem.LSystemWidget import *
 from lsystem.lsystem_utils import *
 from lsystem.input_check import input_check
+from lsystem.settings import *
 """
 F(and G) draws a unit length line
 f(and g) moves forward a unit length
