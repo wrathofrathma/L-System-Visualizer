@@ -1,5 +1,5 @@
 
-alphabet = ["F","f","G","g","H","h","-","+","[","]","|", "(", ")", ">", "<"]
+alphabet = ["F","f","G","g","H","h","-","+","[","]","|", "(", ")", ">", "<"," "]
 ctrl_char = ['A','B','C','D','E','I','J','K','L,','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 error_message = "X"
 
@@ -16,15 +16,21 @@ def check_blank_line(obj):
   for input_box in non_blank_inputs:
     if input_box.valid == True and len(input_box.text()) == 0:
       print_error_message(input_box, "Blank input")
-
       valid=0
   return valid
 
 def check_in_alphabet(obj):
   valid = 1
   alphabetic_inputs = [obj.axiomEdit]
+  prod_input = []
   for rule in obj.prodrulesEdit:
-    alphabetic_inputs.append(rule)
+    prod_input.append(rule)
+  for input_box in prod_input:
+    if input_box.valid == True:
+      for ch in input_box.text():
+        if not ch in alphabet and not ch in ctrl_char and not ch == ':':
+          print_error_message(input_box, ch + " not in alphabet")
+          valid=0
   for input_box in alphabetic_inputs:
     if input_box.valid == True:
       for ch in input_box.text():
@@ -68,6 +74,7 @@ def check_valid_numeric(obj):
   return valid
 def input_check(obj):
   valid = []
+
   valid.append(check_blank_line(obj))
 
   valid.append(check_in_alphabet(obj))
@@ -91,6 +98,7 @@ def check_prod_rule_format(obj):
   valid = 1
   for input_box in obj.prodrulesEdit:
     if input_box.valid and not ':' in input_box.text():
+      print(input_box.text())
       print_error_message(input_box," Missing : ")
       valid = 0
   return valid

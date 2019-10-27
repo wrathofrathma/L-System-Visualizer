@@ -326,7 +326,7 @@ class UIWidget(QWidget):
 
     for i, key in enumerate(grammar['rules']):
       value = grammar['rules'][key]
-      self.prodrulesEdit[i].setText(key+":"+value)
+      self.prodrulesEdit[i].setText(key+": "+value)
     self.angleEdit.setText(str(grammar["angle"]))
     if(self.madeAngle):
       self.turnAngleEdit.setText(str(grammar['turn_angle']))
