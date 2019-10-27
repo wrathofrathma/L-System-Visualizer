@@ -74,10 +74,47 @@ def check_prod_rule_format(obj):
   valid = 1
   for input_box in obj.prodrulesEdit:
     if input_box.valid and not ':' in input_box.text():
-      print(input_box.text())
       print_error_message(input_box," Missing : ")
       valid = 0
   return valid
+
+def check_branching(obj):
+  valid = 1
+  stack = []
+  if obj.axiomEdit.valid:
+    for ch in obj.axiomEdit.text():
+      if ch == '[':
+        stack.append("[")
+      if ch == ']':
+        if len(stack) == 0:
+          print_error_message(obj.axiomEdit,"Must have matching [ ]")
+          valid=0
+        else:
+          stack.pop()
+      if len(stack)>0:
+        print_error_message(obj.axiomEdit,"Must have matching [ ]")
+        valid = 0
+
+  for input_box in obj.prodrulesEdit:
+    if input_box.valid:
+      text = input_box.text().split(":")
+      if '[' in text[0] or ']' in text[0]:
+        print_error_message(input_box, "Can't have [ ] in key")
+      stack = []
+      for ch in text[1]:
+        if ch == '[':
+          stack.append("[")
+        if ch == ']':
+          if len(stack) == 0:
+            print_error_message(input_box,"Must have matching [ ]")
+            valid=0
+          else:
+            stack.pop()
+      if len(stack)>0:
+        print_error_message(input_box,"Must have matching [ ]")
+        valid = 0
+  return valid
+
 
 def input_check(obj):
   valid = []
@@ -88,7 +125,7 @@ def input_check(obj):
   valid.append(check_if_numeric(obj))
   valid.append(check_valid_numeric(obj))
   valid.append(check_prod_rule_format(obj))
-
+  valid.append(check_branching(obj))
   #reset valid
   obj.axiomEdit.valid = 1
   obj.angleEdit.valid = 1
@@ -104,6 +141,5 @@ def input_check(obj):
 
 def print_error_message(obj,msg):
   obj.setStyleSheet("color: red;")
-  obj.setText(obj.error_message)
   print("[ Error ] ",msg)
   obj.valid = False

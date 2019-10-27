@@ -28,10 +28,14 @@ class customLineEdit(QtWidgets.QLineEdit):
     self.error_message = "X"
   def mousePressEvent(self, QMouseEvent):
     self.clicked.emit()
+  def reset_color(self):
+    self.setStyleSheet("color: black;")
   def clear_box(self):
-    if self.text() == self.error_message:
-      self.setText('')
-      self.setStyleSheet("color: black;")
+    self.setText('')
+    self.setStyleSheet("color: black;")
+  def reset_box(self):
+    self.reset_color()
+    self.clear_box()
 
 class UIWidget(QWidget):
   ''' Class that holds all of the widgets for viewing '''
@@ -72,20 +76,20 @@ class UIWidget(QWidget):
     #creates the text box for each label
     self.axiomEdit = customLineEdit()
     self.axiomEdit.returnPressed.connect(self.lsysbutton.click)
-    self.axiomEdit.clicked.connect(lambda: self.axiomEdit.clear_box())
+    self.axiomEdit.clicked.connect(lambda: self.axiomEdit.reset_color())
 
     self.prodrulesEdit.append(customLineEdit())
-    self.prodrulesEdit[0].clicked.connect(lambda: self.prodrulesEdit[0].clear_box())
+    self.prodrulesEdit[0].clicked.connect(lambda: self.prodrulesEdit[0].reset_color())
     self.prodrulesEdit[0].returnPressed.connect(self.lsysbutton.click)
     self.prodrulesEdit[0].textChanged.connect(lambda: self.showPopup())
 
     self.angleEdit = customLineEdit()
     self.angleEdit.returnPressed.connect(self.lsysbutton.click)
-    self.angleEdit.clicked.connect(lambda: self.angleEdit.clear_box())
+    self.angleEdit.clicked.connect(lambda: self.angleEdit.reset_color())
 
     self.itersEdit = customLineEdit()
     self.itersEdit.returnPressed.connect(self.lsysbutton.click)
-    self.itersEdit.clicked.connect(lambda: self.itersEdit.clear_box())
+    self.itersEdit.clicked.connect(lambda: self.itersEdit.reset_color())
 
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
@@ -143,7 +147,7 @@ class UIWidget(QWidget):
       self.turnAngle = QLabel('Turning Angle')
       self.turnAngleEdit = customLineEdit()
       self.turnAngleEdit.returnPressed.connect(self.lsysbutton.click)
-      self.turnAngleEdit.clicked.connect(lambda: self.turnAngleEdit.clear_box())
+      self.turnAngleEdit.clicked.connect(lambda: self.turnAngleEdit.reset_color())
       self.layout.addWidget(self.turnAngle, 11, 0)
       self.layout.addWidget(self.turnAngleEdit, 11, 1, 1, 3)
       self.madeAngle = True
@@ -161,7 +165,7 @@ class UIWidget(QWidget):
       self.lineScale = QLabel('Line Scale')
       self.lineScaleEdit = customLineEdit()
       self.lineScaleEdit.returnPressed.connect(self.lsysbutton.click)
-      self.lineScaleEdit.clicked.connect(lambda: self.lineScaleEdit.clear_box())
+      self.lineScaleEdit.clicked.connect(lambda: self.lineScaleEdit.reset_color())
       self.layout.addWidget(self.lineScale, 12, 0)
       self.layout.addWidget(self.lineScaleEdit, 12, 1, 1, 3)
       self.madeLine = True
@@ -245,7 +249,7 @@ class UIWidget(QWidget):
       self.prodrulesEdit.append(customLineEdit())
       self.prodrulesEdit[self.prods-1].textChanged.connect(lambda: self.showPopup())
       self.prodrulesEdit[-1].returnPressed.connect(self.lsysbutton.click)
-      self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].clear_box())
+      self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].reset_color())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
       self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 1)
 
@@ -310,11 +314,11 @@ class UIWidget(QWidget):
     self.graphix.resetCamera()
 
   def genExample(self, example):
-    self.axiomEdit.clear_box()
+    self.axiomEdit.reset_box()
     for p in self.prodrulesEdit:
-      p.clear_box()
-    self.angleEdit.clear_box()
-    self.itersEdit.clear_box()
+      p.reset_box()
+    self.angleEdit.reset_box()
+    self.itersEdit.reset_box()
     grammar = get_saved_lsystem(example)
     self.axiomEdit.setText(grammar['axiom'])
     while self.prods < len(grammar['rules']):
