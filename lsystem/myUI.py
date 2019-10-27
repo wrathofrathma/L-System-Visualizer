@@ -5,7 +5,7 @@ import numpy as np
 from math import pi
 from lsystem.LSystemWidget import *
 from lsystem.lsystem_utils import *
-
+from lsystem.input_check import input_check
 """
 F(and G) draws a unit length line
 f(and g) moves forward a unit length
@@ -28,7 +28,7 @@ class customLineEdit(QtWidgets.QLineEdit):
   clicked = QtCore.pyqtSignal()
   def __init__(self):
     super().__init__()
-
+    self.valid = True
   def mousePressEvent(self, QMouseEvent):
     self.clicked.emit()
   def clear_box(self):
@@ -74,9 +74,9 @@ class UIWidget(QWidget):
     self.axiomEdit = customLineEdit()
     self.axiomEdit.returnPressed.connect(self.lsysbutton.click)
     self.axiomEdit.clicked.connect(lambda: self.axiomEdit.clear_box())
-    
+
     self.prodrulesEdit.append(customLineEdit())
-    self.prodrulesEdit[0].clicked.connect(lambda: self.prodrulesEdit[0].clear_box()) 
+    self.prodrulesEdit[0].clicked.connect(lambda: self.prodrulesEdit[0].clear_box())
     self.prodrulesEdit[0].returnPressed.connect(self.lsysbutton.click)
     self.prodrulesEdit[0].textChanged.connect(lambda: self.showPopup())
 
@@ -91,7 +91,7 @@ class UIWidget(QWidget):
     self.prodPlus = QPushButton("+", self)
     self.prodPlus.clicked.connect(self.moreProds)
 
-  
+
   def initButtons(self):
 
     #makes the lsys generator button
@@ -113,11 +113,11 @@ class UIWidget(QWidget):
      self.examples[i].clicked.connect(lambda state, x=key: self.genExample(str(x)))
      self.layout_examples.addWidget(self.examples[i])
     self.layout_examples.addStretch(1)
-  
+
   @QtCore.pyqtSlot()
   def on_lsysbutton_clicked(self):
     self.genLSys()
-  
+
   def addWidgets(self):
 
     #Adding widgets to window
@@ -139,7 +139,7 @@ class UIWidget(QWidget):
     for prod in self.prodrulesEdit:
       prodRule += prod.text()
     prodRule += self.axiomEdit.text()
-    
+
     if((")" in prodRule or "(" in prodRule) and self.madeAngle is False):
       self.turnAngle = QLabel('Turning Angle')
       self.turnAngleEdit = customLineEdit()
@@ -157,7 +157,7 @@ class UIWidget(QWidget):
       self.turnAngleEdit = None
       self.turnAngle = None
       self.madeAngle = False
-    
+
     if((">" in prodRule or "<" in prodRule) and self.madeLine is False):
       self.lineScale = QLabel('Line Scale')
       self.lineScaleEdit = customLineEdit()
@@ -166,7 +166,7 @@ class UIWidget(QWidget):
       self.layout.addWidget(self.lineScale, 12, 0)
       self.layout.addWidget(self.lineScaleEdit, 12, 1, 1, 3)
       self.madeLine = True
-    
+
     if(self.madeLine is True and not "<" in prodRule and not ">" in prodRule and self.madeLine is True):
       self.layout.removeWidget(self.lineScaleEdit)
       self.layout.removeWidget(self.lineScale)
@@ -175,7 +175,7 @@ class UIWidget(QWidget):
       self.lineScaleEdit = None
       self.lineScale = None
       self.madeLine = False
-   
+
 
   #Probably doesn't need self as a param, can just be static.
   # Generates a rule dictionary from an array of production rule strings taken from the UI
@@ -284,29 +284,29 @@ class UIWidget(QWidget):
 
   def genLSys(self):
     ''' If the input is valid, iterates through productions and sends to graphics to be drawn '''
-    #if self.inputCheck():
-    axiomInput = self.axiomEdit.text()
-    #prodInput = [self.prodrulesEdit.text()] #changed to array
-    angleInput = self.angleEdit.text()
-    if(self.madeAngle):
-      turnAngleInput = self.turnAngleEdit.text()
-    else:
-      turnAngleInput = 0
-    if(self.madeLine):
-      lineScaleInput = self.lineScaleEdit.text()
-    else:
-      lineScaleInput = 1
-    itersInput = self.itersEdit.text()
-    # Format input for use
-    rules=self.genRuleDict(self.prodrulesEdit)
-    # Generate rule grammar dictionary.
-    grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
-    verts = generate_lsystem(grammar)
-    # Sets verts on graphics widget and draws
-    self.graphix.clear_mesh()
-    self.graphix.set_vertices(verts[0])
-    for i in range(1,len(verts)):
-      self.graphix.set_vertices(verts[i],1) #split = true
+    if input_check(self):
+      axiomInput = self.axiomEdit.text()
+      #prodInput = [self.prodrulesEdit.text()] #changed to array
+      angleInput = self.angleEdit.text()
+      if(self.madeAngle):
+        turnAngleInput = self.turnAngleEdit.text()
+      else:
+        turnAngleInput = 0
+      if(self.madeLine):
+        lineScaleInput = self.lineScaleEdit.text()
+      else:
+        lineScaleInput = 1
+      itersInput = self.itersEdit.text()
+      # Format input for use
+      rules=self.genRuleDict(self.prodrulesEdit)
+      # Generate rule grammar dictionary.
+      grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
+      verts = generate_lsystem(grammar)
+      # Sets verts on graphics widget and draws
+      self.graphix.clear_mesh()
+      self.graphix.set_vertices(verts[0])
+      for i in range(1,len(verts)):
+        self.graphix.set_vertices(verts[i],1) #split = true
     self.graphix.update()
     self.graphix.resetCamera()
 
@@ -335,4 +335,3 @@ class UIWidget(QWidget):
     self.itersEdit.setText(str(grammar['iterations']))
     self.genLSys()
     #print(example)
-
