@@ -138,6 +138,7 @@ class UIWidget(QWidget):
     prodRule = ''
     for prod in self.prodrulesEdit:
       prodRule += prod.text()
+    prodRule += self.axiomEdit.text()
     print(prodRule)
     if((")" in prodRule or "(" in prodRule) and self.madeAngle is False):
       self.turnAngle = QLabel('Turning Angle')
