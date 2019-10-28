@@ -5,6 +5,18 @@ import numpy as np
 from lsystem.graphics.QuaternionObject import *
 from glm import value_ptr
 import random as rand
+
+
+from enum import Enum
+# Enumeration for mesh options.
+# Will be performing a bitwise operation on each option, higher numbers will win out in priority.
+# I know it's redundant to have white vs colors, and pulse vs static, but think of them as aliases for their complements.
+class MeshOptions():
+    White=1
+    Colors=2
+    Pulse=4
+    Static=8
+
 class Mesh(QuaternionObject):
     def __init__(self, dimensions=2):
         super().__init__()
@@ -14,6 +26,7 @@ class Mesh(QuaternionObject):
         self.colors = []
         self.dimensions=dimensions
         self.translate([-0.5, 0, 0])
+        self.options = MeshOptions.White | MeshOptions.Static
 
     def init_ogl(self):
         if(self.shader==None):
@@ -43,15 +56,20 @@ class Mesh(QuaternionObject):
         # Each vertex needs a color.
         self.colors = []
         for v in range(len(self.vertices)):
-            self.colors.append(rand.randint(0,255)/255.0)
-            self.colors.append(rand.randint(0,255)/255.0)
-            self.colors.append(rand.randint(0,255)/255.0)
-            # self.colors.append(1)
-            # self.colors.append(1)
-            # self.colors.append(1)
+            if(self.options & MeshOptions.Colors):
+                self.colors.append(rand.randint(0,255)/255.0)
+                self.colors.append(rand.randint(0,255)/255.0)
+                self.colors.append(rand.randint(0,255)/255.0)
+            else:
+                self.colors.append(1)
+                self.colors.append(1)
+                self.colors.append(1)
 
             self.colors.append(0)
         self.colors = np.array(self.colors, dtype=np.float32)
+
+    def set_options(self, options):
+        self.options = options
 
     def set_shader(self, shader):
         self.shader = shader

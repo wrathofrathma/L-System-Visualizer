@@ -16,6 +16,11 @@ from lsystem.graphics.RayCasting import *
 from lsystem.graphics.Axis import *
 # LSystem visualization widget.
 
+
+class CameraType():
+    Free = 0
+    Orbital = 1
+
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
         super(LSystemDisplayWidget, self).__init__(parent)
@@ -32,6 +37,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.camera.r = 2
         self.active_shader = None
         self.dimensionality = 2 # Dimensionality of the LSystem being displayed....probably will get rid of this later?
+        self.mesh_options = MeshOptions.White | MeshOptions.Static # Default mesh options are white and static
 
         # Threaded timer that refreshes the OpenGL widget. Without this it only updates when we click or trigger an event.
         self.fps = 30.0
@@ -59,7 +65,17 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.casted_ray.set_vertices(rv)
         self.casted_ray.translate([0.5,0,0])
 
-
+    # Will just toggle from what it is currently.
+    def toggle_camera_type(self):
+        pass
+    # Will return an integer camera type
+    def get_camera_type(self):
+        pass
+    # Will accept a CameraType argument(or an integer)
+    # 0 = free camera with drag panning
+    # 1 = oribtal camera
+    def set_camera_type(self,c):
+        pass
     # Do I really need this? Meh. I was feeling it before but now it feels fat.
     def setDimensions(self, d):
         if(d!=2 and d!=3):
@@ -82,6 +98,11 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # Update the shader uniform variables.
         glUseProgram(self.shader2D)
         glUniform1f(glGetUniformLocation(self.shader2D, "time"), time()-self.start_time)
+        if(self.mesh_options & MeshOptions.Pulse):
+            glUniform1i(glGetUniformLocation(self.shader2D, "pulse"), True)
+        else:
+            glUniform1i(glGetUniformLocation(self.shader2D, "pulse"), False)
+
         glUseProgram(self.shader3D)
         glUniform1f(glGetUniformLocation(self.shader3D, "time"), time()-self.start_time)
         # Draw the scene.
@@ -100,6 +121,29 @@ class LSystemDisplayWidget(QOpenGLWidget):
         qpos = np.array([pos.x(), pos.y()])
         wsize = np.array([self.size().width(), self.size().height()])
         return qpos - wsize
+
+    # Sets the mesh options.
+    def set_mesh_options(self, options):
+        # We can use bitwise OR to set the options then XOR to unset the
+        if(options & MeshOptions.Colors):
+            self.mesh_options = self.mesh_options | MeshOptions.Colors
+            if(self.mesh_options & MeshOptions.White):
+                self.mesh_options = self.mesh_options ^ MeshOptions.White
+        elif(options & MeshOptions.White):
+            self.mesh_options = self.mesh_options | MeshOptions.White
+            if(self.mesh_options & MeshOptions.Colors):
+                self.mesh_options = self.mesh_options ^ MeshOptions.Colors
+
+        if(options & MeshOptions.Static):
+            self.mesh_options = self.mesh_options | MeshOptions.Static
+            if(self.mesh_options & MeshOptions.Pulse):
+                self.mesh_options = self.mesh_options ^ MeshOptions.Pulse
+
+        elif(options & MeshOptions.Pulse):
+            self.mesh_options = self.mesh_options | MeshOptions.Pulse
+            if(self.mesh_options & MeshOptions.Static):
+                self.mesh_options = self.mesh_options ^ MeshOptions.Static
+
 
     # Not sure if we'll ever need these NDC conversions, but prepping.
     # Converts a mouse position to normalized device coordinates. Assumes the pos is a tuple, list, or np array of size 2.
@@ -293,6 +337,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         min_y = mins[:,1].min()
 
         print("Min_x: %3.2f, Max_x: %3.2f, Min_y: %3.2f, Max_y: %3.2f" % (min_x, max_x,min_y, max_y))
+
     # Sets the vertices of the last mesh in the array.
     # split=True creates a new mesh before setting the vertices.
     def set_vertices(self, vertices, split=False):
@@ -301,6 +346,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
             self.meshes[-1].set_shader(self.active_shader)
 
         self.meshes[-1].set_vertices(vertices)
+        self.meshes[-1].set_options(self.mesh_options)
 
     # Cleans up the mesh memory on the GPU and clears the array of them.
     def clear_mesh(self):
