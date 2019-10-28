@@ -2,6 +2,9 @@ import threading
 import random
 import copy
 import decimal
+import multiprocessing
+import textwrap
+
 
 def pickProd(prods):
   prods_temp = copy.deepcopy(prods)
@@ -49,18 +52,18 @@ def lThread(strings, prods, it):
   else:
     context_free=0
   for _ in range(it):
+
     if (len(strings)>1) and context_free:
-      str1, str2 = strings[:int(len(strings)/2)], strings[int(len(strings)/2):]
-      thread1 = threading.Thread(target=lambda x, arg1: x.put(stringParse(arg1), args=(newstr1,str1,prods)))
-      thread2 = threading.Thread(target=lambda y, arg2: y.put(stringParse(arg2), args=(newstr2,str2,prods)))
-
-      thread1.start()
-      thread2.start()
-
-      thread1.join()
-      thread2.join()
-      strings = newstr1.get() + newstr2.get()
-
+      strs = textwrap.wrap(strings, int(len(strings)/cpus)+1)
+      strings = ""
+      t= []
+      cpus= multiprocessing.cpu_count()
+      for i in range(cpus-1):
+        t[i] = threading.Thread(target=lambda x, arg1: x.put(stringParse(arg1), args=(newstr1,strs[i],prods)))
+        t[i].start()
+      for i in range(cpus-1):
+        t[i].join()
+        strings += newstr1.get()
     else:
       strings=stringParse(strings, prods)
   return strings
