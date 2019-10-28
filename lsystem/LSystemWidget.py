@@ -17,7 +17,9 @@ from lsystem.graphics.Axis import *
 # LSystem visualization widget.
 
 
-
+class CameraType():
+    Free = 0
+    Orbital = 1
 
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
@@ -63,7 +65,17 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.casted_ray.set_vertices(rv)
         self.casted_ray.translate([0.5,0,0])
 
-
+    # Will just toggle from what it is currently.
+    def toggle_camera_type(self):
+        pass
+    # Will return an integer camera type
+    def get_camera_type(self):
+        pass
+    # Will accept a CameraType argument(or an integer)
+    # 0 = free camera with drag panning
+    # 1 = oribtal camera
+    def set_camera_type(self,c):
+        pass
     # Do I really need this? Meh. I was feeling it before but now it feels fat.
     def setDimensions(self, d):
         if(d!=2 and d!=3):
