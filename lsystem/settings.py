@@ -7,9 +7,10 @@ from lsystem.LSystemWidget import *
 from lsystem.lsystem_utils import *
 
 class PopupSettings(QWidget):
-  def __init__(self):
+  def __init__(self, graphix):
       super().__init__()
       self.initUI()
+      self.graphix = graphix
 
   def initUI(self):
     self.setWindowTitle('L-systems Settings')
@@ -64,21 +65,21 @@ class PopupSettings(QWidget):
     self.layout.addWidget(self.none, 3, 1)
     self.layout.addWidget(self.flashing, 3, 2)
 
-  def dim_state(selfi, dim):
+  def dim_state(self, dim):
     if dim.text() == "2D" and dim.isChecked():
-      print("I WANT 2D")
+        self.graphix.set_camera_type(CameraType.Free)
     else:
-      print("I WANT 3D")
+        self.graphix.set_camera_type(CameraType.Orbital)
 
   def color_state(self, color):
     if color.text() == 'White' and color.isChecked():
-      print("I want WHITE")
+      self.graphix.set_mesh_options(MeshOptions.White)
     elif color.text() == "Rainbow" and color.isChecked():
-      print("I want RAINBOW")
+      self.graphix.set_mesh_options(MeshOptions.Colors)
 
   def feature_state(self, feature):
     if feature.text() == 'None' and feature.isChecked():
-      print("I want NOTHING")
+      self.graphix.set_mesh_options(MeshOptions.Static)
     elif feature.text() == 'Flashing' and feature.isChecked():
-      print('I want FLASHING')
+      self.graphix.set_mesh_options(MeshOptions.Pulse)
 

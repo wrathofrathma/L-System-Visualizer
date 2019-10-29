@@ -56,7 +56,7 @@ class myMainWindow(QMainWindow):
     optionsMenu.addAction(settings)
 
   def buildPopupSettings(self):
-    self.popupSettings = PopupSettings()
+    self.popupSettings = PopupSettings(self.ui_widget.graphix)
     self.popupSettings.show()
 
   def saveFile(self):
