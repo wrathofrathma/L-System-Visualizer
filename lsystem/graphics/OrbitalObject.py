@@ -18,6 +18,10 @@ class OrbitalObject(SpatialObject):
         self.psi = psi
         self.position = vec3(r*cos(psi*self.deg)*cos(theta*self.deg),r*sin(psi*self.deg),r*cos(psi*self.deg)*sin(theta*self.deg))
 
+    def getPosition(self):
+        self.position = vec3(self.r*cos(self.psi*self.deg)*cos(self.theta*self.deg),self.r*sin(self.psi*self.deg),self.r*cos(self.psi*self.deg)*sin(self.theta*self.deg))
+        return self.position
+
     def setOrigin(self, origin):
         self.origin = vec3(origin)
 

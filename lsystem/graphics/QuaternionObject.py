@@ -46,6 +46,8 @@ class QuaternionObject:
     def setPosition(self, pos):
         self.position = vec3(pos)
 
+    def getPosition(self):
+        return self.position
     def setOrientation(self, o):
         self.orientation = vec3(o)
     # Translates the object according to the passed vector.
