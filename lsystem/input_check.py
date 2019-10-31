@@ -56,7 +56,7 @@ def check_valid_numeric(obj):
   valid = 1
   angle_input = [obj.angleEdit]
   if obj.madeAngle == True:
-    angle_input.append(obj.madeAngle)
+    angle_input.append(obj.turnAngleEdit)
   for input in angle_input:
     if input.valid == True and (float(input.text()) >360 or float(input.text())<-360):
       print_error_message(input,"Not a valid angle")
