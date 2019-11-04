@@ -1,13 +1,13 @@
 # Predefined colors. 
-from glm import vec4
+import numpy as np
 
 class Colors:
-    red = vec4(1,0,0,0)
-    blue = vec4(0,0,1,0)
-    green = vec4(0,1,0,0)
-    white = vec4(1,1,1,0)
-    black = vec4(0,0,0,0)
-    yellow = vec4(1,1,0,0)
-    orange = vec4(1,0.5,0,0)
-    purple = vec4(0.8,0,1,0)
-    pink = vec4(1,0.8,0.945,0)
+    red = np.array([1,0,0,0])
+    blue = np.array([0,0,1,0])
+    green = np.array([0,1,0,0])
+    white = np.array([1,1,1,0])
+    black = np.array([0,0,0,0])
+    yellow = np.array([1,1,0,0])
+    orange = np.array([1,0.5,0,0])
+    purple = np.array([0.8,0,1,0])
+    pink = np.array([1,0.8,0.945,0])
