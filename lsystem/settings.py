@@ -82,4 +82,3 @@ class PopupSettings(QWidget):
       self.graphix.set_mesh_options(MeshOptions.Static)
     elif feature.text() == 'Flashing' and feature.isChecked():
       self.graphix.set_mesh_options(MeshOptions.Pulse)
-

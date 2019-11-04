@@ -50,6 +50,7 @@ class myMainWindow(QMainWindow):
 
     settings = QAction('Settings', self)
     settings.triggered.connect(lambda: self.buildPopupSettings())
+    settings.setShortcut('Ctrl+i')
 
     glossary = QAction('Glossary', self)
     glossary.setShortcut('Ctrl+g')
