@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication
 import sys
 from lsystem.myUI import *
+from lsystem.glossary import Glossary
+from lsystem.getting_started import gettingStarted
 
 class myMainWindow(QMainWindow):
   def __init__(self, parent=None):
@@ -13,6 +15,7 @@ class myMainWindow(QMainWindow):
 
   def initWindow(self):
     self.setGeometry(self.left, self.top, self.width, self.height)
+    self.setWindowTitle('L-System Generator')
     self.initMenus()
     self.show()
 
@@ -46,18 +49,35 @@ class myMainWindow(QMainWindow):
     zoomOut.triggered.connect(lambda: self.ui_widget.graphix.zoomOUT())
 
     settings = QAction('Settings', self)
-    settings.setShortcut('Ctrl+i')
     settings.triggered.connect(lambda: self.buildPopupSettings())
+
+    glossary = QAction('Glossary', self)
+    glossary.setShortcut('Ctrl+g')
+    glossary.triggered.connect(lambda: self.buildGlossary())
+
+    gettingStarted = QAction('Getting Started', self)
+    gettingStarted.setShortcut('Ctrl+h')
+    gettingStarted.triggered.connect(lambda: self.buildStart())
 
     fileMenu.addMenu(saveMenu)
     fileMenu.addAction(exitAction)
     viewMenu.addAction(zoomIn)
     viewMenu.addAction(zoomOut)
     optionsMenu.addAction(settings)
+    helpMenu.addAction(gettingStarted)
+    helpMenu.addAction(glossary)
 
   def buildPopupSettings(self):
     self.popupSettings = PopupSettings(self.ui_widget.graphix)
     self.popupSettings.show()
+
+  def buildGlossary(self):
+    self.glossary = Glossary()
+    self.glossary.show()
+
+  def buildStart(self):
+    self.gettingStarted = gettingStarted()
+    self.gettingStarted.show()
 
   def saveFile(self):
     options = QFileDialog.Options()
