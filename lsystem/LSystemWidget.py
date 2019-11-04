@@ -1,54 +1,65 @@
-from OpenGL.GL import shaders
-from OpenGL.GL import *
-
+# Python core includes 
+from PIL import Image
+from time import time
+# PyQt includes 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QTimer
+# OpenGL includes 
+from OpenGL.GL import shaders
+from OpenGL.GL import *
 from OpenGL.arrays import ArrayDatatype, vbo
-import numpy as np
-
+# Lsystem includes 
 from lsystem.graphics.Mesh import *
-from time import time
 from lsystem.lsystem_utils import *
-from PIL import Image
 from lsystem.graphics.SphericalCamera import *
 from lsystem.graphics.FreeCamera import *
 from lsystem.graphics.RayCasting import *
 from lsystem.graphics.Axis import *
-# LSystem visualization widget.
+from lsystem.graphics.Grid import Grid2D
+from lsystem.graphics.colors import Colors
+# Other includes 
+import numpy as np
 
 
-class CameraType():
+# Legit just an enumeration for determining camera type in a readable manner.
+class CameraType:
     Free = 0
     Orbital = 1
 
+# PyQt5 widget for displaying L-Systems. 
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
         super(LSystemDisplayWidget, self).__init__(parent)
         # Background color
-        self.bgcolor = np.array([0.0, 0.0, 0.0, 0.0])
-        # Time, used for color shader shenanigans
+        self.bgcolor = Colors.black
+        # Time, used for calculating delta time between frames(useful for shader calcs we might want later)
         self.start_time = time()
-        # Mesh container
-        self.meshes = []
-        self.keep_centered = True # Boolean for whether to center the mesh after resizes.
+        
+        # Production scene objects. 
+        self.meshes = [] # Mesh container should be outdated soon!
+        self.grid = Grid2D() # 2D Intersection grid 
 
         # Camera initialization
-        self.cameras = [ FreeCamera(800,600), SphericalCamera(800,600)]
-        self.cameras[1].r = 2
-        self.active_camera = CameraType.Orbital 
-        self.active_shader = None
+        self.cameras = [ FreeCamera(800,600), SphericalCamera(800,600)] # We have both an  oribtal camera and a free camera.
+        self.cameras[1].r = 2 # Radius from the origin of the spherical camera. 
+
+        # FLAGS & Defaults 
+        self.keep_centered = True # Boolean flag for whether to center the mesh after the viewport resizes.
+        self.active_camera = CameraType.Free  # active_camera tracks which index of the camera to use. 
+        self.active_shader = None # Tracks which shader to use, 2D vs 3D typically.
         self.dimensionality = 2 # Dimensionality of the LSystem being displayed....probably will get rid of this later?
         self.mesh_options = MeshOptions.White | MeshOptions.Static # Default mesh options are white and static
+        self.fps=30.0 # Number of times a second we refresh the widget. 
+        self.DISPLAY_GRID=True # Toggles the display of the intersection grid. 
 
-        # Threaded timer that refreshes the OpenGL widget. Without this it only updates when we click or trigger an event.
-        self.fps = 30.0
-        timer = QTimer(self)
-        timer.timeout.connect(self.update)
-        timer.start(1/self.fps)
-
-        # DEBUG and utility stuff.
+        # DEBUG Flags 
+        self.DEBUG=True # Toggles the origin axis & plane & raycasting view. Later it'll toggle other debug utils.
+        
+        # DEBUG Objects
         # 3D Axis & a plane mesh for visual clarity while I implement zooming into a point.
-        self.axis = Axis()
+        # World origin axis
+        self.axis = Axis() 
+        # Intersecting plane view for when we raycast into the mesh to deterine where to zoom into.
         self.plane = Mesh(3)
         pv = np.array([
         -1, -1, 0,
@@ -59,18 +70,26 @@ class LSystemDisplayWidget(QOpenGLWidget):
         ], dtype=np.float32)
         self.plane.set_vertices(pv)
         self.plane.translate([0.5,0,0])
+        # Axis for camera origin. 
         self.origin_axis = Axis()
         self.origin_axis.scale(0.03)
+        # Raycasting ray visualization.
         self.casted_ray = Mesh(3)
         rv = np.array([0,0,0,1,0,0])
         self.casted_ray.set_vertices(rv)
         self.casted_ray.translate([0.5,0,0])
-        self.toggle_camera_type()
+
+        # threaded timer that refreshes the opengl widget. without this it only updates when we click or trigger an event.
+        timer = QTimer(self)
+        timer.timeout.connect(self.update)
+        timer.start(1/self.fps)
 
     # Will toggle the camera type & handle the positional relocating here later when we do live toggle.
     def toggle_camera_type(self):
         self.active_camera = CameraType.Orbital if self.active_camera==CameraType.Free else CameraType.Free
-
+    # Toggle drawing of debug objects.
+    def toggle_debug(self):
+        self.DEBUG = not self.DEBUG
     # Will return an integer camera type
     def get_camera_type(self):
         return self.active_camera
@@ -110,11 +129,15 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         glUseProgram(self.shader3D)
         glUniform1f(glGetUniformLocation(self.shader3D, "time"), time()-self.start_time)
-        # Draw the scene.
-        self.axis.draw()
-        self.plane.draw()
-        self.origin_axis.draw()
-        self.casted_ray.draw()
+        # Draw debug objects 
+        if(self.DEBUG):
+            self.axis.draw()
+            self.plane.draw()
+            self.origin_axis.draw()
+            self.casted_ray.draw()
+        if(self.DISPLAY_GRID):
+            self.grid.draw()
+        # Draw the meshes. TODO - Move this to a graph object later.
         for mesh in self.meshes:
             mesh.draw()
 
@@ -197,14 +220,15 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("(%s,%s)" % (self.mouse_last_x, self.mouse_last_y))
         print("NDC %s" % (str(self.qtPosToNDC(event.pos()))))
         if(event.button()==Qt.RightButton and self.active_camera==CameraType.Orbital):
-            ray = getMouseRaycast(self.qtPosToNDC(event.pos()), self.cameras[self.active_camera].getProjection(), self.cameras[self.active_camera].getView())
-            ray-=self.cameras[self.active_camera].position
-            self.casted_ray.set_vertices(np.array([self.cameras[self.active_camera].position[0], self.cameras[self.active_camera].position[1], self.cameras[self.active_camera].position[2], ray[0],ray[1],ray[2]]))
-            #origin = ray - self.cameras[self.active_camera].getR()
-            print("Raycast dir: " + str(ray))
-            print("CAmera coordinates: " + str(self.cameras[self.active_camera].position))
-            print("Camera R: " + str(self.cameras[self.active_camera].getR()))
-            #self.cameras[self.active_camera].setOrigin(origin)
+            if(self.DEBUG):
+                ray = getMouseRaycast(self.qtPosToNDC(event.pos()), self.cameras[self.active_camera].getProjection(), self.cameras[self.active_camera].getView())
+                ray-=self.cameras[self.active_camera].position
+                self.casted_ray.set_vertices(np.array([self.cameras[self.active_camera].position[0], self.cameras[self.active_camera].position[1], self.cameras[self.active_camera].position[2], ray[0],ray[1],ray[2]]))
+                #origin = ray - self.cameras[self.active_camera].getR()
+                print("Raycast dir: " + str(ray))
+                print("CAmera coordinates: " + str(self.cameras[self.active_camera].position))
+                print("Camera R: " + str(self.cameras[self.active_camera].getR()))
+                #self.cameras[self.active_camera].setOrigin(origin)
 
     def mouseMoveEvent(self, event):
         # Store current mouse position
@@ -260,6 +284,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.origin_axis.set_shader(self.shader3D)
         self.casted_ray.set_shader(self.shader3D)
         self.plane.set_shader(self.shader3D)
+        self.grid.set_shader(self.shader2D)
         for mesh in self.meshes:
             mesh.set_shader(self.active_shader)
 
