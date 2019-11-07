@@ -1,14 +1,14 @@
-# Python core includes 
+# Python core includes
 from PIL import Image
 from time import time
-# PyQt includes 
+# PyQt includes
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QTimer
-# OpenGL includes 
+# OpenGL includes
 from OpenGL.GL import shaders
 from OpenGL.GL import *
 from OpenGL.arrays import ArrayDatatype, vbo
-# Lsystem includes 
+# Lsystem includes
 from lsystem.graphics.Mesh import *
 from lsystem.lsystem_utils import *
 from lsystem.graphics.SphericalCamera import *
@@ -17,7 +17,7 @@ from lsystem.graphics.RayCasting import *
 from lsystem.graphics.Axis import *
 from lsystem.graphics.Grid import Grid2D
 from lsystem.graphics.colors import Colors
-# Other includes 
+# Other includes
 import numpy as np
 
 
@@ -26,7 +26,7 @@ class CameraType:
     Free = 0
     Orbital = 1
 
-# PyQt5 widget for displaying L-Systems. 
+# PyQt5 widget for displaying L-Systems.
 class LSystemDisplayWidget(QOpenGLWidget):
     def __init__(self, parent=None):
         super(LSystemDisplayWidget, self).__init__(parent)
@@ -34,31 +34,31 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.bgcolor = Colors.black
         # Time, used for calculating delta time between frames(useful for shader calcs we might want later)
         self.start_time = time()
-        
-        # Production scene objects. 
+
+        # Production scene objects.
         self.meshes = [] # Mesh container should be outdated soon!
-        self.grid = Grid2D() # 2D Intersection grid 
+        self.grid = Grid2D() # 2D Intersection grid
 
         # Camera initialization
         self.cameras = [ FreeCamera(800,600), SphericalCamera(800,600)] # We have both an  oribtal camera and a free camera.
-        self.cameras[1].r = 2 # Radius from the origin of the spherical camera. 
+        self.cameras[1].r = 2 # Radius from the origin of the spherical camera.
 
-        # FLAGS & Defaults 
+        # FLAGS & Defaults
         self.keep_centered = True # Boolean flag for whether to center the mesh after the viewport resizes.
-        self.active_camera = CameraType.Free  # active_camera tracks which index of the camera to use. 
+        self.active_camera = CameraType.Free  # active_camera tracks which index of the camera to use.
         self.active_shader = None # Tracks which shader to use, 2D vs 3D typically.
         self.dimensionality = 2 # Dimensionality of the LSystem being displayed....probably will get rid of this later?
         self.mesh_options = MeshOptions.White | MeshOptions.Static # Default mesh options are white and static
-        self.fps=30.0 # Number of times a second we refresh the widget. 
-        self.DISPLAY_GRID=True # Toggles the display of the intersection grid. 
+        self.fps=30.0 # Number of times a second we refresh the widget.
+        self.DISPLAY_GRID=True # Toggles the display of the intersection grid.
 
-        # DEBUG Flags 
+        # DEBUG Flags
         self.DEBUG=True # Toggles the origin axis & plane & raycasting view. Later it'll toggle other debug utils.
-        
+
         # DEBUG Objects
         # 3D Axis & a plane mesh for visual clarity while I implement zooming into a point.
         # World origin axis
-        self.axis = Axis() 
+        self.axis = Axis()
         # Intersecting plane view for when we raycast into the mesh to deterine where to zoom into.
         self.plane = Mesh(3)
         pv = np.array([
@@ -70,7 +70,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         ], dtype=np.float32)
         self.plane.set_vertices(pv)
         self.plane.translate([0.5,0,0])
-        # Axis for camera origin. 
+        # Axis for camera origin.
         self.origin_axis = Axis()
         self.origin_axis.scale(0.03)
         # Raycasting ray visualization.
@@ -129,7 +129,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         glUseProgram(self.shader3D)
         glUniform1f(glGetUniformLocation(self.shader3D, "time"), time()-self.start_time)
-        # Draw debug objects 
+        # Draw debug objects
         if(self.DEBUG):
             self.axis.draw()
             self.plane.draw()
@@ -149,7 +149,22 @@ class LSystemDisplayWidget(QOpenGLWidget):
         qpos = np.array([pos.x(), pos.y()])
         wsize = np.array([self.size().width(), self.size().height()])
         return qpos - wsize
-
+    #returns the current settings for flashing and color
+    #0 - white or static
+    #1 - color or flashing
+    def get_mesh_options(self):
+        #9 - white, static
+        #10 - color, flashing
+        #5 - white, flashing
+        #6 - color,flashing
+        if self.mesh_options == 9:
+            return 0,0
+        elif self.mesh_options == 10:
+            return 1,0
+        elif self.mesh_options == 5:
+            return 0,1
+        elif self.mesh_options == 6:
+            return 1,1
     # Sets the mesh options.
     def set_mesh_options(self, options):
         # We can use bitwise OR to set the options then XOR to unset the
@@ -239,7 +254,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         xdiff = (self.mouse_last_x-self.mouse_x)
         ydiff = (self.mouse_last_y-self.mouse_y)
 
-        if(self.active_camera==CameraType.Orbital): 
+        if(self.active_camera==CameraType.Orbital):
             # Get the radius
             radius = self.cameras[self.active_camera].getR()
 
@@ -254,7 +269,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
             if(ydiff!=0):
                 trans_vector[1] = 1 if ydiff<0 else -1
             trans_vector*=movement_speed
-            
+
             self.cameras[self.active_camera].translate(trans_vector)
         self.update()
         self.mouse_last_x = self.mouse_x

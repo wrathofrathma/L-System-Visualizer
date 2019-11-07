@@ -9,8 +9,9 @@ from lsystem.lsystem_utils import *
 class PopupSettings(QWidget):
   def __init__(self, graphix):
       super().__init__()
-      self.initUI()
       self.graphix = graphix
+      self.initUI()
+
 
   def initUI(self):
     self.setWindowTitle('L-systems Settings')
@@ -31,29 +32,40 @@ class PopupSettings(QWidget):
     feature_group = QButtonGroup(self)
 
     self.two_dim = QRadioButton("2D")
-    self.two_dim.setChecked(True)
+    if self.graphix.get_camera_type() == 0:
+      self.two_dim.setChecked(True)
     self.two_dim.toggled.connect(lambda: self.dim_state(self.two_dim))
     dim_group.addButton(self.two_dim)
     self.three_dim = QRadioButton("3D")
+    if self.graphix.get_camera_type() == 1:
+      self.three_dim.setChecked(True)
     dim_group.addButton(self.three_dim)
 
+    is_colorful, is_flashing = self.graphix.get_mesh_options()
+
     self.white = QRadioButton("White")
-    self.white.setChecked(True)
+    if not is_colorful:
+      self.white.setChecked(True)
     self.white.toggled.connect(lambda: self.color_state(self.white))
     color_group.addButton(self.white)
     self.rainbow = QRadioButton("Rainbow")
     self.rainbow.toggled.connect(lambda: self.color_state(self.rainbow))
+    if is_colorful:
+      self.rainbow.setChecked(True)
     color_group.addButton(self.rainbow)
-   
+
     self.none = QRadioButton("None")
-    self.none.setChecked(True)
+    if not is_flashing:
+      self.none.setChecked(True)
     self.none.toggled.connect(lambda: self.feature_state(self.none))
     feature_group.addButton(self.none)
     self.flashing = QRadioButton('Flashing')
     self.flashing.toggled.connect(lambda: self.feature_state(self.flashing))
+    if is_flashing:
+      self.flashing.setChecked(True)
     feature_group.addButton(self.flashing)
 
-  
+
   def add_widgets(self):
     self.layout.addWidget(self.dimension, 1, 0)
     self.layout.addWidget(self.color, 2, 0)
