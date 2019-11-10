@@ -51,7 +51,23 @@ class Mesh(QuaternionObject):
         xs = v[:,0] # numpy 2d array slicing to get the xs
         ys = v[:,1] # Same but for ys.
         return (xs.max(), ys.max()), (xs.min(),ys.min())
-
+    
+    #shifts vertices by a set amount, used to center mesh
+    def shift_vertices(self, x_shift, y_shift):
+        v = np.array(self.vertices)
+        v = v.reshape(int(v.shape[0]/2), 2)
+        xvals = v[:,0]
+        yvals = v[:,1]
+        shifted_xvals = [x+x_shift for x in xvals]
+        shifted_yvals = [y+y_shift for y in yvals]
+        
+        v[:,0] = shifted_xvals
+        v[:,1] = shifted_yvals
+        new_array=[]
+        for i in range(len(shifted_xvals)):
+            new_array.append(shifted_xvals[i])
+            new_array.append(shifted_yvals[i])
+        self.vertices = np.array(new_array)
     def generate_colors(self):
         # Each vertex needs a color.
         self.colors = []

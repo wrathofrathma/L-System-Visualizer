@@ -40,8 +40,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.grid = Grid2D() # 2D Intersection grid
 
         # Camera initialization
-        self.cameras = [ FreeCamera(800,600), SphericalCamera(800,600)] # We have both an  oribtal camera and a free camera.
-        self.cameras[1].r = 2 # Radius from the origin of the spherical camera.
+        self.cameras = [ FreeCamera(600,600), SphericalCamera(600 ,600)] # We have both an  oribtal camera and a free camera.
+        self.cameras[1].r = 1 # Radius from the origin of the spherical camera.
 
         # FLAGS & Defaults
         self.keep_centered = True # Boolean flag for whether to center the mesh after the viewport resizes.
@@ -72,13 +72,13 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.plane.translate([0.5,0,0])
         # Axis for camera origin.
         self.origin_axis = Axis()
-        self.origin_axis.scale(0.03)
+        self.origin_axis.scale(0.00)
         # Raycasting ray visualization.
         self.casted_ray = Mesh(3)
         rv = np.array([0,0,0,1,0,0])
         self.casted_ray.set_vertices(rv)
         self.casted_ray.translate([0.5,0,0])
-
+    
         # threaded timer that refreshes the opengl widget. without this it only updates when we click or trigger an event.
         timer = QTimer(self)
         timer.timeout.connect(self.update)
@@ -137,6 +137,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
             self.casted_ray.draw()
         if(self.DISPLAY_GRID):
             self.grid.draw()
+        self.center_mesh()
         # Draw the meshes. TODO - Move this to a graph object later.
         for mesh in self.meshes:
             mesh.draw()
@@ -200,31 +201,31 @@ class LSystemDisplayWidget(QOpenGLWidget):
         return self.toNormalizedDeviceCoordinates(qpos)
 
     def zoomIN(self):
-        if(self.active_camera==CameraType.Orbital):
-            self.cameras[self.active_camera].addR(-0.2)
-            print("Radius: " + str(self.cameras[self.active_camera].getR()))
-        else:
-            self.cameras[self.active_camera].translate([0,0,-0.2])
+        #if(self.active_camera==CameraType.Orbital):
+        self.cameras[1].addR(-0.2)
+        #print("Radius: " + str(self.cameras[self.active_camera].getR()))
+        #else:
+        self.cameras[0].translate([0,0,-0.2])
         self.update()
 
     def zoomOUT(self):
-        if(self.active_camera==CameraType.Orbital):
-            self.cameras[self.active_camera].addR(0.2)
-            #print("Camera Z coord "+str(self.cameras[self.active_camera].position[2]))
-            print("Radius: " + str(self.cameras[self.active_camera].getR()))
-        else:
-            self.cameras[self.active_camera].translate([0,0,0.2])
+        #if(self.active_camera==CameraType.Orbital):
+        self.cameras[1].addR(0.2)
+        #print("Camera Z coord "+str(self.cameras[self.active_camera].position[2]))
+        #print("Radius: " + str(self.cameras[self.active_camera].getR()))
+        #else:
+        self.cameras[0].translate([0,0,0.2])
         self.update()
 
     # Resets camera to default position & orientation
     def resetCamera(self):
-        if(self.active_camera==CameraType.Orbital):
-            self.cameras[self.active_camera].theta = 90
-            self.cameras[self.active_camera].psi = 0
-            self.cameras[self.active_camera].r = 2
-        else:
-            self.cameras[self.active_camera].setPosition([0,0,1])
-            self.cameras[self.active_camera].setOrientation([0,0,0])
+        #if(self.active_camera==CameraType.Orbital):
+        self.cameras[1].theta = 90
+        self.cameras[1].psi = 0
+        self.cameras[1].r = 2
+        #else:
+        self.cameras[0].setPosition([0,0,1])
+        self.cameras[0].setOrientation([0,0,0])
         self.update()
 
     # Triggered only when the mouse is dragged in the opengl frame with the mouse down(on my machine)
@@ -279,10 +280,11 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def resizeGL(self, w, h):
         print("[ INFO ] OpenGL Resized: " + str(w) + "," + str(h))
         glViewport(0,0,w,h)
-        self.cameras[self.active_camera].resize(w,h)
+        self.cameras[0].resize(w,h)
+        self.cameras[1].resize(w,h)
 
-        if(self.keep_centered):
-            self.center_mesh()
+        #if(self.keep_centered):
+        self.center_mesh()
 
     # Defines whether to keep the mesh centered in the view after resizes.
     def center_on_resize(self, val):
@@ -401,8 +403,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         max_y = maxes[:,1].max()
         min_x = mins[:,0].min()
         min_y = mins[:,1].min()
-
-        print("Min_x: %3.2f, Max_x: %3.2f, Min_y: %3.2f, Max_y: %3.2f" % (min_x, max_x,min_y, max_y))
+        center = ((min_x+max_x)/2, (min_y+max_y)/2)
+        for mesh in self.meshes:
+           mesh.shift_vertices(-0,-center[1])
 
     # Sets the vertices of the last mesh in the array.
     # split=True creates a new mesh before setting the vertices.
@@ -410,10 +413,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         if(split):
             self.meshes.append(Mesh())
             self.meshes[-1].set_shader(self.active_shader)
-
         self.meshes[-1].set_vertices(vertices)
         self.meshes[-1].set_options(self.mesh_options)
-
     # Cleans up the mesh memory on the GPU and clears the array of them.
     def clear_mesh(self):
         for mesh in self.meshes:
