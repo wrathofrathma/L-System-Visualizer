@@ -5,7 +5,7 @@ import glm # from pyglm, not glm
 from OpenGL.GL import *
 
 class Camera:
-    def __init__(self,width=800, height=600, fov=50.0):
+    def __init__(self,width=600, height=600, fov=50.0):
         self.width = width
         self.height = height
         self.FoV = fov

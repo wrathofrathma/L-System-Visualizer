@@ -13,7 +13,7 @@ from lsystem.graphics.GraphMesh import GraphObject
 # This class is a gridspace that overlays the l-system and detects intersections in individual gridspaces.
 # It has n divisions across the X & Y axis.
 class Grid2D(GraphObject):
-    def __init__(self, divisions=10):
+    def __init__(self, divisions=20):
         super().__init__(2)
         # Grid specific code
         self.divisions = divisions
@@ -22,8 +22,8 @@ class Grid2D(GraphObject):
         self.generate_vertices()
 
         # Translate & scale into our view. 
-        self.translate([-0.5, 0, 0])
-        self.scale(1.0/divisions)
+        self.translate([-2, -2, 0])
+        self.scale(4.0/divisions)
 
     # Will generate vertices based on the number of divisions provided.
     # We're going to assume each box is composed of a 1x1 unit square then scale down later.
