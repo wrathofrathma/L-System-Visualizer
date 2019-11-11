@@ -90,6 +90,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
     # Toggle drawing of debug objects.
     def toggle_debug(self):
         self.DEBUG = not self.DEBUG
+    # Toggles displaying the grid over it.
+    def toggle_grid(self):
+        self.DISPLAY_GRID = not self.DISPLAY_GRID
     # Will return an integer camera type
     def get_camera_type(self):
         return self.active_camera
@@ -293,6 +296,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
     # OpenGL initialization
     def initializeGL(self):
         print("[ INFO ] Initializing OpenGL...")
+        #Check for opengl version to be core or es
+        gl_version = glGetString(GL_VERSION) 
+        print("OpenGL Version detected: " + str(gl_version))
         self.loadShaders()
         print("[ INFO ] Shader ID: " + str(self.active_shader))
     #    glLineWidth(5)
