@@ -78,7 +78,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         rv = np.array([0,0,0,1,0,0])
         self.casted_ray.set_vertices(rv)
         self.casted_ray.translate([0.5,0,0])
-    
+
         # threaded timer that refreshes the opengl widget. without this it only updates when we click or trigger an event.
         timer = QTimer(self)
         timer.timeout.connect(self.update)
@@ -297,7 +297,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def initializeGL(self):
         print("[ INFO ] Initializing OpenGL...")
         #Check for opengl version to be core or es
-        gl_version = glGetString(GL_VERSION) 
+        gl_version = glGetString(GL_VERSION)
         print("OpenGL Version detected: " + str(gl_version))
         self.loadShaders()
         print("[ INFO ] Shader ID: " + str(self.active_shader))
@@ -391,11 +391,11 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         glDeleteShader(self.fs3)
         glDeleteProgram(self.shader3D)
-    # Centers the mesh in the view
-    def center_mesh(self):
+
+    def get_extrema(self):
         # Well, since we have multiple meshes, we need the mins and maxes of all of them before slicing.
         if(len(self.meshes)==0):
-            return
+            return 0,0,0,0
         maxes=[]
         mins= []
         for mesh in self.meshes:
@@ -409,6 +409,13 @@ class LSystemDisplayWidget(QOpenGLWidget):
         max_y = maxes[:,1].max()
         min_x = mins[:,0].min()
         min_y = mins[:,1].min()
+        return min_x, min_y, max_x, max_y
+
+    # Centers the mesh in the view
+    def center_mesh(self):
+        if (len(self.meshes)==0):
+            return
+        min_x, min_y, max_x, max_y = self.get_extrema()
         center = ((min_x+max_x)/2, (min_y+max_y)/2)
         for mesh in self.meshes:
            mesh.shift_vertices(-0,-center[1])
