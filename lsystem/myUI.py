@@ -126,27 +126,48 @@ class UIWidget(QWidget):
   @QtCore.pyqtSlot()
   def on_lsysbutton_clicked(self):
     self.genLSys()
+
+
+
+
+
+  #NOT DONE YET
   def on_boxcountbutton_clicked(self):
-    self.graphix.toggle_grid()
-    self.graphix.toggle_debug()
-    self.graphix.paintGL()
-    #copied from screenshot functions in LSystemWidget
+    self.graphix.DEBUG = False
+    self.graphix.DISPLAY_GRID = False
     size = self.graphix.size()
     pos_x = self.graphix.pos().x() # Starts from the left. Which is fine.
     pos_y = self.graphix.pos().y() # Starts from the top...so we need to convert this to start from the bottom.
     # So it should be...parent_size - pos_y + open_gl_height
     # Going to do some ghetto stuff and pray the parent is always the  top-level, or else this won't work.
-    parent = self.graphix.parentWidget()
-    pheight = parent.size().height()
+    pheight = self.size().height()
+    print('Pheight = ', pheight)
     pos_y += size.height()
+    print('pos_y = ', pos_y)
     pos_y = pheight - pos_y
+    print('pos_y = ', pos_y)
+
+    # Read all of the pixels into an array.
     pixels = glReadPixels(pos_x,pos_y, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
-    np.set_printoptions(threshold=np.inf)
-    #print(pixels)
+    # Create an image from Python Image Library.
     image = Image.frombytes("RGB", (size.width(), size.height()), pixels)
     # FLip that bitch.
     image = image.transpose(Image.FLIP_TOP_BOTTOM)
-    image.save("test.png")
+    image.save('test.png')
+    print("[ INFO ] Saved.")
+
+
+    self.graphix.DEBUG = True
+    self.graphix.DISPLAY_GRID = True
+
+
+
+
+
+
+
+
+
 
   def addWidgets(self):
 
