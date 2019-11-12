@@ -7,6 +7,7 @@ from lsystem.LSystemWidget import *
 from lsystem.lsystem_utils import *
 from lsystem.input_check import input_check
 from lsystem.settings import *
+import time
 """
 F(and G) draws a unit length line
 f(and g) moves forward a unit length
@@ -103,6 +104,10 @@ class UIWidget(QWidget):
     self.lsysbutton.clicked.connect(self.on_lsysbutton_clicked)
     self.lsysbutton.setAutoDefault(True)
 
+    self.boxcountbutton = QPushButton("Fractal Dim",self)
+    self.boxcountbutton.clicked.connect(self.on_boxcountbutton_clicked)
+    self.boxcountbutton.setAutoDefault(True)
+
     self.widget = QWidget()
     self.scrollArea = QtWidgets.QScrollArea()
     self.scrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
@@ -121,6 +126,27 @@ class UIWidget(QWidget):
   @QtCore.pyqtSlot()
   def on_lsysbutton_clicked(self):
     self.genLSys()
+  def on_boxcountbutton_clicked(self):
+    self.graphix.toggle_grid()
+    self.graphix.toggle_debug()
+    self.graphix.paintGL()
+    #copied from screenshot functions in LSystemWidget
+    size = self.graphix.size()
+    pos_x = self.graphix.pos().x() # Starts from the left. Which is fine.
+    pos_y = self.graphix.pos().y() # Starts from the top...so we need to convert this to start from the bottom.
+    # So it should be...parent_size - pos_y + open_gl_height
+    # Going to do some ghetto stuff and pray the parent is always the  top-level, or else this won't work.
+    parent = self.graphix.parentWidget()
+    pheight = parent.size().height()
+    pos_y += size.height()
+    pos_y = pheight - pos_y
+    pixels = glReadPixels(pos_x,pos_y, size.width(), size.height(), GL_RGB, GL_UNSIGNED_BYTE)
+    np.set_printoptions(threshold=np.inf)
+    #print(pixels)
+    image = Image.frombytes("RGB", (size.width(), size.height()), pixels)
+    # FLip that bitch.
+    image = image.transpose(Image.FLIP_TOP_BOTTOM)
+    image.save("test.png")
 
   def addWidgets(self):
 
@@ -135,6 +161,7 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.iters, 13, 0)
     self.layout.addWidget(self.itersEdit, 13, 1, 1, 3)
     self.layout.addWidget(self.scrollArea, 14, 0, 1, 1)
+    self.layout.addWidget(self.boxcountbutton, 16,0,1,1)
     self.layout.addWidget(self.graphix, 14, 1, 5, -1)
     self.layout.addWidget(self.lsysbutton, 20, 0, 1, -1)
 
