@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QLineEdit, QTextE
 import sys
 from PyQt5 import QtWidgets, QtCore
 import numpy as np
+import collections
 from math import pi
 from lsystem.LSystemWidget import *
 from lsystem.lsystem_utils import *
@@ -48,8 +49,12 @@ class UIWidget(QWidget):
     self.prodrulesEdit = []
     self.examples = []
     self.minuses = None
+    self.index = []
+    self.amount = 0
     self.madeAngle = False
+    self.prodPercent = []
     self.madeLine = False
+    self.deterministic = True
     self.prodrules = []
     load_saved_lsystems()
     self.graphix = LSystemDisplayWidget()
@@ -127,64 +132,37 @@ class UIWidget(QWidget):
   def on_lsysbutton_clicked(self):
     self.genLSys()
 
-
-
-  #NOT DONE YET
   def on_boxcountbutton_clicked(self):
-    ogDEBUG = self.graphix.DEBUG
-    ogGRID = self.graphix.DISPLAY_GRID
     self.graphix.DEBUG = False
     self.graphix.DISPLAY_GRID = False
     self.graphix.paintGL()
-
     size = self.size()
     pos_x = self.pos().x() # Starts from the left. Which is fine.
     pos_y = self.pos().y() # Starts from the top...so we need to convert this to start from the bottom.
-    # So it should be...parent_size - pos_y + open_gl_height
-    # Going to do some ghetto stuff and pray the parent is always the  top-level, or else this won't work.
-    #pheight = self.size().height()
-    #print('Pheight = ', pheight)
-    #pos_y += size.height()
-    #print('pos_y = ', pos_y)
-    #pos_y = pheight - pos_y
-    #print('pos_y = ', pos_y)
-    min_x,min_y,max_x,max_y = self.graphix.get_extrema()
     # Read all of the pixels into an array.
     pixels = glReadPixels(pos_x,pos_y-20, size.width(), size.height()+20, GL_RGB, GL_UNSIGNED_BYTE)
-    np.set_printoptions(threshold=np.inf)
-    print(pixels)
     # Create an image from Python Image Library.
     image = Image.frombytes("RGB", (size.width(), size.height()+20), pixels)
     # FLip that bitch.
-    #image = image.transpose(Image.FLIP_TOP_BOTTOM)
-    #image.save('test.png')
-    #print("[ INFO ] Saved.")
+    image = image.transpose(Image.FLIP_TOP_BOTTOM)
+    image.save('test.png')
+    print("[ INFO ] Saved.")
 
-
-    self.graphix.DEBUG = ogDEBUG
-    self.graphix.DISPLAY_GRID = ogGRID
-
-
-
-
-
-
-
-
-
+    self.graphix.DEBUG = True
+    self.graphix.DISPLAY_GRID = True
 
   def addWidgets(self):
 
     #Adding widgets to window
     self.layout.addWidget(self.axiom, 1, 0)
-    self.layout.addWidget(self.axiomEdit, 1, 1, 1, 3)
-    self.layout.addWidget(self.prodrules[0], 2, 0)
-    self.layout.addWidget(self.prodrulesEdit[0], 2, 1, 1, 1)
-    self.layout.addWidget(self.prodPlus, 2, 2, 1, 2)
+    self.layout.addWidget(self.axiomEdit, 1, 1, 1, 10)
+    self.layout.addWidget(self.prodrules[0], 2, 0, 1, 1)
+    self.layout.addWidget(self.prodrulesEdit[0], 2, 1, 1, 9)
+    self.layout.addWidget(self.prodPlus, 2, 10, 1, 1)
     self.layout.addWidget(self.angle, 10, 0)
-    self.layout.addWidget(self.angleEdit, 10, 1, 1, 3)
+    self.layout.addWidget(self.angleEdit, 10, 1, 1, 10)
     self.layout.addWidget(self.iters, 13, 0)
-    self.layout.addWidget(self.itersEdit, 13, 1, 1, 3)
+    self.layout.addWidget(self.itersEdit, 13, 1, 1, 10)
     self.layout.addWidget(self.scrollArea, 14, 0, 1, 1)
     self.layout.addWidget(self.boxcountbutton, 16,0,1,1)
     self.layout.addWidget(self.graphix, 14, 1, 5, -1)
@@ -192,20 +170,68 @@ class UIWidget(QWidget):
 
   def showPopup(self):
     prodRule = ''
+    rules = ''
+    repeat = ''
     for prod in self.prodrulesEdit:
       prodRule += prod.text()
-    prodRule += self.axiomEdit.text()
+      temp = prod.text()
+      temp = temp.replace(' ', '')
+      temp = temp[:].split(':')[0]
+      rules += temp
+      rules += ' '
+    
+    allProdRule = prodRule + self.axiomEdit.text()
+    rules = rules.split(' ')[:-1]
+    
+    counter = collections.Counter(rules)
 
-    if((")" in prodRule or "(" in prodRule) and self.madeAngle is False):
+    for key in counter:
+      if counter[key] > 1:
+        repeat += key
+
+    if repeat is not '':
+        print("REPEAT IS NOT ''")
+        index = [i for i in range(len(rules)) if rules[i] == repeat]
+        print("LENGTH OF INDEX IS", len(index))
+        print("LENGTH OF SELF.INDEX IS", len(self.index))
+        if len(index) is not len(self.index):
+            print("THE LENGTHS ARE NOT THE SAME")
+            self.index = index
+            for i in self.index:
+                print(self.amount)
+                self.prodPercent.append(customLineEdit())
+                self.prodPercent[self.amount].setFixedWidth(50)
+                self.prodPercent[self.amount].clicked.connect(lambda: self.prodPercent[self.amount].reset_color())
+                self.layout.addWidget(self.prodPercent[self.amount], i+2, 9)
+                self.amount += 1
+            self.deterministic = False
+            self.amount = 0
+    else:
+        print("REPEAT IS ''")
+        if not self.deterministic:
+            print("IT CURRENTLY IS NON DETERMINISTIC")
+            print("SELF PROD THINGY", self.prodPercent)
+            for prod in self.prodPercent:
+                print("NOw deleting percent boxes")
+                self.layout.removeWidget(prod)
+                prod.deleteLater()
+                prod = None
+            self.index = []
+            self.prodPercent = []
+            self.deterministic = True
+            print("HELLO WORLD")
+        
+
+    if((")" in allProdRule or "(" in allProdRule) and self.madeAngle is False):
       self.turnAngle = QLabel('Turning Angle')
       self.turnAngleEdit = customLineEdit()
       self.turnAngleEdit.returnPressed.connect(self.lsysbutton.click)
       self.turnAngleEdit.clicked.connect(lambda: self.turnAngleEdit.reset_color())
       self.layout.addWidget(self.turnAngle, 11, 0)
-      self.layout.addWidget(self.turnAngleEdit, 11, 1, 1, 3)
+      self.layout.addWidget(self.turnAngleEdit, 11, 1, 1, 10)
       self.madeAngle = True
 
-    if(self.madeAngle is True and not "(" in prodRule and not ")" in prodRule and self.madeAngle is True):
+    if(self.madeAngle is True and not "(" in allProdRule and not ")" in allProdRule and self.madeAngle is True):
       self.layout.removeWidget(self.turnAngleEdit)
       self.layout.removeWidget(self.turnAngle)
       self.turnAngle.deleteLater()
@@ -214,16 +240,16 @@ class UIWidget(QWidget):
       self.turnAngle = None
       self.madeAngle = False
 
-    if((">" in prodRule or "<" in prodRule) and self.madeLine is False):
+    if((">" in allProdRule or "<" in allProdRule) and self.madeLine is False):
       self.lineScale = QLabel('Line Scale')
       self.lineScaleEdit = customLineEdit()
       self.lineScaleEdit.returnPressed.connect(self.lsysbutton.click)
       self.lineScaleEdit.clicked.connect(lambda: self.lineScaleEdit.reset_color())
       self.layout.addWidget(self.lineScale, 12, 0)
-      self.layout.addWidget(self.lineScaleEdit, 12, 1, 1, 3)
+      self.layout.addWidget(self.lineScaleEdit, 12, 1, 1, 10)
       self.madeLine = True
 
-    if(self.madeLine is True and not "<" in prodRule and not ">" in prodRule and self.madeLine is True):
+    if(self.madeLine is True and not "<" in allProdRule and not ">" in allProdRule and self.madeLine is True):
       self.layout.removeWidget(self.lineScaleEdit)
       self.layout.removeWidget(self.lineScale)
       self.lineScale.deleteLater()
@@ -231,7 +257,6 @@ class UIWidget(QWidget):
       self.lineScaleEdit = None
       self.lineScale = None
       self.madeLine = False
-
 
   #Probably doesn't need self as a param, can just be static.
   # Generates a rule dictionary from an array of production rule strings taken from the UI
@@ -304,7 +329,7 @@ class UIWidget(QWidget):
       self.prodrulesEdit[-1].returnPressed.connect(self.lsysbutton.click)
       self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].reset_color())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
-      self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 1)
+      self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 9)
 
       if self.minuses is not None:
         #remove last minueses
@@ -314,7 +339,7 @@ class UIWidget(QWidget):
 
       self.minuses = QPushButton("-", self)
       self.minuses.clicked.connect(self.lessProds)
-      self.layout.addWidget(self.minuses, self.prods+1, 2, 1, 2)
+      self.layout.addWidget(self.minuses, self.prods+1, 10, 1, 1)
 
   def lessProds(self):
     ''' Removes productions when - button is clicked '''
@@ -335,8 +360,7 @@ class UIWidget(QWidget):
     if self.prods > 1:
       self.minuses = QPushButton("-", self)
       self.minuses.clicked.connect(self.lessProds)
-      self.layout.addWidget(self.minuses, self.prods+1, 2, 1, 2)
-
+      self.layout.addWidget(self.minuses, self.prods+1, 10, 1, 1)
 
   def genLSys(self):
     ''' If the input is valid, iterates through productions and sends to graphics to be drawn '''
@@ -391,3 +415,4 @@ class UIWidget(QWidget):
     self.itersEdit.setText(str(grammar['iterations']))
     self.genLSys()
     #print(example)
+
