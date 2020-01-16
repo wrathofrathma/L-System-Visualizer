@@ -1,7 +1,8 @@
-#version 420 core
+#version 320 es
 
-in vec4 frag_color;
-out vec4 FragColor;
+precision highp float;
+in highp vec4 frag_color;
+out highp vec4 FragColor;
 
 uniform float time;
 
