@@ -54,6 +54,7 @@ def readStack(stack, starting_pt, angle, turnAngle, lineScale):
   Input list of strings (F, +, -)
   Output List of new vertices
   """
+  print("angle = ",angle)
   currAngle = 0
   stack = stack.replace("G","F")
   stack = stack.replace("g","f")
@@ -85,10 +86,11 @@ def readStack(stack, starting_pt, angle, turnAngle, lineScale):
   t = time()
   scale = float(1);
   print("[ INFO ] Calculating angles")
-  if angle != 0:
+  absangle = abs(angle)
+  if absangle != 0:
     while it < 360:
       pos_angles = np.append(pos_angles,round(it,5))
-      it+=angle
+      it+=absangle
   #if the angle doesn't divide evenly into 360, find the negative angles mod 360 too
   if it != 360:
     it = 360
