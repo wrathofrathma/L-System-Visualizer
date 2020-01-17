@@ -49,10 +49,10 @@ class UIWidget(QWidget):
     self.prodrulesEdit = []
     self.examples = []
     self.minuses = None
-    self.index = []
-    self.amount = 0
     self.madeAngle = False
     self.prodPercent = []
+    self.amount = 0
+    self.index = 0
     self.madeLine = False
     self.deterministic = True
     self.prodrules = []
@@ -89,6 +89,10 @@ class UIWidget(QWidget):
     self.prodrulesEdit[0].clicked.connect(lambda: self.prodrulesEdit[0].reset_color())
     self.prodrulesEdit[0].returnPressed.connect(self.lsysbutton.click)
     self.prodrulesEdit[0].textChanged.connect(lambda: self.showPopup())
+
+    self.prodPercent.append(customLineEdit())
+    self.prodPercent[0].setFixedWidth(50)
+    self.prodPercent[0].setText("1")
 
     self.angleEdit = customLineEdit()
     self.angleEdit.returnPressed.connect(self.lsysbutton.click)
@@ -158,6 +162,7 @@ class UIWidget(QWidget):
     self.layout.addWidget(self.axiomEdit, 1, 1, 1, 10)
     self.layout.addWidget(self.prodrules[0], 2, 0, 1, 1)
     self.layout.addWidget(self.prodrulesEdit[0], 2, 1, 1, 9)
+    self.layout.addWidget(self.prodPercent[0], 2, 9)
     self.layout.addWidget(self.prodPlus, 2, 10, 1, 1)
     self.layout.addWidget(self.angle, 10, 0)
     self.layout.addWidget(self.angleEdit, 10, 1, 1, 10)
@@ -172,6 +177,10 @@ class UIWidget(QWidget):
     prodRule = ''
     rules = ''
     repeat = ''
+    index = []
+    self.amount = 0
+    #Clearing any boxes
+
     for prod in self.prodrulesEdit:
       prodRule += prod.text()
       temp = prod.text()
@@ -181,47 +190,22 @@ class UIWidget(QWidget):
       rules += ' '
     
     allProdRule = prodRule + self.axiomEdit.text()
-    rules = rules.split(' ')[:-1]
-    
-    counter = collections.Counter(rules)
-
-    for key in counter:
-      if counter[key] > 1:
-        repeat += key
-
-    if repeat is not '':
-        print("REPEAT IS NOT ''")
-        index = [i for i in range(len(rules)) if rules[i] == repeat]
-        print("LENGTH OF INDEX IS", len(index))
-        print("LENGTH OF SELF.INDEX IS", len(self.index))
-        if len(index) is not len(self.index):
-            print("THE LENGTHS ARE NOT THE SAME")
-            self.index = index
-            for i in self.index:
-                print(self.amount)
-                self.prodPercent.append(customLineEdit())
-                self.prodPercent[self.amount].setFixedWidth(50)
-                self.prodPercent[self.amount].clicked.connect(lambda: self.prodPercent[self.amount].reset_color())
-                self.layout.addWidget(self.prodPercent[self.amount], i+2, 9)
-                self.amount += 1
-            self.deterministic = False
-            self.amount = 0
-    else:
-        print("REPEAT IS ''")
-        if not self.deterministic:
-            print("IT CURRENTLY IS NON DETERMINISTIC")
-            print("SELF PROD THINGY", self.prodPercent)
-            for prod in self.prodPercent:
-                print("NOw deleting percent boxes")
-                self.layout.removeWidget(prod)
-                prod.deleteLater()
-                prod = None
-            self.index = []
-            self.prodPercent = []
-            self.deterministic = True
-            print("HELLO WORLD")
-        
-
+    #rules = rules.split(' ')[:-1]
+    #print(rules)
+    #counter = collections.Counter(rules)
+    #for key in counter:
+    #    if counter[key] > 1:
+    #        repeat += key
+    #for r in repeat:
+    #    index.append([i for i, x in enumerate(rules) if x == r])
+    #self.index = index
+    #for i in index:
+    #    for j in i:
+    #        self.prodPercent.append(customLineEdit())
+    #        self.prodPercent[self.amount].setFixedWidth(50)
+    #        self.layout.addWidget(self.prodPercent[self.amount], j+2, 9)
+    #        self.amount += 1
+            
     if((")" in allProdRule or "(" in allProdRule) and self.madeAngle is False):
       self.turnAngle = QLabel('Turning Angle')
       self.turnAngleEdit = customLineEdit()
@@ -291,24 +275,24 @@ class UIWidget(QWidget):
         #pr = rule.replace("->",":")
         pr = rule.split(':')
         rules[pr[0]]=[]
-      for rule in prodRules:
+      for i, rule in enumerate(prodRules):
         rule = rule.text()
         rule = rule.replace(" ","")
         #pr = rule.replace("->",":")
         pr = rule.split(':')
-        rules[pr[0]].append([0,pr[1]])
+        rules[pr[0]].append([float(self.prodPercent[i].text()), pr[1]])
       '''
       THIS PART IS NOT CONTEXT SENSITIVE
       '''
 
-      for key in rules.keys():
-        #r is random array of prob that add to 1
-        l=len(rules[key])
-        r = [rand.random() for i in range(1,l+1)]
-        s = sum(r)
-        r = [ i/s for i in r ]
-        for i in range(l):
-          rules[key][i][0] = r[i]
+      #for key in rules.keys():
+      #  #r is random array of prob that add to 1
+      #  l=len(rules[key])
+      #  r = [rand.random() for i in range(1,l+1)]
+      #  s = sum(r)
+      #  r = [ i/s for i in r ]
+      #  for i in range(l):
+      #    rules[key][i][0] = r[i]
       #for letter in alphabet:
       #  if len(rules[letter])==0:
       #    rules[letter].append([1,letter])
@@ -325,11 +309,14 @@ class UIWidget(QWidget):
       self.prods = self.prods + 1
       self.prodrules.append(QLabel("Production Rule " + str(self.prods)))
       self.prodrulesEdit.append(customLineEdit())
+      self.prodPercent.append(customLineEdit())
+      self.prodPercent[-1].setFixedWidth(50)
       self.prodrulesEdit[self.prods-1].textChanged.connect(lambda: self.showPopup())
       self.prodrulesEdit[-1].returnPressed.connect(self.lsysbutton.click)
       self.prodrulesEdit[-1].clicked.connect(lambda: self.prodrulesEdit[-1].reset_color())
       self.layout.addWidget(self.prodrules[self.prods-1], self.prods+1, 0)
       self.layout.addWidget(self.prodrulesEdit[self.prods-1], self.prods+1, 1, 1, 9)
+      self.layout.addWidget(self.prodPercent[self.prods-1], self.prods+1, 9)
 
       if self.minuses is not None:
         #remove last minueses
@@ -340,7 +327,7 @@ class UIWidget(QWidget):
       self.minuses = QPushButton("-", self)
       self.minuses.clicked.connect(self.lessProds)
       self.layout.addWidget(self.minuses, self.prods+1, 10, 1, 1)
-
+      self.prodPercent[-1].setText("1")
   def lessProds(self):
     ''' Removes productions when - button is clicked '''
     if self.prods > 1:
@@ -351,12 +338,29 @@ class UIWidget(QWidget):
       #remove last widget prodrulesEdit
       self.layout.removeWidget(self.prodrulesEdit[-1])
       self.prodrulesEdit[-1].deleteLater()
-      self.prodrulesEdit.pop()
-      #remove last minueses
+      self.prodrulesEdit.pop() 
+      #remove last percentage 
+      self.layout.removeWidget(self.prodPercent[-1])
+      self.prodPercent[-1].deleteLater()
+      self.prodPercent.pop()
+      #remove last percentage
+      #for i in self.index:
+      #    for j in i:
+      #        if j == self.prods-1:
+      #             print("WE NEED TO DELETE")
+      #             print(i)
+      #      print("HELLO")
+      #      self.layout.removeWidget(self.prodPercent[-1])
+      #      self.prodPercent[-1].deleteLater()
+      #      self.prodPercent.pop()
+      #      self.amount = self.amount - 1
+      #      print(len(self.prodPercent))
+      #remove last minuses
       self.layout.removeWidget(self.minuses)
       self.minuses.deleteLater()
       self.minuses = None
       self.prods = self.prods - 1
+      
     if self.prods > 1:
       self.minuses = QPushButton("-", self)
       self.minuses.clicked.connect(self.lessProds)

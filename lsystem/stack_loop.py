@@ -54,6 +54,7 @@ def readStack(stack, starting_pt, angle, turnAngle, lineScale):
   Input list of strings (F, +, -)
   Output List of new vertices
   """
+  currAngle = 0
   stack = stack.replace("G","F")
   stack = stack.replace("g","f")
   vertices = []
