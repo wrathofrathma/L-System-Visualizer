@@ -5,7 +5,7 @@ import os
 import copy
 from lsystem.parsing import *
 from lsystem.stack_loop import *
-
+from lsystem.fractal_dim import *
 # This file for now is acting as a catch-all utility file.
 # At the moment the most important definitions are
 # saved_lsystems - Global dictionary definition of loaded lsystems.
@@ -36,16 +36,35 @@ def generate_lsystem(grammar):
   s = lThread(grammar_copy['axiom'], grammar_copy['rules'], grammar_copy['iterations'])
   # Generate vertics
   verts_arr_temp = readStack(s,(0,0),grammar_copy['angle'], grammar_copy['turnAngle'], grammar_copy['lineScale'])
+
+  #as the meshes in verts_arr_temp get normalized they will be appended to this
   verts_arr = []
-  m = map(max,verts_arr_temp)
-  m=max(max(m))
+  #finds max x or y value of all meshes/vertices
+  maxes = np.amax(verts_arr_temp)
+  #finds min x or y value of all meshes/vertices
+  # mins = map(min,verts_arr_temp)
+  # mins = abs(min(min(mins)))
+  # print(maxes)
+  # #make maxes the abs value
+  # if mins > maxes:
+  #   maxes = mins
+
   for verts in verts_arr_temp:
     verts = np.array(verts, dtype=np.float32)
-    #print(verts)
-    rows = len(verts)
+    # coord_split = np.hsplit(verts,2)
+    # x_coor = normalize_coordinates(coord_split[0])
+    # y_coor = normalize_coordinates(coord_split[1])
+    # print(x_coor)
+    # print()
+    # print(y_coor)
+    # verts = np.hstack(coord_split[0],coord_split[1])
     verts = verts.reshape(verts.shape[0]*verts.shape[1])
-    verts = normalize_coordinates(verts,m)
+    verts = normalize_coordinates(verts,maxes)
     verts_arr.append(verts)
+    # print("Max of verts: ",max(verts))
+    # print("Min of verts: ",min(verts))
+    # print()
+  fractal_dim_calc(verts_arr)
   return verts_arr
 
 # Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
@@ -97,8 +116,18 @@ def load_saved_lsystems():
 
 # Normalizes the coordinates such that the largest vertice bound is 1 or -1.
 # We will remove this later when we have proper scaling/zooming.
-def normalize_coordinates(coords,m=0):
-  if m == 0:
+def normalize_coordinates(coords, m=0):
+  if m==0:
     m=coords.max()
+  # print(coords)
   coords = coords/m
+  # print("m = ",m)
+  # print("coords = ",coords)
+  # max=coords.max()
+  # min = coords.min()
+  # print("max = ",max)
+  # print("min = ",min)
+  # for i,x in enumerate(coords):
+  #  coords[i] = ((x-min)*.999999)/(x-max)
+  # print("coords = ",coords)
   return coords
