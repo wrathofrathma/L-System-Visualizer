@@ -40,14 +40,11 @@ def generate_lsystem(grammar):
   #as the meshes in verts_arr_temp get normalized they will be appended to this
   verts_arr = []
   #finds max x or y value of all meshes/vertices
-  maxes = np.amax(verts_arr_temp)
-  #finds min x or y value of all meshes/vertices
-  # mins = map(min,verts_arr_temp)
-  # mins = abs(min(min(mins)))
-  # print(maxes)
-  # #make maxes the abs value
-  # if mins > maxes:
-  #   maxes = mins
+  maxes = np.max(verts_arr_temp)
+
+  #TODO: Find the min and max of x and y.
+  #TODO: Find the max of abs(x_max-x_min) and abs(y_max-y_min)
+  #TODO: Then perform (x-x_min)/max diff * .9999 and (y-y_min)/max diff * .9999
 
   for verts in verts_arr_temp:
     verts = np.array(verts, dtype=np.float32)
