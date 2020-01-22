@@ -35,33 +35,40 @@ def generate_lsystem(grammar):
   # Generate full production string.
   s = lThread(grammar_copy['axiom'], grammar_copy['rules'], grammar_copy['iterations'])
   # Generate vertics
-  verts_arr_temp = readStack(s,(0,0),grammar_copy['angle'], grammar_copy['turnAngle'], grammar_copy['lineScale'])
-
+  verts_arr_temp = readStack(s,[0,0],grammar_copy['angle'], grammar_copy['turnAngle'], grammar_copy['lineScale'])
+  verts_arr_temp = np.array(verts_arr_temp)
   #as the meshes in verts_arr_temp get normalized they will be appended to this
   verts_arr = []
   #finds max x or y value of all meshes/vertices
+  #flat = verts_arr_temp.reshape(verts_arr_temp.shape[0]*verts_arr_temp.shape[1])
+  #print(flat)
   maxes = np.max(verts_arr_temp)
-
-  #TODO: Find the min and max of x and y.
-  #TODO: Find the max of abs(x_max-x_min) and abs(y_max-y_min)
-  #TODO: Then perform (x-x_min)/max diff * .9999 and (y-y_min)/max diff * .9999
+  #for now manually strip the x and y values from verts_arr_temp
+  x_vals = []
+  y_vals = []
+  for mesh in verts_arr_temp:
+    for point in mesh:
+      x_vals.append(point[0])
+      y_vals.append(point[1])
+  minx = min(x_vals)
+  maxx = max(x_vals)
+  miny = min(y_vals)
+  maxy = max(y_vals)
+  maxdif = max([maxx - minx, maxy-miny])
+  # Find the min and max of x and y.
+  # Find the max of abs(x_max-x_min) and abs(y_max-y_min)
+  # Then perform (x-x_min)/max diff * .9999 and (y-y_min)/max diff * .9999
 
   for verts in verts_arr_temp:
     verts = np.array(verts, dtype=np.float32)
-    # coord_split = np.hsplit(verts,2)
-    # x_coor = normalize_coordinates(coord_split[0])
-    # y_coor = normalize_coordinates(coord_split[1])
-    # print(x_coor)
-    # print()
-    # print(y_coor)
-    # verts = np.hstack(coord_split[0],coord_split[1])
     verts = verts.reshape(verts.shape[0]*verts.shape[1])
-    verts = normalize_coordinates(verts,maxes)
+    for i in range(0, len(verts), 2):
+      verts[i] = ((verts[i]-minx)*.99999)/maxdif
+      verts[i+1] = ((verts[i+1]-miny)*.99999)/maxdif
+    #verts = normalize_coordinates(verts,maxes)
     verts_arr.append(verts)
-    # print("Max of verts: ",max(verts))
-    # print("Min of verts: ",min(verts))
-    # print()
   fractal_dim_calc(verts_arr)
+  #print(verts_arr)
   return verts_arr
 
 # Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
