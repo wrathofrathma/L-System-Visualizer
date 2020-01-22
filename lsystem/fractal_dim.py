@@ -5,37 +5,38 @@ def gen_pixel_map(meshes, size):
   #add one and multiply by half of size to get from world coord to pixel map
   pix_map = np.full((size,size),'.')
   meshes = np.asarray(meshes)
-  print(meshes)
-  meshes = (meshes+1)*size/2
-  print(meshes)
+  # print(meshes)
+  meshes = (meshes)*size
+  # print(meshes)
   for vert_array in meshes:
-    #initialize first coordinate pair
-    x_old = vert_array[0]
-    y_old = vert_array[1]
-    #add it to the pixel map
-    pix_map[int(np.trunc(x_old)), int(np.trunc(y_old))]=1
-    for i in range(2,len(vert_array)-1,2):
-      #second coordinate pair
-      x_new = vert_array[i] #coordinates are stored as real numbers for precision
-      y_new = vert_array[i+1]
+    if len(vert_array) >2:
+      #initialize first coordinate pair
+      x_old = vert_array[0]
+      y_old = vert_array[1]
+      #add it to the pixel map
+      pix_map[int(np.trunc(x_old)), int(np.trunc(y_old))]=1
+      for i in range(2,len(vert_array)-1,2):
+        #second coordinate pair
+        x_new = vert_array[i] #coordinates are stored as real numbers for precision
+        y_new = vert_array[i+1]
 
 
-      #add the line connection new point and old point
-      h=0
-      step_size=1/(max(abs(x_new-x_old), abs(y_new-y_old))*2)
-      for h in np.arange(0,1,step_size):
-        xx = x_old + h*(x_new-x_old)
-        yy = y_old + h*(y_new-y_old)
-        xx_coord = min(int(np.trunc(xx)),size-1)
-        yy_coord = min(int(np.trunc(yy)),size-1)
-        pix_map[xx_coord, yy_coord]=1
-      #This takes care of edge case where max =1024 is outside of array
-      x_new_coord = min(int(np.trunc(x_new)), size-1)
-      y_new_coord = min(int(np.trunc(y_new)),size-1)
+        #add the line connection new point and old point
+        h=0
+        step_size=1/(max(abs(x_new-x_old), abs(y_new-y_old))*2)
+        for h in np.arange(0,1,step_size):
+          xx = x_old + h*(x_new-x_old)
+          yy = y_old + h*(y_new-y_old)
+          xx_coord = min(int(np.trunc(xx)),size-1)
+          yy_coord = min(int(np.trunc(yy)),size-1)
+          pix_map[xx_coord, yy_coord]=1
+        #This takes care of edge case where max =1024 is outside of array
+        x_new_coord = min(int(np.trunc(x_new)), size-1)
+        y_new_coord = min(int(np.trunc(y_new)),size-1)
 
-      pix_map[x_new_coord, y_new_coord]=1
-      x_old = x_new
-      y_old = y_new
+        pix_map[x_new_coord, y_new_coord]=1
+        x_old = x_new
+        y_old = y_new
 
   print("pixel map done")
   return pix_map
