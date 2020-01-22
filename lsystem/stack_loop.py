@@ -6,12 +6,9 @@ import numpy as np
 from time import time
 import copy
 import json
-funcdict = {
-  'F': Ff,
-  '+': plus,
-  '-': minus
-}
-#l = ['F','f','+','-','F']
+
+#TODO: change tuples return array to lists
+#(from [[(x,y),..],[(w,z),...],...] to [[[x,y],..],[[w,z],...],...])
 def readsubstring(string, starting_pt, start_angle, turnAngle, trig_dict, scale, lineScale):
   """
   Input: readsubstring takes in a string, a starking point, the starting angle,
@@ -26,10 +23,10 @@ def readsubstring(string, starting_pt, start_angle, turnAngle, trig_dict, scale,
     if not new_angle in trig_dict.keys():
       trig_dict[new_angle]=[math.cos(new_angle),math.sin(new_angle)]
     if string[i] == 'F':
-      new_point = (new_point[0]+(scale*trig_dict[new_angle][0]),new_point[1]+(scale*trig_dict[new_angle][1]))
+      new_point = [new_point[0]+(scale*trig_dict[new_angle][0]),new_point[1]+(scale*trig_dict[new_angle][1])]
       vertContainer.append(new_point)
     elif string[i] == 'H':
-      new_point = (new_point[0]+(scale*trig_dict[new_angle][0]/2),new_point[1]+(scale*trig_dict[new_angle][1]/2))
+      new_point = [new_point[0]+(scale*trig_dict[new_angle][0]/2),new_point[1]+(scale*trig_dict[new_angle][1]/2)]
       vertContainer.append(new_point)
     elif string[i] == '+':
         new_angle = round((new_angle - trig_dict['angle'])%360,5)
@@ -112,13 +109,13 @@ def readStack(stack, starting_pt, angle, turnAngle, lineScale):
       #move little f
       if not curr_state[1] in trig_dict.keys():
         trig_dict[curr_state[1]]=[math.cos(curr_state[1]),math.sin(curr_state[1])]
-      curr_state = ((curr_state[0][0]+(scale*trig_dict[curr_state[1]][0]),curr_state[0][1]+(scale*trig_dict[curr_state[1]][1])),currAngle, scale)
+      curr_state = ([curr_state[0][0]+(scale*trig_dict[curr_state[1]][0]),curr_state[0][1]+(scale*trig_dict[curr_state[1]][1])],currAngle, scale)
       str.replace('f','')
     elif str[0] == 'h':
       #move little h
       if not curr_state[1] in trig_dict.keys():
         trig_dict[curr_state[1]]=[math.cos(curr_state[1]),math.sin(curr_state[1])]
-      curr_state = ((curr_state[0][0]+(scale*trig_dict[curr_state[1]][0]/2),curr_state[0][1]+(scale*trig_dict[curr_state[1]][1]/2)),currAngle,  scale)
+      curr_state = ([curr_state[0][0]+(scale*trig_dict[curr_state[1]][0]/2),curr_state[0][1]+(scale*trig_dict[curr_state[1]][1]/2)],currAngle,  scale)
       str.replace('h','')
     elif str[0]=='[':
       saved_states.append(curr_state)
