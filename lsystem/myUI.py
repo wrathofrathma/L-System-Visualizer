@@ -56,6 +56,7 @@ class UIWidget(QWidget):
     self.madeLine = False
     self.deterministic = True
     self.prodrules = []
+    self.verts= [] # This will store the vertices from generate_lsystem
     load_saved_lsystems()
     self.graphix = LSystemDisplayWidget()
     self.initUI()
@@ -137,23 +138,7 @@ class UIWidget(QWidget):
     self.genLSys()
 
   def on_boxcountbutton_clicked(self):
-    self.graphix.DEBUG = False
-    self.graphix.DISPLAY_GRID = False
-    self.graphix.paintGL()
-    size = self.size()
-    pos_x = self.pos().x() # Starts from the left. Which is fine.
-    pos_y = self.pos().y() # Starts from the top...so we need to convert this to start from the bottom.
-    # Read all of the pixels into an array.
-    pixels = glReadPixels(pos_x,pos_y-20, size.width(), size.height()+20, GL_RGB, GL_UNSIGNED_BYTE)
-    # Create an image from Python Image Library.
-    image = Image.frombytes("RGB", (size.width(), size.height()+20), pixels)
-    # FLip that bitch.
-    image = image.transpose(Image.FLIP_TOP_BOTTOM)
-    image.save('test.png')
-    print("[ INFO ] Saved.")
-
-    self.graphix.DEBUG = True
-    self.graphix.DISPLAY_GRID = True
+    print("FRACTAL DIMENSION: ",fractal_dim_calc(self.verts))
 
   def addWidgets(self):
 
@@ -188,7 +173,7 @@ class UIWidget(QWidget):
       temp = temp[:].split(':')[0]
       rules += temp
       rules += ' '
-    
+
     allProdRule = prodRule + self.axiomEdit.text()
     #rules = rules.split(' ')[:-1]
     #print(rules)
@@ -205,7 +190,7 @@ class UIWidget(QWidget):
     #        self.prodPercent[self.amount].setFixedWidth(50)
     #        self.layout.addWidget(self.prodPercent[self.amount], j+2, 9)
     #        self.amount += 1
-            
+
     if((")" in allProdRule or "(" in allProdRule) and self.madeAngle is False):
       self.turnAngle = QLabel('Turning Angle')
       self.turnAngleEdit = customLineEdit()
@@ -338,8 +323,8 @@ class UIWidget(QWidget):
       #remove last widget prodrulesEdit
       self.layout.removeWidget(self.prodrulesEdit[-1])
       self.prodrulesEdit[-1].deleteLater()
-      self.prodrulesEdit.pop() 
-      #remove last percentage 
+      self.prodrulesEdit.pop()
+      #remove last percentage
       self.layout.removeWidget(self.prodPercent[-1])
       self.prodPercent[-1].deleteLater()
       self.prodPercent.pop()
@@ -360,7 +345,7 @@ class UIWidget(QWidget):
       self.minuses.deleteLater()
       self.minuses = None
       self.prods = self.prods - 1
-      
+
     if self.prods > 1:
       self.minuses = QPushButton("-", self)
       self.minuses.clicked.connect(self.lessProds)
@@ -385,12 +370,12 @@ class UIWidget(QWidget):
       rules=self.genRuleDict(self.prodrulesEdit)
       # Generate rule grammar dictionary.
       grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
-      verts = generate_lsystem(grammar)
+      self.verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
       self.graphix.clear_mesh()
-      self.graphix.set_vertices(verts[0])
-      for i in range(1,len(verts)):
-        self.graphix.set_vertices(verts[i],1) #split = true
+      self.graphix.set_vertices(self.verts[0])
+      for i in range(1,len(self.verts)):
+        self.graphix.set_vertices(self.verts[i],1) #split = true
     self.graphix.update()
     self.graphix.resetCamera()
 
@@ -419,4 +404,3 @@ class UIWidget(QWidget):
     self.itersEdit.setText(str(grammar['iterations']))
     self.genLSys()
     #print(example)
-

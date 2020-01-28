@@ -67,7 +67,7 @@ def generate_lsystem(grammar):
       verts[i+1] = ((verts[i+1]-miny)*.99999)/maxdif
     #verts = normalize_coordinates(verts,maxes)
     verts_arr.append(verts)
-  fractal_dim_calc(verts_arr)
+  #fractal_dim_calc(verts_arr)
   #print(verts_arr)
   return verts_arr
 

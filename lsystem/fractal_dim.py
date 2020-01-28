@@ -54,18 +54,22 @@ def pool_pixel_map(map):
   return pix_map
 
 def fractal_dim_calc(meshes):
-  pix_map = gen_pixel_map(meshes,2048)
-  np.set_printoptions(threshold=np.inf)
-  np.set_printoptions(linewidth= np.inf)
-  #print(pix_map)
+  size = 4096
+  pix_map = gen_pixel_map(meshes,size)
+  count= 0
+  fractal_dim = np.log(np.count_nonzero(pix_map == '1'))/np.log(size)
+  return fractal_dim
+  # np.set_printoptions(threshold=np.inf)
+  # np.set_printoptions(linewidth= np.inf)
+  # print(pix_map)
 
-  #print(len(pix_map))
-  pix_map = pool_pixel_map(pix_map)
-  pix_map = pool_pixel_map(pix_map)
-  pix_map = pool_pixel_map(pix_map)
-  pix_map = pool_pixel_map(pix_map)
-  pix_map = pool_pixel_map(pix_map)
-  print(np.array2string(pix_map, separator=',', formatter={'str_kind': lambda x: x}))
+  # print(len(pix_map))
+  # pix_map = pool_pixel_map(pix_map)
+  # pix_map = pool_pixel_map(pix_map)
+  # pix_map = pool_pixel_map(pix_map)
+  # pix_map = pool_pixel_map(pix_map)
+  # pix_map = pool_pixel_map(pix_map)
+  # print(np.array2string(pix_map, separator=',', formatter={'str_kind': lambda x: x}))
   #np.set_printoptions(threshold=np.inf)
   #print(pix_map)
   #print(len(pix_map))
