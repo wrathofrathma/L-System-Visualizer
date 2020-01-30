@@ -13,5 +13,5 @@ out vec4 frag_color; // Our fragment color
 void main(){
   frag_pos = model * vec4(vpos, 0.0, 1.0);
   gl_Position = proj * view * model * vec4(vpos,0.0,1.0);
-  frag_color = vcolor;
+  frag_color = vec4(1.0,1.0,1.0,0.0);
 }
