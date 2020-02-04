@@ -53,10 +53,10 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.dimensionality = 2 # Dimensionality of the LSystem being displayed....probably will get rid of this later?
         self.mesh_options = MeshOptions.White | MeshOptions.Static # Default mesh options are white and static
         self.fps=30.0 # Number of times a second we refresh the widget.
-        self.DISPLAY_GRID=True # Toggles the display of the intersection grid.
+        self.DISPLAY_GRID=False # Toggles the display of the intersection grid.
 
         # DEBUG Flags
-        self.DEBUG=True # Toggles the origin axis & plane & raycasting view. Later it'll toggle other debug utils.
+        self.DEBUG=False # Toggles the origin axis & plane & raycasting view. Later it'll toggle other debug utils.
 
         # DEBUG Objects
         # 3D Axis & a plane mesh for visual clarity while I implement zooming into a point.
