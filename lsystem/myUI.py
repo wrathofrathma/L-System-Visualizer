@@ -370,10 +370,12 @@ class UIWidget(QWidget):
       rules=self.genRuleDict(self.prodrulesEdit)
       # Generate rule grammar dictionary.
       grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
-      self.graph = generate_lsystem(grammar)
+      self.verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
-      self.graphix.clear_graph()
-      self.graphix.set_graph(self.graph)
+      self.graphix.clear_mesh()
+      self.graphix.set_vertices(self.verts[0])
+      for i in range(1,len(self.verts)):
+        self.graphix.set_vertices(self.verts[i],1) #split = true
     self.graphix.update()
     self.graphix.resetCamera()
 
@@ -385,15 +387,33 @@ class UIWidget(QWidget):
     self.itersEdit.reset_box()
     grammar = get_saved_lsystem(example)
     self.axiomEdit.setText(grammar['axiom'])
-    while self.prods < len(grammar['rules']):
+
+    numRules = 0
+    for key in grammar['rules']:
+      if isinstance(grammar['rules'][key], list):
+        numRules += len(grammar['rules'][key])
+      else:
+        numRules += 1
+    
+    while self.prods < numRules:
       self.moreProds()
 
-    while self.prods > len(grammar['rules']):
+    while self.prods > numRules:
       self.lessProds()
 
     for i, key in enumerate(grammar['rules']):
       value = grammar['rules'][key]
-      self.prodrulesEdit[i].setText(key+": "+value)
+      if isinstance(value,str):
+        self.prodrulesEdit[i].setText(key+": "+value)
+      else:
+        j = 0
+        for v in value:
+          print(v)
+          self.prodrulesEdit[i+j].setText(key + ": " + v[0])
+          self.prodPercent[i+j].setText(v[1])
+          j += 1
+        i += j
+      
     self.angleEdit.setText(str(grammar["angle"]))
     if(self.madeAngle):
       self.turnAngleEdit.setText(str(grammar['turn_angle']))
