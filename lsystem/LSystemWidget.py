@@ -17,6 +17,8 @@ from lsystem.graphics.RayCasting import *
 from lsystem.graphics.Axis import *
 from lsystem.graphics.Grid import Grid2D
 from lsystem.graphics.colors import Colors
+from lsystem.graphics.GraphMesh import *
+from lsystem.graph import Graph
 # Other includes
 import numpy as np
 
@@ -36,7 +38,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.start_time = time()
 
         # Production scene objects.
-        self.meshes = [] # Mesh container should be outdated soon!
+        self.graph = Graph()
+        self.graph_mesh = GraphObject()
         self.grid = Grid2D() # 2D Intersection grid
 
         # Camera initialization
@@ -141,9 +144,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         if(self.DISPLAY_GRID):
             self.grid.draw()
         self.center_mesh()
-        # Draw the meshes. TODO - Move this to a graph object later.
-        for mesh in self.meshes:
-            mesh.draw()
+        self.graph_mesh.draw()
 
 
     # Converts a qt mouse position event coordinates to opengl coordinates
@@ -308,8 +309,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.casted_ray.set_shader(self.shader3D)
         self.plane.set_shader(self.shader3D)
         self.grid.set_shader(self.shader2D)
-        for mesh in self.meshes:
-            mesh.set_shader(self.active_shader)
+        self.graph_mesh.set_shader(self.active_shader)
 
     def loadShaders(self):
         # Load the shader files into a string.
@@ -378,7 +378,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Cleaning up display widget memory.")
 
         # Cleaning up mesh memory on GPU
-        self.clear_mesh()
+        self.clear_graph()
+        self.graph_mesh.cleanup()
 
         # Detaching shaders and deleting shader program
         #glDetachShader(self.shader, self.vs)
@@ -392,49 +393,59 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glDeleteShader(self.fs3)
         glDeleteProgram(self.shader3D)
 
-    def get_extrema(self):
-        # Well, since we have multiple meshes, we need the mins and maxes of all of them before slicing.
-        if(len(self.meshes)==0):
-            return 0,0,0,0
-        maxes=[]
-        mins= []
-        for mesh in self.meshes:
-            ma, mi = mesh.detect2DEdges()
-            maxes.append(ma)
-            mins.append(mi)
-        # this should create 2, (n,2) dimension numpy arrays.
-        maxes = np.array(maxes)
-        mins = np.array(mins)
-        max_x = maxes[:,0].max()
-        max_y = maxes[:,1].max()
-        min_x = mins[:,0].min()
-        min_y = mins[:,1].min()
-        return min_x, min_y, max_x, max_y
+    # def get_extrema(self):
+    #     # Well, since we have multiple meshes, we need the mins and maxes of all of them before slicing.
+    #     if(len(self.meshes)==0):
+    #         return 0,0,0,0
+    #     maxes=[]
+    #     mins= []
+    #     for mesh in self.meshes:
+    #         ma, mi = mesh.detect2DEdges()
+    #         maxes.append(ma)
+    #         mins.append(mi)
+    #     # this should create 2, (n,2) dimension numpy arrays.
+    #     maxes = np.array(maxes)
+    #     mins = np.array(mins)
+    #     max_x = maxes[:,0].max()
+    #     max_y = maxes[:,1].max()
+    #     min_x = mins[:,0].min()
+    #     min_y = mins[:,1].min()
+    #     return min_x, min_y, max_x, max_y
 
-    # Centers the mesh in the view
     def center_mesh(self):
-        if (len(self.meshes)==0):
-            return
-        min_x, min_y, max_x, max_y = self.get_extrema()
-        center = ((min_x+max_x)/2, (min_y+max_y)/2)
-        for mesh in self.meshes:
-           mesh.shift_vertices(-0,-center[1])
+      if(len(self.graph.vertices)==0):
+        return
+      (xmax,ymax),(xmin,ymin) = self.graph_mesh.detect2DEdges()
+      xdiff = abs(xmax-xmin)
+      ydiff = abs(ymax-ymin)
+      scale = max(xdiff,ydiff)
+      self.graph_mesh.setScale(vec3(1.0/scale))
+      pos = vec3(0.0)
+      xmid = (xmax+xmin)/2.0*-1
+      ymid = (ymax+ymin)/2.0*-1
+      pos[0]=xmid
+      pos[1]=ymid
+      self.graph_mesh.setPosition(pos)
+
+
+    # # Centers the mesh in the view
+    # def center_mesh(self):
+        # if (len(self.meshes)==0):
+            # return
+        # min_x, min_y, max_x, max_y = self.get_extrema()
+        # center = ((min_x+max_x)/2, (min_y+max_y)/2)
+        # for mesh in self.meshes:
+           # mesh.shift_vertices(-0,-center[1])
 
     # Sets the vertices of the last mesh in the array.
     # split=True creates a new mesh before setting the vertices.
-    def set_vertices(self, vertices, split=False):
-        if(split):
-            self.meshes.append(Mesh())
-            self.meshes[-1].set_shader(self.active_shader)
-        self.meshes[-1].set_vertices(vertices)
-        self.meshes[-1].set_options(self.mesh_options)
+    def set_graph(self,graph):
+      self.graph=graph
+      self.graph_mesh.set_graph_data(graph)
     # Cleans up the mesh memory on the GPU and clears the array of them.
-    def clear_mesh(self):
-        for mesh in self.meshes:
-            mesh.cleanup()
-        self.meshes.clear()
-        self.meshes.append(Mesh())
-        self.meshes[-1].set_shader(self.active_shader)
+    def clear_graph(self):
+        self.graph.clear()
+        self.graph_mesh.clear_graph()
 
     # Sets the background color of the OpenGL widget.
     def set_bg_color(self, color):

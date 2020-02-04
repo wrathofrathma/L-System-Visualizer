@@ -6,6 +6,7 @@ import copy
 from lsystem.parsing import *
 from lsystem.stack_loop import *
 from lsystem.fractal_dim import *
+from lsystem.graph import Graph
 # This file for now is acting as a catch-all utility file.
 # At the moment the most important definitions are
 # saved_lsystems - Global dictionary definition of loaded lsystems.
@@ -31,6 +32,7 @@ saved_file = "assets/lsystems/saved_lsystems.json"
 
 def generate_lsystem(grammar):
   grammar_copy= copy.deepcopy(grammar)
+  graph = Graph() # Adjacency list based graph.
   print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
   # Generate full production string.
   s = lThread(grammar_copy['axiom'], grammar_copy['rules'], grammar_copy['iterations'])
@@ -59,17 +61,31 @@ def generate_lsystem(grammar):
   # Find the max of abs(x_max-x_min) and abs(y_max-y_min)
   # Then perform (x-x_min)/max diff * .9999 and (y-y_min)/max diff * .9999
 
+  # Edited for temporary support of adjacency lists. It's wasteful currently, but when we integrate it further back into the tech stack during refactor, it
+  # should become more efficient.
+  # Since each verts_arr_temp/verts represents an individual fork, we can assume they are connected by edges. So let's track the previous point and draw lines. 
   for verts in verts_arr_temp:
     verts = np.array(verts, dtype=np.float32)
     verts = verts.reshape(verts.shape[0]*verts.shape[1])
     for i in range(0, len(verts), 2):
       verts[i] = ((verts[i]-minx)*.99999)/maxdif
       verts[i+1] = ((verts[i+1]-miny)*.99999)/maxdif
-    #verts = normalize_coordinates(verts,maxes)
-    verts_arr.append(verts)
+      graph.add_vertex((verts[i],verts[i+1]))
+      if(i>0):
+          graph.add_edge((prev_point),(verts[i],verts[i+1]))
+      prev_point = (verts[i],verts[i+1])
+
+  # for verts in verts_arr_temp:
+  #   verts = np.array(verts, dtype=np.float32)
+  #   verts = verts.reshape(verts.shape[0]*verts.shape[1])
+  #   for i in range(0, len(verts), 2):
+  #     verts[i] = ((verts[i]-minx)*.99999)/maxdif
+  #     verts[i+1] = ((verts[i+1]-miny)*.99999)/maxdif
+  #   #verts = normalize_coordinates(verts,maxes)
+  #   verts_arr.append(verts)
   #fractal_dim_calc(verts_arr)
   #print(verts_arr)
-  return verts_arr
+  return graph
 
 # Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
 # Overwrites any previous lsystem defined with the same key.

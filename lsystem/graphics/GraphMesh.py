@@ -25,6 +25,7 @@ class GraphObject(QuaternionObject):
         self.vertices = []
         self.colors = []
         self.indices = []
+        # self.translate([-0.5,-0.5,0])
 
     def init_ogl(self):
         if(self.shader==None):
@@ -46,12 +47,23 @@ class GraphObject(QuaternionObject):
         self.update=True
         glUseProgram(0)
 
+    # Clears the vertices, colors, indices
+    def clear_graph(self):
+        self.vertices = [] 
+        self.colors = [] 
+        self.indices = [] 
+        self.data_initialized=False
     # The function to pass exported graph data to.
-    def set_graph_data(vertices, colors, indices):
-        self.vertices = vertices
-        self.colors = colors
-        self.indices = indices
+    def set_graph_data(self,graph):
+        self.vertices, self.colors, self.indices = graph_to_ogl(graph)
         self.data_initialized=True
+
+    def detect2DEdges(self):
+      v = np.array(self.vertices)
+      v = v.reshape(int(v.shape[0]/2), 2)
+      xs = v[:,0] # numpy 2d array slicing to get the xs
+      ys = v[:,1] # Same but for ys.
+      return (xs.max(), ys.max()), (xs.min(),ys.min())
 
     def set_shader(self, shader):
         self.shader = shader

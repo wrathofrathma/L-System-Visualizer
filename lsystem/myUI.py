@@ -370,12 +370,10 @@ class UIWidget(QWidget):
       rules=self.genRuleDict(self.prodrulesEdit)
       # Generate rule grammar dictionary.
       grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
-      self.verts = generate_lsystem(grammar)
+      self.graph = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
-      self.graphix.clear_mesh()
-      self.graphix.set_vertices(self.verts[0])
-      for i in range(1,len(self.verts)):
-        self.graphix.set_vertices(self.verts[i],1) #split = true
+      self.graphix.clear_graph()
+      self.graphix.set_graph(self.graph)
     self.graphix.update()
     self.graphix.resetCamera()
 
