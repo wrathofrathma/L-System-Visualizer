@@ -54,7 +54,7 @@ def pool_pixel_map(map):
   return pix_map
 
 def fractal_dim_calc(meshes):
-  size = 4096
+  size = 512
   pix_map = gen_pixel_map(meshes,size)
   count= 0
   fractal_dim = np.log(np.count_nonzero(pix_map == '1'))/np.log(size)
