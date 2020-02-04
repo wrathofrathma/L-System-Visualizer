@@ -3,6 +3,7 @@ import sys
 from lsystem.myUI import *
 from lsystem.glossary import Glossary
 from lsystem.getting_started import gettingStarted
+from lsystem.save_rules_window import saveRules
 
 class myMainWindow(QMainWindow):
   def __init__(self, parent=None):
@@ -35,6 +36,10 @@ class myMainWindow(QMainWindow):
     saveAct.setShortcut('Ctrl+S')
     saveAct.triggered.connect(lambda: self.saveFile())
     saveMenu.addAction(saveAct)
+    
+    saveRuleAct = QAction('Save your rules', self)
+    saveRuleAct.triggered.connect(lambda: self.buildSaveRules())
+    saveMenu.addAction(saveRuleAct)
 
     exitAction = QAction('Exit', self)
     exitAction.setShortcut('Ctrl+Q')
@@ -85,6 +90,10 @@ class myMainWindow(QMainWindow):
     fileName, _ = QFileDialog.getSaveFileName(self,"Save Screenshot", options=options)
     if fileName:
         self.ui_widget.graphix.screenshot(fileName + ".png")
+
+  def buildSaveRules(self):
+    self.saveRules = saveRules(self.ui_widget)
+    self.saveRules.show()
 
   def closeEvent(self, event=None):
       print("[ INFO ] Exiting...")
