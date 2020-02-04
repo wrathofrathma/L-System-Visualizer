@@ -16,13 +16,15 @@ class Graph:
     self.adjacency_list = {}
     self.colors = []
     self.vertices = []
+    self.n = 0
   # Let's assume the vertex passed is a tuple since that's hashable and we need that for dictionaries to work.
   # Optional color passed for each vertex. Default is white.
   def add_vertex(self, vertex, color=Colors.white):
     if vertex not in self.adjacency_list:
-      self.adjacency_list[vertex] = {"edges" : [], "color" : color}
+      self.adjacency_list[vertex] = {"edges" : [], "color" : color, "index" : self.n}
       self.vertices.append(vertex)
       self.colors.append(color)
+      self.n+=1
   # Assume both v1 and v2 are tuples of form (x,y) representing their 2d space position.
   # Normally in undirected graphs you add the edge to both vertices...but we're going to not do that to avoid concurrency issues later.
   # We'll just add to v1 each time.
@@ -150,7 +152,7 @@ def generate_indices(adjacency_list, vert_list):
   inds = []
   for v in vert_list:
     for e in adjacency_list[v]["edges"]:
-      inds += [vert_list.index(v), vert_list.index(e)]
+      inds += [adjacency_list[v]["index"], adjacency_list[e]["index"]]
   end = time()
   print("[ INFO ] Finished exporting to OGL indices in " + str(round(end-start,3))+ "s")
   return inds
