@@ -80,7 +80,7 @@ def graph_to_ogl(graph):
   vertices = np.array(graph.vertices)
   colors = graph.colors
   indices = generate_indices(adjacency_list, graph.vertices)
-  vertices = vertices.reshape(vertices.shape[0]*2)
+  vertices = vertices.reshape(vertices.shape[0]*vertices.shape[1])
   # v_out = []
   # for v in vertices:
   #   v_out+=v

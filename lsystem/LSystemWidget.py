@@ -117,9 +117,11 @@ class LSystemDisplayWidget(QOpenGLWidget):
         if(d==2):
             self.active_shader=self.shader2D
             self.active_mesh = 0
+            self.clear_graph()
         else:
             self.active_mesh = 1
             self.active_shader=self.shader3D
+            self.clear_graph()
 
     # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):
