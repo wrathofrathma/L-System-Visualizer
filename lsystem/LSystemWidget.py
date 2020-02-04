@@ -442,6 +442,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def set_graph(self,graph):
       self.graph=graph
       self.graph_mesh.set_graph_data(graph)
+      self.center_mesh()
     # Cleans up the mesh memory on the GPU and clears the array of them.
     def clear_graph(self):
         self.graph.clear()
