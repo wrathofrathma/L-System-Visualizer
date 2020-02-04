@@ -143,7 +143,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
             self.casted_ray.draw()
         if(self.DISPLAY_GRID):
             self.grid.draw()
-        self.center_mesh()
+        # self.center_mesh()
         self.graph_mesh.draw()
 
 
