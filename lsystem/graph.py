@@ -71,21 +71,26 @@ class Graph:
 #         if(i==mod-1):
 #             stride-=1 # Reset the stride to normal for the rest to evenly divide.
 #     return r
-
+from time import time
 # this function will generate vertices,colors, and indices for use in opengl from a graph.
 def graph_to_ogl(graph):
   adjacency_list = graph.adjacency_list
-  vertices = graph.vertices
+  vertices = np.array(graph.vertices)
   colors = graph.colors
-  indices = generate_indices(adjacency_list, vertices)
-  # Rejoin all threads.
-  v_out = []
-  for v in vertices:
-    v_out+=v
+  indices = generate_indices(adjacency_list, graph.vertices)
+  vertices = vertices.reshape(vertices.shape[0]*2)
+  # v_out = []
+  # for v in vertices:
+  #   v_out+=v
+  start = time()
+  print("[ INFO ] Finished exporting OGL vertices in " + str(round(time() - start,3)) + "s")
+  start = time()
   c_out = []
   for c in colors:
     c_out += list(c)
-  return (np.array(v_out), np.array(c_out), np.array(indices))
+  end = time()
+  print("[ INFO ] Finished exporting to OGL vertices and colors in " + str(round(end-start,3))+ "s")
+  return (np.array(vertices), np.array(c_out), np.array(indices))
 
 
 # Threaded version of graph_to_ogl
@@ -141,10 +146,13 @@ def generate_indices(adjacency_list, vert_list):
   # for each vertice in our vertice range
   #   for every outgoing edge
   #       add that line's indice.
+  start = time()
   inds = []
   for v in vert_list:
     for e in adjacency_list[v]["edges"]:
       inds += [vert_list.index(v), vert_list.index(e)]
+  end = time()
+  print("[ INFO ] Finished exporting to OGL indices in " + str(round(end-start,3))+ "s")
   return inds
 
 # adjacency_list = graph adjacency_list(Graph.vertices)
