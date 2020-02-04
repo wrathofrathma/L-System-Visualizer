@@ -32,7 +32,7 @@
     "axiom":"F-F-F-F",
     "iterations":2
   },
-  "Piano Curve" : {
+  "Peano Curve" : {
     "rules": {"F" : "FF+F+F+FF+F+F-F"},
     "angle": 90,
     "turn_angle": 0,
@@ -73,7 +73,7 @@
     "iterations":2
   },
     "Cantor Set" : {
-    "rules" : { "F" : "FfF","f" : "fff","X":"-f+"},
+    "rules" : { "F" : "FfF","f" : "fff"},
     "angle" : 90,
     "turn_angle": 0,
     "line_scale": 1,
