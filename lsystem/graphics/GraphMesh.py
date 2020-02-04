@@ -109,8 +109,9 @@ class GraphObject(QuaternionObject):
         shaders.glUseProgram(0)
 
     def cleanup(self):
-        self.VBO.delete()
-        self.EBO.delete()
+        if(self.opengl_initialized):
+            self.VBO.delete()
+            self.EBO.delete()
 
     def update_gpu(self):
         self.update=False
