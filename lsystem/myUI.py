@@ -372,10 +372,10 @@ class UIWidget(QWidget):
       grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
       self.verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
-      self.graphix.clear_mesh()
-      self.graphix.set_vertices(self.verts[0])
-      for i in range(1,len(self.verts)):
-        self.graphix.set_vertices(self.verts[i],1) #split = true
+      self.graphix.clear_graph()
+      self.graphix.set_graph(self.verts)
+      #for i in range(1,len(self.verts)):
+      #  self.graphix.set_graph(self.verts[i],1) #split = true
     self.graphix.update()
     self.graphix.resetCamera()
 
@@ -394,7 +394,7 @@ class UIWidget(QWidget):
         numRules += len(grammar['rules'][key])
       else:
         numRules += 1
-    
+
     while self.prods < numRules:
       self.moreProds()
 
@@ -413,7 +413,7 @@ class UIWidget(QWidget):
           self.prodPercent[i+j].setText(v[1])
           j += 1
         i += j
-      
+
     self.angleEdit.setText(str(grammar["angle"]))
     if(self.madeAngle):
       self.turnAngleEdit.setText(str(grammar['turn_angle']))

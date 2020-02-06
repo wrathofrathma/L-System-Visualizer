@@ -85,7 +85,7 @@ def generate_lsystem(grammar):
   #   verts_arr.append(verts)
   #fractal_dim_calc(verts_arr)
   #print(verts_arr)
-  print(graph.vertices)
+  #print(graph.vertices)
   return graph
 
 # Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
