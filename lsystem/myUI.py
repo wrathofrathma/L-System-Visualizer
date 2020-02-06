@@ -138,7 +138,13 @@ class UIWidget(QWidget):
     self.genLSys()
 
   def on_boxcountbutton_clicked(self):
-    print("FRACTAL DIMENSION: ",fractal_dim_calc(self.verts))
+    start_size = 128
+    num_sizes = 5
+    end_size = start_size * (2 ** num_sizes)
+    fractal_dim = fractal_dim_calc(self.verts, end_size, num_sizes)
+    for i in range(num_sizes):
+      print("FRACTAL DIMENSION (box width = 1/",start_size,"): ",fractal_dim[i])
+      start_size = start_size *2
 
   def addWidgets(self):
 
