@@ -1,0 +1,18 @@
+import std.common.[Name]
+[python] import test_def.[*]
+
+Symbols := '+' '-' '[' ']' '{' '}'
+
+Nctx ::= Name as n
+    rewrite F(n.value)
+
+CtxRight ::= '{' Name as context '}' Name as right
+	rewrite ctx(context.value, right = right.value)
+
+CtxLeft ::= Name as left '{' Name as context '}'
+	rewrite ctx(context.value, left.value)
+
+CtxBoth ::= Name as left '{' Name as context '}' Name as right
+	rewrite ctx(context.value, left.value, right.value)
+
+Start ::= a = (CtxBoth | CtxLeft | CtxRight | Nctx) -> a
