@@ -24,7 +24,7 @@ h moves forward half a unit length
 """
 
 
-class customLineEdit(QtWidgets.QLineEdit):
+class CustomLineEdit(QtWidgets.QLineEdit):
     ''' Class that enables clicking in a text box '''
     clicked = QtCore.pyqtSignal()
 
@@ -92,25 +92,25 @@ class UIWidget(QWidget):
         self.iters = QLabel('Iterations')
 
         # creates the text box for each label
-        self.axiom_edit = customLineEdit()
+        self.axiom_edit = CustomLineEdit()
         self.axiom_edit.returnPressed.connect(self.lsys_button.click)
         self.axiom_edit.clicked.connect(lambda: self.axiom_edit.reset_color())
 
-        self.prod_rules_edit.append(customLineEdit())
+        self.prod_rules_edit.append(CustomLineEdit())
         self.prod_rules_edit[0].clicked.connect(
             lambda: self.prod_rules_edit[0].reset_color())
         self.prod_rules_edit[0].returnPressed.connect(self.lsys_button.click)
         self.prod_rules_edit[0].textChanged.connect(lambda: self.show_popup())
 
-        self.prod_percent.append(customLineEdit())
+        self.prod_percent.append(CustomLineEdit())
         self.prod_percent[0].setFixedWidth(50)
         self.prod_percent[0].setText("1")
 
-        self.angle_edit = customLineEdit()
+        self.angle_edit = CustomLineEdit()
         self.angle_edit.returnPressed.connect(self.lsys_button.click)
         self.angle_edit.clicked.connect(lambda: self.angle_edit.reset_color())
 
-        self.iters_edit = customLineEdit()
+        self.iters_edit = CustomLineEdit()
         self.iters_edit.returnPressed.connect(self.lsys_button.click)
         self.iters_edit.clicked.connect(lambda: self.iters_edit.reset_color())
 
@@ -211,7 +211,7 @@ class UIWidget(QWidget):
 
         if((")" in all_prod_rule or "(" in all_prod_rule) and self.made_angle is False):
             self.turn_angle = QLabel('Turning Angle')
-            self.turn_angle_edit = customLineEdit()
+            self.turn_angle_edit = CustomLineEdit()
             self.turn_angle_edit.returnPressed.connect(self.lsys_button.click)
             self.turn_angle_edit.clicked.connect(
                 lambda: self.turn_angle_edit.reset_color())
@@ -230,7 +230,7 @@ class UIWidget(QWidget):
 
         if((">" in all_prod_rule or "<" in all_prod_rule) and self.made_line is False):
             self.line_scale = QLabel('Line Scale')
-            self.line_scale_edit = customLineEdit()
+            self.line_scale_edit = CustomLineEdit()
             self.line_scale_edit.returnPressed.connect(self.lsys_button.click)
             self.line_scale_edit.clicked.connect(
                 lambda: self.line_scale_edit.reset_color())
@@ -313,8 +313,8 @@ class UIWidget(QWidget):
         if self.prods < 4:
             self.prods = self.prods + 1
             self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
-            self.prod_rules_edit.append(customLineEdit())
-            self.prod_percent.append(customLineEdit())
+            self.prod_rules_edit.append(CustomLineEdit())
+            self.prod_percent.append(CustomLineEdit())
             self.prod_percent[-1].setFixedWidth(50)
             self.prod_rules_edit[self.prods -
                                1].textChanged.connect(lambda: self.show_popup())
@@ -380,20 +380,20 @@ class UIWidget(QWidget):
     def genLSys(self):
         ''' If the input is valid, iterates through productions and sends to graphics to be drawn '''
         if input_check(self):
-            axiomInput = self.axiomEdit.text()
-            # prodInput = [self.prodrulesEdit.text()] #changed to array
-            angleInput = self.angleEdit.text()
-            if(self.madeAngle):
-                turnAngleInput = self.turnAngleEdit.text()
+            axiom_input = self.axiom_edit.text()
+            # prodInput = [self.prodrlesEdit.text()] #changed to array
+            angle_input = self.angle_edit.text()
+            if(self.made_angle):
+                turn_angle_input = self.turn_angle_edit.text()
             else:
-                turnAngleInput = 0
-            if(self.madeLine):
-                lineScaleInput = self.lineScaleEdit.text()
+                turn_angle_input = 0
+            if(self.made_line):
+                line_scale_input = self.line_scale_edit.text()
             else:
-                lineScaleInput = 1
-            itersInput = self.itersEdit.text()
+                line_scale_input = 1
+            iters_input = self.iters_edit.text()
             # Format input for use
-            rules = self.genRuleDict(self.prod_rules_edit)
+            rules = self.gen_rule_dict(self.prod_rules_edit)
             # Generate rule grammar dictionary.
             grammar = {'rules': rules, 'axiom': axiom_input, 'iterations': int(iters_input), 'angle': float(
                 angle_input), 'turnAngle': float(turn_angle_input), 'lineScale': float(line_scale_input)}
@@ -422,10 +422,10 @@ class UIWidget(QWidget):
             else:
                 num_rules += 1
 
-        while self.prods < numRules:
+        while self.prods < num_rules:
             self.more_prods()
 
-        while self.prods > numRules:
+        while self.prods > num_rules:
             self.less_prods()
 
         for i, key in enumerate(grammar['rules']):

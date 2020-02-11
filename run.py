@@ -2,13 +2,13 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 import sys
 from lsystem.myUI import *
 from lsystem.glossary import Glossary
-from lsystem.getting_started import gettingStarted
-from lsystem.save_rules_window import saveRules
+from lsystem.getting_started import GettingStarted
+from lsystem.save_rules_window import SaveRules
 
 
-class myMainWindow(QMainWindow):
+class MyMainWindow(QMainWindow):
     def __init__(self, parent=None):
-        super(myMainWindow, self).__init__(parent=parent)
+        super(MyMainWindow, self).__init__(parent=parent)
         self.left = 500
         self.top = 500
         self.width = 500
@@ -104,6 +104,6 @@ class myMainWindow(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    display = myMainWindow()
+    display = MyMainWindow()
     r = app.exec_()
     sys.exit(r)
