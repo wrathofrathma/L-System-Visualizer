@@ -2,33 +2,37 @@ from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QLineEdit, QPushButton
 from lsystem.lsystem_utils import save_lsystem
 import sys
 
-class saveRules(QWidget):
+class SaveRules(QWidget):
   def __init__(self, ui):
       super().__init__()
       self.ui = ui
-      self.initUI()
+      self.init_ui()
 
-  def initUI(self):
+  def init_ui(self):
+    #sets the window title, layout, and adds widgets to the window
     self.setWindowTitle('Save your rules')
     self.layout = QGridLayout()
-    self.add_labels()
+    self.create_widgets()
     self.add_widgets()
     self.setLayout(self.layout)
 
-  def add_labels(self):
-    self.saveLabel = QLabel('Name your rules')
-    self.nameBox = QLineEdit()
-    self.nameBox.returnPressed.connect(lambda: self.save())
-    self.saveButton = QPushButton('Save your rules')
-    self.saveButton.clicked.connect(lambda: self.save())
+  def create_widgets(self):
+    #creates the widgets to be added to the window
+    self.save_label = QLabel('Name your rules')
+    self.name_box = QLineEdit()
+    self.name_box.returnPressed.connect(lambda: self.save())
+    self.save_button = QPushButton('Save your rules')
+    self.save_button.clicked.connect(lambda: self.save())
   
   def add_widgets(self):
-    self.layout.addWidget(self.saveLabel, 1, 0)
-    self.layout.addWidget(self.nameBox, 1, 1,1,2)
-    self.layout.addWidget(self.saveButton, 1, 3)
+    #adds the widgets to the window
+    self.layout.addWidget(self.save_label, 1, 0)
+    self.layout.addWidget(self.name_box, 1, 1,1,2)
+    self.layout.addWidget(self.save_button, 1, 3)
 
   def save(self):
-    name = self.nameBox.text()
+    #grabs the name of the lsystem from the namebox, grabs the grammar from the ui, and calls save_lsystem in lsystem_utils.py
+    name = self.name_box.text()
     if len(name) > 0:
       grammar = {}
       grammar["rules"] = {}
@@ -37,13 +41,13 @@ class saveRules(QWidget):
         print(rule.text())
         rule = rule.text().replace(" ", "")
         pr = rule.split(':')
-        #get probabilities
+        #add the rule and probabilty to pr[0]'s list, if there isn't a list then make one
         try:
           grammar["rules"][pr[0]].append([pr[1],self.ui.prodPercent[i].text()])
         except KeyError:
           grammar["rules"][pr[0]] = []
           grammar["rules"][pr[0]].append([pr[1],self.ui.prodPercent[i].text()])
-        i += 1
+        i += 1 # increment to grab the probability for each rule
       grammar["angle"] = float(self.ui.angleEdit.text())
       if(self.ui.madeAngle):
         grammar["turn_angle"] = float(self.ui.turnAngleEdit.text())
