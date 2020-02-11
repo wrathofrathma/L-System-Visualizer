@@ -1,20 +1,13 @@
 # -*- coding: utf-8 -*-
-
-from lsystem.pointer_class import *
-from lsystem.production_rules import *
 import numpy as np
 from time import time
 import copy
 import json
-
-# TODO: change tuples return array to lists
-# (from [[(x,y),..],[(w,z),...],...] to [[[x,y],..],[[w,z],...],...])
-
-
+import math
 def read_substring(string, starting_pt, start_angle, turn_angle, trig_dict, scale, line_scale):
     """
-    Input: readsubstring takes in a string, a starking point, the starting angle,
-    the dictinary of angles and their trig values and an empty array
+    Input: readsubstring takes in a string, a starting point, the starting angle,
+    the dictinary of angle trig values, current line scale, and what the line scale would change by
     Output: returns angle and vertices
     """
     vert_container = []  # make sure it's empty
@@ -23,7 +16,7 @@ def read_substring(string, starting_pt, start_angle, turn_angle, trig_dict, scal
     vert_container.append(new_point)  # append first point
     for i in range(len(string)):
         if not new_angle in trig_dict.keys():
-            trig_dict[new_angle] = [math.cos(new_angle), math.sin(new_angle)]
+            trig_dict[new_angle] = [math.cos(new_angle * np.pi/180), math.sin(new_angle* np.pi/180)]
         if string[i] == 'F':
             new_point = [new_point[0]+(scale*trig_dict[new_angle][0]),
                          new_point[1]+(scale*trig_dict[new_angle][1]), 0]
@@ -82,60 +75,48 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
             stack = stack[next_break+1:]
     # Set up a dictionary of all the possible angles and calculate the sin and cos of those angles ahead of time
     # WARNING currently rounding all angles to 5 digits, may not be exact enough
+
+    # trig dict keeps track of the cos and sin of all the angles in radians
+    # format trig_dict[an_angle] = [cos(an_angle), sin(an_angle)]
+    # trig_dict["angle"] = the user inputted angle
     trig_dict = dict()
     trig_dict['angle'] = angle
-    it = 0
-    pos_angles = []
     t = time()
-    scale = float(1)
-    print("[ INFO ] Calculating angles")
-    abs_angle = abs(angle)
-    if abs_angle != 0:
-        while it < 360:
-            pos_angles = np.append(pos_angles, round(it, 5))
-            it += abs_angle
-    # if the angle doesn't divide evenly into 360, find the negative angles mod 360 too
-    if it != 360:
-        it = 360
-        while it > angle:
-            it -= angle
-            pos_angles = np.append(pos_angles, round(it, 5))
-    else:
-        pos_angles = np.append(pos_angles, 0)
-
-    sin_arr = np.sin(np.array(pos_angles)*np.pi/180)
-    cos_arr = np.cos(np.array(pos_angles)*np.pi/180)
-    for i in range(len(pos_angles)):
-        trig_dict[pos_angles[i]] = (cos_arr[i], sin_arr[i])
-    new_point = starting_pt  # new point initalized to starting point
-    curr_state = (starting_pt, 0, scale)
-    # for each little f/h create a new mesh with the starting position and angle initialized from the previous mesh
+    #new_point = starting_pt  # new point initalized to starting point
+    curr_state = {
+        "point" : starting_pt,
+        "angle" : 0,
+        "scale" :  float(1)
+    }
+    print(curr_state["angle"])
+    print("TRIG DICT: ",trig_dict)
+    # for each little f/h create a new array with the starting position and angle initialized from the previous mesh
     for str in s:
-        if str[0] == 'f':
-            # move little f
-            if not curr_state[1] in trig_dict.keys():
-                trig_dict[curr_state[1]] = [math.cos(curr_state[1]), math.sin(curr_state[1])]
-            curr_state = ([curr_state[0][0]+(scale*trig_dict[curr_state[1]][0]),
-                           curr_state[0][1]+(scale*trig_dict[curr_state[1]][1]), 0], curr_angle, scale)
-            str.replace('f', '')
-        elif str[0] == 'h':
-            # move little h
-            if not curr_state[1] in trig_dict.keys():
-                trig_dict[curr_state[1]] = [math.cos(curr_state[1]), math.sin(curr_state[1])]
-            curr_state = ([curr_state[0][0]+(scale*trig_dict[curr_state[1]][0]/2),
-                           curr_state[0][1]+(scale*trig_dict[curr_state[1]][1]/2), 0], curr_angle,  scale)
-            str.replace('h', '')
+        if str[0] == 'f' or str[0] =='h':
+            if str[0] =='h':
+                divisor = 2
+                str.replace('h', '')
+            else:
+                divisor = 1
+                str.replace('f', '')
+            if not curr_state["angle"] in trig_dict.keys():
+                trig_dict[curr_state["angle"]] = [math.cos(curr_state["angle"]*np.pi/180), math.sin(curr_state["angle"]*np.pi/180)]
+            curr_state["point"] = [curr_state["point"][0]+(curr_state["scale"]*trig_dict[curr_state["angle"]][0]/divisor),
+                           curr_state["point"][1]+(curr_state["scale"]*trig_dict[curr_state["angle"]][1]/divisor), 0]
         elif str[0] == '[':
-            saved_states.append(curr_state)
+            saved_states.append((curr_state["point"], curr_state["angle"],curr_state["scale"]))
             str.replace('[', '')
         elif str[0] == ']':
-            curr_state = saved_states.pop()
+            tmp_state = saved_states.pop()
+            curr_state["point"] = tmp_state[0]
+            curr_state["angle"] = tmp_state[1]
+            curr_state["scale"] = tmp_state[2]
             str.replace(']', '')
 
-        curr_angle, vertices, scale = read_substring(
-            str, curr_state[0], curr_state[1], turn_angle, trig_dict, scale, line_scale)
+        curr_state["angle"], vertices, curr_state["scale"] = read_substring(
+            str, curr_state["point"], curr_state["angle"], turn_angle, trig_dict, curr_state["scale"], line_scale)
         vert_arr.append(vertices)
-        curr_state = (vertices[-1], curr_angle, scale)
+        curr_state["point"] = vertices[-1]
     print("[ INFO ] Finshed finding vertices (", round(time()-t, 3), "s )")
     #print("vert_arr = ",vert_arr)
     return vert_arr
