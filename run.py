@@ -5,100 +5,102 @@ from lsystem.glossary import Glossary
 from lsystem.getting_started import gettingStarted
 from lsystem.save_rules_window import saveRules
 
+
 class myMainWindow(QMainWindow):
-  def __init__(self, parent=None):
-    super(myMainWindow, self).__init__(parent=parent)
-    self.left = 500
-    self.top = 500
-    self.width = 500
-    self.height = 500
-    self.initWindow()
+    def __init__(self, parent=None):
+        super(myMainWindow, self).__init__(parent=parent)
+        self.left = 500
+        self.top = 500
+        self.width = 500
+        self.height = 500
+        self.init_window()
 
-  def initWindow(self):
-    self.setGeometry(self.left, self.top, self.width, self.height)
-    self.setWindowTitle('L-System Generator')
-    self.initMenus()
-    self.show()
+    def init_window(self):
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        self.setWindowTitle('L-System Generator')
+        self.init_menus()
+        self.show()
 
-  def initMenus(self):
-    mainMenu = self.menuBar()
-    fileMenu = mainMenu.addMenu('File')
-    viewMenu = mainMenu.addMenu('View')
-    optionsMenu = mainMenu.addMenu('Options')
-    helpMenu = mainMenu.addMenu('Help')
+    def init_menus(self):
+        main_menu = self.menuBar()
+        file_menu = main_menu.addMenu('File')
+        view_menu = main_menu.addMenu('View')
+        options_menu = main_menu.addMenu('Options')
+        help_menu = main_menu.addMenu('Help')
 
+        self.ui_widget = UIWidget()
+        self.setCentralWidget(self.ui_widget)
 
-    self.ui_widget = UIWidget()
-    self.setCentralWidget(self.ui_widget)
+        save_menu = QMenu('Save', self)
+        save_act = QAction('Take a Screenshot', self)
+        save_act.setShortcut('Ctrl+S')
+        save_act.triggered.connect(lambda: self.save_file())
+        save_menu.addAction(save_act)
 
-    saveMenu = QMenu('Save', self)
-    saveAct = QAction('Take a Screenshot', self)
-    saveAct.setShortcut('Ctrl+S')
-    saveAct.triggered.connect(lambda: self.saveFile())
-    saveMenu.addAction(saveAct)
-    
-    saveRuleAct = QAction('Save your rules', self)
-    saveRuleAct.triggered.connect(lambda: self.buildSaveRules())
-    saveMenu.addAction(saveRuleAct)
+        save_rule_act = QAction('Save your rules', self)
+        save_rule_act.triggered.connect(lambda: self.build_save_rules())
+        save_menu.addAction(save_rule_act)
 
-    exitAction = QAction('Exit', self)
-    exitAction.setShortcut('Ctrl+Q')
-    exitAction.triggered.connect(lambda: self.closeEvent())
+        exit_action = QAction('Exit', self)
+        exit_action.setShortcut('Ctrl+Q')
+        exit_action.triggered.connect(lambda: self.close_event())
 
-    zoomIn = QAction('Zoom In', self)
-    zoomIn.setShortcut('Ctrl++')
-    zoomIn.triggered.connect(lambda: self.ui_widget.graphix.zoomIN())
+        zoom_in = QAction('Zoom In', self)
+        zoom_in.setShortcut('Ctrl++')
+        zoom_in.triggered.connect(lambda: self.ui_widget.graphix.zoom_IN())
 
-    zoomOut = QAction('Zoom Out', self)
-    zoomOut.setShortcut('Ctrl+-')
-    zoomOut.triggered.connect(lambda: self.ui_widget.graphix.zoomOUT())
+        zoom_out = QAction('Zoom Out', self)
+        zoom_out.setShortcut('Ctrl+-')
+        zoom_out.triggered.connect(lambda: self.ui_widget.graphix.zoom_OUT())
 
-    settings = QAction('Settings', self)
-    settings.triggered.connect(lambda: self.buildPopupSettings())
-    settings.setShortcut('Ctrl+i')
+        settings = QAction('Settings', self)
+        settings.triggered.connect(lambda: self.build_popup_settings())
+        settings.setShortcut('Ctrl+i')
 
-    glossary = QAction('Glossary', self)
-    glossary.setShortcut('Ctrl+g')
-    glossary.triggered.connect(lambda: self.buildGlossary())
+        glossary = QAction('Glossary', self)
+        glossary.setShortcut('Ctrl+g')
+        glossary.triggered.connect(lambda: self.build_glossary())
 
-    gettingStarted = QAction('Getting Started', self)
-    gettingStarted.setShortcut('Ctrl+h')
-    gettingStarted.triggered.connect(lambda: self.buildStart())
+        getting_started = QAction('Getting Started', self)
+        getting_started.setShortcut('Ctrl+h')
+        getting_started.triggered.connect(lambda: self.build_start())
 
-    fileMenu.addMenu(saveMenu)
-    fileMenu.addAction(exitAction)
-    viewMenu.addAction(zoomIn)
-    viewMenu.addAction(zoomOut)
-    optionsMenu.addAction(settings)
-    helpMenu.addAction(gettingStarted)
-    helpMenu.addAction(glossary)
+        file_menu.addMenu(save_menu)
+        file_menu.addAction(exit_action)
+        view_menu.addAction(zoom_in)
+        view_menu.addAction(zoom_out)
+        options_menu.addAction(settings)
+        help_menu.addAction(getting_started)
+        help_menu.addAction(glossary)
 
-  def buildPopupSettings(self):
-    self.popupSettings = PopupSettings(self.ui_widget.graphix)
-    self.popupSettings.show()
+    def build_popup_settings(self):
+        self.popup_settings = popup_settings(self.ui_widget.graphix)
+        self.popup_settings.show()
 
-  def buildGlossary(self):
-    self.glossary = Glossary()
-    self.glossary.show()
+    def build_glossary(self):
+        self.glossary = Glossary()
+        self.glossary.show()
 
-  def buildStart(self):
-    self.gettingStarted = gettingStarted()
-    self.gettingStarted.show()
+    def build_start(self):
+        self.getting_started = getting_started()
+        self.getting_started.show()
 
-  def saveFile(self):
-    options = QFileDialog.Options()
-    fileName, _ = QFileDialog.getSaveFileName(self,"Save Screenshot", options=options)
-    if fileName:
-        self.ui_widget.graphix.screenshot(fileName + ".png")
+    def save_file(self):
+        options = QFileDialog.Options()
+        file_name, _ = QFileDialog.getSaveFileName(
+            self, "Save Screenshot", options=options)
+        if file_name:
+            self.ui_widget.graphix.screenshot(file_name + ".png")
 
-  def buildSaveRules(self):
-    self.saveRules = saveRules(self.ui_widget)
-    self.saveRules.show()
+    def build_save_rules(self):
+        self.save_rules = save_rules(self.ui_widget)
+        self.save_rules.show()
 
-  def closeEvent(self, event=None):
-      print("[ INFO ] Exiting...")
-      self.ui_widget.graphix.cleanup()
-      exit()
+    def close_event(self, event=None):
+        print("[ INFO ] Exiting...")
+        self.ui_widget.graphix.cleanup()
+        exit()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
