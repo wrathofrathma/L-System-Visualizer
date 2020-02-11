@@ -1,9 +1,10 @@
-import threading
+#import threading
 import random
 import copy
 import decimal
 import multiprocessing
 import textwrap
+import time
 
 
 def pickProd(prods):
@@ -59,7 +60,7 @@ def lThread(strings, prods, it):
       t= []
       cpus= multiprocessing.cpu_count()
       for i in range(cpus-1):
-        t[i] = threading.Thread(target=lambda x, arg1: x.put(stringParse(arg1), args=(newstr1,strs[i],prods)))
+        t[i] = multiprocessing.Process(target=lambda x, arg1: x.put(stringParse(arg1), args=(newstr1,strs[i],prods)))
         t[i].start()
       for i in range(cpus-1):
         t[i].join()
