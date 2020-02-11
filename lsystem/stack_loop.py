@@ -49,7 +49,7 @@ def read_substring(string, starting_pt, start_angle, turn_angle, trig_dict, scal
         elif string[i] == '<':
             scale /= line_scale
     # returns angle that string left off on, array of vertices, and the new angle
-    return new_angle, vertContainer, scale
+    return new_angle, vert_container, scale
 
 
 def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
@@ -89,11 +89,11 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
     t = time()
     scale = float(1)
     print("[ INFO ] Calculating angles")
-    absangle = abs(angle)
-    if absangle != 0:
+    abs_angle = abs(angle)
+    if abs_angle != 0:
         while it < 360:
             pos_angles = np.append(pos_angles, round(it, 5))
-            it += absangle
+            it += abs_angle
     # if the angle doesn't divide evenly into 360, find the negative angles mod 360 too
     if it != 360:
         it = 360
