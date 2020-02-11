@@ -17,6 +17,8 @@ from lsystem.graphics.RayCasting import *
 from lsystem.graphics.Axis import *
 from lsystem.graphics.Grid import Grid2D
 from lsystem.graphics.colors import Colors
+from lsystem.graphics.GraphMesh import *
+from lsystem.graph import Graph
 # Other includes
 import numpy as np
 
@@ -36,7 +38,10 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.start_time = time()
 
         # Production scene objects.
-        self.meshes = [] # Mesh container should be outdated soon!
+        self.graph = Graph()
+        self.meshes = []
+        self.meshes.append(GraphObject())
+        self.meshes.append(GraphObject(3))
         self.grid = Grid2D() # 2D Intersection grid
 
         # Camera initialization
@@ -48,12 +53,13 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.active_camera = CameraType.Free  # active_camera tracks which index of the camera to use.
         self.active_shader = None # Tracks which shader to use, 2D vs 3D typically.
         self.dimensionality = 2 # Dimensionality of the LSystem being displayed....probably will get rid of this later?
+        self.active_mesh = 0
         self.mesh_options = MeshOptions.White | MeshOptions.Static # Default mesh options are white and static
-        self.fps=30.0 # Number of times a second we refresh the widget.
-        self.DISPLAY_GRID=True # Toggles the display of the intersection grid.
+        self.fps=10.0 # Number of times a second we refresh the widget.
+        self.DISPLAY_GRID=False # Toggles the display of the intersection grid.
 
         # DEBUG Flags
-        self.DEBUG=True # Toggles the origin axis & plane & raycasting view. Later it'll toggle other debug utils.
+        self.DEBUG=False # Toggles the origin axis & plane & raycasting view. Later it'll toggle other debug utils.
 
         # DEBUG Objects
         # 3D Axis & a plane mesh for visual clarity while I implement zooming into a point.
@@ -110,8 +116,12 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.dimensionality=d
         if(d==2):
             self.active_shader=self.shader2D
+            self.active_mesh = 0
+            self.clear_graph()
         else:
+            self.active_mesh = 1
             self.active_shader=self.shader3D
+            self.clear_graph()
 
     # This is from QOpenGLWidget, this is where all drawing is done.
     def paintGL(self):
@@ -133,17 +143,15 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glUseProgram(self.shader3D)
         glUniform1f(glGetUniformLocation(self.shader3D, "time"), time()-self.start_time)
         # Draw debug objects
-        if(self.DEBUG):
-            self.axis.draw()
-            self.plane.draw()
-            self.origin_axis.draw()
-            self.casted_ray.draw()
-        if(self.DISPLAY_GRID):
-            self.grid.draw()
-        self.center_mesh()
-        # Draw the meshes. TODO - Move this to a graph object later.
-        for mesh in self.meshes:
-            mesh.draw()
+        # if(self.DEBUG):
+            # self.axis.draw()
+            # self.plane.draw()
+            # self.origin_axis.draw()
+            # self.casted_ray.draw()
+        # if(self.DISPLAY_GRID):
+        #     self.grid.draw()
+        # self.center_mesh()
+        self.meshes[self.active_mesh].draw()
 
 
     # Converts a qt mouse position event coordinates to opengl coordinates
@@ -308,8 +316,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.casted_ray.set_shader(self.shader3D)
         self.plane.set_shader(self.shader3D)
         self.grid.set_shader(self.shader2D)
-        for mesh in self.meshes:
-            mesh.set_shader(self.active_shader)
+        self.meshes[0].set_shader(self.active_shader)
+        self.meshes[1].set_shader(self.shader3D)
 
     def loadShaders(self):
         # Load the shader files into a string.
@@ -378,7 +386,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         print("[ INFO ] Cleaning up display widget memory.")
 
         # Cleaning up mesh memory on GPU
-        self.clear_mesh()
+        self.clear_graph()
+        for m in self.meshes:
+            m.cleanup()
 
         # Detaching shaders and deleting shader program
         #glDetachShader(self.shader, self.vs)
@@ -392,49 +402,61 @@ class LSystemDisplayWidget(QOpenGLWidget):
         glDeleteShader(self.fs3)
         glDeleteProgram(self.shader3D)
 
-    def get_extrema(self):
-        # Well, since we have multiple meshes, we need the mins and maxes of all of them before slicing.
-        if(len(self.meshes)==0):
-            return 0,0,0,0
-        maxes=[]
-        mins= []
-        for mesh in self.meshes:
-            ma, mi = mesh.detect2DEdges()
-            maxes.append(ma)
-            mins.append(mi)
-        # this should create 2, (n,2) dimension numpy arrays.
-        maxes = np.array(maxes)
-        mins = np.array(mins)
-        max_x = maxes[:,0].max()
-        max_y = maxes[:,1].max()
-        min_x = mins[:,0].min()
-        min_y = mins[:,1].min()
-        return min_x, min_y, max_x, max_y
+    # def get_extrema(self):
+    #     # Well, since we have multiple meshes, we need the mins and maxes of all of them before slicing.
+    #     if(len(self.meshes)==0):
+    #         return 0,0,0,0
+    #     maxes=[]
+    #     mins= []
+    #     for mesh in self.meshes:
+    #         ma, mi = mesh.detect2DEdges()
+    #         maxes.append(ma)
+    #         mins.append(mi)
+    #     # this should create 2, (n,2) dimension numpy arrays.
+    #     maxes = np.array(maxes)
+    #     mins = np.array(mins)
+    #     max_x = maxes[:,0].max()
+    #     max_y = maxes[:,1].max()
+    #     min_x = mins[:,0].min()
+    #     min_y = mins[:,1].min()
+    #     return min_x, min_y, max_x, max_y
 
-    # Centers the mesh in the view
     def center_mesh(self):
-        if (len(self.meshes)==0):
-            return
-        min_x, min_y, max_x, max_y = self.get_extrema()
-        center = ((min_x+max_x)/2, (min_y+max_y)/2)
-        for mesh in self.meshes:
-           mesh.shift_vertices(-0,-center[1])
+      if(len(self.graph.vertices)==0):
+        return
+      (xmax,ymax),(xmin,ymin) = self.meshes[self.active_mesh].detect2DEdges()
+      xdiff = abs(xmax-xmin)
+      ydiff = abs(ymax-ymin)
+      scale = max(xdiff,ydiff)
+      self.meshes[self.active_mesh].setScale(vec3(1.0/scale))
+      pos = vec3(0.0)
+      xmid = (xmax+xmin)/2.0*-1
+      ymid = (ymax+ymin)/2.0*-1
+      pos[0]=xmid
+      pos[1]=ymid
+      self.meshes[self.active_mesh].setPosition(pos)
+
+
+    # # Centers the mesh in the view
+    # def center_mesh(self):
+        # if (len(self.meshes)==0):
+            # return
+        # min_x, min_y, max_x, max_y = self.get_extrema()
+        # center = ((min_x+max_x)/2, (min_y+max_y)/2)
+        # for mesh in self.meshes:
+           # mesh.shift_vertices(-0,-center[1])
 
     # Sets the vertices of the last mesh in the array.
     # split=True creates a new mesh before setting the vertices.
-    def set_vertices(self, vertices, split=False):
-        if(split):
-            self.meshes.append(Mesh())
-            self.meshes[-1].set_shader(self.active_shader)
-        self.meshes[-1].set_vertices(vertices)
-        self.meshes[-1].set_options(self.mesh_options)
+    def set_graph(self,graph):
+      self.graph=graph
+      self.meshes[self.active_mesh].set_graph_data(graph)
+      self.center_mesh()
     # Cleans up the mesh memory on the GPU and clears the array of them.
-    def clear_mesh(self):
-        for mesh in self.meshes:
-            mesh.cleanup()
-        self.meshes.clear()
-        self.meshes.append(Mesh())
-        self.meshes[-1].set_shader(self.active_shader)
+    def clear_graph(self):
+        self.graph.clear()
+        self.meshes[0].clear_graph()
+        self.meshes[1].clear_graph()
 
     # Sets the background color of the OpenGL widget.
     def set_bg_color(self, color):

@@ -52,22 +52,25 @@ class Mesh(QuaternionObject):
         ys = v[:,1] # Same but for ys.
         return (xs.max(), ys.max()), (xs.min(),ys.min())
     
+    # Commenting since someone will ask why I removed this.
+    # Typically if you want to shift something, you would alter the transformation matrix instead of tinkering with the model vertices directly.
+    # Also this class inherits the QuaternionObject class which has a translate function
     #shifts vertices by a set amount, used to center mesh
-    def shift_vertices(self, x_shift, y_shift):
-        v = np.array(self.vertices)
-        v = v.reshape(int(v.shape[0]/2), 2)
-        xvals = v[:,0]
-        yvals = v[:,1]
-        shifted_xvals = [x+x_shift for x in xvals]
-        shifted_yvals = [y+y_shift for y in yvals]
+    # def shift_vertices(self, x_shift, y_shift):
+    #     v = np.array(self.vertices)
+    #     v = v.reshape(int(v.shape[0]/2), 2)
+    #     xvals = v[:,0]
+    #     yvals = v[:,1]
+    #     shifted_xvals = [x+x_shift for x in xvals]
+    #     shifted_yvals = [y+y_shift for y in yvals]
         
-        v[:,0] = shifted_xvals
-        v[:,1] = shifted_yvals
-        new_array=[]
-        for i in range(len(shifted_xvals)):
-            new_array.append(shifted_xvals[i])
-            new_array.append(shifted_yvals[i])
-        self.vertices = np.array(new_array)
+    #     v[:,0] = shifted_xvals
+    #     v[:,1] = shifted_yvals
+    #     new_array=[]
+    #     for i in range(len(shifted_xvals)):
+    #         new_array.append(shifted_xvals[i])
+    #         new_array.append(shifted_yvals[i])
+    #     self.vertices = np.array(new_array)
     def generate_colors(self):
         # Each vertex needs a color.
         self.colors = []

@@ -1,44 +1,47 @@
 import numpy as np
 
-def gen_pixel_map(meshes, size):
+def gen_pixel_map(graph, size):
   #meshes is an array of arrays of vertices
   #add one and multiply by half of size to get from world coord to pixel map
   pix_map = np.full((size,size),'.')
-  meshes = np.asarray(meshes)
+  verts = graph.vertices
   # print(meshes)
-  meshes = (meshes)*size
-  # print(meshes)
-  for vert_array in meshes:
-    if len(vert_array) >2:
+  for i,point in enumerate(verts):
+    verts[i] = (size*point[0], size*point[1])
+  #verts = (verts)*size
+  #print(verts)
+  #for vert_array in verts:
+  #  if len(vert_array) >2:
       #initialize first coordinate pair
-      x_old = vert_array[0]
-      y_old = vert_array[1]
-      #add it to the pixel map
-      pix_map[int(np.trunc(x_old)), int(np.trunc(y_old))]=1
-      for i in range(2,len(vert_array)-1,2):
-        #second coordinate pair
-        x_new = vert_array[i] #coordinates are stored as real numbers for precision
-        y_new = vert_array[i+1]
+  x_old = verts[0][0]
+  y_old = verts[0][1]
+  #add it to the pixel map
+  pix_map[int(np.trunc(x_old)), int(np.trunc(y_old))]=1
+  for i in range(1,len(verts)):
+    #second coordinate pair
+    x_new = verts[i][0] #coordinates are stored as real numbers for precision
+    y_new = verts[i][1]
+    #print("x_old, y_old :(",x_old,",", y_old,")")
+    #print("x_new, y_new :(",x_new,",", y_new,")")
 
+    #add the line connection new point and old point
+    h=0
+    step_size=1/(max(abs(x_new-x_old), abs(y_new-y_old))*2)
+    for h in np.arange(0,1,step_size):
+      xx = x_old + h*(x_new-x_old)
+      yy = y_old + h*(y_new-y_old)
+      xx_coord = min(int(np.trunc(xx)),size-1)
+      yy_coord = min(int(np.trunc(yy)),size-1)
+      pix_map[xx_coord, yy_coord]=1
+    #This takes care of edge case where max =1024 is outside of array
+    x_new_coord = min(int(np.trunc(x_new)), size-1)
+    y_new_coord = min(int(np.trunc(y_new)),size-1)
 
-        #add the line connection new point and old point
-        h=0
-        step_size=1/(max(abs(x_new-x_old), abs(y_new-y_old))*2)
-        for h in np.arange(0,1,step_size):
-          xx = x_old + h*(x_new-x_old)
-          yy = y_old + h*(y_new-y_old)
-          xx_coord = min(int(np.trunc(xx)),size-1)
-          yy_coord = min(int(np.trunc(yy)),size-1)
-          pix_map[xx_coord, yy_coord]=1
-        #This takes care of edge case where max =1024 is outside of array
-        x_new_coord = min(int(np.trunc(x_new)), size-1)
-        y_new_coord = min(int(np.trunc(y_new)),size-1)
+    pix_map[x_new_coord, y_new_coord]=1
+    x_old = x_new
+    y_old = y_new
 
-        pix_map[x_new_coord, y_new_coord]=1
-        x_old = x_new
-        y_old = y_new
-
-  print("pixel map done")
+  #print("pixel map done")
   return pix_map
   #np.set_printoptions(threshold=np.inf)
   #print(pix_map)
@@ -53,18 +56,22 @@ def pool_pixel_map(map):
         pix_map[int(i/2), int(j/2)]=1
   return pix_map
 
-def fractal_dim_calc(meshes):
-  size = 4096
-  pix_map = gen_pixel_map(meshes,size)
-  count= 0
-  fractal_dim = np.log(np.count_nonzero(pix_map == '1'))/np.log(size)
-  return fractal_dim
-  # np.set_printoptions(threshold=np.inf)
-  # np.set_printoptions(linewidth= np.inf)
-  # print(pix_map)
+def fractal_dim_calc(graph,ending_size, num_sizes):
 
+  fractal_dim = []
+  pix_map = gen_pixel_map(graph,ending_size)
+  count= 0
+  fractal_dim.insert(0,np.log(np.count_nonzero(pix_map == '1'))/np.log(ending_size))
+  for i in range(num_sizes-1):
+    ending_size = ending_size/2
+    pix_map = pool_pixel_map(pix_map)
+    fractal_dim.insert(0,np.log(np.count_nonzero(pix_map == '1'))/np.log(ending_size))
+  #np.set_printoptions(threshold=np.inf)
+  #np.set_printoptions(linewidth= np.inf)
+  #print(pix_map)
+  return fractal_dim
   # print(len(pix_map))
-  # pix_map = pool_pixel_map(pix_map)
+  #
   # pix_map = pool_pixel_map(pix_map)
   # pix_map = pool_pixel_map(pix_map)
   # pix_map = pool_pixel_map(pix_map)

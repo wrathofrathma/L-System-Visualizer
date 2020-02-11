@@ -80,7 +80,9 @@ class PopupSettings(QWidget):
   def dim_state(self, dim):
     if dim.text() == "2D" and dim.isChecked():
         self.graphix.set_camera_type(CameraType.Free)
+        self.graphix.setDimensions(2)
     else:
+        self.graphix.setDimensions(3)
         self.graphix.set_camera_type(CameraType.Orbital)
 
   def color_state(self, color):

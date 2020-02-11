@@ -72,3 +72,5 @@ class QuaternionObject:
 
     def scale(self,s):
         self.current_scale*=s
+    def setScale(self,s):
+      self.current_scale = vec3(s)

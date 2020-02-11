@@ -138,7 +138,13 @@ class UIWidget(QWidget):
     self.genLSys()
 
   def on_boxcountbutton_clicked(self):
-    print("FRACTAL DIMENSION: ",fractal_dim_calc(self.verts))
+    start_size = 128
+    num_sizes = 5
+    end_size = start_size * (2 ** num_sizes)
+    fractal_dim = fractal_dim_calc(self.verts, end_size, num_sizes)
+    for i in range(num_sizes):
+      print("FRACTAL DIMENSION (box width = 1/",start_size,"): ",fractal_dim[i])
+      start_size = start_size *2
 
   def addWidgets(self):
 
@@ -372,10 +378,10 @@ class UIWidget(QWidget):
       grammar = {'rules' : rules, 'axiom' : axiomInput, 'iterations' : int(itersInput), 'angle' : float(angleInput), 'turnAngle': float(turnAngleInput), 'lineScale': float(lineScaleInput)}
       self.verts = generate_lsystem(grammar)
       # Sets verts on graphics widget and draws
-      self.graphix.clear_mesh()
-      self.graphix.set_vertices(self.verts[0])
-      for i in range(1,len(self.verts)):
-        self.graphix.set_vertices(self.verts[i],1) #split = true
+      self.graphix.clear_graph()
+      self.graphix.set_graph(self.verts)
+      #for i in range(1,len(self.verts)):
+      #  self.graphix.set_graph(self.verts[i],1) #split = true
     self.graphix.update()
     self.graphix.resetCamera()
 
@@ -387,15 +393,33 @@ class UIWidget(QWidget):
     self.itersEdit.reset_box()
     grammar = get_saved_lsystem(example)
     self.axiomEdit.setText(grammar['axiom'])
-    while self.prods < len(grammar['rules']):
+
+    numRules = 0
+    for key in grammar['rules']:
+      if isinstance(grammar['rules'][key], list):
+        numRules += len(grammar['rules'][key])
+      else:
+        numRules += 1
+
+    while self.prods < numRules:
       self.moreProds()
 
-    while self.prods > len(grammar['rules']):
+    while self.prods > numRules:
       self.lessProds()
 
     for i, key in enumerate(grammar['rules']):
       value = grammar['rules'][key]
-      self.prodrulesEdit[i].setText(key+": "+value)
+      if isinstance(value,str):
+        self.prodrulesEdit[i].setText(key+": "+value)
+      else:
+        j = 0
+        for v in value:
+          print(v)
+          self.prodrulesEdit[i+j].setText(key + ": " + v[0])
+          self.prodPercent[i+j].setText(v[1])
+          j += 1
+        i += j
+
     self.angleEdit.setText(str(grammar["angle"]))
     if(self.madeAngle):
       self.turnAngleEdit.setText(str(grammar['turn_angle']))
