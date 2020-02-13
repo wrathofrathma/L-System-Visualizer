@@ -2,12 +2,12 @@
 
 def check_blank_line(obj):
   valid = 1
-  non_blank_inputs = [obj.axiomEdit,obj.angleEdit,obj.itersEdit]
-  if obj.madeAngle == True:
-    non_blank_inputs.append(obj.turnAngleEdit)
-  if obj.madeLine == True:
-    non_blank_inputs.append(obj.lineScaleEdit)
-  for rule in obj.prodrulesEdit:
+  non_blank_inputs = [obj.axiom_edit,obj.angle_edit,obj.iters_edit]
+  if obj.made_angle == True:
+    non_blank_inputs.append(obj.turn_angle_edit)
+  if obj.made_line == True:
+    non_blank_inputs.append(obj.line_scale_edit)
+  for rule in obj.prod_rules_edit:
     non_blank_inputs.append(rule)
 
   for input_box in non_blank_inputs:
@@ -18,9 +18,9 @@ def check_blank_line(obj):
 
 def check_in_alphabet(obj):
   valid = 1
-  obj.alphabetic_inputs = [obj.axiomEdit]
+  obj.alphabetic_inputs = [obj.axiom_edit]
   prod_input = []
-  for rule in obj.prodrulesEdit:
+  for rule in obj.prod_rules_edit:
     prod_input.append(rule)
   for input_box in prod_input:
     if input_box.valid == True:
@@ -38,11 +38,11 @@ def check_in_alphabet(obj):
 
 def check_if_numeric(obj):
   valid = 1
-  numeric_inputs = [ obj.angleEdit, obj.itersEdit]
-  if obj.madeAngle == True:
-    numeric_inputs.append(obj.turnAngleEdit)
-  if obj.madeLine == True:
-    numeric_inputs.append(obj.lineScaleEdit)
+  numeric_inputs = [ obj.angle_edit, obj.iters_edit]
+  if obj.made_angle == True:
+    numeric_inputs.append(obj.turn_angle_edit)
+  if obj.made_line == True:
+    numeric_inputs.append(obj.line_scale_edit)
   for input in numeric_inputs:
     if input.valid==True:
       try:
@@ -54,25 +54,25 @@ def check_if_numeric(obj):
 
 def check_valid_numeric(obj):
   valid = 1
-  angle_input = [obj.angleEdit]
-  if obj.madeAngle == True:
+  angle_input = [obj.angle_edit]
+  if obj.made_angle == True:
     angle_input.append(obj.turnAngleEdit)
   for input in angle_input:
     if input.valid == True and (float(input.text()) >360 or float(input.text())<-360):
       print_error_message(input,"Not a valid angle")
       valid = 0
-  positive_input = [obj.itersEdit]
-  if obj.madeLine == True:
+  positive_input = [obj.iters_edit]
+  if obj.made_line == True:
     positive_input.append(obj.lineScaleEdit)
   for input in positive_input:
     if input.valid == True and float(input.text()) <= 0:
-      print_error_message(obj.itersEdit,"Not a valid number of iterations")
+      print_error_message(obj.iters_edit,"Not a valid number of iterations")
       valid = 0
   return valid
 
 def check_prod_rule_format(obj):
   valid = 1
-  for input_box in obj.prodrulesEdit:
+  for input_box in obj.prod_rules_edit:
     if input_box.valid and not ':' in input_box.text():
       print_error_message(input_box," Missing : ")
       valid = 0
@@ -81,21 +81,21 @@ def check_prod_rule_format(obj):
 def check_branching(obj):
   valid = 1
   stack = []
-  if obj.axiomEdit.valid:
-    for ch in obj.axiomEdit.text():
+  if obj.axiom_edit.valid:
+    for ch in obj.axiom_edit.text():
       if ch == '[':
         stack.append("[")
       if ch == ']':
         if len(stack) == 0:
-          print_error_message(obj.axiomEdit,"Must have matching [ ]")
+          print_error_message(obj.axiom_edit,"Must have matching [ ]")
           valid=0
         else:
           stack.pop()
       if len(stack)>0:
-        print_error_message(obj.axiomEdit,"Must have matching [ ]")
+        print_error_message(obj.axiom_edit,"Must have matching [ ]")
         valid = 0
 
-  for input_box in obj.prodrulesEdit:
+  for input_box in obj.prod_rules_edit:
     if input_box.valid:
       text = input_box.text().split(":")
       if '[' in text[0] or ']' in text[0]:
@@ -127,14 +127,14 @@ def input_check(obj):
   valid.append(check_prod_rule_format(obj))
   valid.append(check_branching(obj))
   #reset valid
-  obj.axiomEdit.valid = 1
-  obj.angleEdit.valid = 1
-  if obj.madeAngle == True:
-    obj.turnAngleEdit.valid =1
-  if obj.madeLine:
-    obj.lineScaleEdit.valid = 1
-  obj.itersEdit.valid = 1
-  for input_box in obj.prodrulesEdit:
+  obj.axiom_edit.valid = 1
+  obj.angle_edit.valid = 1
+  if obj.made_angle == True:
+    obj.turn_angle_edit.valid =1
+  if obj.made_line:
+    obj.line_scale_edit.valid = 1
+  obj.iters_edit.valid = 1
+  for input_box in obj.prod_rules_edit:
     input_box.valid = 1
   return (sum(valid) == len(valid))
 

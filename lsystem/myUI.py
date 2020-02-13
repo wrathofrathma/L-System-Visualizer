@@ -377,7 +377,7 @@ class UIWidget(QWidget):
             self.minuses.clicked.connect(self.less_prods)
             self.layout.addWidget(self.minuses, self.prods+1, 10, 1, 1)
 
-    def genLSys(self):
+    def gen_LSys(self):
         ''' If the input is valid, iterates through productions and sends to graphics to be drawn '''
         if input_check(self):
             axiom_input = self.axiom_edit.text()
