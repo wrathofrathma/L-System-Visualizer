@@ -146,7 +146,7 @@ class UIWidget(QWidget):
 
     @QtCore.pyqtSlot()
     def on_lsys_button_clicked(self):
-        self.gen_LSys()
+        self.genLSys()
 
     def on_boxcount_button_clicked(self):
         start_size = 2
@@ -223,7 +223,7 @@ class UIWidget(QWidget):
             self.layout.removeWidget(self.turn_angle_edit)
             self.layout.removeWidget(self.turn_angle)
             self.turn_angle.deleteLater()
-            self.turn_engle_edit.deleteLater()
+            self.turn_angle_edit.deleteLater()
             self.turn_angle_edit = None
             self.turn_angle = None
             self.made_angle = False
@@ -377,7 +377,7 @@ class UIWidget(QWidget):
             self.minuses.clicked.connect(self.less_prods)
             self.layout.addWidget(self.minuses, self.prods+1, 10, 1, 1)
 
-    def gen_LSys(self):
+    def genLSys(self):
         ''' If the input is valid, iterates through productions and sends to graphics to be drawn '''
         if input_check(self):
             axiom_input = self.axiom_edit.text()
@@ -447,5 +447,5 @@ class UIWidget(QWidget):
         if(self.made_line):
             self.line_scale_edit.setText(str(grammar['line_scale']))
         self.iters_edit.setText(str(grammar['iterations']))
-        self.gen_LSys()
+        self.genLSys()
         # print(example)

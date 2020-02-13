@@ -56,14 +56,14 @@ def check_valid_numeric(obj):
   valid = 1
   angle_input = [obj.angle_edit]
   if obj.made_angle == True:
-    angle_input.append(obj.turnAngleEdit)
+    angle_input.append(obj.turn_angle_edit)
   for input in angle_input:
     if input.valid == True and (float(input.text()) >360 or float(input.text())<-360):
       print_error_message(input,"Not a valid angle")
       valid = 0
   positive_input = [obj.iters_edit]
   if obj.made_line == True:
-    positive_input.append(obj.lineScaleEdit)
+    positive_input.append(obj.line_scale_edit)
   for input in positive_input:
     if input.valid == True and float(input.text()) <= 0:
       print_error_message(obj.iters_edit,"Not a valid number of iterations")

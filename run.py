@@ -74,7 +74,7 @@ class MyMainWindow(QMainWindow):
         help_menu.addAction(glossary)
 
     def build_popup_settings(self):
-        self.popup_settings = popup_settings(self.ui_widget.graphix)
+        self.popup_settings = PopupSettings(self.ui_widget.graphix)
         self.popup_settings.show()
 
     def build_glossary(self):
@@ -82,7 +82,7 @@ class MyMainWindow(QMainWindow):
         self.glossary.show()
 
     def build_start(self):
-        self.getting_started = getting_started()
+        self.getting_started = GettingStarted()
         self.getting_started.show()
 
     def save_file(self):
@@ -93,7 +93,7 @@ class MyMainWindow(QMainWindow):
             self.ui_widget.graphix.screenshot(file_name + ".png")
 
     def build_save_rules(self):
-        self.save_rules = save_rules(self.ui_widget)
+        self.save_rules = SaveRules(self.ui_widget)
         self.save_rules.show()
 
     def close_event(self, event=None):
