@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
 import sys
 from lsystem.myUI import *
 from lsystem.glossary import Glossary
@@ -47,11 +47,11 @@ class MyMainWindow(QMainWindow):
 
         zoom_in = QAction('Zoom In', self)
         zoom_in.setShortcut('Ctrl++')
-        zoom_in.triggered.connect(lambda: self.ui_widget.graphix.zoom_IN())
+        zoom_in.triggered.connect(lambda: self.ui_widget.graphix.zoom_in())
 
         zoom_out = QAction('Zoom Out', self)
         zoom_out.setShortcut('Ctrl+-')
-        zoom_out.triggered.connect(lambda: self.ui_widget.graphix.zoom_OUT())
+        zoom_out.triggered.connect(lambda: self.ui_widget.graphix.zoom_out())
 
         settings = QAction('Settings', self)
         settings.triggered.connect(lambda: self.build_popup_settings())
