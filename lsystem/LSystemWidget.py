@@ -9,11 +9,9 @@ from PyQt5.QtWidgets import (
     QWidget,
     QVBoxLayout,
     QLabel,
-    QMenu,
-    QAction,
 )
 
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtCore import QTimer
 
 # OpenGL includes
 from OpenGL.GL import (
