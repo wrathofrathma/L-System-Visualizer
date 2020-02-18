@@ -14,7 +14,7 @@ Clone the repository, then run the following line of code in the main directory:
 
 ```pip install -r requirements.txt```
 
-```python UI.v0.01.py```
+```python run.py```
 
 ### Contributers
 - Chris Arausa @wrathofrathma
