@@ -1,6 +1,7 @@
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QLineEdit, QTextEdit, QGridLayout, QApplication, QLabel
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QLineEdit, QTextEdit, QGridLayout, QApplication, QLabel, QAction, QMenu
 import sys
 from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtCore import Qt
 import numpy as np
 import collections
 from math import pi
@@ -404,7 +405,7 @@ class UIWidget(QWidget):
             # for i in range(1,len(self.verts)):
             #  self.graphix.set_graph(self.verts[i],1) #split = true
         self.graphix.update()
-        self.graphix.resetCamera()
+        self.graphix.reset_camera()
 
     def gen_example(self, example):
         self.axiom_edit.reset_box()
