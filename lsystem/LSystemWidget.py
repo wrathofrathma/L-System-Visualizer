@@ -216,6 +216,9 @@ class LSystemDisplayWidget(QOpenGLWidget):
         xdiff = self.mouse_last_x - self.mouse_x
         ydiff = self.mouse_last_y - self.mouse_y
 
+        self.mouse_last_x = self.mouse_x
+        self.mouse_last_y = self.mouse_y
+        
         if self.active_camera == CameraType.Orbital:
             # Get the radius
             # radius = self.cameras[self.active_camera].getR()
@@ -224,18 +227,16 @@ class LSystemDisplayWidget(QOpenGLWidget):
             self.cameras[self.active_camera].addPsi(ydiff)
         else:
             # Pan around the scene
-            movement_speed = 0.01
-            trans_vector = np.zeros(3)
-            if xdiff != 0:
-                trans_vector[0] = -1 if xdiff < 0 else 1
-            if ydiff != 0:
-                trans_vector[1] = 1 if ydiff < 0 else -1
-            trans_vector *= movement_speed
+            #movement_speed = 0.01
+            #trans_vector = np.zeros(3)
+            #if xdiff != 0:
+                #trans_vector[0] = -1 if xdiff < 0 else 1
+            #if ydiff != 0:
+                #trans_vector[1] = 1 if ydiff < 0 else -1
+            #trans_vector *= movement_speed
 
             self.cameras[self.active_camera].translate(trans_vector)
         self.update()
-        self.mouse_last_x = self.mouse_x
-        self.mouse_last_y = self.mouse_y
 
     # Called when the OpenGL widget resizes.
     def resizeGL(self, w, h):

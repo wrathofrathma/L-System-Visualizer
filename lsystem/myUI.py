@@ -10,6 +10,7 @@ from lsystem.lsystem_utils import *
 from lsystem.input_check import input_check
 from lsystem.settings import *
 import time
+import matplotlib.pyplot as plt
 """
 F(and G) draws a unit length line
 f(and g) moves forward a unit length
@@ -63,6 +64,7 @@ class UIWidget(QWidget):
         self.prod_percent = []
         self.amount = 0
         self.index = 0
+        self.frac_points = []
         self.made_line = False
         self.prod_rules = []
         self.verts = []  # This will store the vertices from generate_lsystem
@@ -150,23 +152,33 @@ class UIWidget(QWidget):
         self.genLSys()
 
     def on_boxcount_button_clicked(self):
-        start_size = 2
-        num_sizes = 12
-        x_arr = []
-        y_arr = []
+        start_size = 8
+        num_sizes = 10
+        self.x_arr = []
+        self.y_arr = []
         fract_avg=[]
         end_size = start_size * (2 ** num_sizes)
         fractal_dim = fractal_dim_calc(self.verts, end_size, num_sizes)
         for i in range(num_sizes):
-            x_arr.append(np.log((start_size)))
-            y_arr.append(fractal_dim[i])
-            fract_avg.append(np.polyfit( x_arr,y_arr,1))
+            self.x_arr.append(np.log((start_size)))
+            self.y_arr.append(fractal_dim[i])
+            fract_avg.append(np.polyfit( self.x_arr,self.y_arr,1)[0])
             print("(box width = 1/",
                   start_size, ") FRACTAL AVG: ",fract_avg[-1])
             start_size = start_size * 2
         # y_arr = np.asarray(y_arr)
         # x_arr = np.asarray(x_arr)
+        plt.plot(self.x_arr, self.y_arr, 'bo', picker=.5)
+        plt.title("Fractal dimension = {}".format(np.average(fract_avg)))
+        plt.show()
         print("AVERAGE: ",np.average(fract_avg))
+        #plt.canvas.mpl_connect('pick_event', onpick)
+
+    def onpick(event):
+        self.fract_points.append(event)
+        print("The event is: ", event)
+        print("The x point? ", self.x_arr[event.ind])
+        print("The even index: ", event,ind)
 
     def add_widgets(self):
 
