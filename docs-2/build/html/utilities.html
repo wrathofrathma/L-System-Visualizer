@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Graph &#8212; L System Visualizer 5/14/2020 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Fractal Dimention Calculator Documentation" href="fractal.html" />
+    <link rel="prev" title="Utilities Documentation" href="utilities-toc.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-lsystem.graph">
+<span id="graph"></span><h1>Graph<a class="headerlink" href="#module-lsystem.graph" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graph.Graph">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graph.</code><code class="sig-name descname">Graph</code><a class="headerlink" href="#lsystem.graph.Graph" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graph.Graph.add_edge">
+<code class="sig-name descname">add_edge</code><span class="sig-paren">(</span><em class="sig-param">v1</em>, <em class="sig-param">v2</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graph.Graph.add_edge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graph.Graph.add_vertex">
+<code class="sig-name descname">add_vertex</code><span class="sig-paren">(</span><em class="sig-param">vertex</em>, <em class="sig-param">color=array([1</em>, <em class="sig-param">1</em>, <em class="sig-param">1</em>, <em class="sig-param">0])</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graph.Graph.add_vertex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graph.Graph.clear">
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graph.Graph.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graph.Graph.edge_exists">
+<code class="sig-name descname">edge_exists</code><span class="sig-paren">(</span><em class="sig-param">v1</em>, <em class="sig-param">v2</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graph.Graph.edge_exists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="lsystem.graph.generate_indices">
+<code class="sig-prename descclassname">lsystem.graph.</code><code class="sig-name descname">generate_indices</code><span class="sig-paren">(</span><em class="sig-param">adjacency_list</em>, <em class="sig-param">vert_list</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graph.generate_indices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.graph.graph_to_ogl">
+<code class="sig-prename descclassname">lsystem.graph.</code><code class="sig-name descname">graph_to_ogl</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graph.graph_to_ogl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.input_check">
+<span id="input-check"></span><h1>input_check<a class="headerlink" href="#module-lsystem.input_check" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="lsystem.input_check.check_blank_line">
+<code class="sig-prename descclassname">lsystem.input_check.</code><code class="sig-name descname">check_blank_line</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.input_check.check_blank_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.input_check.check_branching">
+<code class="sig-prename descclassname">lsystem.input_check.</code><code class="sig-name descname">check_branching</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.input_check.check_branching" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.input_check.check_if_numeric">
+<code class="sig-prename descclassname">lsystem.input_check.</code><code class="sig-name descname">check_if_numeric</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.input_check.check_if_numeric" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.input_check.check_in_alphabet">
+<code class="sig-prename descclassname">lsystem.input_check.</code><code class="sig-name descname">check_in_alphabet</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.input_check.check_in_alphabet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.input_check.check_nondeterminism">
+<code class="sig-prename descclassname">lsystem.input_check.</code><code class="sig-name descname">check_nondeterminism</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.input_check.check_nondeterminism" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.input_check.check_prod_rule_format">
+<code class="sig-prename descclassname">lsystem.input_check.</code><code class="sig-name descname">check_prod_rule_format</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.input_check.check_prod_rule_format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.input_check.check_valid_numeric">
+<code class="sig-prename descclassname">lsystem.input_check.</code><code class="sig-name descname">check_valid_numeric</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.input_check.check_valid_numeric" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.input_check.input_check">
+<code class="sig-prename descclassname">lsystem.input_check.</code><code class="sig-name descname">input_check</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.input_check.input_check" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.input_check.print_error_message">
+<code class="sig-prename descclassname">lsystem.input_check.</code><code class="sig-name descname">print_error_message</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">msg</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.input_check.print_error_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.lsystem_utils">
+<span id="lsystem-utils"></span><h1>lsystem_utils<a class="headerlink" href="#module-lsystem.lsystem_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="lsystem.lsystem_utils.generate_lsystem">
+<code class="sig-prename descclassname">lsystem.lsystem_utils.</code><code class="sig-name descname">generate_lsystem</code><span class="sig-paren">(</span><em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.lsystem_utils.generate_lsystem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.lsystem_utils.get_saved_lsystem">
+<code class="sig-prename descclassname">lsystem.lsystem_utils.</code><code class="sig-name descname">get_saved_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.lsystem_utils.get_saved_lsystem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.lsystem_utils.load_saved_lsystems">
+<code class="sig-prename descclassname">lsystem.lsystem_utils.</code><code class="sig-name descname">load_saved_lsystems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.lsystem_utils.load_saved_lsystems" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.lsystem_utils.normalize_coordinates">
+<code class="sig-prename descclassname">lsystem.lsystem_utils.</code><code class="sig-name descname">normalize_coordinates</code><span class="sig-paren">(</span><em class="sig-param">coords</em>, <em class="sig-param">m=0</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.lsystem_utils.normalize_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.lsystem_utils.save_lsystem">
+<code class="sig-prename descclassname">lsystem.lsystem_utils.</code><code class="sig-name descname">save_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.lsystem_utils.save_lsystem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.parsing">
+<span id="parsing"></span><h1>parsing<a class="headerlink" href="#module-lsystem.parsing" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="lsystem.parsing.lThread">
+<code class="sig-prename descclassname">lsystem.parsing.</code><code class="sig-name descname">lThread</code><span class="sig-paren">(</span><em class="sig-param">strings</em>, <em class="sig-param">prods</em>, <em class="sig-param">it</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.parsing.lThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes in an axiom set of prods and number of iterations and generates the new string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lsystem.parsing.pick_prod">
+<code class="sig-prename descclassname">lsystem.parsing.</code><code class="sig-name descname">pick_prod</code><span class="sig-paren">(</span><em class="sig-param">prods</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.parsing.pick_prod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="lsystem.parsing.string_parse">
+<code class="sig-prename descclassname">lsystem.parsing.</code><code class="sig-name descname">string_parse</code><span class="sig-paren">(</span><em class="sig-param">strings</em>, <em class="sig-param">prodRules</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.parsing.string_parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>NOTE: Context sensitive reads left to right, with longest key getting priority</p>
+<p>str_temp is the current string
+it will be used to keep track of what parts of the string still need proccessing
+Context free implimentation idea:
+1. sort the keys from longest to shortest
+2. say the key is length n, if the first n letters of the string match the key, add prod[key] to the new string
+3a.if the first n letters ever match a key remove the first n letters of the string
+3b.default rule: a letter goes to itself</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.stack_loop">
+<span id="stack-loop"></span><h1>stack_loop<a class="headerlink" href="#module-lsystem.stack_loop" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="lsystem.stack_loop.read_stack">
+<code class="sig-prename descclassname">lsystem.stack_loop.</code><code class="sig-name descname">read_stack</code><span class="sig-paren">(</span><em class="sig-param">stack</em>, <em class="sig-param">starting_pt</em>, <em class="sig-param">angle</em>, <em class="sig-param">turn_angle</em>, <em class="sig-param">line_scale</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.stack_loop.read_stack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input list of strings (F, +, -)
+Output List of new vertices</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lsystem.stack_loop.read_substring">
+<code class="sig-prename descclassname">lsystem.stack_loop.</code><code class="sig-name descname">read_substring</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">starting_pt</em>, <em class="sig-param">start_angle</em>, <em class="sig-param">turn_angle</em>, <em class="sig-param">trig_dict</em>, <em class="sig-param">scale</em>, <em class="sig-param">line_scale</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.stack_loop.read_substring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input: readsubstring takes in a string, a starting point, the starting angle,
+the dictinary of angle trig values, current line scale, and what the line scale would change by
+Output: returns angle and vertices</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">L System Visualizer</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="windows-toc.html">Window Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="utilities-toc.html">Utilities Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.input_check">input_check</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.lsystem_utils">lsystem_utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.parsing">parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.stack_loop">stack_loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html">Fractal Dimention Calculator Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="utilities-toc.html">Utilities Documentation</a><ul>
+      <li>Previous: <a href="utilities-toc.html" title="previous chapter">Utilities Documentation</a></li>
+      <li>Next: <a href="fractal.html" title="next chapter">Fractal Dimention Calculator Documentation</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Team BRAWT.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/utilities.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

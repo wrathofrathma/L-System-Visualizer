@@ -1,5 +1,3 @@
-
-
 def check_blank_line(obj):
   valid = 1
   non_blank_inputs = [obj.axiom_edit,obj.angle_edit,obj.iters_edit]
@@ -120,12 +118,12 @@ def input_check(obj):
   valid = []
 
   valid.append(check_blank_line(obj))
-
   valid.append(check_in_alphabet(obj))
   valid.append(check_if_numeric(obj))
   valid.append(check_valid_numeric(obj))
   valid.append(check_prod_rule_format(obj))
   valid.append(check_branching(obj))
+  #valid.append(check_nondeterminism(obj))
   #reset valid
   obj.axiom_edit.valid = 1
   obj.angle_edit.valid = 1
@@ -143,3 +141,18 @@ def print_error_message(obj,msg):
   obj.setStyleSheet("color: red;")
   print("[ Error ] ",msg)
   obj.valid = False
+
+def check_nondeterminism(obj):
+    #check if nondeterminism exists and if it is valid
+    valid = 1
+    prod_input = []
+    for rule in obj.prod_rules_edit:
+        temprule = rule.split(":")
+        if temprule[0] not in prod_input:
+            prod_input.append(temprule[0])
+            print(temprule[0])
+    if sum(obj.prod_percent) != len(prod_input):
+        valid = 0
+        print("The precents do not equal the number of production rules.")
+
+    return valid

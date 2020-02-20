@@ -41,58 +41,58 @@ class PopupSettings(QWidget):
       self.three_dim.setChecked(True)
     dim_group.addButton(self.three_dim)
 
-    is_colorful, is_flashing = self.graphix.get_mesh_options()
+    # is_colorful, is_flashing = self.graphix.get_mesh_options()
 
-    self.white = QRadioButton("White")
-    if not is_colorful:
-      self.white.setChecked(True)
-    self.white.toggled.connect(lambda: self.color_state(self.white))
-    color_group.addButton(self.white)
-    self.rainbow = QRadioButton("Rainbow")
-    self.rainbow.toggled.connect(lambda: self.color_state(self.rainbow))
-    if is_colorful:
-      self.rainbow.setChecked(True)
-    color_group.addButton(self.rainbow)
+    # self.white = QRadioButton("White")
+    # if not is_colorful:
+    #   self.white.setChecked(True)
+    # self.white.toggled.connect(lambda: self.color_state(self.white))
+    # color_group.addButton(self.white)
+    # self.rainbow = QRadioButton("Rainbow")
+    # self.rainbow.toggled.connect(lambda: self.color_state(self.rainbow))
+    # if is_colorful:
+    #   self.rainbow.setChecked(True)
+    # color_group.addButton(self.rainbow)
 
-    self.none = QRadioButton("None")
-    if not is_flashing:
-      self.none.setChecked(True)
-    self.none.toggled.connect(lambda: self.feature_state(self.none))
-    feature_group.addButton(self.none)
-    self.flashing = QRadioButton('Flashing')
-    self.flashing.toggled.connect(lambda: self.feature_state(self.flashing))
-    if is_flashing:
-      self.flashing.setChecked(True)
-    feature_group.addButton(self.flashing)
+    # self.none = QRadioButton("None")
+    # if not is_flashing:
+    #   self.none.setChecked(True)
+    # self.none.toggled.connect(lambda: self.feature_state(self.none))
+    # feature_group.addButton(self.none)
+    # self.flashing = QRadioButton('Flashing')
+    # self.flashing.toggled.connect(lambda: self.feature_state(self.flashing))
+    # if is_flashing:
+    #   self.flashing.setChecked(True)
+    # feature_group.addButton(self.flashing)
 
 
   def add_widgets(self):
     self.layout.addWidget(self.dimension, 1, 0)
-    self.layout.addWidget(self.color, 2, 0)
-    self.layout.addWidget(self.feature, 3, 0)
+    # self.layout.addWidget(self.color, 2, 0)
+    # self.layout.addWidget(self.feature, 3, 0)
     self.layout.addWidget(self.two_dim, 1, 1)
     self.layout.addWidget(self.three_dim, 1, 2)
-    self.layout.addWidget(self.white, 2, 1)
-    self.layout.addWidget(self.rainbow, 2, 2)
-    self.layout.addWidget(self.none, 3, 1)
-    self.layout.addWidget(self.flashing, 3, 2)
+    # self.layout.addWidget(self.white, 2, 1)
+    # self.layout.addWidget(self.rainbow, 2, 2)
+    # self.layout.addWidget(self.none, 3, 1)
+    # self.layout.addWidget(self.flashing, 3, 2)
 
   def dim_state(self, dim):
     if dim.text() == "2D" and dim.isChecked():
         self.graphix.set_camera_type(CameraType.Free)
-        self.graphix.setDimensions(2)
+        self.graphix.set_dimensions(2)
     else:
-        self.graphix.setDimensions(3)
+        self.graphix.set_dimensions(3)
         self.graphix.set_camera_type(CameraType.Orbital)
 
-  def color_state(self, color):
-    if color.text() == 'White' and color.isChecked():
-      self.graphix.set_mesh_options(MeshOptions.White)
-    elif color.text() == "Rainbow" and color.isChecked():
-      self.graphix.set_mesh_options(MeshOptions.Colors)
+  # def color_state(self, color):
+  #   if color.text() == 'White' and color.isChecked():
+  #     self.graphix.set_mesh_options(MeshOptions.White)
+  #   elif color.text() == "Rainbow" and color.isChecked():
+  #     self.graphix.set_mesh_options(MeshOptions.Colors)
 
-  def feature_state(self, feature):
-    if feature.text() == 'None' and feature.isChecked():
-      self.graphix.set_mesh_options(MeshOptions.Static)
-    elif feature.text() == 'Flashing' and feature.isChecked():
-      self.graphix.set_mesh_options(MeshOptions.Pulse)
+  # def feature_state(self, feature):
+  #   if feature.text() == 'None' and feature.isChecked():
+  #     self.graphix.set_mesh_options(MeshOptions.Static)
+  #   elif feature.text() == 'Flashing' and feature.isChecked():
+  #     self.graphix.set_mesh_options(MeshOptions.Pulse)

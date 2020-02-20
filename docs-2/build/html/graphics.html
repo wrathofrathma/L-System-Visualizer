@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Axis &#8212; L System Visualizer 5/14/2020 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Graphics Documentation" href="graphics-toc.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-lsystem.graphics.Axis">
+<span id="axis"></span><h1>Axis<a class="headerlink" href="#module-lsystem.graphics.Axis" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.Axis.Axis">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.Axis.</code><code class="sig-name descname">Axis</code><a class="headerlink" href="#lsystem.graphics.Axis.Axis" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.Axis.Axis.cleanup">
+<code class="sig-name descname">cleanup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Axis.Axis.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Axis.Axis.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Axis.Axis.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Axis.Axis.init_ogl">
+<code class="sig-name descname">init_ogl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Axis.Axis.init_ogl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Axis.Axis.set_shader">
+<code class="sig-name descname">set_shader</code><span class="sig-paren">(</span><em class="sig-param">shader</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Axis.Axis.set_shader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Axis.Axis.update_gpu">
+<code class="sig-name descname">update_gpu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Axis.Axis.update_gpu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.Camera">
+<span id="camera"></span><h1>Camera<a class="headerlink" href="#module-lsystem.graphics.Camera" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.Camera.Camera">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.Camera.</code><code class="sig-name descname">Camera</code><span class="sig-paren">(</span><em class="sig-param">width=600</em>, <em class="sig-param">height=600</em>, <em class="sig-param">fov=50.0</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Camera.Camera" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.Camera.Camera.applyUpdate">
+<code class="sig-name descname">applyUpdate</code><span class="sig-paren">(</span><em class="sig-param">shader</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Camera.Camera.applyUpdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Camera.Camera.getProjection">
+<code class="sig-name descname">getProjection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Camera.Camera.getProjection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Camera.Camera.getView">
+<code class="sig-name descname">getView</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Camera.Camera.getView" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Camera.Camera.resize">
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">width</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Camera.Camera.resize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Camera.Camera.updateProjection">
+<code class="sig-name descname">updateProjection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Camera.Camera.updateProjection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.colors">
+<span id="colors"></span><h1>colors<a class="headerlink" href="#module-lsystem.graphics.colors" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.colors.Colors">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.colors.</code><code class="sig-name descname">Colors</code><a class="headerlink" href="#lsystem.graphics.colors.Colors" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="lsystem.graphics.colors.Colors.black">
+<code class="sig-name descname">black</code><em class="property"> = array([0, 0, 0, 0])</em><a class="headerlink" href="#lsystem.graphics.colors.Colors.black" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.colors.Colors.blue">
+<code class="sig-name descname">blue</code><em class="property"> = array([0, 0, 1, 0])</em><a class="headerlink" href="#lsystem.graphics.colors.Colors.blue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.colors.Colors.green">
+<code class="sig-name descname">green</code><em class="property"> = array([0, 1, 0, 0])</em><a class="headerlink" href="#lsystem.graphics.colors.Colors.green" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.colors.Colors.orange">
+<code class="sig-name descname">orange</code><em class="property"> = array([1. , 0.5, 0. , 0. ])</em><a class="headerlink" href="#lsystem.graphics.colors.Colors.orange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.colors.Colors.pink">
+<code class="sig-name descname">pink</code><em class="property"> = array([1.   , 0.8  , 0.945, 0.   ])</em><a class="headerlink" href="#lsystem.graphics.colors.Colors.pink" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.colors.Colors.purple">
+<code class="sig-name descname">purple</code><em class="property"> = array([0.8, 0. , 1. , 0. ])</em><a class="headerlink" href="#lsystem.graphics.colors.Colors.purple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.colors.Colors.red">
+<code class="sig-name descname">red</code><em class="property"> = array([1, 0, 0, 0])</em><a class="headerlink" href="#lsystem.graphics.colors.Colors.red" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.colors.Colors.white">
+<code class="sig-name descname">white</code><em class="property"> = array([1, 1, 1, 0])</em><a class="headerlink" href="#lsystem.graphics.colors.Colors.white" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.colors.Colors.yellow">
+<code class="sig-name descname">yellow</code><em class="property"> = array([1, 1, 0, 0])</em><a class="headerlink" href="#lsystem.graphics.colors.Colors.yellow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.FreeCamera">
+<span id="freecamera"></span><h1>FreeCamera<a class="headerlink" href="#module-lsystem.graphics.FreeCamera" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.FreeCamera.FreeCamera">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.FreeCamera.</code><code class="sig-name descname">FreeCamera</code><span class="sig-paren">(</span><em class="sig-param">width</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.FreeCamera.FreeCamera" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.FreeCamera.FreeCamera.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.FreeCamera.FreeCamera.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.FreeCamera.FreeCamera.updateView">
+<code class="sig-name descname">updateView</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.FreeCamera.FreeCamera.updateView" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.GraphMesh">
+<span id="graphmesh"></span><h1>GraphMesh<a class="headerlink" href="#module-lsystem.graphics.GraphMesh" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.GraphMesh.GraphObject">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.GraphMesh.</code><code class="sig-name descname">GraphObject</code><span class="sig-paren">(</span><em class="sig-param">dimensions=2</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.GraphMesh.GraphObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.GraphMesh.GraphObject.cleanup">
+<code class="sig-name descname">cleanup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.GraphMesh.GraphObject.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.GraphMesh.GraphObject.clear_graph">
+<code class="sig-name descname">clear_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.GraphMesh.GraphObject.clear_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.GraphMesh.GraphObject.detect2DEdges">
+<code class="sig-name descname">detect2DEdges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.GraphMesh.GraphObject.detect2DEdges" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.GraphMesh.GraphObject.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.GraphMesh.GraphObject.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.GraphMesh.GraphObject.init_ogl">
+<code class="sig-name descname">init_ogl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.GraphMesh.GraphObject.init_ogl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.GraphMesh.GraphObject.set_graph_data">
+<code class="sig-name descname">set_graph_data</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.GraphMesh.GraphObject.set_graph_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.GraphMesh.GraphObject.set_shader">
+<code class="sig-name descname">set_shader</code><span class="sig-paren">(</span><em class="sig-param">shader</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.GraphMesh.GraphObject.set_shader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.GraphMesh.GraphObject.update_gpu">
+<code class="sig-name descname">update_gpu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.GraphMesh.GraphObject.update_gpu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.Grid">
+<span id="grid"></span><h1>Grid<a class="headerlink" href="#module-lsystem.graphics.Grid" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.Grid.Grid2D">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.Grid.</code><code class="sig-name descname">Grid2D</code><span class="sig-paren">(</span><em class="sig-param">divisions=20</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Grid.Grid2D" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.Grid.Grid2D.generate_vertices">
+<code class="sig-name descname">generate_vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Grid.Grid2D.generate_vertices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Grid.Grid2D.set_divisions">
+<code class="sig-name descname">set_divisions</code><span class="sig-paren">(</span><em class="sig-param">divisions</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Grid.Grid2D.set_divisions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.Mesh">
+<span id="mesh"></span><h1>Mesh<a class="headerlink" href="#module-lsystem.graphics.Mesh" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.Mesh.Mesh">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.Mesh.</code><code class="sig-name descname">Mesh</code><span class="sig-paren">(</span><em class="sig-param">dimensions=2</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.cleanup">
+<code class="sig-name descname">cleanup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.detect2DEdges">
+<code class="sig-name descname">detect2DEdges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.detect2DEdges" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.draw">
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.generate_colors">
+<code class="sig-name descname">generate_colors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.generate_colors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.get_vertices">
+<code class="sig-name descname">get_vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.get_vertices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.init_ogl">
+<code class="sig-name descname">init_ogl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.init_ogl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.set_options">
+<code class="sig-name descname">set_options</code><span class="sig-paren">(</span><em class="sig-param">options</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.set_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.set_shader">
+<code class="sig-name descname">set_shader</code><span class="sig-paren">(</span><em class="sig-param">shader</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.set_shader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.set_vertices">
+<code class="sig-name descname">set_vertices</code><span class="sig-paren">(</span><em class="sig-param">vertices</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.set_vertices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.Mesh.Mesh.update_gpu">
+<code class="sig-name descname">update_gpu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.Mesh.Mesh.update_gpu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lsystem.graphics.Mesh.MeshOptions">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.Mesh.</code><code class="sig-name descname">MeshOptions</code><a class="headerlink" href="#lsystem.graphics.Mesh.MeshOptions" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="lsystem.graphics.Mesh.MeshOptions.Colors">
+<code class="sig-name descname">Colors</code><em class="property"> = 2</em><a class="headerlink" href="#lsystem.graphics.Mesh.MeshOptions.Colors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.Mesh.MeshOptions.Pulse">
+<code class="sig-name descname">Pulse</code><em class="property"> = 4</em><a class="headerlink" href="#lsystem.graphics.Mesh.MeshOptions.Pulse" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.Mesh.MeshOptions.Static">
+<code class="sig-name descname">Static</code><em class="property"> = 8</em><a class="headerlink" href="#lsystem.graphics.Mesh.MeshOptions.Static" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.graphics.Mesh.MeshOptions.White">
+<code class="sig-name descname">White</code><em class="property"> = 1</em><a class="headerlink" href="#lsystem.graphics.Mesh.MeshOptions.White" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.OrbitalObject">
+<span id="orbitalobject"></span><h1>OrbitalObject<a class="headerlink" href="#module-lsystem.graphics.OrbitalObject" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.OrbitalObject.</code><code class="sig-name descname">OrbitalObject</code><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.addPsi">
+<code class="sig-name descname">addPsi</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.addPsi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.addR">
+<code class="sig-name descname">addR</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.addR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.addTheta">
+<code class="sig-name descname">addTheta</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.addTheta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.getFacing">
+<code class="sig-name descname">getFacing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.getFacing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.getPosition">
+<code class="sig-name descname">getPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.getPosition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.getPsi">
+<code class="sig-name descname">getPsi</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.getPsi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.getR">
+<code class="sig-name descname">getR</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.getR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.getTheta">
+<code class="sig-name descname">getTheta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.getTheta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.setOrigin">
+<code class="sig-name descname">setOrigin</code><span class="sig-paren">(</span><em class="sig-param">origin</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.setOrigin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.setPosition">
+<code class="sig-name descname">setPosition</code><span class="sig-paren">(</span><em class="sig-param">r</em>, <em class="sig-param">theta</em>, <em class="sig-param">psi</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.setPosition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.setPsi">
+<code class="sig-name descname">setPsi</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.setPsi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.setR">
+<code class="sig-name descname">setR</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.setR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.OrbitalObject.OrbitalObject.setTheta">
+<code class="sig-name descname">setTheta</code><span class="sig-paren">(</span><em class="sig-param">num</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.OrbitalObject.OrbitalObject.setTheta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.QuaternionObject">
+<span id="quaternionobject"></span><h1>QuaternionObject<a class="headerlink" href="#module-lsystem.graphics.QuaternionObject" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.QuaternionObject.</code><code class="sig-name descname">QuaternionObject</code><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.generateModelMatrix">
+<code class="sig-name descname">generateModelMatrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.generateModelMatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.getPosition">
+<code class="sig-name descname">getPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.getPosition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.getRotationMatrix">
+<code class="sig-name descname">getRotationMatrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.getRotationMatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.getRotationQuat">
+<code class="sig-name descname">getRotationQuat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.getRotationQuat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.getXAxis">
+<code class="sig-name descname">getXAxis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.getXAxis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.getYAxis">
+<code class="sig-name descname">getYAxis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.getYAxis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.getZAxis">
+<code class="sig-name descname">getZAxis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.getZAxis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.rotate">
+<code class="sig-name descname">rotate</code><span class="sig-paren">(</span><em class="sig-param">rotation</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.rotate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.scale">
+<code class="sig-name descname">scale</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.scale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.setOrientation">
+<code class="sig-name descname">setOrientation</code><span class="sig-paren">(</span><em class="sig-param">o</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.setOrientation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.setPosition">
+<code class="sig-name descname">setPosition</code><span class="sig-paren">(</span><em class="sig-param">pos</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.setPosition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.setScale">
+<code class="sig-name descname">setScale</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.setScale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.QuaternionObject.QuaternionObject.translate">
+<code class="sig-name descname">translate</code><span class="sig-paren">(</span><em class="sig-param">offset</em>, <em class="sig-param">relative=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.QuaternionObject.QuaternionObject.translate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.RayCasting">
+<span id="raycasting"></span><h1>RayCasting<a class="headerlink" href="#module-lsystem.graphics.RayCasting" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="lsystem.graphics.RayCasting.getMouseRaycast">
+<code class="sig-prename descclassname">lsystem.graphics.RayCasting.</code><code class="sig-name descname">getMouseRaycast</code><span class="sig-paren">(</span><em class="sig-param">mouse_pos</em>, <em class="sig-param">projection</em>, <em class="sig-param">view</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.RayCasting.getMouseRaycast" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.SpatialObject">
+<span id="spatialobject"></span><h1>SpatialObject<a class="headerlink" href="#module-lsystem.graphics.SpatialObject" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.SpatialObject.SpatialObject">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.SpatialObject.</code><code class="sig-name descname">SpatialObject</code><a class="headerlink" href="#lsystem.graphics.SpatialObject.SpatialObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.SpatialObject.SpatialObject.getOrientation">
+<code class="sig-name descname">getOrientation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.SpatialObject.SpatialObject.getOrientation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.SpatialObject.SpatialObject.getPosition">
+<code class="sig-name descname">getPosition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.SpatialObject.SpatialObject.getPosition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.SpatialObject.SpatialObject.setOrientation">
+<code class="sig-name descname">setOrientation</code><span class="sig-paren">(</span><em class="sig-param">o</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.SpatialObject.SpatialObject.setOrientation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.SpatialObject.SpatialObject.setPosition">
+<code class="sig-name descname">setPosition</code><span class="sig-paren">(</span><em class="sig-param">pos</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.SpatialObject.SpatialObject.setPosition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.graphics.SphericalCamera">
+<span id="sphericalcamera"></span><h1>SphericalCamera<a class="headerlink" href="#module-lsystem.graphics.SphericalCamera" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="lsystem.graphics.SphericalCamera.SphericalCamera">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.SphericalCamera.</code><code class="sig-name descname">SphericalCamera</code><span class="sig-paren">(</span><em class="sig-param">width</em>, <em class="sig-param">height</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.SphericalCamera.SphericalCamera" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.graphics.SphericalCamera.SphericalCamera.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.SphericalCamera.SphericalCamera.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.graphics.SphericalCamera.SphericalCamera.updateView">
+<code class="sig-name descname">updateView</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.SphericalCamera.SphericalCamera.updateView" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">L System Visualizer</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="windows-toc.html">Window Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utilities-toc.html">Utilities Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html">Fractal Dimention Calculator Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="graphics-toc.html">Graphics Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.Camera">Camera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.colors">colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.FreeCamera">FreeCamera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.GraphMesh">GraphMesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.Grid">Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.Mesh">Mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.OrbitalObject">OrbitalObject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.QuaternionObject">QuaternionObject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.RayCasting">RayCasting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.SpatialObject">SpatialObject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.SphericalCamera">SphericalCamera</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="graphics-toc.html">Graphics Documentation</a><ul>
+      <li>Previous: <a href="graphics-toc.html" title="previous chapter">Graphics Documentation</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Team BRAWT.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/graphics.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

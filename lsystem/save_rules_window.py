@@ -37,32 +37,32 @@ class SaveRules(QWidget):
       grammar = {}
       grammar["rules"] = {}
       i = 0
-      for rule in self.ui.prodrulesEdit:
+      for rule in self.ui.prod_rules_edit:
         print(rule.text())
         rule = rule.text().replace(" ", "")
         pr = rule.split(':')
         #add the rule and probabilty to pr[0]'s list, if there isn't a list then make one
         try:
-          grammar["rules"][pr[0]].append([pr[1],self.ui.prodPercent[i].text()])
+          grammar["rules"][pr[0]].append([pr[1],self.ui.prod_percent[i].text()])
         except KeyError:
           grammar["rules"][pr[0]] = []
-          grammar["rules"][pr[0]].append([pr[1],self.ui.prodPercent[i].text()])
+          grammar["rules"][pr[0]].append([pr[1],self.ui.prod_percent[i].text()])
         i += 1 # increment to grab the probability for each rule
-      grammar["angle"] = float(self.ui.angleEdit.text())
-      if(self.ui.madeAngle):
-        grammar["turn_angle"] = float(self.ui.turnAngleEdit.text())
+      grammar["angle"] = float(self.ui.angle_edit.text())
+      if(self.ui.made_angle):
+        grammar["turn_angle"] = float(self.ui.turn_angle_edit.text())
       else:
         grammar["turn_angle"] = 0
-      if(self.ui.madeLine):
-        grammar["line_scale"] = float(self.ui.lineScaleEdit.text())
+      if(self.ui.made_line):
+        grammar["line_scale"] = float(self.ui.line_scale_edit.text())
       else:
         grammar["line_scale"] = 0
-      grammar["axiom"] = self.ui.axiomEdit.text()
-      grammar["iterations"] = int(self.ui.itersEdit.text())
+      grammar["axiom"] = self.ui.axiom_edit.text()
+      grammar["iterations"] = int(self.ui.iters_edit.text())
       save_lsystem(name, grammar)
       print("[ INFO ] L-System " + str(name) + " saved to disk...")
       #make window disappear
       self.hide()
     else:
-      self.nameBox.setStyleSheet("color: red;")
-      self.nameBox.setText("Name your L-System before you save!")
+      self.name_box.setStyleSheet("color: red;")
+      self.name_box.setText("Name your L-System before you save!")
