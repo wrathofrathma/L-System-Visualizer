@@ -151,12 +151,21 @@ class UIWidget(QWidget):
     def on_boxcount_button_clicked(self):
         start_size = 2
         num_sizes = 12
+        x_arr = []
+        y_arr = []
+        fract_avg=[]
         end_size = start_size * (2 ** num_sizes)
         fractal_dim = fractal_dim_calc(self.verts, end_size, num_sizes)
         for i in range(num_sizes):
-            print("FRACTAL DIMENSION (box width = 1/",
-                  start_size, "): ", fractal_dim[i])
+            x_arr.append(np.log((start_size)))
+            y_arr.append(fractal_dim[i])
+            fract_avg.append(np.polyfit( x_arr,y_arr,1))
+            print("(box width = 1/",
+                  start_size, ") FRACTAL AVG: ",fract_avg[-1])
             start_size = start_size * 2
+        # y_arr = np.asarray(y_arr)
+        # x_arr = np.asarray(x_arr)
+        print("AVERAGE: ",np.average(fract_avg))
 
     def add_widgets(self):
 

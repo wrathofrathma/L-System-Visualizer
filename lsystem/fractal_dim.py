@@ -61,22 +61,10 @@ def fractal_dim_calc(graph,ending_size, num_sizes):
   fractal_dim = []
   pix_map = gen_pixel_map(graph,ending_size)
   count= 0
-  fractal_dim.insert(0,np.log(np.count_nonzero(pix_map == '1'))/np.log(ending_size))
+  fractal_dim.insert(0,np.log(np.count_nonzero(pix_map == '1')))#/np.log(ending_size))
   for i in range(num_sizes-1):
     ending_size = ending_size/2
     pix_map = pool_pixel_map(pix_map)
-    fractal_dim.insert(0,np.log(np.count_nonzero(pix_map == '1'))/np.log(ending_size))
-  #np.set_printoptions(threshold=np.inf)
-  #np.set_printoptions(linewidth= np.inf)
-  #print(pix_map)
-  return fractal_dim
-  # print(len(pix_map))
-  #
-  # pix_map = pool_pixel_map(pix_map)
-  # pix_map = pool_pixel_map(pix_map)
-  # pix_map = pool_pixel_map(pix_map)
-  # pix_map = pool_pixel_map(pix_map)
-  # print(np.array2string(pix_map, separator=',', formatter={'str_kind': lambda x: x}))
-  #np.set_printoptions(threshold=np.inf)
-  #print(pix_map)
-  #print(len(pix_map))
+    fractal_dim.insert(0,np.log(np.count_nonzero(pix_map == '1')))#/np.log(ending_size))
+
+  return fractal_dim # JUST RETURNS log(N(E))
