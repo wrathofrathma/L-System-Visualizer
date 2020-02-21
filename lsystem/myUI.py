@@ -153,7 +153,7 @@ class UIWidget(QWidget):
 
     def on_boxcount_button_clicked(self):
         start_size = 8
-        num_sizes = 10
+        num_sizes = 7
         self.x_arr = []
         self.y_arr = []
         fract_avg=[]
@@ -162,6 +162,7 @@ class UIWidget(QWidget):
         for i in range(num_sizes):
             self.x_arr.append(np.log((start_size)))
             self.y_arr.append(fractal_dim[i])
+
             fract_avg.append(np.polyfit( self.x_arr,self.y_arr,1)[0])
             print("(box width = 1/",
                   start_size, ") FRACTAL AVG: ",fract_avg[-1])
@@ -169,7 +170,7 @@ class UIWidget(QWidget):
         # y_arr = np.asarray(y_arr)
         # x_arr = np.asarray(x_arr)
         plt.plot(self.x_arr, self.y_arr, 'bo', picker=.5)
-        plt.title("Fractal dimension = {}".format(np.average(fract_avg)))
+        plt.title("Fractal dimension = {}".format(np.polyfit( self.x_arr,self.y_arr,1)[0]))#np.average(fract_avg)))
         plt.show()
         print("AVERAGE: ",np.average(fract_avg))
         #plt.canvas.mpl_connect('pick_event', onpick)
