@@ -1,0 +1,8 @@
+----------------------------------------------------------------------------
+L-System-Visualizer Package Changes Log (see our github for more changes)
+----------------------------------------------------------------------------
+
+Release SUmmary:
+
+1.0, February 23, 2020
+    Need to put things about changes to package here

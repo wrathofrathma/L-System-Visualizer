@@ -1,0 +1,84 @@
+{
+
+  "Sierpinski Triangle" : {
+    "rules" : { "F" : "F-G+F+G-F","G" : "GG"},
+    "angle" : 120,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom" : "F-G-G",
+    "iterations" : 5
+  },
+  "Koch Curve" : {
+    "rules": { "F" : "F+F-F-F+F"},
+    "angle": 90,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom": "-F",
+    "iterations": 5
+  },
+  "Koch Snowflake" :{
+    "rules":{"F":"F-F++F-F"},
+    "angle":60,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom":"F++F++F",
+    "iterations":5
+  },
+  "Koch Island":{
+    "rules":{"F":"F+FF-FF-F-F+F+FF-F-F+F+FF+FF-F"},
+    "angle":90,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom":"F-F-F-F",
+    "iterations":2
+  },
+  "Peano Curve" : {
+    "rules": {"F" : "FF+F+F+FF+F+F-F"},
+    "angle": 90,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom": "F",
+    "iterations": 4
+  },
+  "Dragon Curve" : {
+    "rules" : {"X":"X+YF+","Y":"-FX-Y"},
+    "angle" : 90,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom" : "FX",
+    "iterations": 10
+  },
+  "Hilbert Curve":{
+    "rules" : {"A": "-BF+AFA+FB-","B":"+AF-BFB-FA+"},
+    "angle":90,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom":"A",
+    "iterations": 5
+  },
+  "Tree Example":{
+    "rules":{"F":"FF","X":"F+[-F-XF-X][+FF][--XF[+X]][++F-X]"},
+    "angle":25,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom":"--X",
+    "iterations":3
+  },
+  "Islands and Lakes":{
+    "rules":{"F":"F+f-FF+F+FF+Ff+FF-f+FF-F-FF-Ff-FFF","f":"ffffff"},
+    "angle":90,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom":"F+F+F+F",
+    "iterations":2
+  },
+    "Cantor Set" : {
+    "rules" : { "F" : "FfF","f" : "fff"},
+    "angle" : 90,
+    "turn_angle": 0,
+    "line_scale": 1,
+    "axiom" : "XF",
+    "iterations" : 5
+  }
+
+}
