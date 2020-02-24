@@ -1,3 +1,4 @@
+''' This file for now is acting as a catch-all utility file.'''
 import math
 import numpy as np
 import json
@@ -7,7 +8,6 @@ from lsystem.parsing import *
 from lsystem.stack_loop import *
 from lsystem.fractal_dim import *
 from lsystem.graph import Graph
-# This file for now is acting as a catch-all utility file.
 # At the moment the most important definitions are
 # saved_lsystems - Global dictionary definition of loaded lsystems.
 # save_lsystem - Save an lsystem to the user defined json file.
@@ -23,7 +23,6 @@ from lsystem.graph import Graph
 # 'rules' : dict of production rules
 # 'angle' : the angle in degrees(integer)
 # 'iterations' : number of iterations(integer)
-saved_lsystems = {}
 # predefined areas to keep the files.
 predef_file = "assets/lsystems/predefined_lsystems.json"
 saved_file = "assets/lsystems/saved_lsystems.json"
@@ -94,6 +93,7 @@ def generate_lsystem(grammar):
 
 
 def save_lsystem(key, grammar):
+    saved_lsystems = {}
     # Check if the file exists.
     if(os.path.exists(saved_file)):
         # If it does, then load all saved data and replace/insert the new data to the dict.
@@ -106,13 +106,14 @@ def save_lsystem(key, grammar):
     # Then overwrite the file.
     with open(saved_file, "w") as sfile:
         json.dump(saved, sfile, indent=2)
+    return saved_lsystems
 
 # Returns a given lsystem's vertices & grammar from the dict. Or returns None.
 # The return type is a tuple, (verts, grammar)
 # Grammar is a dictionary the represents the axiom, production rules, angle, and iterations to be loaded into the UI.
 
 
-def get_saved_lsystem(key):
+def get_saved_lsystem(key, saved_lsystems):
     if key in saved_lsystems:
         grammar = saved_lsystems[key]
         return grammar
@@ -124,6 +125,7 @@ def get_saved_lsystem(key):
 
 
 def load_saved_lsystems():
+    saved_lsystems = {}
     print("[ INFO ] Loading saved L-Systems from disk...")
     # Check if the file exists.
     if(os.path.exists(predef_file)):
@@ -140,7 +142,7 @@ def load_saved_lsystems():
         # For every key(aka lsystem definition), add it to our saved lsystems.
         for key in saved.keys():
             saved_lsystems[key] = saved[key]
-
+    return saved_lsystems
 # Normalizes the coordinates such that the largest vertice bound is 1 or -1.
 # We will remove this later when we have proper scaling/zooming.
 
