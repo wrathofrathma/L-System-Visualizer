@@ -195,7 +195,7 @@ class UIWidget(QWidget):
 
     @QtCore.pyqtSlot()
     def on_lsys_button_clicked(self):
-        self.genLSys()
+        self.gen_sys()
 
     def on_boxcount_button_clicked(self):
         start_size = 8
