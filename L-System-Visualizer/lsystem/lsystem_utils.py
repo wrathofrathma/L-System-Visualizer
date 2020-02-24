@@ -34,7 +34,7 @@ def generate_lsystem(grammar):
     graph = Graph()  # Adjacency list based graph.
     print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
     # Generate full production string.
-    s = lThread(grammar_copy['axiom'],
+    s = parsed_thread(grammar_copy['axiom'],
                 grammar_copy['rules'], grammar_copy['iterations'])
     # Generate vertics
     verts_arr_temp = read_stack(
