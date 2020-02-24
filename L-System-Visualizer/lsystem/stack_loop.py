@@ -70,7 +70,7 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
     stack = stack.replace("g", "f")
     vertices = []
     vert_arr = []
-    s = []
+    tmp_stack = []
     saved_states = []
     # keep the delimeter as the first character of the string
     while len(stack) > 0:
@@ -79,13 +79,13 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
         index_f = stack[1:].find("f")  # index of little f
         index_h = stack[1:].find("h")  # index of little h
         if max([index_start_b, index_end_b, index_f, index_h]) == -1:
-            s.append(stack)
+            tmp_stack.append(stack)
             stack = []
         else:
             next_break = min(
                 i for i in [index_start_b, index_end_b, index_f, index_h] if i >= 0
             )
-            s.append(stack[0 : next_break + 1])
+            tmp_stack.append(stack[0 : next_break + 1])
             stack = stack[next_break + 1 :]
     # Set up a dictionary of all the possible angles
     # calculate the sin and cos of those angles ahead of time
@@ -103,7 +103,7 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
     print("TRIG DICT: ", trig_dict)
     # for each little f/h create a new array with the starting position and angle
     # initialized from the previous mesh
-    for char in s:
+    for char in tmp_stack:
         if char[0] == "f" or char[0] == "h":
             if char[0] == "h":
                 divisor = 2

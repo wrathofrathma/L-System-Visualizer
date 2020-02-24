@@ -143,6 +143,7 @@ class UIWidget(QWidget):
         self.setGeometry(500, 500, 500, 500)
 
     def init_text_boxes(self):
+        '''Links all of the text boxes to buttons'''
         # creates the labels for each text box
         self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
 

@@ -1,3 +1,4 @@
+'''This file handles the OpenGL Window actions'''
 # Python core includes
 from PIL import Image
 from time import time
@@ -35,9 +36,8 @@ from OpenGL.GL import (
     glDeleteProgram,
 )
 
-from glm import vec3
-
 # Lsystem includes
+from glm import vec3
 from graphics.SphericalCamera import SphericalCamera
 from graphics.FreeCamera import FreeCamera
 from graphics.Grid import Grid2D
@@ -57,8 +57,8 @@ class CameraType:
 
 
 class LSystemDisplayWidget(QOpenGLWidget):
-    def __init__(self, parent=None):
-        super(LSystemDisplayWidget, self).__init__(parent)
+    def __init__(self):
+        super(LSystemDisplayWidget, self).__init__()
         # Background color
         self.bgcolor = Colors.black
         self.start_time = time()
@@ -199,15 +199,13 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.cameras[0].setOrientation([0, 0, 0])
         self.update()
 
-    # Triggered only when the mouse is dragged in the opengl frame with the mouse down(on my machine)
-    # We store hte mouse position here, to be used in teh mouse move event.
     def mousePressEvent(self, event):
+        ''' Stores the mouse position when clicked'''
         self.mouse_last_x = event.pos().x()
         self.mouse_last_y = event.pos().y()
-        # print("(%s,%s)" % (self.mouse_last_x, self.mouse_last_y))
-        # print("NDC %s" % (str(self.qtPosToNDC(event.pos()))))
 
     def mouseMoveEvent(self, event):
+        '''Calculates the movement for panning'''
         # Store current mouse position
         self.mouse_x = event.pos().x()
         self.mouse_y = event.pos().y()
