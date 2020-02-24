@@ -18,9 +18,16 @@ import numpy as np
 from PyQt5.QtWidgets import QVBoxLayout, QPushButton, QWidget, QGridLayout, QLabel
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import Qt
-from lsystem.lsystem_utils import load_saved_lsystems, get_saved_lsystem, generate_lsystem
+from lsystem.lsystem_utils import (
+    load_saved_lsystems,
+    get_saved_lsystem,
+    generate_lsystem,
+)
 from lsystem.input_check import input_check
 from lsystem.LSystemWidget import LSystemDisplayWidget
+from lsystem.fractal_dim import fractal_dim_calc
+
+
 class CustomLineEdit(QtWidgets.QLineEdit):
     """ Class that enables clicking in a text box """
 
@@ -52,6 +59,19 @@ class UIWidget(QWidget):
     def __init__(self):
         """ Initializes class and variables """
         super(UIWidget, self).__init__()
+        self.axiom = QLabel("Axiom")
+        self.angle = QLabel("Angles(degrees)")
+        self.iters = QLabel("Iterations")
+        self.axiom_edit = CustomLineEdit()
+        self.angle_edit = CustomLineEdit()
+        self.iters_edit = CustomLineEdit()
+        self.prod_plus = QPushButton("+", self)
+        self.lsys_button = QPushButton("Generate L System", self)
+        self.boxcount_button = QPushButton("Fractal Dim", self)
+        self.widget = QWidget()
+        self.scroll_area = QtWidgets.QScrollArea()
+        self.layout_examples = QVBoxLayout(self.widget)
+        
         self.prods = 1
         self.prod_rules_edit = []
         self.examples = []
@@ -124,13 +144,9 @@ class UIWidget(QWidget):
 
     def init_text_boxes(self):
         # creates the labels for each text box
-        self.axiom = QLabel("Axiom")
         self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
-        self.angle = QLabel("Angles(degrees)")
-        self.iters = QLabel("Iterations")
 
         # creates the text box for each label
-        self.axiom_edit = CustomLineEdit()
         self.axiom_edit.returnPressed.connect(self.lsys_button.click)
         self.axiom_edit.clicked.connect(lambda: self.axiom_edit.reset_color())
 
@@ -145,36 +161,28 @@ class UIWidget(QWidget):
         self.prod_percent[0].setFixedWidth(50)
         self.prod_percent[0].setText("1")
 
-        self.angle_edit = CustomLineEdit()
         self.angle_edit.returnPressed.connect(self.lsys_button.click)
         self.angle_edit.clicked.connect(lambda: self.angle_edit.reset_color())
 
-        self.iters_edit = CustomLineEdit()
         self.iters_edit.returnPressed.connect(self.lsys_button.click)
         self.iters_edit.clicked.connect(lambda: self.iters_edit.reset_color())
 
-        self.prod_plus = QPushButton("+", self)
         self.prod_plus.clicked.connect(self.more_prods)
 
     def init_buttons(self):
 
         # makes the lsys generator button
-        self.lsys_button = QPushButton("Generate L System", self)
         self.lsys_button.clicked.connect(self.on_lsys_button_clicked)
         self.lsys_button.setAutoDefault(True)
 
-        self.boxcount_button = QPushButton("Fractal Dim", self)
         self.boxcount_button.clicked.connect(self.on_boxcount_button_clicked)
         self.boxcount_button.setAutoDefault(True)
 
-        self.widget = QWidget()
-        self.scroll_area = QtWidgets.QScrollArea()
         self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setFixedWidth(150)
         self.scroll_area.setWidget(self.widget)
-        self.layout_examples = QVBoxLayout(self.widget)
 
         for i, key in enumerate(self.saved_lsystems):
             self.examples.append(QPushButton(key))
@@ -201,25 +209,21 @@ class UIWidget(QWidget):
             self.y_arr.append(fractal_dim[i])
 
             fract_avg.append(np.polyfit(self.x_arr, self.y_arr, 1)[0])
-            print("(box width = 1/", start_size,
-                  ") FRACTAL AVG: ", fract_avg[-1])
+            print("(box width = 1/", start_size, ") FRACTAL AVG: ", fract_avg[-1])
             start_size = start_size * 2
         # y_arr = np.asarray(y_arr)
         # x_arr = np.asarray(x_arr)
         plt.plot(self.x_arr, self.y_arr, "bo", picker=0.5)
         plt.title(
-            "Fractal dimension = {}".format(
-                np.polyfit(self.x_arr, self.y_arr, 1)[0])
+            "Fractal dimension = {}".format(np.polyfit(self.x_arr, self.y_arr, 1)[0])
         )  # np.average(fract_avg)))
         plt.show()
         print("AVERAGE: ", np.average(fract_avg))
-        # plt.canvas.mpl_connect('pick_event', onpick)
 
-    def onpick(event):
+    def on_pick(self, event):
         self.fract_points.append(event)
         print("The event is: ", event)
         print("The x point? ", self.x_arr[event.ind])
-        print("The even index: ", event, ind)
 
     def add_widgets(self):
 
@@ -242,8 +246,8 @@ class UIWidget(QWidget):
     def show_popup(self):
         prod_rule = ""
         rules = ""
-        repeat = ""
-        index = []
+        # repeat = ""
+        # index = []
         self.amount = 0
         # Clearing any boxes
 
@@ -325,61 +329,24 @@ class UIWidget(QWidget):
     # Probably doesn't need self as a param, can just be static.
     # Generates a rule dictionary from an array of production rule strings taken from the UI
     def gen_rule_dict(self, prod_rules):
-        non_det = 1
-        if non_det == 0:
-            rules = {}
-            for rule in prod_rules:
-                rule = rule.text()
-                rule = rule.replace(" ", "")
-                # pr = rule.replace("->",":")
-                pr = rule.split(":")
-                rules[pr[0]] = pr[1]
-            """
-      THIS PART IS NOT CONTEXT SENSITIVE
-      """
-            for letter in alphabet:
-                if not letter in list(rules.keys()):
-                    rules[letter] = letter
-            return rules
-        elif non_det == 1:
-            # formats production rules as
-            """
-            {"F": [[p,rule],[p,rule]], "f":[[p,rule],[p,rule]] ... }
-            """
-            rules = {}
-            # for r in alphabet:
-            #  rules[r]=[]
-            for rule in prod_rules:
-                rule = rule.text()
-                rule = rule.replace(" ", "")
-                # pr = rule.replace("->",":")
-                pr = rule.split(":")
-                rules[pr[0]] = []
-            for i, rule in enumerate(prod_rules):
-                rule = rule.text()
-                rule = rule.replace(" ", "")
-                # pr = rule.replace("->",":")
-                pr = rule.split(":")
-                rules[pr[0]].append(
-                    [float(self.prod_percent[i].text()), pr[1]])
-            """
-      THIS PART IS NOT CONTEXT SENSITIVE
-      """
+        """ 
+        formats production rules as
+        {"F": [[p,rule],[p,rule]], "f":[[p,rule],[p,rule]] ... }
+        """
+        rules = {}
+        for rule in prod_rules:
+            rule = rule.text()
+            rule = rule.replace(" ", "")
+            prod = rule.split(":")
+            rules[prod[0]] = []
+        for i, rule in enumerate(prod_rules):
+            rule = rule.text()
+            rule = rule.replace(" ", "")
+            prod = rule.split(":")
+            rules[prod[0]].append([float(self.prod_percent[i].text()), prod[1]])
+        return rules
 
-            # for key in rules.keys():
-            #  #r is random array of prob that add to 1
-            #  l=len(rules[key])
-            #  r = [rand.random() for i in range(1,l+1)]
-            #  s = sum(r)
-            #  r = [ i/s for i in r ]
-            #  for i in range(l):
-            #    rules[key][i][0] = r[i]
-            # for letter in alphabet:
-            #  if len(rules[letter])==0:
-            #    rules[letter].append([1,letter])
-            return rules
-
-    def close_event(self, event):
+    def close_event(self):
         print("[ INFO ] Exiting...")
         self.graphix.cleanup()
         exit()
@@ -388,26 +355,22 @@ class UIWidget(QWidget):
         """ Creates more productions when + button is clicked """
         if self.prods < 4:
             self.prods = self.prods + 1
-            self.prod_rules.append(
-                QLabel("Production Rule " + str(self.prods)))
+            self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
             self.prod_rules_edit.append(CustomLineEdit())
             self.prod_percent.append(CustomLineEdit())
             self.prod_percent[-1].setFixedWidth(50)
             self.prod_rules_edit[self.prods - 1].textChanged.connect(
                 lambda: self.show_popup()
             )
-            self.prod_rules_edit[-1].returnPressed.connect(
-                self.lsys_button.click)
+            self.prod_rules_edit[-1].returnPressed.connect(self.lsys_button.click)
             self.prod_rules_edit[-1].clicked.connect(
                 lambda: self.prod_rules_edit[-1].reset_color()
             )
-            self.layout.addWidget(
-                self.prod_rules[self.prods - 1], self.prods + 1, 0)
+            self.layout.addWidget(self.prod_rules[self.prods - 1], self.prods + 1, 0)
             self.layout.addWidget(
                 self.prod_rules_edit[self.prods - 1], self.prods + 1, 1, 1, 9
             )
-            self.layout.addWidget(
-                self.prod_percent[self.prods - 1], self.prods + 1, 9)
+            self.layout.addWidget(self.prod_percent[self.prods - 1], self.prods + 1, 9)
 
             if self.minuses is not None:
                 # remove last minueses
@@ -458,7 +421,7 @@ class UIWidget(QWidget):
             self.minuses.clicked.connect(self.less_prods)
             self.layout.addWidget(self.minuses, self.prods + 1, 10, 1, 1)
 
-    def genLSys(self):
+    def gen_sys(self):
         """
         If the input is valid, iterates through productions
         and sends to graphics to be drawn
@@ -498,8 +461,8 @@ class UIWidget(QWidget):
 
     def gen_example(self, example):
         self.axiom_edit.reset_box()
-        for p in self.prod_rules_edit:
-            p.reset_box()
+        for prod in self.prod_rules_edit:
+            prod.reset_box()
         self.angle_edit.reset_box()
         self.iters_edit.reset_box()
         grammar = get_saved_lsystem(example, self.saved_lsystems)
@@ -524,10 +487,10 @@ class UIWidget(QWidget):
                 self.prod_rules_edit[i].setText(key + ": " + value)
             else:
                 j = 0
-                for v in value:
-                    print(v)
-                    self.prod_rules_edit[i + j].setText(key + ": " + v[0])
-                    self.prod_percent[i + j].setText(v[1])
+                for val in value:
+                    print(val)
+                    self.prod_rules_edit[i + j].setText(key + ": " + val[0])
+                    self.prod_percent[i + j].setText(val[1])
                     j += 1
                 i += j
 
@@ -537,5 +500,4 @@ class UIWidget(QWidget):
         if self.made_line:
             self.line_scale_edit.setText(str(grammar["line_scale"]))
         self.iters_edit.setText(str(grammar["iterations"]))
-        self.genLSys()
-        # print(example)
+        self.gen_sys()

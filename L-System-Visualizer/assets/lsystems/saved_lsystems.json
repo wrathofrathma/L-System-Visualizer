@@ -19,5 +19,20 @@
     "line_scale": 0,
     "axiom": "F-G-G",
     "iterations": 5
+  },
+  "test": {
+    "rules": {
+      "F": [
+        [
+          "F+F-F-F+F",
+          "1"
+        ]
+      ]
+    },
+    "angle": 90.0,
+    "turn_angle": 0,
+    "line_scale": 0,
+    "axiom": "-F",
+    "iterations": 5
   }
 }
