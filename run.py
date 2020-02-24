@@ -4,6 +4,7 @@ from lsystem.myUI import *
 from lsystem.glossary import Glossary
 from lsystem.getting_started import GettingStarted
 from lsystem.save_rules_window import SaveRules
+from lsystem.screenshot_window import ScreenshotWindow
 
 
 class MyMainWindow(QMainWindow):
@@ -86,12 +87,9 @@ class MyMainWindow(QMainWindow):
         self.getting_started.show()
 
     def save_file(self):
-        options = QFileDialog.Options()
-        file_name, _ = QFileDialog.getSaveFileName(
-            self, "Save Screenshot", options=options)
-        if file_name:
-            self.ui_widget.graphix.screenshot(file_name + ".png")
-
+        self.screenshotWindow = ScreenshotWindow(self.ui_widget)
+        self.screenshotWindow.show()
+        
     def build_save_rules(self):
         self.save_rules = SaveRules(self.ui_widget)
         self.save_rules.show()
