@@ -152,18 +152,20 @@ def check_nondeterminism(obj):
             temprule = rule.text().split(":")
             if temprule[0] not in prod_input:
                 prod_input.append(temprule[0])
-    print("Egg")
-    print(prod_input)
     if obj.prod_percent:
         for input_percent in obj.prod_percent:
             if input_percent.valid:
+                try:
+                    float(input_percent.text())
+                except:
+                    valid = 0
+                    return valid
                 temp_percent = float(input_percent.text())
+                if temp_percent > 1:
+                    valid = 0
                 prod_percents.append(temp_percent)
-
-    print("egg2")
-    print(prod_percents)
-
     if sum(prod_percents) != float(len(prod_input)):
         valid = 0
-    print("egg3")
+
+
     return valid
