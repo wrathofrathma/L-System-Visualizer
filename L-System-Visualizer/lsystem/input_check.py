@@ -123,7 +123,7 @@ def input_check(obj):
   valid.append(check_valid_numeric(obj))
   valid.append(check_prod_rule_format(obj))
   valid.append(check_branching(obj))
-  #valid.append(check_nondeterminism(obj))
+  valid.append(check_nondeterminism(obj))
   #reset valid
   obj.axiom_edit.valid = 1
   obj.angle_edit.valid = 1
@@ -146,13 +146,24 @@ def check_nondeterminism(obj):
     #check if nondeterminism exists and if it is valid
     valid = 1
     prod_input = []
+    prod_percents = []
     for rule in obj.prod_rules_edit:
-        temprule = rule.split(":")
-        if temprule[0] not in prod_input:
-            prod_input.append(temprule[0])
-            print(temprule[0])
-    if sum(obj.prod_percent) != len(prod_input):
-        valid = 0
-        print("The precents do not equal the number of production rules.")
+        if rule.valid:
+            temprule = rule.text().split(":")
+            if temprule[0] not in prod_input:
+                prod_input.append(temprule[0])
+    print("Egg")
+    print(prod_input)
+    if obj.prod_percent:
+        for input_percent in obj.prod_percent:
+            if input_percent.valid:
+                temp_percent = float(input_percent.text())
+                prod_percents.append(temp_percent)
 
+    print("egg2")
+    print(prod_percents)
+
+    if sum(prod_percents) != float(len(prod_input)):
+        valid = 0
+    print("egg3")
     return valid
