@@ -179,14 +179,14 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
     def zoom_in(self):
         # if(self.active_camera==CameraType.Orbital):
-        self.cameras[1].addR(-0.2)
+        self.cameras[1].add_r(-0.2)
         # print("Radius: " + str(self.cameras[self.active_camera].getR()))
         # else:
         self.cameras[0].translate([0, 0, -0.2])
         self.update()
 
     def zoom_out(self):
-        self.cameras[1].addR(0.2)
+        self.cameras[1].add_r(0.2)
         self.cameras[0].translate([0, 0, 0.2])
         self.update()
 
