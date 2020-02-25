@@ -40,7 +40,7 @@ from OpenGL.GL import (
 from glm import vec3
 from graphics.SphericalCamera import SphericalCamera
 from graphics.FreeCamera import FreeCamera
-from graphics.Grid import Grid2D
+
 from graphics.colors import Colors
 from graphics.GraphMesh import GraphObject
 from lsystem.graph import Graph
@@ -68,7 +68,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.meshes = []
         self.meshes.append(GraphObject())
         self.meshes.append(GraphObject(3))
-        self.grid = Grid2D()  # 2D Intersection grid
+        # self.grid = Grid2D()  # 2D Intersection grid
 
         # Camera initialization
         self.cameras = [
