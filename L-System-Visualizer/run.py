@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QAction, QApplication, QFileDialog, QMainWindow, QMe
 
 from lsystem.getting_started import GettingStarted
 from lsystem.glossary import Glossary
-from lsystem.myUI import UIWidget
+from lsystem.my_ui import UIWidget
 from lsystem.save_rules_window import SaveRules
 from lsystem.settings import PopupSettings
 
