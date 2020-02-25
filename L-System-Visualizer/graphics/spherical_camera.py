@@ -1,5 +1,5 @@
-from graphics.Camera import *
-from graphics.OrbitalObject import *
+from graphics.camera import Camera
+from graphics.orbital_object import OrbitalObject
 
 
 class SphericalCamera(Camera, OrbitalObject):

@@ -1,7 +1,7 @@
 """This file handles the popup settings window"""
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QButtonGroup, QRadioButton
 
-from lsystem.LSystemWidget import CameraType
+from lsystem.lsystem_widget import CameraType
 
 
 class PopupSettings(QWidget):

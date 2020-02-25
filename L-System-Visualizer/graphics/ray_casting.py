@@ -1,6 +1,7 @@
 from glm import mat4, vec3, vec4, normalize, inverse
 
-def getMouseRaycast(mouse_pos, projection, view):
+
+def get_mouse_raycast(mouse_pos, projection, view):
     # Convert to clip space
     clipped_dir = vec4(mouse_pos[0], mouse_pos[1], -1, 1)
 

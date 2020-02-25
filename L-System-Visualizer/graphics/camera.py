@@ -2,14 +2,14 @@
 
 import numpy as np
 import glm  # from pyglm, not glm
-from OpenGL.GL import *
+from OpenGL.GL import GL_FALSE, glGetUniformLocation, glUseProgram, glUniformMatrix4fv
 
 
 class Camera:
     def __init__(self, width=600, height=600, fov=50.0):
         self.width = width
         self.height = height
-        self.FoV = fov
+        self.fov = fov
         self.clip_near = 0.1
         self.clip_far = 200.0
 
@@ -19,7 +19,7 @@ class Camera:
 
     def update_projection(self):
         self.projection = glm.perspective(
-            glm.radians(self.FoV),
+            glm.radians(self.fov),
             self.width / self.height,
             self.clip_near,
             self.clip_far,

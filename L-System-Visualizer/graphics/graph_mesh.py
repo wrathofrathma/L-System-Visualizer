@@ -1,15 +1,29 @@
 # Generic class for drawing anything exported from the Graph class.
 
-from OpenGL.GL import *
+from OpenGL.GL import (
+    GL_ELEMENT_ARRAY_BUFFER,
+    GL_ARRAY_BUFFER,
+    shaders,
+    glUniformMatrix4fv,
+    glGetUniformLocation,
+    GL_FALSE,
+    glEnableVertexAttribArray,
+    glVertexAttribPointer,
+    glDrawElements,
+    GL_LINES,
+    GL_VERTEX_ARRAY,
+    GL_COLOR_ARRAY,
+    GL_UNSIGNED_INT,
+    GL_FLOAT,
+    glDisableClientState,
+    glUseProgram,
+)
 
 from OpenGL.arrays import ArrayDatatype, vbo
 import numpy as np
-from graphics.QuaternionObject import *
+from graphics.quaternion_object import QuaternionObject
 from glm import value_ptr
-from ctypes import c_void_p
-
-from graphics.colors import Colors
-from lsystem.graph import *
+from lsystem.graph import graph_to_ogl
 
 
 # This class is a gridspace that overlays the l-system and detects intersections in individual gridspaces.

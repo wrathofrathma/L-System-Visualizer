@@ -1,5 +1,5 @@
-from graphics.Camera import *
-from graphics.QuaternionObject import *
+from graphics.camera import Camera
+from graphics.quaternion_object import QuaternionObject
 
 from glm import mat4, translate
 

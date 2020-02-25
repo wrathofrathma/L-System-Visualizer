@@ -38,11 +38,11 @@ from OpenGL.GL import (
 
 # Lsystem includes
 from glm import vec3
-from graphics.SphericalCamera import SphericalCamera
-from graphics.FreeCamera import FreeCamera
+from graphics.spherical_camera import SphericalCamera
+from graphics.free_camera import FreeCamera
 
 from graphics.colors import Colors
-from graphics.GraphMesh import GraphObject
+from graphics.graph_mesh import GraphObject
 from lsystem.graph import Graph
 
 # Other includes

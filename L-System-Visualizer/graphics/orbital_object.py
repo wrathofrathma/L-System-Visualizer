@@ -1,6 +1,6 @@
-from graphics.SpatialObject import *
+from graphics.spatial_object import SpatialObject
 
-from glm import mat4, vec3, lookAt
+from glm import vec3, lookAt
 from math import cos, sin, pi
 
 
