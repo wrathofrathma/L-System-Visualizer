@@ -1,0 +1,8 @@
+include *.txt setup.py
+recursive-include L-System-Visualizer *.py
+recursive-include L-System-Visualizer\lsystem *.py
+recursive-include L-System-Visualizer\graphics *.py
+recursive-include L-System-Visualizer\graphics\deprecated *.py
+recursive-include L-System-Visualizer\assets\shaders *.fs *.vs
+recursive-include L-System-Visualizer\assets\lsystem *.json
+recursive-include L-System-Visualizer\graphics\__pycache__ *.pyc
