@@ -31,17 +31,18 @@ class CustomLineEdit(QtWidgets.QLineEdit):
     """ Class that enables clicking in a text box """
 
     clicked = QtCore.pyqtSignal()
-
     def __init__(self):
         super().__init__()
         self.valid = True
         self.error_message = "X"
 
-    def mouse_press_event(self, QMouseEvent):
+    # Needs to be CamelCase
+    def mousePressEvent(self, QMouseEvent):
         self.clicked.emit()
 
     def reset_color(self):
         self.setStyleSheet("color: black;")
+        print("Color reset")
 
     def clear_box(self):
         self.setText("")
@@ -50,6 +51,7 @@ class CustomLineEdit(QtWidgets.QLineEdit):
     def reset_box(self):
         self.reset_color()
         self.clear_box()
+
 
 
 class UIWidget(QWidget):
@@ -64,13 +66,14 @@ class UIWidget(QWidget):
         self.axiom_edit = CustomLineEdit()
         self.angle_edit = CustomLineEdit()
         self.iters_edit = CustomLineEdit()
+        self.text_boxes = [self.axiom_edit, self.angle_edit, self.iters_edit]
         self.prod_plus = QPushButton("+", self)
         self.lsys_button = QPushButton("Generate L System", self)
         self.boxcount_button = QPushButton("Fractal Dim", self)
         self.widget = QWidget()
         self.scroll_area = QtWidgets.QScrollArea()
         self.layout_examples = QVBoxLayout(self.widget)
-        
+
         self.prods = 1
         self.prod_rules_edit = []
         self.examples = []
@@ -154,6 +157,7 @@ class UIWidget(QWidget):
         self.prod_rules_edit[0].clicked.connect(
             lambda: self.prod_rules_edit[0].reset_color()
         )
+        self.text_boxes.append(self.prod_rules_edit[-1])
         self.prod_rules_edit[0].returnPressed.connect(self.lsys_button.click)
         self.prod_rules_edit[0].textChanged.connect(lambda: self.show_popup())
 
@@ -161,6 +165,7 @@ class UIWidget(QWidget):
         self.prod_percent[0].setFixedWidth(50)
         self.prod_percent[0].setText("1")
 
+        self.text_boxes.append(self.prod_percent[-1])
         self.angle_edit.returnPressed.connect(self.lsys_button.click)
         self.angle_edit.clicked.connect(lambda: self.angle_edit.reset_color())
 
@@ -237,8 +242,8 @@ class UIWidget(QWidget):
         fig.canvas.mpl_connect('pick_event', self.onpick)
         plt.show()
         return True
-        
-        
+
+
 
     def add_widgets(self):
 
@@ -259,6 +264,7 @@ class UIWidget(QWidget):
         self.layout.addWidget(self.lsys_button, 20, 0, 1, -1)
 
     def show_popup(self):
+        self.reset_text_box_color()
         prod_rule = ""
         rules = ""
         # repeat = ""
@@ -294,6 +300,7 @@ class UIWidget(QWidget):
         if (")" in all_prod_rule or "(" in all_prod_rule) and self.made_angle is False:
             self.turn_angle = QLabel("Turning Angle")
             self.turn_angle_edit = CustomLineEdit()
+            self.text_boxes.append(self.turn_angle_edit)
             self.turn_angle_edit.returnPressed.connect(self.lsys_button.click)
             self.turn_angle_edit.clicked.connect(
                 lambda: self.turn_angle_edit.reset_color()
@@ -315,10 +322,12 @@ class UIWidget(QWidget):
             self.turn_angle_edit = None
             self.turn_angle = None
             self.made_angle = False
+            self.text_boxes.remove(self.turn_angle_edit)
 
         if (">" in all_prod_rule or "<" in all_prod_rule) and self.made_line is False:
             self.line_scale = QLabel("Line Scale")
             self.line_scale_edit = CustomLineEdit()
+            self.text_boxes.append(self.line_scale_edit)
             self.line_scale_edit.returnPressed.connect(self.lsys_button.click)
             self.line_scale_edit.clicked.connect(
                 lambda: self.line_scale_edit.reset_color()
@@ -340,11 +349,12 @@ class UIWidget(QWidget):
             self.line_scale_edit = None
             self.line_scale = None
             self.made_line = False
+            self.text_boxes.remove(self.line_scale_edit)
 
     # Probably doesn't need self as a param, can just be static.
     # Generates a rule dictionary from an array of production rule strings taken from the UI
     def gen_rule_dict(self, prod_rules):
-        """ 
+        """
         formats production rules as
         {"F": [[p,rule],[p,rule]], "f":[[p,rule],[p,rule]] ... }
         """
@@ -373,6 +383,8 @@ class UIWidget(QWidget):
             self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
             self.prod_rules_edit.append(CustomLineEdit())
             self.prod_percent.append(CustomLineEdit())
+            self.text_boxes.append(self.prod_rules_edit[-1])
+            self.text_boxes.append(self.prod_percent[-1])
             self.prod_percent[-1].setFixedWidth(50)
             self.prod_rules_edit[self.prods - 1].textChanged.connect(
                 lambda: self.show_popup()
@@ -401,6 +413,9 @@ class UIWidget(QWidget):
     def less_prods(self):
         """ Removes productions when - button is clicked """
         if self.prods > 1:
+            self.text_boxes.remove(self.prod_rules_edit[-1])
+            self.text_boxes.remove(self.prod_percent[-1])
+
             # remove last widget prodrules
             self.layout.removeWidget(self.prod_rules[-1])
             self.prod_rules[-1].deleteLater()
@@ -431,12 +446,14 @@ class UIWidget(QWidget):
             self.minuses = None
             self.prods = self.prods - 1
 
+
         if self.prods > 1:
             self.minuses = QPushButton("-", self)
             self.minuses.clicked.connect(self.less_prods)
             self.layout.addWidget(self.minuses, self.prods + 1, 10, 1, 1)
 
     def gen_sys(self):
+
         """
         If the input is valid, iterates through productions
         and sends to graphics to be drawn
@@ -516,3 +533,10 @@ class UIWidget(QWidget):
             self.line_scale_edit.setText(str(grammar["line_scale"]))
         self.iters_edit.setText(str(grammar["iterations"]))
         self.gen_sys()
+
+    def reset_text_box_color(self):
+        print("in reset color num textboxes = ", len(self.text_boxes))
+
+        for box in self.text_boxes:
+            print("reseting color ")
+            box.reset_color()

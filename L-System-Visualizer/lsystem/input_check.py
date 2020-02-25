@@ -157,7 +157,7 @@ def print_error_message(obj, msg):
 
 def check_nd(obj):
     """determine if the percentages are valid"""
-    valid = False
+    valid = True
     prod_input = []
     prod_percents = []
     for rule in obj.prod_rules_edit:
