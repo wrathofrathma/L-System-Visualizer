@@ -172,11 +172,14 @@ def check_nondeterminism(obj):
                     float(input_percent.text())
                 except:
                     valid = 0
+                    print_error_message(input_percent, "Invalid Inputs")
                     return valid
                 temp_percent = float(input_percent.text())
                 if temp_percent > 1:
+                    print_error_message(input_percent, "The input is not valid")
                     valid = 0
                 prod_percents.append(temp_percent)
-    if sum(prod_percents) != float(len(prod_input)):
-        valid = 0
+        if sum(prod_percents) != float(len(prod_input)):
+            print_error_message(input_percent, "invalid inputs")
+            valid = 0
     return valid
