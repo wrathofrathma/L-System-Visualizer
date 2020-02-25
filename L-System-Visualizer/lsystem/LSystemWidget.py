@@ -1,4 +1,4 @@
-'''This file handles the OpenGL Window actions'''
+"""This file handles the OpenGL Window actions"""
 # Python core includes
 from PIL import Image
 from time import time
@@ -143,8 +143,8 @@ class LSystemDisplayWidget(QOpenGLWidget):
         # Update the camera data
         self.cameras[self.active_camera].update()
         # Upload the updates to both shaders.
-        self.cameras[self.active_camera].applyUpdate(self.shader2D)
-        self.cameras[self.active_camera].applyUpdate(self.shader3D)
+        self.cameras[self.active_camera].apply_update(self.shader2D)
+        self.cameras[self.active_camera].apply_update(self.shader3D)
         # Update the shader uniform variables.
         glUseProgram(self.shader2D)
         glUniform1f(
@@ -195,17 +195,17 @@ class LSystemDisplayWidget(QOpenGLWidget):
         self.cameras[1].theta = 90
         self.cameras[1].psi = 0
         self.cameras[1].r = 2
-        self.cameras[0].setPosition([0, 0, 1])
-        self.cameras[0].setOrientation([0, 0, 0])
+        self.cameras[0].set_position([0, 0, 1])
+        self.cameras[0].set_orientation([0, 0, 0])
         self.update()
 
     def mousePressEvent(self, event):
-        ''' Stores the mouse position when clicked'''
+        """ Stores the mouse position when clicked"""
         self.mouse_last_x = event.pos().x()
         self.mouse_last_y = event.pos().y()
 
     def mouseMoveEvent(self, event):
-        '''Calculates the movement for panning'''
+        """Calculates the movement for panning"""
         # Store current mouse position
         self.mouse_x = event.pos().x()
         self.mouse_y = event.pos().y()
@@ -216,7 +216,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
 
         self.mouse_last_x = self.mouse_x
         self.mouse_last_y = self.mouse_y
-        
+
         if self.active_camera == CameraType.Orbital:
             # Get the radius
             # radius = self.cameras[self.active_camera].getR()
@@ -347,7 +347,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
     def center_mesh(self):
         if len(self.graph.vertices) == 0:
             return
-        (xmax, ymax), (xmin, ymin) = self.meshes[self.active_mesh].detect2DEdges()
+        (xmax, ymax), (xmin, ymin) = self.meshes[self.active_mesh].detect_2d_edges()
         xdiff = abs(xmax - xmin)
         ydiff = abs(ymax - ymin)
         scale = max(xdiff, ydiff)
@@ -357,7 +357,7 @@ class LSystemDisplayWidget(QOpenGLWidget):
         ymid = (ymax + ymin) / 2.0 * -1
         pos[0] = xmid
         pos[1] = ymid
-        self.meshes[self.active_mesh].setPosition(pos)
+        self.meshes[self.active_mesh].set_position(pos)
 
     # # Centers the mesh in the view
     # def center_mesh(self):

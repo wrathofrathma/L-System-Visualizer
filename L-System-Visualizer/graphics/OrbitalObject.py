@@ -3,6 +3,7 @@ from graphics.SpatialObject import *
 from glm import mat4, vec3, lookAt
 from math import cos, sin, pi
 
+
 class OrbitalObject(SpatialObject):
     def __init__(self):
         super().__init__()
@@ -12,74 +13,86 @@ class OrbitalObject(SpatialObject):
         self.deg = pi / 180.0
         self.origin = vec3(0)
 
-    def setPosition(self, r, theta, psi):
+    def set_position(self, r, theta, psi):
         self.r = r
         self.theta = theta
         self.psi = psi
-        self.position = vec3(r*cos(psi*self.deg)*cos(theta*self.deg),r*sin(psi*self.deg),r*cos(psi*self.deg)*sin(theta*self.deg))
+        self.position = vec3(
+            r * cos(psi * self.deg) * cos(theta * self.deg),
+            r * sin(psi * self.deg),
+            r * cos(psi * self.deg) * sin(theta * self.deg),
+        )
 
-    def getPosition(self):
-        self.position = vec3(self.r*cos(self.psi*self.deg)*cos(self.theta*self.deg),self.r*sin(self.psi*self.deg),self.r*cos(self.psi*self.deg)*sin(self.theta*self.deg))
+    def get_position(self):
+        self.position = vec3(
+            self.r * cos(self.psi * self.deg) * cos(self.theta * self.deg),
+            self.r * sin(self.psi * self.deg),
+            self.r * cos(self.psi * self.deg) * sin(self.theta * self.deg),
+        )
         return self.position
 
-    def setOrigin(self, origin):
+    def set_origin(self, origin):
         self.origin = vec3(origin)
 
-    def addTheta(self, num):
+    def add_theta(self, num):
         self.theta += num
-        if(self.theta > 360):
-            self.theta-=360
-        if(self.theta<0):
-            self.theta+=360
-        self.setPosition(self.r, self.theta, self.psi)
+        if self.theta > 360:
+            self.theta -= 360
+        if self.theta < 0:
+            self.theta += 360
+        self.set_position(self.r, self.theta, self.psi)
 
-    def addR(self,num):
-        self.r+=num
-        if(self.r<0.000001):
-            self.r=0.000001
-        self.setPosition(self.r, self.theta, self.psi)
+    def add_r(self, num):
+        self.r += num
+        if self.r < 0.000001:
+            self.r = 0.000001
+        self.set_position(self.r, self.theta, self.psi)
 
-    def addPsi(self,num):
-        self.psi+=num
-        if(self.psi>90):
-            self.psi=90
-        if(self.psi<-90):
-            self.psi=-90
-        self.setPosition(self.r, self.theta, self.psi)
+    def add_psi(self, num):
+        self.psi += num
+        if self.psi > 90:
+            self.psi = 90
+        if self.psi < -90:
+            self.psi = -90
+        self.set_position(self.r, self.theta, self.psi)
 
-    def setPsi(self, num):
-        self.psi=num
-        if(self.psi>90):
-            self.psi=90
-        if(self.psi<-90):
-            self.psi=-90
-        self.setPosition(self.r, self.theta, self.psi)
+    def set_psi(self, num):
+        self.psi = num
+        if self.psi > 90:
+            self.psi = 90
+        if self.psi < -90:
+            self.psi = -90
+        self.set_position(self.r, self.theta, self.psi)
 
-    def setR(self, num):
+    def set_r(self, num):
         self.r = num
-        if(self.r<0.000001):
-            self.r=0.000001
-        self.setPosition(self.r, self.theta, self.psi)
+        if self.r < 0.000001:
+            self.r = 0.000001
+        self.set_position(self.r, self.theta, self.psi)
 
-    def setTheta(self, num):
-        self.num=num
-        while(self.theta>360):
-            self.theta-=360
-        while(self.theta<0):
-            self.theta+=360
-        self.setPosition(self.r, self.theta, self.psi)
+    def set_theta(self, num):
+        self.num = num
+        while self.theta > 360:
+            self.theta -= 360
+        while self.theta < 0:
+            self.theta += 360
+        self.set_position(self.r, self.theta, self.psi)
 
-    def getTheta(self):
+    def get_theta(self):
         return self.theta
 
-    def getR(self):
+    def get_r(self):
         return self.r
 
-    def getPsi(self):
+    def get_psi(self):
         return self.psi
 
-    def getFacing(self):
-        eye = vec3(self.r*cos(self.psi*self.deg)*cos(self.theta*self.deg),self.r*sin(self.psi*self.deg),self.r*cos(self.psi*self.deg)*sin(self.theta*self.deg))
+    def get_facing(self):
+        eye = vec3(
+            self.r * cos(self.psi * self.deg) * cos(self.theta * self.deg),
+            self.r * sin(self.psi * self.deg),
+            self.r * cos(self.psi * self.deg) * sin(self.theta * self.deg),
+        )
         center = self.origin
-        up = vec3(0,1,0)
-        return lookAt(eye,center,up)
+        up = vec3(0, 1, 0)
+        return lookAt(eye, center, up)
