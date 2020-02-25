@@ -27,7 +27,6 @@ from lsystem.input_check import input_check
 from lsystem.lsystem_widget import LSystemDisplayWidget
 from lsystem.fractal_dim import fractal_dim_calc
 
-
 class CustomLineEdit(QtWidgets.QLineEdit):
     """ Class that enables clicking in a text box """
 
@@ -214,17 +213,32 @@ class UIWidget(QWidget):
             start_size = start_size * 2
         # y_arr = np.asarray(y_arr)
         # x_arr = np.asarray(x_arr)
-        plt.plot(self.x_arr, self.y_arr, "bo", picker=0.5)
-        plt.title(
+        figi, ax = plt.subplots()
+        line, = ax.plot(self.x_arr, self.y_arr, "bo", picker=5)
+        ax.set_title(
             "Fractal dimension = {}".format(np.polyfit(self.x_arr, self.y_arr, 1)[0])
         )  # np.average(fract_avg)))
+        figi.canvas.mpl_connect('pick_event', self.onpick)
         plt.show()
         print("AVERAGE: ", np.average(fract_avg))
 
-    def on_pick(self, event):
-        self.fract_points.append(event)
-        print("The event is: ", event)
-        print("The x point? ", self.x_arr[event.ind])
+    def onpick(self, event):
+        print("I am an EVENT")
+        ind = event.ind
+        print("The x array is: ", self.x_arr)
+        x_arr = np.delete(self.x_arr, ind, axis=None)
+        y_arr = np.delete(self.y_arr, ind, axis=None)
+        print("The x array is: ", x_arr)
+        fig, ax = plt.subplots()
+        ax.plot(x_arr, y_arr, "bo", picker=5)
+        ax.set_title(
+            "Fractal dimension = {}".format(np.polyfit(x_arr, y_arr, 1)[0])
+        )  # np.average(fract_avg)))
+        fig.canvas.mpl_connect('pick_event', self.onpick)
+        plt.show()
+        return True
+        
+        
 
     def add_widgets(self):
 
