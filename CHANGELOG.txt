@@ -1,0 +1,547 @@
+Changelog
+=========
+
+
+(unreleased)
+------------
+- Merge branch 'dev' of https://github.com/wrathofrathma/L-System-
+  Visualizer into dev. [unknown]
+- Modules and packages should be snake case. [Rathma]
+- Manifest first attempt. [unknown]
+- F. [rathma]
+- Cleaning up star imports, and changing module names to fit pep8.
+  [rathma]
+- Deprecating some early cold. [rathma]
+- Added a remove_saved_lsystem function. [rathma]
+- Refactoring for pep8. [rathma]
+- Added comments and switched to pep8. [unknown]
+- Patched out some errors in input checking. [unknown]
+- Fixed non-determinism. [Lela Bones]
+- Beta of nondeterminism input check. [unknown]
+- Last minute reordering, please delete your local and reinstall. [Lela
+  Bones]
+- Fixed most of my UI code, still need to seperate files. [Lela Bones]
+- In the middle of refactorign myUi. [Lela Bones]
+- Refactored parsing.py, still some logic things to fix. [Lela Bones]
+- Merge branch 'dev' of https://github.com/wrathofrathma/L-System-
+  Visualizer into dev. [Lela Bones]
+- Made a screenshot window. [mattythats]
+- Reformatting the save rules lsystem file. [Lela Bones]
+- Refactored settings.py. [Lela Bones]
+- Reformatted stack loop.py need to change s and t variables for better
+  naming. [Lela Bones]
+- I fefactored the run.py and am reformatting the way files are saved.
+  [Lela Bones]
+- Fixed the drag function I broke (Note: It is still bad) [Lela Bones]
+- FOR RESEARCH: only do lin reg at the end. [Stephanie Warman]
+- IPUSHEDITALL, also steph and I did research junks. [Lela Bones]
+- Merge branch 'dev' of https://github.com/wrathofrathma/L-System-
+  Visualizer into dev. [Stephanie Warman]
+- Brand new docs got no keys. [mattythats]
+- Small debugging. [Lela Bones]
+- Began nondeterminism check. [unknown]
+- Updated read me. [Lela Bones]
+- Merge branch 'dev' of https://github.com/wrathofrathma/L-System-
+  Visualizer into dev. [Lela Bones]
+- Refactored with pep8. [unknown]
+- Some trimming down of the fat. [Rathma]
+- Cleaning up some imports. [Rathma]
+- F. [Rathma]
+- Removed unecessary files. [Lela Bones]
+- Fractal stuff for research. [Stephanie Warman]
+- Updated requirements. [Lela Bones]
+- Refactor stuff 2. [mattythats]
+- Deleting Files. [Lela Bones]
+- Refactored for workable code. [Stephanie Warman]
+- Merge branch 'dev' of https://github.com/wrathofrathma/L-System-
+  Visualizer into dev. [Stephanie Warman]
+- Fixed rest of files for pep8. [Lela Bones]
+- Pep8 style. [mattythats]
+
+  getting started content is a wip
+- Reformatted the UI Files. [Lela Bones]
+- Merge branch 'dev' of https://github.com/wrathofrathma/L-System-
+  Visualizer into dev. [unknown]
+- Switched from threads to processes. [unknown]
+- Context sesative still broke. [unknown]
+- Refactored stack_loop. [Stephanie Warman]
+- Fixed a couple things I missed. [Stephanie Warman]
+- Put in pep8 standard (still needs logical refactoring) [Stephanie
+  Warman]
+- Add files via upload. [mattblairro]
+- Fractal_dim takes graph input (maybe double check accuracy of pixel
+  map) [Stephanie Warman]
+- Updated myUI to call correctly named functions, removed debug
+  statments. [Stephanie Warman]
+- Merge branch 'dev' of https://github.com/wrathofrathma/L-System-
+  Visualizer into dev. [Stephanie Warman]
+- Save/load functionality in. [mattythats]
+
+  run - getting the functionality up in the menu bar
+
+  save_rules - custom popup window for lsystem name
+
+  myUI - added a case to load user-saved systems without crashing
+- I added 3D, forgot what I changed adding everything. [Stephanie
+  Warman]
+- Test. [Rathma]
+- Some 3d stuff. [Rathma]
+- Centering on graph load. [Rathma]
+- Removed centering on every frame. [Rathma]
+- Changing the runtime of indice calc from n cubed to n. [Rathma]
+- Speeding up the vertice export. [Rathma]
+- Recentered Cantor Set. [Lela Bones]
+- Turning off the grid. [Rathma]
+- Converting most of our mesh stuff to adjacency lists. [Rathma]
+- Hardcoding the white fix for now. [Rathma]
+- Added fractal dimension calculation. [Stephanie Warman]
+- Finished pixel mapping. [Stephanie Warman]
+- Replaced tuples with arrays. [Stephanie Warman]
+- Normalized coordinates to be between 0 and 1. [Stephanie Warman]
+- Planning ahead with normalizing. [Stephanie Warman]
+- Visualizing box counting. [Stephanie Warman]
+- Adding code for box counting. [Stephanie Warman]
+- Fixed negative angle issue. [Stephanie Warman]
+- Basic Non-Determinism linked up. [Lela Bones]
+- Patching shaders to work with glsl 320 es. [Rathma]
+- Fixed the things I broke. [Lela Bones]
+- Working on getting pixel map. [Stephanie Warman]
+- Fixing fractal button for steph. [Lela Bones]
+- Working on getting pixel mapping for fractal dim. [Stephanie Warman]
+- Added grid toggle. [Rathma]
+- Fixed grid. [Lela Bones]
+- Fixed centering. [Lela Bones]
+- Made current settings show up when you open settings. [Stephanie
+  Warman]
+- Added shortcut for settings menu. [Lela Bones]
+- Changed to numpy arrays instead of glm vectors because numpy arrays
+  are picklable. [wrathofrathma]
+- Added some more colors. [wrathofrathma]
+- Cleaned up LSystemWidget code a bit & commented more. Added debug
+  toggles & the grid mesh. [wrathofrathma]
+- Created a class on top of the graph class to generate a 2D grid
+  easily. [wrathofrathma]
+- Created a class to accept the output vertices, colors, and indices
+  from the graph. [wrathofrathma]
+- Graph. [wrathofrathma]
+- Glossary and getting started things. [mattythats]
+- Adding some predefined colors for ease of use. [wrathofrathma]
+- Adjacency list used for our grid system & vertice gen. [wrathofrathma]
+- Fixed input checking for turning angle error. [Stephanie Warman]
+- Linked up the graphics widget with the UI options. [wrathofrathma]
+- Added multi-camera support with toggles. Added 2D panning around
+  again, and implemented free camera zoom/reset as well. [wrathofrathma]
+- Added getters for object positions. [wrathofrathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Multithreading. [mattblairro]
+- Updated toggle buttons in settings menu. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Dumb function to hook into for changing the camera type.
+  [wrathofrathma]
+- Added a function to set draw options for the mesh. [wrathofrathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Changed input check to not clear box on click. [Stephanie Warman]
+- Made alphabet non global. [Stephanie Warman]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Fixed input checking some more. [Stephanie Warman]
+- Working on settings menu. [Lela Bones]
+- Fixing bugs. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Fixed input checking. [Stephanie Warman]
+- Switching to colons for productions. [Lela Bones]
+- Fixxing bugs so the special options have default values if not
+  defined. [Lela Bones]
+- Displaying/deleting certain options only if specific letters from
+  alphabet is being used. [Lela Bones]
+- Deleting/showing option boxes when specific alphabet characters are
+  used. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Got rid of print statement. [Stephanie Warman]
+- Changed ( and ) to permanently change angle. [Stephanie Warman]
+- Linked lsystem button to enter key. [Lela Bones]
+- Fixed input checking ofr > and < [Stephanie Warman]
+- Added <, >, relevant ui bits and input checking. [mattythats]
+- Fixed pipeline and parenthesis. [mattythats]
+- Add files via upload. [mattblairro]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Made deep copy of prods, so we don't get into trouble. [Rathma]
+- Renaming more files. [Lela Bones]
+- Changed window size. [Lela Bones]
+- Refactored Lsystem. [Stephanie Warman]
+- Implimenting probablities in non-determinism. [Stephanie Warman]
+- Starting to refactor Lsystem.py file first. [Lela Bones]
+- Added popup and in process of rearranging and documenting code. [Lela
+  Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Added context sensitive. [Stephanie Warman]
+- Finished incorporating non-deter into the rest of the code. [Stephanie
+  Warman]
+- Saved L-systems now still go through genRuleDict. [Stephanie Warman]
+- Fixed typo in Cantor Set. [Stephanie Warman]
+- Fixed bug in G, g. [Stephanie Warman]
+- Add files via upload. [mattblairro]
+- Add files via upload. [mattblairro]
+- Got rid of default prod rules in dictionary. [Stephanie Warman]
+- Fixed nondetermnism. [mattblairro]
+- Add files via upload. [mattblairro]
+- Add files via upload. [mattblairro]
+- Merge https://github.com/wrathofrathma/L-System-Visualizer into
+  development. [Lela Bones]
+- Update README.md. [Lela]
+- Update README.md. [Lela]
+- Packaged environmen. [Lela Bones]
+- Merge pull request #1 from wrathofrathma/development. [Lela]
+
+  Rebasing master on dev branch for newest pre version. Version 1 will come out next.
+- Update README.md. [Lela]
+- Update README.md. [Lela]
+- Update README.md. [Lela]
+
+  Started adding to readme
+- Set horizontal scroll to not show. [Lela Bones]
+- Add files via upload. [mattblairro]
+- Fixed Koch's snowflake. [Stephanie Warman]
+- Shifted Cantor Set up a little. [Stephanie Warman]
+- Added more L-systems to json file. [Stephanie Warman]
+- Added input checking for brackets and control characters. [Stephanie
+  Warman]
+- Whoops. [mattythats]
+- Very light changes. [mattythats]
+- Ray casting from mouse position is all fucked up until I cast from the
+  mouse position rather than the camera position. [Rathma]
+- Cleaned up code and added comments for clarity. [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Update stack_loop.py. [mattythats]
+- Added an axis graphical representation & fixed shader error. [Rathma]
+- 60fps color stuff. Need to make it do the wave. [Rathma]
+- Adding example. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Stephanie Warman]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Removing unecessary files. [Lela Bones]
+- Incorporated Matt T's code. [Stephanie Warman]
+- Pulsing. [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Can't remember if I changed the things. [Lela Bones]
+- Allowed for more than one preset production rule. [Lela Bones]
+- Got rid if print statements. [Stephanie Warman]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Stephanie Warman]
+- Updated json file. [Stephanie Warman]
+- Added colors, removed default gen, going to add a timer for the
+  colors. [Rathma]
+- Whoops, fixed the reset camera angle to not just be a line. [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Removed annoying print statement. [wrathofrathma]
+- Can set the origin of the camera now. [wrathofrathma]
+- Implemented basic raycasting. [wrathofrathma]
+- Converting to orbital camera. [wrathofrathma]
+- Splitting 2D & 3D Shader usage. Adding 2D/3D mesh toggle.
+  [wrathofrathma]
+- Scroll bar modifications, fixed minus functionality. [Lela Bones]
+- Fixed scrolling and spacing. [Lela Bones]
+- Dont yell at me I deleted 4. Also I fixed the scroll. [Lela Bones]
+- Adding rough of scrollbar. [Lela Bones]
+- Slowly moving towards a 2D/3D split. [wrathofrathma]
+- Bug fix. [Stephanie Warman]
+- Fixed another angle key error. [Stephanie Warman]
+- Fixed angle key error. [Stephanie Warman]
+- Delete UI.v0.02.py. [Lela]
+- Added formating probablity functionality (just cahnge not_det to = 1
+  in genRuleDict. [Stephanie Warman]
+- Added missing comma. [mattythats]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Stephanie Warman]
+- Removing .png file. [Lela Bones]
+- Modify architecture for application. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Changed mesh to white real quick. [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Visualizer into development.
+  [Lela Bones]
+- Starting to change architecture for application. [Lela Bones]
+- Fixed little f. [Stephanie Warman]
+- Allowed angle to equal 0. [Stephanie Warman]
+- Fixed nested branching. [Stephanie Warman]
+- Added prototype branching, still needs input checking. [Stephanie
+  Warman]
+- Fixed the zoom in function. [Lela Bones]
+- Dragging around town. [Lela Bones]
+- Merge pull request #4 from wrathofrathma/dev-docs. [Lela]
+
+  Add files via upload
+- Add files via upload. [mattythats]
+
+  documentation for the development branch so far
+- Made it so any angle can be inputted. [Stephanie Warman]
+- Fix close event error. [Lela Bones]
+- Lela commanded me to push. [Rathma]
+- Closing properly again. [Lela Bones]
+- Added view menu with zoom capabilities. [Lela Bones]
+- Cleanup. [wrathofrathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [wrathofrathma]
+- I didn't add files. [Lela Bones]
+- Fixing screenshot offset to only include the opengl frame.
+  [wrathofrathma]
+- Added file saving and fixed closed event error. [Lela Bones]
+- Added menu linked with screenshot. [Lela Bones]
+- Switching to a free camera so we can zoom on the mouse position when
+  clicking in the future. [wrathofrathma]
+- Moved production rules to be in read stack to avoid so many function
+  calls, reduces readability :( increase speed :) [Stephanie Warman]
+- Calculate trig with numpy array for speed up. [Stephanie Warman]
+- Added a FreeCamera class for moving around a scene manually. Also
+  getting ready for scaling to the size of a viewport. Then again we
+  could just clip the view/projection matrix and normalize the
+  vectors... [wrathofrathma]
+- Fixed error messege color reset when preset example pressed.
+  [Stephanie Warman]
+- Don't need dirty print statements. [wrathofrathma]
+- Added colors to our mesh & shaders. [wrathofrathma]
+- Add files via upload. [mattblairro]
+
+  two thread parallization
+- Switched it up, now axi1 and axi2 are lists and we have no "que"
+  [Stephanie Warman]
+- Actually fixed. [Stephanie Warman]
+- Redesigned, now uses a list of one str called que, (list so it can be
+  passed by ref) [Stephanie Warman]
+- Fixed. [Stephanie Warman]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Stephanie Warman]
+- Add files via upload. [mattblairro]
+
+  this does not work uploaded for debugging purposes
+- Added mouse input support. Now clicks do a basic zoom in and out. Will
+  expand on this later. [wrathofrathma]
+- Fixed some function calls with orbital objects. [wrathofrathma]
+- Testing something. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Stephanie Warman]
+- Moved cleanup function to close event. [Rathma]
+- Deleted a print statement. [Stephanie Warman]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Fixed little f. [Stephanie Warman]
+- Added a close event to ui. [Rathma]
+- Trying to fix things. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Removed weird file. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Fixing exit button. [Lela Bones]
+- Camera class working with viewport scaling. Also fixed a multi-
+  inheritance issue with super constructors. [Rathma]
+- Forgot to set the shader when splitting. [Rathma]
+- Lots of shit going on. Moved graphics related stuff to graphics
+  directory. Started work on 3D stuff & things required for scaling &
+  translation. [wrathofrathma]
+- Instead of removing duplicates, only add vertices if letter is 'F'
+  [Stephanie Warman]
+- Made it so you can enter more than one letter for the axiom, made
+  default production rules in genRuleDict. [Stephanie Warman]
+- Changed draw function: glDrawArrays(GL_LINE_STRIP, 0,
+  int(len(self.vertices)/ 2.0)) to get rid of the dividing by 2.
+  [Stephanie Warman]
+- Fixed key errors and added angle attribute to pointer class.
+  [Stephanie Warman]
+- Has a shader error when using little f, made it so that the
+  generate_lsystem function returns an array and added a loop to create
+  meshes for each set of vertices. [Stephanie Warman]
+- Dawn of quaternions. [Rathma]
+- Whoopsie. [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Auto gen examples. [Lela Bones]
+- Cleaning up. [Rathma]
+- Comments and shit. [Rathma]
+- Added a clear mesh method and changed setting verts to add splitting.
+  [Rathma]
+- Fixed display of hardcoded examples. [Stephanie Warman]
+- Commented out broken code. [Stephanie Warman]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Stephanie Warman]
+- Trying to prepopulate known lsystems. [Lela Bones]
+- Changed generate_lystem to return a list of list of vertices (a
+  sperate list for each little f) MIGHT NOT WORK. [Stephanie Warman]
+- Fixing Chris's terrible comments. [Lela Bones]
+- Fixed spacing in code. [Lela Bones]
+- Added clearing mesh container & splitting mesh convenience methods.
+  [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Lela Bones]
+- Now supporting multiple mesh drawings. [Rathma]
+- Made minus button function and properly commented functions. [Lela
+  Bones]
+- Made input checking check if axiom in production rules, and made error
+  message clear on click. [Stephanie Warman]
+- Dynamically adding prod rules for alphabet size. [Lela Bones]
+- Moved saved lsystem stuff to assets/lsystems/ [wrathofrathma]
+- Rebound the exit button to a cleanup method to call graphics cleanup
+  methods before exit. [wrathofrathma]
+- Removed unused graphics code & moved the Mesh to the lsystem folder.
+  Removed old shader class because we moved to PyOpenGL's convenience
+  methods. [wrathofrathma]
+- Forgot to add the ghetto doc of saving lsystems. [wrathofrathma]
+- Added lsystem saving to json. [wrathofrathma]
+- Added the ability to save screenshots of the given opengl context.
+  [wrathofrathma]
+- Fixed the shaders from not drawing properly. [wrathofrathma]
+- Created loaders/getters for saved lsystems in json format, and moved
+  lsystem generation to a specific method so we're not redoing it each
+  time. [wrathofrathma]
+- Changing to version 0.2. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Fixed input checking. [Lela Bones]
+- Change line width to 1. [Rathma]
+- Made production rule addder better, Steph will have to redo input
+  checking, prod rules are now in a list. [Lela Bones]
+- Combined windows and added + for production rules. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Stephanie Warman]
+- Fixed input checking. [Stephanie Warman]
+- Restructuring the top-level directory for clarity. [Rathma]
+- Moved my todo-list elsewhere. [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Can put more than one letter for axiom. [Stephanie Warman]
+- Tracking my TODO list. [Rathma]
+- Generalized & commented input formatting & rule dictionary creation.
+  [Rathma]
+- Some convenience functions for normalizing coords & generating verts
+  for popular fractals. [Rathma]
+- Adding a main function to Matt's thing. [Rathma]
+- Generating based on user input. [Rathma]
+- Added angle to the stack loop. [Rathma]
+- Added angle parameter to the production rules. [Rathma]
+- Testing various opengl stuffs. [Rathma]
+- Hardcoded LSystem working example. [Rathma]
+- Add files via upload. [mattblairro]
+- Changed rotation function to plus and minus functions. [Stephanie
+  Warman]
+- Switching to GL_LINE_STRIPs to reduce the amount of data we send to
+  the GPU. [Rathma]
+- Ditching the container and moving the convenience methods to the
+  widget itself. [Rathma]
+- Working mesh & widget finally. But colors are fucked. [Rathma]
+- Gitignore with ignored pyc/pycache files. [Rathma]
+- Cleaning up pycache stuff and adding my gitignore file so this stops
+  happening. [Rathma]
+- Beginning the redesign before switching computers. [Rathma]
+- Commenting and setting up a clean test environment to figure out
+  later. [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Stephanie Warman]
+- Working on UI/GL Combo. [Lela Bones]
+- This reads the parser output and converts to vertices. [Stephanie
+  Warman]
+- Functional test drawing. [Rathma]
+- Messing around with built in VBO convenience classes. [Rathma]
+- Moving all OpenGL calls to a place where the context is valid.
+  [Rathma]
+- Derping around. [Rathma]
+- Dummy opengl quad for testing. [Rathma]
+- Shifting around virtual methods. [Rathma]
+- Some shader loading changes. [Rathma]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Rathma]
+- Added member for initial position. [Stephanie Warman]
+- Made pos a np array. [Stephanie Warman]
+- Shader updates, and moving towards building a mesh container. [Rathma]
+- Made it so you can set the starting pos. [Stephanie Warman]
+- Allowed spaces in prodRules input. [Stephanie Warman]
+- Fixing red X on angle. [Lela Bones]
+- Added color to error message. [Stephanie Warman]
+- Box clears on click, but only when error message is displayed.
+  [Stephanie Warman]
+- Fixed superclass constructor call, an in-class method call, and
+  cleaned up some print statements. [Rathma]
+- Everyone should add *.pyc or the __pycache__ folders to their
+  .gitignore. [Rathma]
+- Fixed shader loading. Can only load shaders within a valid GL context
+  and we can only do that in the initializeGL section. [Rathma]
+- Removed unused function. [Stephanie Warman]
+- Added input checking, no colors yet. [Stephanie Warman]
+- Adding the buttons and input functionality. [Lela Bones]
+- Merge branch 'development' of
+  https://github.com/wrathofrathma/L-System-Project into development.
+  [Stephanie Warman]
+- Basic new UI. [Lela Bones]
+- Increased readability. [Stephanie Warman]
+- Added a pointer_class with basic functions. [Stephanie Warman]
+- Added production rules with hardcoded angle. [Stephanie Warman]
+- Delete UI-Layout.py. [Lela]
+- Renamed old UI. [Lela Bones]
+- Sleepy error fixing. [Rathma]
+- Adding some error checking to the shader code. Coincidentally i broke
+  it lol. [Rathma]
+- Rudamentary shader class for loading a shader. A lot of work to still
+  be done before we can draw. [Rathma]
+- Added some cleanup & Update code. [Rathma]
+- LSystem OpenGL widget. Needs a lot of work still. Also a placeholder
+  production rule file. [Rathma]
+- Base Mesh & Drawable objects to expand on. [Rathma]
+- Basic bitch 2D Shaders. [Rathma]
+- Added flashing error. [Stephanie Warman]
+- Couln't figure out flashing error. [Stephanie Warman]
+- Finished basic input checking. [Stephanie Warman]
+- Added minimal input checking. [Stephanie Warman]
+- Starting UI. [Lela Bones]
+- Initial commit. [Rathma]
+
+
