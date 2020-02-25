@@ -135,7 +135,7 @@ def input_check(obj):
     valid.append(check_valid_numeric(obj))
     valid.append(check_prod_rule_format(obj))
     valid.append(check_branching(obj))
-    valid.append(check_nondeterminism(obj))
+    valid.append(check_nd(obj))
     # reset valid
     obj.axiom_edit.valid = 1
     obj.angle_edit.valid = 1
@@ -155,9 +155,9 @@ def print_error_message(obj, msg):
     obj.valid = False
 
 
-def check_nondeterminism(obj):
+def check_nd(obj):
     """determine if the percentages are valid"""
-    valid = 1
+    valid = False
     prod_input = []
     prod_percents = []
     for rule in obj.prod_rules_edit:
@@ -171,15 +171,15 @@ def check_nondeterminism(obj):
                 try:
                     float(input_percent.text())
                 except:
-                    valid = 0
+                    valid = False
                     print_error_message(input_percent, "Invalid Inputs")
                     return valid
                 temp_percent = float(input_percent.text())
-                if temp_percent > 1:
+                if temp_percent != 1:
                     print_error_message(input_percent, "The input is not valid")
-                    valid = 0
+                    valid = False
                 prod_percents.append(temp_percent)
         if sum(prod_percents) != float(len(prod_input)):
             print_error_message(input_percent, "invalid inputs")
-            valid = 0
+            valid = False
     return valid
