@@ -42,8 +42,7 @@ class CustomLineEdit(QtWidgets.QLineEdit):
 
     def reset_color(self):
         self.setStyleSheet("color: black;")
-        print("Color reset")
-
+        
     def clear_box(self):
         self.setText("")
         self.setStyleSheet("color: black;")
@@ -535,8 +534,5 @@ class UIWidget(QWidget):
         self.gen_sys()
 
     def reset_text_box_color(self):
-        print("in reset color num textboxes = ", len(self.text_boxes))
-
         for box in self.text_boxes:
-            print("reseting color ")
             box.reset_color()
