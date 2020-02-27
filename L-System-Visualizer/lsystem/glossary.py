@@ -13,8 +13,8 @@ class Glossary(QWidget):
         self.big_h = QLabel('H: draws a line of half unit length.')
         self.little_h = QLabel(
             'h: moves forward in a line of half unit length.')
-        self.plus = QLabel('+: turns the angle counter-clockwise by an angle.')
-        self.minus = QLabel('-: turns the angle clockwise by an angle.')
+        self.plus = QLabel('+: turns the angle clockwise by an angle.')
+        self.minus = QLabel('-: turns the angle counter-clockwise by an angle.')
         self.pipe = QLabel('|: reverses direction.')
         self.left_bracket = QLabel(
             '[: starts a branch. Must have a ] somewhere after.')
