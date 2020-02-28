@@ -42,7 +42,7 @@ class CustomLineEdit(QtWidgets.QLineEdit):
 
     def reset_color(self):
         self.setStyleSheet("color: black;")
-        
+
     def clear_box(self):
         self.setText("")
         self.setStyleSheet("color: black;")
@@ -217,28 +217,51 @@ class UIWidget(QWidget):
             start_size = start_size * 2
         # y_arr = np.asarray(y_arr)
         # x_arr = np.asarray(x_arr)
+        print("Made it this far")
         figi, ax = plt.subplots()
         line, = ax.plot(self.x_arr, self.y_arr, "bo", picker=5)
         ax.set_title(
             "Fractal dimension = {}".format(np.polyfit(self.x_arr, self.y_arr, 1)[0])
         )  # np.average(fract_avg)))
-        figi.canvas.mpl_connect('pick_event', self.onpick)
+        figi.canvas.mpl_connect('pick_event', self.onpick1)
         plt.show()
         print("AVERAGE: ", np.average(fract_avg))
 
-    def onpick(self, event):
-        print("I am an EVENT")
-        ind = event.ind
+    def onpick1(self, event):
+        print("I am an EVENT1")
+        #plt.close(fig=None)
+        ind = event.ind[0]+1
         print("The x array is: ", self.x_arr)
-        x_arr = np.delete(self.x_arr, ind, axis=None)
-        y_arr = np.delete(self.y_arr, ind, axis=None)
-        print("The x array is: ", x_arr)
+        print("event.ind is: ", ind)
+        for i in range(ind):
+            # always delete index 0 because array shifts left after delete
+            self.x_arr = np.delete(self.x_arr, 0, axis=None)
+            self.y_arr = np.delete(self.y_arr, 0, axis=None)
+        print("The x array is: ", self.x_arr)
         fig, ax = plt.subplots()
-        ax.plot(x_arr, y_arr, "bo", picker=5)
+        ax.plot(self.x_arr, self.y_arr, "bo", picker=5)
         ax.set_title(
-            "Fractal dimension = {}".format(np.polyfit(x_arr, y_arr, 1)[0])
+            "Fractal dimension = {}".format(np.polyfit(self.x_arr, self.y_arr, 1)[0])
         )  # np.average(fract_avg)))
-        fig.canvas.mpl_connect('pick_event', self.onpick)
+        fig.canvas.mpl_connect('pick_event', self.onpick2)
+        plt.show()
+        return True
+    def onpick2(self, event):
+        print("I am an EVENT2")
+        #plt.close(fig=None)
+        ind = event.ind[0]
+        num_to_remove = len(self.x_arr)-ind
+        print("The x array is: ", self.x_arr)
+        for i in range(num_to_remove):
+            # always delete index -1
+            self.x_arr = np.delete(self.x_arr, -1, axis=None)
+            self.y_arr = np.delete(self.y_arr, -1, axis=None)
+        print("The x array is: ", self.x_arr)
+        fig, ax = plt.subplots()
+        ax.plot(self.x_arr, self.y_arr, "bo", picker=5)
+        ax.set_title(
+            "Fractal dimension = {}".format(np.polyfit(self.x_arr, self.y_arr, 1)[0])
+        )  # np.average(fract_avg)))
         plt.show()
         return True
 
