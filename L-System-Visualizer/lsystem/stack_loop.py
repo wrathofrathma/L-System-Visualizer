@@ -6,7 +6,7 @@ import numpy as np
 
 
 def read_substring(
-    lsys, starting_pt, start_angle, turn_angle, trig_dict, scale, line_scale
+    lsys, curr_state, turn_angle, trig_dict,  line_scale
 ):
     """
     Input: readsubstring takes in a string of the current lsystem,
@@ -18,8 +18,8 @@ def read_substring(
     Output: returns angle and vertices
     """
     vert_container = []  # make sure it's empty
-    new_point = starting_pt  # initalize starting point
-    new_angle = start_angle  # initalize starting angle
+    new_point = curr_state['point']  # initalize starting point
+    new_angle = curr_state['angle']  # initalize starting angle
     vert_container.append(new_point)  # append first point
     for char in lsys:
         if not new_angle in trig_dict.keys():
@@ -29,8 +29,8 @@ def read_substring(
             ]
         if char == "F":
             new_point = [
-                new_point[0] + (scale * trig_dict[new_angle][0]),
-                new_point[1] + (scale * trig_dict[new_angle][1]),
+                new_point[0] + (curr_state['scale'] * trig_dict[new_angle][0]),
+                new_point[1] + (curr_state['scale'] * trig_dict[new_angle][1]),
                 0,
             ]
             vert_container.append(new_point)
@@ -54,11 +54,12 @@ def read_substring(
             trig_dict["angle"] = round((trig_dict["angle"] + turn_angle) % 360, 5)
             # new_angle = round((new_angle + turn_angle)%360,5)
         elif char == ">":
-            scale *= line_scale
+            curr_state['scale'] *= curr_state['scale']
         elif char == "<":
-            scale /= line_scale
+            curr_state['scale']  /= curr_state['scale']
+
     # returns angle that string left off on, array of vertices, and the new angle
-    return new_angle, vert_container, scale
+    return new_angle, vert_container, curr_state['scale']
 
 
 def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
@@ -137,14 +138,13 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
 
         curr_state["angle"], vertices, curr_state["scale"] = read_substring(
             char,
-            curr_state["point"],
-            curr_state["angle"],
+            curr_state,
             turn_angle,
             trig_dict,
-            curr_state["scale"],
             line_scale,
         )
-        vert_arr.append(vertices)
+        if len(vertices) != 1:
+            vert_arr.append(vertices)
         curr_state["point"] = vertices[-1]
     print("[ INFO ] Finshed finding vertices (", round(time() - t, 3), "s )")
     return vert_arr
