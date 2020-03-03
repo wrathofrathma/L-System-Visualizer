@@ -50,49 +50,35 @@ class Graph:
             return True
         return False
 
+    def export_to_ogl_verts(self):
+        verts = []
+        for v in self.vertices:
+            for e in self.adjacency_list[v]["edges"]:
+                verts += [v, e]
+        return np.array(verts)
 
-def generate_indices(adjacency_list, vert_list):
-    # for each vertice in our vertice range
-    #   for every outgoing edge
-    #       add that line's indice.
-    start = time()
-    inds = []
-    for v in vert_list:
-        for e in adjacency_list[v]["edges"]:
-            inds += [adjacency_list[v]["index"], adjacency_list[e]["index"]]
-    end = time()
-    print(
-        "[ INFO ] Finished exporting to OGL indices in "
-        + str(round(end - start, 3))
-        + "s"
-    )
-    return inds
+    def generate_indices(self, adjacency_list, vert_list):
+        # for each vertice in our vertice range
+        #   for every outgoing edge
+        #       add that line's indice.
+        start = time()
+        inds = []
+        for v in vert_list:
+            for e in adjacency_list[v]["edges"]:
+                inds += [adjacency_list[v]["index"], adjacency_list[e]["index"]]
+        end = time()
+        print(
+            "[ INFO ] Finished exporting to OGL indices in "
+            + str(round(end - start, 3))
+            + "s"
+        )
+        return inds
 
-
-# this function will generate opengl vertex data from a graph.
-def graph_to_ogl(graph):
-    adjacency_list = graph.adjacency_list
-    vertices = np.array(graph.vertices)
-    colors = graph.colors
-    indices = generate_indices(adjacency_list, graph.vertices)
-    vertices = vertices.reshape(vertices.shape[0] * vertices.shape[1])
-    # v_out = []
-    # for v in vertices:
-    #   v_out+=v
-    start = time()
-    print(
-        "[ INFO ] Finished exporting OGL vertices in "
-        + str(round(time() - start, 3))
-        + "s"
-    )
-    start = time()
-    c_out = []
-    for c in colors:
-        c_out += list(c)
-    end = time()
-    print(
-        "[ INFO ] Finished exporting to OGL vertices and colors in "
-        + str(round(end - start, 3))
-        + "s"
-    )
-    return (np.array(vertices), np.array(c_out), np.array(indices))
+    # this function will generate opengl vertex data from a graph.
+    def export_to_ogl_indices(self):
+        adjacency_list = self.adjacency_list
+        vertices = np.array(self.vertices)
+        colors = self.colors
+        indices = generate_indices(adjacency_list, self.vertices)
+        vertices = vertices.reshape(vertices.shape[0] * vertices.shape[1])
+        return (np.array(vertices), np.array([0, 0, 0, 1]), np.array(indices))
