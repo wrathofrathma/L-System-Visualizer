@@ -57,6 +57,24 @@ class Graph:
                 verts += [v, e]
         return np.array(verts)
 
+    def export_to_matplot2d(self):
+        lines = []
+        for v in self.vertices:
+          for e in self.adjacency_list[v]["edges"]:
+            lines += [((v[0], e[0]), (v[1], e[1]))]
+        return lines
+
+    def export_to_pyqtgraph(self):
+        # Reshape in case we have 3 dimensional data
+        verts = np.array(self.vertices)
+        verts = verts[:, :2]
+        adj = []
+        for v in self.vertices:
+          for e in self.adjacency_list[v]["edges"]:
+            adj += [(self.adjacency_list[v]["index"], self.adjacency_list[e]["index"])]
+        adj = np.array(adj)
+        return (verts, adj)
+
     def generate_indices(self, adjacency_list, vert_list):
         # for each vertice in our vertice range
         #   for every outgoing edge

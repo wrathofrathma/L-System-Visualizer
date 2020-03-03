@@ -24,7 +24,10 @@ from lsystem.lsystem_utils import (
     generate_lsystem,
 )
 from lsystem.input_check import input_check
-from lsystem.lsystem_widget import LSystemDisplayWidget
+
+from lsystem.lsystem_2d_widget import LSystem2DWidget
+from lsystem.lsystem_3d_widget import LSystem3DWidget
+
 from lsystem.fractal_dim import fractal_dim_calc
 
 class CustomLineEdit(QtWidgets.QLineEdit):
@@ -86,7 +89,7 @@ class UIWidget(QWidget):
         self.prod_rules = []
         self.verts = []  # This will store the vertices from generate_lsystem
         self.saved_lsystems = load_saved_lsystems()
-        self.graphix = LSystemDisplayWidget()
+        self.graphix = LSystem2DWidget()
         self.init_UI()
         self.alphabet = [
             "F",
