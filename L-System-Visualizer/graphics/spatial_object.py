@@ -1,6 +1,8 @@
 from glm import (
     mat4,
+    mat3,
     vec3,
+    vec4,
     mat4_cast,
     normalize,
     conjugate,
@@ -8,6 +10,8 @@ from glm import (
     scale,
     translate,
 )
+import numpy as np
+from scipy.spatial.transform import Rotation as R
 
 
 class SpatialObject:
@@ -15,53 +19,26 @@ class SpatialObject:
         self.model_matrix = mat4(1.0)
         self.position = vec3(0.0)
         self.current_scale = vec3(1.0)
-        self.orientation = vec3(0.0)
+        self.rotation = R.from_rotvec(np.array([0., 0., 0.]))
 
-    # Adds a rotation value to our object's rotation.
-    # Accepts both numpy array & glm vec3.
+    
+    def get_rotation(self):
+        return self.rotation
+
     def rotate(self, rotation):
-        self.orientation += rotation
+        """applies a rotation using radians"""
+        r = R.from_rotvec(np.array(rotation))
+        self.rotation = r * self.rotation
 
-    # Returns the current rotation matrix.
-    def get_rotation_matrix(self):
-        return mat4_cast(self.get_rotation_quat())
-
-    # Returns the current rotation quaternion.
-    def get_rotation_quat(self):
-        # Generate quaternions based on our yaw pitch and roll.
-        qyaw = angleAxis(self.orientation.x, vec3(0, 1, 0))
-        qpitch = angleAxis(self.orientation.y, vec3(1, 0, 0))
-        qroll = angleAxis(self.orientation.z, vec3(0, 0, 1))
-        # Generate total accumulated rotation
-        orientation = qroll * qpitch * qyaw
-        # Normalize/make it length 1
-        return normalize(orientation)
-
-    # Determines what the object's x axis is relative to itself.
-    # Returns a vector containing the direction to the x axis.
-    def get_x_axis(self):
-        rotation = self.get_rotation_quat()
-        return conjugate(rotation) * vec3(1, 0, 0)
-
-    # Determines what the object's y axis is relative to itself.
-    # Returns a vector containing the direction to the y axis.
-    def get_y_axis(self):
-        rotation = self.get_rotation_quat()
-        return conjugate(rotation) * vec3(0, 1, 0)
-
-    # Returns a vector containing the direction to the z axis.
-    def get_z_axis(self):
-        rotation = self.get_rotation_quat()
-        return conjugate(rotation) * vec3(0, 0, 1)
+    def set_rotation(self, rotation):
+        """Sets our rotation in radians."""
+        self.rotation = R.from_rotvec(np.array(rotation))
 
     def set_position(self, pos):
         self.position = vec3(pos)
 
     def get_position(self):
         return self.position
-
-    def set_orientation(self, o):
-        self.orientation = vec3(o)
 
     def translate(self, offset, relative=True):
         offset = vec3(offset)
@@ -74,10 +51,9 @@ class SpatialObject:
 
     # Generates and returns the object's current model matrix.
     def generate_model_matrix(self):
-        transMatrix = translate(mat4(1.0), self.position)
-        rotMatrix = self.get_rotation_matrix()
-        scaleMatrix = scale(mat4(1.0), self.current_scale)
-        self.model_matrix = transMatrix * rotMatrix * scaleMatrix
+        trans_matrix = translate(mat4(1.0), self.position)
+        scale_matrix = scale(mat4(1.0), self.current_scale)
+        self.model_matrix = trans_matrix * scale_matrix
         return self.model_matrix
 
     def scale(self, s):
