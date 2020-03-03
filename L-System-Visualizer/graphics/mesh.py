@@ -1,7 +1,9 @@
 # from graphics.SpatialObject import SpatialObject
 from pyqtgraph.opengl import MeshData, GLMeshItem
 import numpy as np
-from glm import vec3
+from glm import vec3, vec4
+from copy import deepcopy
+from math import radians, degrees, pi
 
 # Testing
 from spatial_object import SpatialObject
@@ -13,14 +15,15 @@ class MeshObject(SpatialObject, GLMeshItem):
     """Interface to pyqtgraph's GLMeshItem that allows us to scale and rotate the vertices."""
 
     def __init__(self, **kwds):
-        SpatialObject.__init__(self)
         GLMeshItem.__init__(self)
+        SpatialObject.__init__(self)
         # Argument extraction
         self.opts = {
             'vertexes': None,
+            'model_verts': None,
             'indices': None,
             'position': vec3(0.0),
-            'orientation': vec3(0.0),
+            'rotation': vec3(0.0),
             'scale': vec3(1.0),
             'smooth': True,
             'computeNormals': False,
@@ -33,19 +36,36 @@ class MeshObject(SpatialObject, GLMeshItem):
         for k, v in kwds.items():
             self.opts[k] = v
         self.set_position(self.opts['position'], False)
-        self.set_orientation(self.opts['orientation'], False)
+        self.set_rotation(self.opts['rotation'], False)
         self.set_scale(self.opts['scale'], False)
         self.opts['meshdata'] = MeshData()
         self.set_vertexes(self.opts['vertexes'], False)
         self.set_indices(self.opts['indices'], False)
-        self.updates_vertices()
+        self.update_vertices()
     
     # TODO - Override all of the translation/rotation/scaling functions 
     # and hook them into updating the mesh
 
     # updates vertices with our scale/translation/rotation
-    def updates_vertices(self):
+    def update_vertices(self):
         # TODO - Actually do what i said this function will do
+        model = self.generate_model_matrix()
+        rotation = self.get_rotation()
+        print("Model")
+        print(model)
+        verts = deepcopy(self.opts['model_verts'])
+        nverts = []
+        for v in verts:
+            nv = np.array(model * vec4(v, 1.0))
+            nv = nv[:3]
+            nv = rotation.apply(nv)
+            print(nv)
+            nverts += [nv]
+            
+
+        # for v in verts:
+            # nverts += [np.array((model * vec4(v, 1.0).xyz)), dtype = np.float32)]
+        self.opts['vertexes'] = np.array(nverts, dtype=np.float32)
         self.opts['meshdata'].setVertexes(self.opts['vertexes'])
         self.setMeshData(meshdata=self.opts['meshdata'])
 
@@ -55,23 +75,23 @@ class MeshObject(SpatialObject, GLMeshItem):
         if(update):
             self.update_vertices()
 
-    def set_orientation(self, o, update=True):
-        super(MeshObject, self).set_orientation(o)
-        self.opts['orientation'] = o
+    def set_rotation(self, o, update=True):
+        super(MeshObject, self).set_rotation(o)
+        self.opts['rotation'] = o
         if(update):
             self.update_vertices()
 
     def set_scale(self, s, update=True):
         super(MeshObject, self).set_scale(s)
         self.opts['scale'] = s
-        if(update):
+        if (update):
             self.update_vertices()
 
     def set_vertexes(self, v, update=True):
         if(v is None):
             return
         # If these aren't floats, then there is an error in normal calculation
-        self.opts['vertexes'] = np.array(v, dtype=np.float32)
+        self.opts['model_verts'] = np.array(v, dtype=np.float32)
         if(update):
             self.update_vertices()
 
@@ -88,8 +108,8 @@ if __name__ == "__main__":
     view = gl.GLViewWidget()
     view.show()
     a = {}
-    v = np.array([(0., 0., 0.), (0., 1., 0.), (1., 0., 0.), (1., 1., 1.)])
-    f = np.array([[0, 1, 3]])
+    v = np.array([(0., 0., 0.), (0., 1., 0.), (1., 0., 0.)])
+    f = np.array([[0, 1, 2]])
     # print(f)
     a['vertexes'] = v
     a['faces'] = f
@@ -99,12 +119,18 @@ if __name__ == "__main__":
     # m.setFaces(f)
     # mesh = GLMeshItem(meshdata=m)
     view.addItem(mesh)
+    mesh.set_position((0, 1, 0))
+    # mesh.set_rotation((np.sin(pi / 2), 0, 0))
+    # mesh.set_rotation((0, -pi / 2, 0))
+    mesh.set_rotation((0, radians(90), 0))
+    mesh.rotate((0, radians(90), 0))
+    mesh.set_scale(vec3(2.0))
     xgrid = gl.GLGridItem()
     ygrid = gl.GLGridItem()
     zgrid = gl.GLGridItem()
-    # view.addItem(xgrid)
-    # view.addItem(ygrid)
-    # view.addItem(zgrid)
+    view.addItem(xgrid) 
+    view.addItem(ygrid)
+    view.addItem(zgrid)
 
     xgrid.rotate(90, 0, 1, 0)
     ygrid.rotate(90, 1, 0, 0)
