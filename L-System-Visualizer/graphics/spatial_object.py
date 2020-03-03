@@ -7,11 +7,10 @@ from glm import (
     angleAxis,
     scale,
     translate,
-    quat,
 )
 
 
-class SpacialObject:
+class SpatialObject:
     def __init__(self):
         self.model_matrix = mat4(1.0)
         self.position = vec3(0.0)
