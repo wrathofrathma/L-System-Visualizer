@@ -53,7 +53,8 @@ class LSystem2DWidget(PlotWidget):
         self.clear_graph()
         self.graph = graph
         (verts, adj) = self.graph.export_to_pyqtgraph()
-        self.mesh = GraphItem(pos=verts, adj=adj)
+        self.mesh = GraphItem()
+        self.mesh.setData(pos=verts, adj=adj, symbol=None)
         self.addItem(self.mesh)
 
     def clear_graph(self):
