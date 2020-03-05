@@ -19,87 +19,88 @@ class MeshObject(SpatialObject, GLMeshItem):
         SpatialObject.__init__(self)
         # Argument extraction
         self.opts = {
-            'vertexes': None,
-            'model_verts': None,
-            'indices': None,
-            'position': vec3(0.0),
-            'rotation': vec3(0.0),
-            'scale': vec3(1.0),
-            'smooth': True,
-            'computeNormals': False,
-            'drawEdges': False,
-            'drawFaces': True,
-            'shader': None,
-            'color': (1., 1., 1., 1.),
-            'edgeColor': (0.5, 0.5, 0.5, 1.0)
-            }
+            "vertexes": None,
+            "model_verts": None,
+            "indices": None,
+            "position": vec3(0.0),
+            "rotation": vec3(0.0),
+            "scale": vec3(1.0),
+            "smooth": True,
+            "computeNormals": False,
+            "drawEdges": False,
+            "drawFaces": True,
+            "shader": None,
+            "color": (1.0, 1.0, 1.0, 1.0),
+            "edgeColor": (0.5, 0.5, 0.5, 1.0),
+        }
         for k, v in kwds.items():
             self.opts[k] = v
-        self.set_position(self.opts['position'], False)
-        self.set_rotation(self.opts['rotation'], False)
-        self.set_scale(self.opts['scale'], False)
-        self.opts['meshdata'] = MeshData()
-        self.set_vertexes(self.opts['vertexes'], False)
-        self.set_indices(self.opts['indices'], False)
+        self.set_position(self.opts["position"], False)
+        self.set_rotation(self.opts["rotation"], False)
+        self.set_scale(self.opts["scale"], False)
+        self.opts["meshdata"] = MeshData()
+        self.set_vertexes(self.opts["vertexes"], False)
+        self.set_indices(self.opts["indices"], False)
         self.update_vertices()
-    
-    # TODO - Override all of the translation/rotation/scaling functions 
+
+    # TODO - Override all of the translation/rotation/scaling functions
     # and hook them into updating the mesh
+
+    def get_vertices(self):
+        return self.opts["vertexes"]
 
     # updates vertices with our scale/translation/rotation
     def update_vertices(self):
         # TODO - Actually do what i said this function will do
         model = self.generate_model_matrix()
         rotation = self.get_rotation()
-        print("Model")
-        print(model)
-        verts = deepcopy(self.opts['model_verts'])
+        verts = deepcopy(self.opts["model_verts"])
         nverts = []
         for v in verts:
             nv = np.array(model * vec4(v, 1.0))
             nv = nv[:3]
             nv = rotation.apply(nv)
-            print(nv)
             nverts += [nv]
-            
 
         # for v in verts:
-            # nverts += [np.array((model * vec4(v, 1.0).xyz)), dtype = np.float32)]
-        self.opts['vertexes'] = np.array(nverts, dtype=np.float32)
-        self.opts['meshdata'].setVertexes(self.opts['vertexes'])
-        self.setMeshData(meshdata=self.opts['meshdata'])
+        # nverts += [np.array((model * vec4(v, 1.0).xyz)), dtype = np.float32)]
+        self.opts["vertexes"] = np.array(nverts, dtype=np.float32)
+        self.opts["meshdata"].setVertexes(self.opts["vertexes"])
+        if self.opts["indices"] is not None:
+            self.opts["meshdata"].setFaces(self.opts["indices"])
+        self.setMeshData(meshdata=self.opts["meshdata"])
 
     def set_position(self, pos, update=True):
         super(MeshObject, self).set_position(pos)
-        self.opts['position'] = pos
-        if(update):
+        self.opts["position"] = pos
+        if update:
             self.update_vertices()
 
     def set_rotation(self, o, update=True):
         super(MeshObject, self).set_rotation(o)
-        self.opts['rotation'] = o
-        if(update):
+        self.opts["rotation"] = o
+        if update:
             self.update_vertices()
 
     def set_scale(self, s, update=True):
         super(MeshObject, self).set_scale(s)
-        self.opts['scale'] = s
-        if (update):
+        self.opts["scale"] = s
+        if update:
             self.update_vertices()
 
     def set_vertexes(self, v, update=True):
-        if(v is None):
+        if v is None:
             return
         # If these aren't floats, then there is an error in normal calculation
-        self.opts['model_verts'] = np.array(v, dtype=np.float32)
-        if(update):
+        self.opts["model_verts"] = np.array(v, dtype=np.float32)
+        if update:
             self.update_vertices()
 
     def set_indices(self, i, update=True):
-        if(i is None):
+        if i is None:
             return
-        self.opts['indices'] = np.array(i)
-        if(update):
+        self.opts["indices"] = np.array(i)
+        if update:
             self.update_vertices()
 
 
@@ -107,12 +108,13 @@ if __name__ == "__main__":
     pg.mkQApp()
     view = gl.GLViewWidget()
     view.show()
-    a = {}
-    v = np.array([(0., 0., 0.), (0., 1., 0.), (1., 0., 0.)])
-    f = np.array([[0, 1, 2]])
+    v = np.array([(0.0, 0.0, 0.0), (0.0, 1.0, 0.0), (1.0, 0.0, 0.0), (1.0, 1.0, 0.0)])
+    f = np.array([[0, 1, 2], [1, 2, 3]])
+    # f = np.array([[0, 1, 2, 1, 2, 3]])
+    # f = np.array([[1, 2, 3]])
+    # f = None
+    # f = np.array([[0, 1, 2]])
     # print(f)
-    a['vertexes'] = v
-    a['faces'] = f
     mesh = MeshObject(indices=f, vertexes=v)
     # m = MeshData()
     # m.setVertexes(v)
@@ -128,7 +130,7 @@ if __name__ == "__main__":
     xgrid = gl.GLGridItem()
     ygrid = gl.GLGridItem()
     zgrid = gl.GLGridItem()
-    view.addItem(xgrid) 
+    view.addItem(xgrid)
     view.addItem(ygrid)
     view.addItem(zgrid)
 
@@ -138,7 +140,9 @@ if __name__ == "__main__":
     xgrid.scale(0.2, 0.1, 0.1)
     ygrid.scale(0.2, 0.1, 0.1)
     zgrid.scale(0.1, 0.2, 0.1)
+    print(mesh.get_vertices())
     import sys
     from pyqtgraph import QtCore
-    if sys.flags.interactive != 1 or not hasattr(QtCore, 'PYQT_VERSION'):
+
+    if sys.flags.interactive != 1 or not hasattr(QtCore, "PYQT_VERSION"):
         pg.QtGui.QApplication.exec()
