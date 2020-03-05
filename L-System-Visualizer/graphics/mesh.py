@@ -49,6 +49,9 @@ class MeshObject(SpatialObject, GLMeshItem):
     def get_vertices(self):
         return self.opts["vertexes"]
 
+    def get_faces(self):
+        return self.opts["indices"]
+
     # updates vertices with our scale/translation/rotation
     def update_vertices(self):
         # TODO - Actually do what i said this function will do
@@ -57,9 +60,9 @@ class MeshObject(SpatialObject, GLMeshItem):
         verts = deepcopy(self.opts["model_verts"])
         nverts = []
         for v in verts:
-            nv = np.array(model * vec4(v, 1.0))
+            nv = rotation.apply(v)
+            nv = np.array(model * vec4(nv, 1.0))
             nv = nv[:3]
-            nv = rotation.apply(nv)
             nverts += [nv]
 
         # for v in verts:
