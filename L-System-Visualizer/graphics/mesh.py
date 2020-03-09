@@ -73,6 +73,21 @@ class MeshObject(SpatialObject, GLMeshItem):
             self.opts["meshdata"].setFaces(self.opts["indices"])
         self.setMeshData(meshdata=self.opts["meshdata"])
 
+    def translate(self, v, update=True):
+        super(SpatialObject, self).translate(v)
+        if update:
+            self.update_vertices()
+
+    def rotate(self, rotation, update=True):
+        super(SpatialObject, self).rotate(rotation)
+        if update:
+            self.update_vertices()
+
+    def scale(self, s, update=True):
+        super(SpatialObject, self).scale(s)
+        if update:
+            self.update_vertices()
+
     def set_position(self, pos, update=True):
         super(MeshObject, self).set_position(pos)
         self.opts["position"] = pos
