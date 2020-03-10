@@ -5,7 +5,7 @@ from time import time
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 def read_substring(
-    lsys, curr_state, turn_angle,  line_scale
+    lsys, curr_state, turn_angle,  line_scale, Obj
 ):
     """
     Input: readsubstring takes in a string of the current lsystem,
@@ -18,18 +18,18 @@ def read_substring(
     """
     obj_container = []  # make sure it's empty
     new_point = curr_state['point']  # initalize starting point
-    new_obj = MeshObject(new_point, 0) # append first object
+    new_obj = Obj(new_point) # append first object
     obj_container.append(new_obj)
     angle = curr_state['angle']
     r1 = R.from_rotvec('z',turn_angle, degrees=True)#for xy plane rotation
     for char in lsys:
         if char == "F":
             new_point = new_point + angle_vector*line_scale
-            new_obj = MeshObject(new_point, 0)
+            new_obj = Obj(new_point)
             obj_container.append(new_obj)
         elif char == "H":
             new_point = new_point + angle_vector*.5 *line_scale
-            new_obj = MeshObject(new_point, 0)
+            new_obj = Obj(new_point)
             obj_container.append(new_obj)
         elif char == "+":
             change_in_angle = np.array([0,0,1])*turn_angle #rotate in xy plane
@@ -55,7 +55,7 @@ def read_substring(
     return angle, obj_container
 
 
-def read_stack(stack, starting_pt, angle, turn_angle, line_scale, object):
+def read_stack(stack, starting_pt, angle, turn_angle, line_scale, Obj):
     """
     Input list of strings (F, +, -)
     Output List of new vertices
@@ -125,6 +125,7 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale, object):
             curr_state,
             turn_angle,
             line_scale,
+            Obj,
         )
         if len(obj) != 1:
             obj_arr.append(objs)
