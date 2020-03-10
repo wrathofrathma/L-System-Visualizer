@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (QCheckBox, QToolBar, QLabel, QMainWindow, QApplicat
                              QActionGroup,QStatusBar, QMenuBar, QAction, QHBoxLayout, QWidget, QGridLayout)
 
 from PyQt5.QtWidgets import QAction, QApplication, QFileDialog, QMainWindow, QMenu
-
+from PyQt5.QtCore import QSize, Qt
 from lsystem.getting_started import GettingStarted
 from lsystem.glossary import Glossary
 from lsystem.my_ui import UIWidget
@@ -29,8 +29,7 @@ class MyMainWindow(QMainWindow):
         self.save_rules = SaveRules(self.ui_widget)
         self.getting_started = GettingStarted()
         self.init_window()
-        
-    '''        
+         
         toolbar = QToolBar("Settings Toolbar")
         toolbar.setIconSize(QSize(16,16))
         self.addToolBar(toolbar)
@@ -42,8 +41,6 @@ class MyMainWindow(QMainWindow):
         self.button_action.setStatusTip("Click to use 2D L-Systems")
         self.button_action.triggered.connect(lambda: self.toggle_dim())
         self.dim_group.addAction(self.button_action)
-        
-        toolbar.addSeparator()
         
         self.button_action2 = QAction("3D", self)
         self.button_action2.setStatusTip("Click to use 3D L-Systems")
@@ -59,7 +56,7 @@ class MyMainWindow(QMainWindow):
         
     def toggle_dim(self):
         print(self.dim_group.checkedAction())
-    '''
+    
     def init_window(self):
         """Shows the main window"""
         self.setGeometry(self.left, self.top, self.width, self.height)
