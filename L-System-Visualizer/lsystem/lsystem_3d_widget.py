@@ -16,8 +16,7 @@ from pyqtgraph.opengl import GLViewWidget, GLMeshItem, GLLinePlotItem
 # Lsystem includes
 from glm import vec3
 
-# from graphics.graph_mesh import GraphObject
-from lsystem.graph import Graph
+from graphics.square import Square
 
 # Other includes
 import numpy as np
@@ -28,8 +27,19 @@ class LSystem3DWidget(GLViewWidget):
         self.start_time = time()
 
         # Production scene objects.
-        self.graph = Graph()
         self.mesh_list = []
+        
+        self.run_test()
+
+
+
+    def run_test(self):
+        # Testing
+        self.add_mesh(Square(pos=(0, 0, 0)))
+        self.add_mesh(Square(pos=(3, 0, 0)))
+        self.add_mesh(Square(pos=(4, 0, 0)))
+        self.add_mesh(Square(pos=(7, 0, 0)))
+
 
     def reset_camera(self):
         pass
@@ -45,6 +55,9 @@ class LSystem3DWidget(GLViewWidget):
 
     def cleanup(self):
         pass
+
+    def clear_graph(self):
+        self.clear_meshes()
 
     def add_mesh(self, mesh):
         self.mesh_list.append(mesh)
