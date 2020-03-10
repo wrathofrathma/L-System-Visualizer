@@ -29,7 +29,7 @@ class LSystem3DWidget(GLViewWidget):
 
         # Production scene objects.
         self.graph = Graph()
-        self.mesh = None
+        self.mesh_list = []
 
     def reset_camera(self):
         pass
@@ -46,11 +46,11 @@ class LSystem3DWidget(GLViewWidget):
     def cleanup(self):
         pass
 
-    def set_graph(self, graph):
-        self.clear_graph()
-        self.graph = graph
+    def add_mesh(self, mesh):
+        self.mesh_list.append(mesh)
+        self.addItem(self.mesh_list[-1])
 
-    def clear_graph(self):
-        if isinstance(self.mesh, GLMeshItem):
-            self.removeItem(self.mesh)
-        self.mesh = None
+    def clear_meshes(self):
+        for mesh in self.mesh_list:
+            self.removeItem(mesh)
+        self.mesh_list.clear()
