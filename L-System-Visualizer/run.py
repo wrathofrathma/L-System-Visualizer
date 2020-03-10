@@ -2,8 +2,7 @@
 import sys
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (QCheckBox, QToolBar, QLabel, QMainWindow, QApplication, QPushButton, QDialog, 
-                             QStatusBar, QMenuBar, QAction, QHBoxLayout, QWidget, QGridLayout)
-from PyQt5.QtCore import Qt, QSize
+                             QActionGroup,QStatusBar, QMenuBar, QAction, QHBoxLayout, QWidget, QGridLayout)
 
 from PyQt5.QtWidgets import QAction, QApplication, QFileDialog, QMainWindow, QMenu
 
@@ -31,31 +30,36 @@ class MyMainWindow(QMainWindow):
         self.getting_started = GettingStarted()
         self.init_window()
         
-        
+    '''        
         toolbar = QToolBar("Settings Toolbar")
         toolbar.setIconSize(QSize(16,16))
         self.addToolBar(toolbar)
-        
-        button_action = QAction("2D", self)
-        button_action.setStatusTip("Click to use 2D L-Systems")
-        button_action.triggered.connect(self.onMyToolBarButtonClick)
-        button_action.setCheckable(True)
-        toolbar.addAction(button_action)
+        self.dim_group = QActionGroup(self)
+        toolbar.setMovable(False)
+        toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
+
+        self.button_action = QAction("2D", self)
+        self.button_action.setStatusTip("Click to use 2D L-Systems")
+        self.button_action.triggered.connect(lambda: self.toggle_dim())
+        self.dim_group.addAction(self.button_action)
         
         toolbar.addSeparator()
         
-        button_action2 = QAction("3D", self)
-        button_action2.setStatusTip("Click to use 3D L-Systems")
-        button_action2.triggered.connect(self.onMyToolBarButtonClick)
-        button_action2.setCheckable(True)
-        toolbar.addAction(button_action2)
-        
+        self.button_action2 = QAction("3D", self)
+        self.button_action2.setStatusTip("Click to use 3D L-Systems")
+        self.button_action2.triggered.connect(lambda: self.toggle_dim())
+        self.dim_group.addAction(self.button_action2)
+        toolbar.addActions(self.dim_group.actions())
+ 
+        self.button_action.setCheckable(True)
+        self.button_action.setChecked(True)
+        self.button_action2.setCheckable(True)
         self.setStatusBar(QStatusBar(self))
         
         
-    def onMyToolBarButtonClick(self, s):
-        print("click", s)
-
+    def toggle_dim(self):
+        print(self.dim_group.checkedAction())
+    '''
     def init_window(self):
         """Shows the main window"""
         self.setGeometry(self.left, self.top, self.width, self.height)
