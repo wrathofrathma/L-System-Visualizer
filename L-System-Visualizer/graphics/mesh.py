@@ -6,7 +6,7 @@ from copy import deepcopy
 from math import radians, degrees, pi
 
 # Testing
-from spatial_object import SpatialObject
+from graphics.spatial_object import SpatialObject
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 
@@ -41,7 +41,8 @@ class MeshObject(SpatialObject, GLMeshItem):
         self.opts["meshdata"] = MeshData()
         self.set_vertexes(self.opts["vertexes"], False)
         self.set_indices(self.opts["indices"], False)
-        self.update_vertices()
+        if (self.opts["vertexes"] is not None):
+            self.update_vertices()
 
     # TODO - Override all of the translation/rotation/scaling functions
     # and hook them into updating the mesh
@@ -73,20 +74,20 @@ class MeshObject(SpatialObject, GLMeshItem):
             self.opts["meshdata"].setFaces(self.opts["indices"])
         self.setMeshData(meshdata=self.opts["meshdata"])
 
-    def translate(self, v, update=True):
-        super(SpatialObject, self).translate(v)
-        if update:
-            self.update_vertices()
+    # def translate(self, v, update=True):
+        # super(SpatialObject, self).translate(v)
+        # if update:
+            # self.update_vertices()
 
-    def rotate(self, rotation, update=True):
-        super(SpatialObject, self).rotate(rotation)
-        if update:
-            self.update_vertices()
+    # def rotate(self, rotation, update=True):
+        # super(SpatialObject, self).rotate(rotation)
+        # if update:
+            # self.update_vertices()
 
-    def scale(self, s, update=True):
-        super(SpatialObject, self).scale(s)
-        if update:
-            self.update_vertices()
+    # def scale(self, s, update=True):
+        # super(SpatialObject, self).scale(s)
+        # if update:
+            # self.update_vertices()
 
     def set_position(self, pos, update=True):
         super(MeshObject, self).set_position(pos)
@@ -143,7 +144,7 @@ if __name__ == "__main__":
     # mesh.set_rotation((np.sin(pi / 2), 0, 0))
     # mesh.set_rotation((0, -pi / 2, 0))
     mesh.set_rotation((0, radians(90), 0))
-    mesh.rotate((0, radians(90), 0))
+    # mesh.rotate((0, radians(90), 0))
     mesh.set_scale(vec3(2.0))
     xgrid = gl.GLGridItem()
     ygrid = gl.GLGridItem()

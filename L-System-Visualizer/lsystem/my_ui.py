@@ -118,7 +118,7 @@ class UIWidget(QWidget):
             "I",
             "J",
             "K",
-            "L,",
+            "L",
             "M",
             "N",
             "O",
@@ -340,6 +340,7 @@ class UIWidget(QWidget):
             and not ")" in all_prod_rule
             and self.made_angle is True
         ):
+            self.text_boxes.remove(self.turn_angle_edit)
             self.layout.removeWidget(self.turn_angle_edit)
             self.layout.removeWidget(self.turn_angle)
             self.turn_angle.deleteLater()
@@ -347,7 +348,6 @@ class UIWidget(QWidget):
             self.turn_angle_edit = None
             self.turn_angle = None
             self.made_angle = False
-            self.text_boxes.remove(self.turn_angle_edit)
 
         if (">" in all_prod_rule or "<" in all_prod_rule) and self.made_line is False:
             self.line_scale = QLabel("Line Scale")
@@ -367,6 +367,7 @@ class UIWidget(QWidget):
             and not ">" in all_prod_rule
             and self.made_line is True
         ):
+            self.text_boxes.remove(self.line_scale_edit)
             self.layout.removeWidget(self.line_scale_edit)
             self.layout.removeWidget(self.line_scale)
             self.line_scale.deleteLater()
@@ -374,7 +375,6 @@ class UIWidget(QWidget):
             self.line_scale_edit = None
             self.line_scale = None
             self.made_line = False
-            self.text_boxes.remove(self.line_scale_edit)
 
     # Probably doesn't need self as a param, can just be static.
     # Generates a rule dictionary from an array of production rule strings taken from the UI
