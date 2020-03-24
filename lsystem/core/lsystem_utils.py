@@ -1,7 +1,10 @@
 """ This file for now is acting as a catch-all utility file."""
 import json
 import os
+import platform
 import copy
+import logging
+from pathlib import Path
 import numpy as np
 from lsystem.core.parsing import parsed_thread
 from lsystem.core.stack_loop import read_stack
@@ -85,6 +88,21 @@ def generate_lsystem(grammar):
 
     return graph
 
+def get_saved_path():
+  """Returns the operating system dependent saved_lsystems.json path"""
+  opsys = platform.system()
+  if (opsys == 'Linux' or opsys == 'Darwin'):
+    path = os.path.join(str(Path.home()), ".config/lsystem")
+  elif(opsys=='Windows'):
+    path = os.path.expandvars(r'%APPDATA%\lsystem')
+  assert path is not None, "Something went wrong parsing operating system platform"
+  try:
+    os.makedirs(path)
+  except FileExistsError:
+    pass
+  path = os.path.join(path, "saved_lsystems.json")
+  return path
+
 
 def save_lsystem(key, grammar):
     """
@@ -92,7 +110,7 @@ def save_lsystem(key, grammar):
         Overwrites any previous lsystem defined with the same key.
     """
     saved_lsystems = {}
-    saved_file = "assets/lsystems/saved_lsystems.json"
+    saved_file = get_saved_path()
     # Check if the file exists.
     if os.path.exists(saved_file):
         # If it does, then load all saved data and replace/insert the new data to the dict.
@@ -107,12 +125,11 @@ def save_lsystem(key, grammar):
         json.dump(saved, sfile, indent=2)
     return saved_lsystems
 
-
 def load_saved_lsystems():
     """ Loads the saved L Systems into our app """
     saved_lsystems = {}
     #@TODO - Define a config/cache directory for the saved lsystem file.
-    saved_file = "assets/lsystems/saved_lsystems.json"
+    saved_file = get_saved_path()
     predef_file = os.path.join(os.path.dirname(__file__), "../assets/lsystems/predefined_lsystems.json")
     print(predef_file)
     print("[ INFO ] Loading saved L-Systems from disk...")
