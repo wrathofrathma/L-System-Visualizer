@@ -68,7 +68,7 @@ class MyMainWindow(QMainWindow):
             print("I want 3D!")
             self.button_action.setChecked(False)
             self.ui_widget.dims.setCurrentWidget(self.ui_widget.three_d)
-            self.ui_widget.graphc = self.ui_widget.three_d
+            self.ui_widget.graphix = self.ui_widget.three_d
         else:
           self.button_action2.setChecked(True)
           print("Nothing should happen")
