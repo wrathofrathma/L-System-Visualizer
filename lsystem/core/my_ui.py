@@ -29,6 +29,7 @@ from lsystem.core.lsystem_2d_widget import LSystem2DWidget
 from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
 from lsystem.core.fractal_dim import fractal_dim_calc
+import copy
 
 class CustomLineEdit(QtWidgets.QLineEdit):
     """ Class that enables clicking in a text box """
@@ -91,7 +92,7 @@ class UIWidget(QWidget):
         self.saved_lsystems = load_saved_lsystems()
         self.two_d = LSystem2DWidget()
         self.three_d = LSystem3DWidget()
-        
+
         self.dims = QStackedWidget()
         self.dims.addWidget(self.two_d)
         self.dims.addWidget(self.three_d)
@@ -211,14 +212,19 @@ class UIWidget(QWidget):
     def on_lsys_button_clicked(self):
         self.gen_sys()
 
+
+
     def on_boxcount_button_clicked(self):
+
+
         start_size = 8
         num_sizes = 7
         self.x_arr = []
         self.y_arr = []
         fract_avg = []
         end_size = start_size * (2 ** num_sizes)
-        fractal_dim = fractal_dim_calc(self.verts, end_size, num_sizes)
+        temp_verts = copy.deepcopy(self.verts)
+        fractal_dim = fractal_dim_calc(temp_verts, end_size, num_sizes)
         for i in range(num_sizes):
             self.x_arr.append(np.log((start_size)))
             self.y_arr.append(fractal_dim[i])
@@ -235,45 +241,47 @@ class UIWidget(QWidget):
             "Fractal dimension = {}".format(np.polyfit(self.x_arr, self.y_arr, 1)[0])
         )  # np.average(fract_avg)))
         figi.canvas.mpl_connect('pick_event', self.onpick1)
+        #figi.show()
         plt.show()
         print("AVERAGE: ", np.average(fract_avg))
 
-    def onpick2(self, event):
+    def onpick1(self, event):
+
         print("I am an EVENT1")
         #plt.close(fig=None)
         ind = event.ind[0]+1
-        print("The x array is: ", self.x_arr)
-        print("event.ind is: ", ind)
         for i in range(ind):
+            if(len(self.x_arr)==2):
+                break
             # always delete index 0 because array shifts left after delete
             self.x_arr = np.delete(self.x_arr, 0, axis=None)
             self.y_arr = np.delete(self.y_arr, 0, axis=None)
         print("The x array is: ", self.x_arr)
-        fig, ax = plt.subplots()
+        fig1, ax = plt.subplots()
         ax.plot(self.x_arr, self.y_arr, "bo", picker=5)
         ax.set_title(
             "Fractal dimension = {}".format(np.polyfit(self.x_arr, self.y_arr, 1)[0])
         )  # np.average(fract_avg)))
-        fig.canvas.mpl_connect('pick_event', self.onpick2)
-        plt.show()
+        fig1.canvas.mpl_connect('pick_event', self.onpick2)
+        fig1.show()
         return True
-    def onpick1(self, event):
+    def onpick2(self, event):
         print("I am an EVENT2")
         #plt.close(fig=None)
         ind = event.ind[0]
         num_to_remove = len(self.x_arr)-ind
-        print("The x array is: ", self.x_arr)
         for i in range(num_to_remove):
+            if(len(self.x_arr)==2):
+                break
             # always delete index -1
             self.x_arr = np.delete(self.x_arr, -1, axis=None)
             self.y_arr = np.delete(self.y_arr, -1, axis=None)
-        print("The x array is: ", self.x_arr)
-        fig, ax = plt.subplots()
+        fig2, ax = plt.subplots()
         ax.plot(self.x_arr, self.y_arr, "bo", picker=5)
         ax.set_title(
             "Fractal dimension = {}".format(np.polyfit(self.x_arr, self.y_arr, 1)[0])
         )  # np.average(fract_avg)))
-        plt.show()
+        fig2.show()
         return True
 
 
