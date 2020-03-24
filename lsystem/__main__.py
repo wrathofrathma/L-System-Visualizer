@@ -12,8 +12,8 @@ from lsystem.core.my_ui import UIWidget
 from lsystem.core.save_rules_window import SaveRules
 from lsystem.core.settings import PopupSettings
 
-from lsystem.lsystem_2d_widget import LSystem2DWidget
-from lsystem.lsystem_3d_widget import LSystem3DWidget
+from lsystem.core.lsystem_2d_widget import LSystem2DWidget
+from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
 class MyMainWindow(QMainWindow):
     """This class is the main UI Window that is the parent for the entire application"""
