@@ -5,7 +5,7 @@ from time import time
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 def read_substring(
-    lsys, curr_state, turn_angle, scale_factor, Obj
+    lsys, curr_state, turn_angle, #scale_factor, Obj
 ):
     """
     Input: readsubstring takes in a string of the current lsystem,
@@ -40,7 +40,27 @@ def read_substring(
             rotation=R.from_rotvec(rotation_vector)
             rotated_angle = rotation.apply(angle)
             angle = rotated_angle
-        #
+        elif char == "\\":
+            rotation_vector = np.array([1,0,0])*turn_angle #rotate in xy plane
+            rotation=R.from_rotvec(rotation_vector)
+            rotated_angle = rotation.apply(angle)
+            angle = rotated_angle
+        elif char == "/":
+            rotation_vector = np.array([-1,0,0])*turn_angle #rotate in xy plane
+            rotation=R.from_rotvec(rotation_vector)
+            rotated_angle = rotation.apply(angle)
+            angle = rotated_angle
+        elif char == "{":
+            rotation_vector = np.array([0,1,0])*turn_angle #rotate in xy plane
+            rotation=R.from_rotvec(rotation_vector)
+            rotated_angle = rotation.apply(angle)
+            angle = rotated_angle
+        elif char == "}":
+            rotation_vector = np.array([0,-1,0])*turn_angle #rotate in xy plane
+            rotation=R.from_rotvec(rotation_vector)
+            rotated_angle = rotation.apply(angle)
+            angle = rotated_angle
+    #
         # elif char == "|":
         #     new_angle = round((new_angle + 180) % 360, 5)
         # elif char == "(":
@@ -137,7 +157,7 @@ def read_stack(stack, starting_pt, angle, turn_angle, scale_factor, Obj):
     return obj_arr
 
 # if __name__ == "__main__":
-#     str = "FF+F"
+#     str = "FF+F-F{F}"
 #     starting_pt=[0,0,0]
 #     curr_state = {"point": starting_pt, "angle": np.array([1,0,0], dtype=float), "scale": float(1)}
 #     print(read_substring(str, curr_state, np.radians(45)))
