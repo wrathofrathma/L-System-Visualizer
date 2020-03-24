@@ -5,7 +5,7 @@ from time import time
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 def read_substring(
-    lsys, curr_state, turn_angle,  line_scale, Obj
+    lsys, curr_state, turn_angle
 ):
     """
     Input: readsubstring takes in a string of the current lsystem,
@@ -18,22 +18,23 @@ def read_substring(
     """
     obj_container = []  # make sure it's empty
     new_point = curr_state['point']  # initalize starting point
-    new_obj = Obj(new_point) # append first object
-    obj_container.append(new_obj)
+    #new_obj = Obj(new_point) # append first object
+    #obj_container.append(new_obj)
     angle = curr_state['angle']
-    r1 = R.from_rotvec('z',turn_angle, degrees=True)#for xy plane rotation
     for char in lsys:
         if char == "F":
-            new_point = new_point + angle_vector*line_scale
-            new_obj = Obj(new_point)
-            obj_container.append(new_obj)
+            new_point = np.add(new_point, angle)
+            #new_obj = Obj(new_point)
+            obj_container.append(new_point)
         elif char == "H":
             new_point = new_point + angle_vector*.5 *line_scale
             new_obj = Obj(new_point)
             obj_container.append(new_obj)
         elif char == "+":
-            change_in_angle = np.array([0,0,1])*turn_angle #rotate in xy plane
-            angle = r1.apply(change_in_angle)
+            rotation_vector = np.array([0,0,1])*turn_angle #rotate in xy plane
+            rotation=R.from_rotvec(rotation_vector)
+            rotated_angle = rotation.apply(angle)
+            angle = rotated_angle
         elif char == "-":
             change_in_angle = np.array([0,0,1])*turn_angle*(-1) #rotate in xy plane
             angle = r1.apply(change_in_angle)
@@ -132,3 +133,9 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale, Obj):
         curr_state["point"] = obj[-1].opts['position']
     print("[ INFO ] Finshed finding vertices (", round(time() - t, 3), "s )")
     return obj_arr
+
+if __name__ == "__main__":
+    str = "FF+F"
+    starting_pt=[0,0,0]
+    curr_state = {"point": starting_pt, "angle": np.array([1,0,0], dtype=float), "scale": float(1)}
+    print(read_substring(str, curr_state, np.radians(45)))
