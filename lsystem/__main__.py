@@ -12,6 +12,8 @@ from lsystem.core.my_ui import UIWidget
 from lsystem.core.save_rules_window import SaveRules
 from lsystem.core.settings import PopupSettings
 
+from lsystem.lsystem_2d_widget import LSystem2DWidget
+from lsystem.lsystem_3d_widget import LSystem3DWidget
 
 class MyMainWindow(QMainWindow):
     """This class is the main UI Window that is the parent for the entire application"""
@@ -33,30 +35,46 @@ class MyMainWindow(QMainWindow):
         toolbar = QToolBar("Settings Toolbar")
         toolbar.setIconSize(QSize(16,16))
         self.addToolBar(toolbar)
-        self.dim_group = QActionGroup(self)
         toolbar.setMovable(False)
         toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
 
         self.button_action = QAction("2D", self)
         self.button_action.setStatusTip("Click to use 2D L-Systems")
-        self.button_action.triggered.connect(lambda: self.toggle_dim())
-        self.dim_group.addAction(self.button_action)
+        self.button_action.triggered.connect(self.toggle_dim2D)
         
         self.button_action2 = QAction("3D", self)
         self.button_action2.setStatusTip("Click to use 3D L-Systems")
-        self.button_action2.triggered.connect(lambda: self.toggle_dim())
-        self.dim_group.addAction(self.button_action2)
-        toolbar.addActions(self.dim_group.actions())
- 
+        self.button_action2.triggered.connect(self.toggle_dim3D)
+
+        toolbar.addAction(self.button_action)
+        toolbar.addAction(self.button_action2)
+        
         self.button_action.setCheckable(True)
+        self.button_action2.setCheckable(True) 
         self.button_action.setChecked(True)
-        self.button_action2.setCheckable(True)
         self.setStatusBar(QStatusBar(self))
-        
-        
-    def toggle_dim(self):
-        print(self.dim_group.checkedAction())
     
+    def toggle_dim2D(self, s):
+        if(s):
+          print("I want 2D!")
+          self.button_action2.setChecked(False)
+          self.ui_widget.dims.setCurrentWidget(self.ui_widget.two_d)
+          self.ui_widget.graphix = self.ui_widget.two_d
+        else:
+          self.button_action.setChecked(True)
+          print("Nothing should happen :)")
+    def toggle_dim3D(self, s):
+        if(s):
+            print("I want 3D!")
+            self.button_action.setChecked(False)
+            self.ui_widget.dims.setCurrentWidget(self.ui_widget.three_d)
+            self.ui_widget.graphc = self.ui_widget.three_d
+        else:
+          self.button_action2.setChecked(True)
+          print("Nothing should happen")
+        
+         
+   
     def init_window(self):
         """Shows the main window"""
         self.setGeometry(self.left, self.top, self.width, self.height)

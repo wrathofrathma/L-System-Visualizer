@@ -15,7 +15,7 @@ h moves forward half a unit length
 
 import matplotlib.pyplot as plt
 import numpy as np
-from PyQt5.QtWidgets import QVBoxLayout, QPushButton, QWidget, QGridLayout, QLabel
+from PyQt5.QtWidgets import QStackedWidget, QVBoxLayout, QPushButton, QWidget, QGridLayout, QLabel
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import Qt
 from lsystem.core.lsystem_utils import (
@@ -89,7 +89,15 @@ class UIWidget(QWidget):
         self.prod_rules = []
         self.verts = []  # This will store the vertices from generate_lsystem
         self.saved_lsystems = load_saved_lsystems()
-        self.graphix = LSystem2DWidget()
+        self.two_d = LSystem2DWidget()
+        self.three_d = LSystem3DWidget()
+        
+        self.dims = QStackedWidget()
+        self.dims.addWidget(self.two_d)
+        self.dims.addWidget(self.three_d)
+        self.dims.setCurrentWidget(self.two_d)
+        self.graphix = self.two_d
+
         self.init_UI()
         self.alphabet = [
             "F",
@@ -230,7 +238,7 @@ class UIWidget(QWidget):
         plt.show()
         print("AVERAGE: ", np.average(fract_avg))
 
-    def onpick1(self, event):
+    def onpick2(self, event):
         print("I am an EVENT1")
         #plt.close(fig=None)
         ind = event.ind[0]+1
@@ -249,7 +257,7 @@ class UIWidget(QWidget):
         fig.canvas.mpl_connect('pick_event', self.onpick2)
         plt.show()
         return True
-    def onpick2(self, event):
+    def onpick1(self, event):
         print("I am an EVENT2")
         #plt.close(fig=None)
         ind = event.ind[0]
@@ -285,7 +293,7 @@ class UIWidget(QWidget):
         self.layout.addWidget(self.iters_edit, 13, 1, 1, 10)
         self.layout.addWidget(self.scroll_area, 14, 0, 1, 1)
         self.layout.addWidget(self.boxcount_button, 16, 0, 1, 1)
-        self.layout.addWidget(self.graphix, 14, 1, 5, -1)
+        self.layout.addWidget(self.dims, 14, 1, 5, -1)
         self.layout.addWidget(self.lsys_button, 20, 0, 1, -1)
 
     def show_popup(self):
