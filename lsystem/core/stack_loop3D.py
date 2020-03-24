@@ -5,7 +5,7 @@ from time import time
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 def read_substring(
-    lsys, curr_state, turn_angle
+    lsys, curr_state, turn_angle, scale_factor, Obj
 ):
     """
     Input: readsubstring takes in a string of the current lsystem,
@@ -27,8 +27,8 @@ def read_substring(
             #new_obj = Obj(new_point)
             obj_container.append(new_point)
         elif char == "H":
-            new_point = new_point + angle_vector*.5 *line_scale
-            new_obj = Obj(new_point)
+            new_point = np.add(np.mult(new_point,.5), angle)
+            #new_obj = Obj(new_point)
             obj_container.append(new_obj)
         elif char == "+":
             rotation_vector = np.array([0,0,1])*turn_angle #rotate in xy plane
@@ -36,8 +36,10 @@ def read_substring(
             rotated_angle = rotation.apply(angle)
             angle = rotated_angle
         elif char == "-":
-            change_in_angle = np.array([0,0,1])*turn_angle*(-1) #rotate in xy plane
-            angle = r1.apply(change_in_angle)
+            rotation_vector = np.array([0,0,-1])*turn_angle #rotate in xy plane
+            rotation=R.from_rotvec(rotation_vector)
+            rotated_angle = rotation.apply(angle)
+            angle = rotated_angle
         #
         # elif char == "|":
         #     new_angle = round((new_angle + 180) % 360, 5)
@@ -56,7 +58,7 @@ def read_substring(
     return angle, obj_container
 
 
-def read_stack(stack, starting_pt, angle, turn_angle, line_scale, Obj):
+def read_stack(stack, starting_pt, angle, turn_angle, scale_factor, Obj):
     """
     Input list of strings (F, +, -)
     Output List of new vertices
@@ -125,7 +127,7 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale, Obj):
             char,
             curr_state,
             turn_angle,
-            line_scale,
+            scale_factor,
             Obj,
         )
         if len(obj) != 1:
@@ -134,8 +136,8 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale, Obj):
     print("[ INFO ] Finshed finding vertices (", round(time() - t, 3), "s )")
     return obj_arr
 
-if __name__ == "__main__":
-    str = "FF+F"
-    starting_pt=[0,0,0]
-    curr_state = {"point": starting_pt, "angle": np.array([1,0,0], dtype=float), "scale": float(1)}
-    print(read_substring(str, curr_state, np.radians(45)))
+# if __name__ == "__main__":
+#     str = "FF+F"
+#     starting_pt=[0,0,0]
+#     curr_state = {"point": starting_pt, "angle": np.array([1,0,0], dtype=float), "scale": float(1)}
+#     print(read_substring(str, curr_state, np.radians(45)))
