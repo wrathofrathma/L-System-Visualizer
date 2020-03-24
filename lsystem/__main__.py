@@ -39,21 +39,46 @@ class MyMainWindow(QMainWindow):
         toolbar.setContextMenuPolicy(Qt.PreventContextMenu)
 
         self.button_action = QAction("2D", self)
-        self.button_action.setStatusTip("Click to use 2D L-Systems")
+        self.button_action.setStatusTip("Click to use 2D L-Systems!")
         self.button_action.triggered.connect(self.toggle_dim2D)
         
         self.button_action2 = QAction("3D", self)
-        self.button_action2.setStatusTip("Click to use 3D L-Systems")
+        self.button_action2.setStatusTip("Click to use 3D L-Systems!")
         self.button_action2.triggered.connect(self.toggle_dim3D)
+
+        self.save_action = QAction('Save Rules', self)
+        self.save_action.setStatusTip("Click to save the grammar of the L-System!")
+        self.save_action.triggered.connect(lambda: self.save_rules.show())
+
+        self.glossary_action = QAction("Glossary", self)
+        self.glossary_action.setStatusTip("Click to see the glossary!")
+        self.glossary_action.triggered.connect(lambda: self.glossary.show())
+
+        self.tutorial = QAction("Tutorial", self)
+        self.tutorial.setStatusTip("Click here to see how to get started!")
+        self.tutorial.triggered.connect(lambda: self.getting_started.show())
+
+
+        toolbar.addAction(self.tutorial)
+        toolbar.addAction(self.glossary_action)
+        toolbar.addAction(self.save_action)
+
+
+        toolbar.addSeparator()
+
 
         toolbar.addAction(self.button_action)
         toolbar.addAction(self.button_action2)
-        
+
         self.button_action.setCheckable(True)
         self.button_action2.setCheckable(True) 
         self.button_action.setChecked(True)
+
         self.setStatusBar(QStatusBar(self))
     
+        self.setCentralWidget(self.ui_widget)
+    
+
     def toggle_dim2D(self, s):
         if(s):
           print("I want 2D!")
@@ -79,20 +104,12 @@ class MyMainWindow(QMainWindow):
         """Shows the main window"""
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.setWindowTitle("L-System Generator")
-        self.init_menus()
         self.show()
 
-    def init_menus(self):
-        """Makes the menus for the menu bar"""
-        main_menu = self.menuBar()
-        file_menu = main_menu.addMenu("File")
-        options_menu = main_menu.addMenu("Options")
-        help_menu = main_menu.addMenu("Help")
-
-        self.setCentralWidget(self.ui_widget)
+        ''' 
 
         save_rule_act = QAction("Save your rules", self)
-        save_rule_act.triggered.connect(lambda: self.save_rules.show())
+        save_rule_act.triggered.connect(lambda: 
         main_menu.addAction(save_rule_act)
 
         exit_action = QAction("Exit", self)
@@ -115,18 +132,7 @@ class MyMainWindow(QMainWindow):
         options_menu.addAction(settings)
         help_menu.addAction(getting_started)
         help_menu.addAction(glossary)
-
-    def save_file(self):
-        """Takes a screenshot of the function and saves it"""
-        options = QFileDialog.Options()
-        file_name, _ = QFileDialog.getSaveFileName(
-            self, "Save Screenshot", options=options
-        )
-        if file_name:
-            self.ui_widget.graphix.screenshot(file_name + ".png")
-
-        self.save_rules.show()
-
+        '''
     def close_event(self):
         """Makes sure everything gets properly deleated upon closing"""
         print("[ INFO ] Exiting...")

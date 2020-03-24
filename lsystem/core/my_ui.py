@@ -287,7 +287,7 @@ class UIWidget(QWidget):
 
 
     def add_widgets(self):
-
+        print("I AM LELA ADDING SHIT")
         # Adding widgets to window
         self.layout.addWidget(self.axiom, 1, 0)
         self.layout.addWidget(self.axiom_edit, 1, 1, 1, 10)
