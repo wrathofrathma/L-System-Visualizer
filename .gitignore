@@ -1,6 +1,8 @@
 *.pyc
 *__pycache__
 .todo
-.gitignore
 test/
 test/*
+*egg*
+build/
+dist/
