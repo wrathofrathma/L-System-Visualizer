@@ -35,6 +35,7 @@ def read_substring(
             rotation=R.from_rotvec(rotation_vector)
             rotated_angle = rotation.apply(angle)
             angle = rotated_angle
+
         elif char == "-":
             rotation_vector = np.array([0,0,-1])*turn_angle #rotate in xy plane
             rotation=R.from_rotvec(rotation_vector)
@@ -83,8 +84,7 @@ def read_stack(stack, starting_pt, angle, turn_angle, scale_factor, obj):
     Input list of strings (F, +, -)
     Output List of new vertices
     """
-
-
+    print("turn angle at beginning is: ",turn_angle)
     stack = stack.replace("G", "F")
     stack = stack.replace("g", "f")
     objs = []
@@ -146,7 +146,7 @@ def read_stack(stack, starting_pt, angle, turn_angle, scale_factor, obj):
         curr_state["angle"], objs = read_substring(
             char,
             curr_state,
-            turn_angle,
+            angle,
             scale_factor,
             obj,
         )
