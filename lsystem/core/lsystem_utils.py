@@ -104,8 +104,6 @@ def generate_lsystem_3d(grammar):
         tmp_stack,
         [0, 0, 0],
         grammar_copy["angle"],
-        grammar_copy["turnAngle"],
-        grammar_copy["lineScale"],
         Square
     )
 
