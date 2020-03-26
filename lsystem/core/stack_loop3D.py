@@ -39,7 +39,7 @@ def read_substring(
             new_obj = obj(current_point, obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
         elif char == "H":
-            new_point = np.add(new_point, np.mult(unit_step,.5))
+            new_point = np.add(new_point, np.multiply(unit_step,.5))
             obj_ortientation = R.from_matrix(orientation_mat)
             new_obj = obj(current_point)#, obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
@@ -117,22 +117,24 @@ def read_stack(stack, starting_pt, angle, obj):
     for char in tmp_stack:
         if char[0] == "f" or char[0] == "h":
             if char[0] == "h":
-                divisor = 2
+                factor = .5
                 char.replace("h", "")
             else:
-                divisor = 1
+                factor = 1
                 char.replace("f", "")
-            curr_state["point"] += curr_state['angle']/divisor
+            unit_step = curr_state['orientation_mat'][0]
+            curr_state['point'] = np.add(curr_state['point'], np.multiply(unit_step,factor))
+            obj_ortientation = R.from_matrix(curr_state['orientation_mat'])
+            new_obj = obj(curr_state['point'], obj_ortientation.as_rotvec())
         elif char[0] == "[":
             saved_states.append(
-                (curr_state["point"], curr_state["angle"], curr_state["scale"])
+                (curr_state["point"], curr_state["orientation_mat"])
             )
             char.replace("[", "")
         elif char[0] == "]":
             tmp_state = saved_states.pop()
             curr_state["point"] = tmp_state[0]
-            curr_state["angle"] = tmp_state[1]
-            curr_state["scale"] = tmp_state[2]
+            curr_state["orientation_mat"] = tmp_state[1]
             char.replace("]", "")
 
         curr_state["orientation_mat"], array_of_objects = read_substring(
