@@ -5,7 +5,7 @@ from time import time
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 def read_substring(
-    lsys, curr_state, turn_angle, #scale_factor, Obj
+    lsys, curr_state, turn_angle, scale_factor, obj
 ):
     """
     Input: readsubstring takes in a string of the current lsystem,
@@ -18,17 +18,17 @@ def read_substring(
     """
     obj_container = []  # make sure it's empty
     new_point = curr_state['point']  # initalize starting point
-    #new_obj = Obj(new_point) # append first object
-    #obj_container.append(new_obj)
+    new_obj = obj(new_point) # append first object
+    obj_container.append(new_obj)
     angle = curr_state['angle']
     for char in lsys:
         if char == "F":
             new_point = np.add(new_point, angle)
-            #new_obj = Obj(new_point)
-            obj_container.append(new_point)
+            new_obj = obj(new_point)
+            obj_container.append(new_obj)
         elif char == "H":
             new_point = np.add(np.mult(new_point,.5), angle)
-            #new_obj = Obj(new_point)
+            new_obj = obj(new_point)
             obj_container.append(new_obj)
         elif char == "+":
             rotation_vector = np.array([0,0,1])*turn_angle #rotate in xy plane
@@ -78,7 +78,7 @@ def read_substring(
     return angle, obj_container
 
 
-def read_stack(stack, starting_pt, angle, turn_angle, scale_factor, Obj):
+def read_stack(stack, starting_pt, angle, turn_angle, scale_factor, obj):
     """
     Input list of strings (F, +, -)
     Output List of new vertices
@@ -117,7 +117,7 @@ def read_stack(stack, starting_pt, angle, turn_angle, scale_factor, Obj):
     #trig_dict["angle"] = np.array([0,1,0])
     t = time()
     # new_point = starting_pt  # new point initalized to starting point
-    curr_state = {"point": starting_pt, "angle": np.array([0,1,0], dtype=float32), "scale": float(1)}
+    curr_state = {"point": starting_pt, "angle": np.array([0, 1, 0], dtype=np.float32), "scale": float(1)}
     print(curr_state["angle"])
     #print("TRIG DICT: ", trig_dict)
     # for each little f/h create a new array with the starting position and angle
@@ -148,11 +148,11 @@ def read_stack(stack, starting_pt, angle, turn_angle, scale_factor, Obj):
             curr_state,
             turn_angle,
             scale_factor,
-            Obj,
+            obj,
         )
-        if len(obj) != 1:
+        if len(objs) != 1:
             obj_arr.append(objs)
-        curr_state["point"] = obj[-1].opts['position']
+        curr_state["point"] = objs[-1].opts['position']
     print("[ INFO ] Finshed finding vertices (", round(time() - t, 3), "s )")
     return obj_arr
 

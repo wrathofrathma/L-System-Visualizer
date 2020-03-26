@@ -7,8 +7,10 @@ import logging
 from pathlib import Path
 import numpy as np
 from lsystem.core.parsing import parsed_thread
-from lsystem.core.stack_loop import read_stack
+from lsystem.core.stack_loop import read_stack as read_2d_stack
+from lsystem.core.stack_loop3D import read_stack as read_3d_stack
 from lsystem.core.graph import Graph
+from lsystem.graphics.square import Square
 
 # At the moment the most important definitions are
 # saved_lsystems - Global dictionary definition of loaded lsystems.
@@ -38,7 +40,7 @@ def get_saved_lsystem(key, saved_lsystems):
         return None
 
 
-def generate_lsystem(grammar):
+def generate_lsystem_2d(grammar):
     """  Generates the L-System based off of the grammar """
     grammar_copy = copy.deepcopy(grammar)
     graph = Graph()  # Adjacency list based graph.
@@ -48,7 +50,7 @@ def generate_lsystem(grammar):
         grammar_copy["axiom"], grammar_copy["rules"], grammar_copy["iterations"]
     )
     # Generate vertics
-    verts_arr_temp = read_stack(
+    verts_arr_temp = read_2d_stack(
         tmp_stack,
         [0, 0, 0],
         grammar_copy["angle"],
@@ -87,6 +89,27 @@ def generate_lsystem(grammar):
             prev_point = (verts[i], verts[i + 1])
 
     return graph
+
+def generate_lsystem_3d(grammar):
+    """  Generates the L-System based off of the grammar """
+    grammar_copy = copy.deepcopy(grammar)
+    graph = Graph()  # Adjacency list based graph.
+    print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
+    # Generate full production string.
+    tmp_stack = parsed_thread(
+        grammar_copy["axiom"], grammar_copy["rules"], grammar_copy["iterations"]
+    )
+    # Generate vertics
+    mesh = read_3d_stack(
+        tmp_stack,
+        [0, 0, 0],
+        grammar_copy["angle"],
+        grammar_copy["turnAngle"],
+        grammar_copy["lineScale"],
+        Square
+    )
+
+    return mesh
 
 def get_saved_path():
   """Returns the operating system dependent saved_lsystems.json path"""

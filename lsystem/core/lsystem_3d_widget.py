@@ -22,7 +22,7 @@ class LSystem3DWidget(GLViewWidget):
         # Production scene objects.
         self.mesh_list = []
         
-        self.run_test()
+        # self.run_test()
 
 
 
@@ -52,9 +52,11 @@ class LSystem3DWidget(GLViewWidget):
     def clear_graph(self):
         self.clear_meshes()
 
-    def add_mesh(self, mesh):
-        self.mesh_list.append(mesh)
-        self.addItem(self.mesh_list[-1])
+    def add_mesh(self, mesh_list):
+        for m in mesh_list:
+          for mesh in m:
+            self.mesh_list.append(mesh)
+            self.addItem(mesh)
 
     def clear_meshes(self):
         for mesh in self.mesh_list:
