@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (
   QHBoxLayout,
   QStackedWidget,
   QShortcut)
+from PyQt5.QtGui import QPixmap
 
 class GettingStarted(QWidget):
   def __init__(self):
@@ -60,6 +61,9 @@ class GettingStarted(QWidget):
     self.axiom_one = QLabel('The axiom is where your L-System starts.')
     self.axiom_two = QLabel('Use production rules to transform your axiom into an L-System.')
     self.axiom_three = QLabel('See the symbols glossary for valid inputs.')
+    self.axiom_screenshot = QLabel(self)
+    self.axiom_pic = QPixmap("assets/screenshots/axiom.PNG");
+    self.axiom_screenshot.setPixmap(self.axiom_pic)
 
     self.prod_rule_title = QLabel('Production Rules', objectName = 'title')
     self.prod_rule_one = QLabel('Production rules are part of how you transform your axiom into an L-System.')
@@ -72,15 +76,24 @@ class GettingStarted(QWidget):
                                  'you can weight them so one is chosen more often than the others.')
     self.prod_rule_five = QLabel('The sum of all boxes for a left side must add up to 1.')
     self.prod_rule_six = QLabel('The plus buttons on the right can be used to add up to 3 more production rules to your L-System')
-
+    self.prod_rule_screenshot = QLabel(self)
+    self.prod_rule_pic = QPixmap("assets/screenshots/prod_rules.PNG");
+    self.prod_rule_screenshot.setPixmap(self.prod_rule_pic)
+    
     self.angle_title = QLabel('Angle', objectName = 'title')
     self.angle_one = QLabel('The angle determines how steep the turns are in your L-System when you use + or -.')
     self.angle_two = QLabel('Valid inputs are any number from -360 to 360')
+    self.angle_screenshot = QLabel(self)
+    self.angle_pic = QPixmap("assets/screenshots/angles.PNG");
+    self.angle_screenshot.setPixmap(self.angle_pic)
 
     self.iteration_title = QLabel('Iterations', objectName = 'title')
     self.iteration_one = QLabel('Iterations affect the number of times rules get applied to the string.')
     self.iteration_two = QLabel('The more iterations, the more defined the shape of your L-System becomes.')
     self.iteration_three = QLabel('Valid inputs are any number greater than 0.')
+    self.iteration_screenshot = QLabel(self)
+    self.iteration_pic = QPixmap("assets/screenshots/iterations.PNG");
+    self.iteration_screenshot.setPixmap(self.iteration_pic)
 
     self.branching_title = QLabel('Branching', objectName = 'title')
     self.branching_one = QLabel('Branching allows for the L-System to create offshoots')
@@ -91,11 +104,17 @@ class GettingStarted(QWidget):
     self.turn_angle_one = QLabel('The turning angle text box only appears if the axiom or a production rule has the symbols ( or ) in it.')
     self.turn_angle_two = QLabel('( decreases the angle by the turning angle and ) increases it.')
     self.turn_angle_three = QLabel('Valid inputs are any number between 0 and 360.')
+    self.turn_angle_screenshot = QLabel(self)
+    self.turn_angle_pic = QPixmap("assets/screenshots/turn_angle.PNG");
+    self.turn_angle_screenshot.setPixmap(self.turn_angle_pic)
 
     self.line_scale_title = QLabel('Line Scaling', objectName = 'title')
     self.line_scale_one = QLabel('The line scaling text box only appears if the axiom or a production rule has the symbols < or > in it.')
     self.line_scale_two = QLabel('< divides the length of all subsequent lines by the line scaling factor and > increases it.')
     self.line_scale_three = QLabel('Valid inputs are any number')
+    self.line_scale_screenshot = QLabel(self)
+    self.line_scale_pic = QPixmap("assets/screenshots/line_scale.PNG");
+    self.line_scale_screenshot.setPixmap(self.line_scale_pic)
     
     self.next_button = QPushButton("Next Page");
     self.next_button.setShortcut('Ctrl+N')
@@ -115,6 +134,7 @@ class GettingStarted(QWidget):
     self.page_one_layout.addWidget(self.axiom_one, 1, 0)
     self.page_one_layout.addWidget(self.axiom_two, 2, 0)
     self.page_one_layout.addWidget(self.axiom_three, 3, 0)
+    self.page_one_layout.addWidget(self.axiom_screenshot,4,0)
     self.page_one_widget.setLayout(self.page_one_layout)
     self.layout_list.append(self.page_one_widget)
     self.pages_widget.addWidget(self.page_one_widget)
@@ -126,6 +146,7 @@ class GettingStarted(QWidget):
     self.page_two_layout.addWidget(self.prod_rule_four, 4, 0)
     self.page_two_layout.addWidget(self.prod_rule_five, 5, 0)
     self.page_two_layout.addWidget(self.prod_rule_six, 6, 0)
+    self.page_two_layout.addWidget(self.prod_rule_screenshot, 7, 0)
     self.page_two_widget.setLayout(self.page_two_layout)
     self.layout_list.append(self.page_two_widget)
     self.pages_widget.addWidget(self.page_two_widget)
@@ -133,6 +154,7 @@ class GettingStarted(QWidget):
     self.page_three_layout.addWidget(self.angle_title, 0, 0)
     self.page_three_layout.addWidget(self.angle_one, 1, 0)
     self.page_three_layout.addWidget(self.angle_two, 2, 0)
+    self.page_three_layout.addWidget(self.angle_screenshot, 3, 0)
     self.page_three_widget.setLayout(self.page_three_layout)
     self.layout_list.append(self.page_three_widget)
     self.pages_widget.addWidget(self.page_three_widget)
@@ -141,6 +163,7 @@ class GettingStarted(QWidget):
     self.page_four_layout.addWidget(self.iteration_one, 1, 0)
     self.page_four_layout.addWidget(self.iteration_two, 2, 0)
     self.page_four_layout.addWidget(self.iteration_three, 3, 0)
+    self.page_four_layout.addWidget(self.iteration_screenshot, 4, 0)
     self.page_four_widget.setLayout(self.page_four_layout)
     self.layout_list.append(self.page_four_widget)
     self.pages_widget.addWidget(self.page_four_widget)
@@ -157,6 +180,7 @@ class GettingStarted(QWidget):
     self.page_six_layout.addWidget(self.turn_angle_one, 1, 0)
     self.page_six_layout.addWidget(self.turn_angle_two, 2, 0)
     self.page_six_layout.addWidget(self.turn_angle_three, 3, 0)
+    self.page_six_layout.addWidget(self.turn_angle_screenshot, 4, 0)
     self.page_six_widget.setLayout(self.page_six_layout)
     self.layout_list.append(self.page_six_widget)
     self.pages_widget.addWidget(self.page_six_widget)
@@ -165,6 +189,7 @@ class GettingStarted(QWidget):
     self.page_seven_layout.addWidget(self.line_scale_one, 1 ,0)
     self.page_seven_layout.addWidget(self.line_scale_two, 2, 0)
     self.page_seven_layout.addWidget(self.line_scale_three, 3, 0)
+    self.page_seven_layout.addWidget(self.line_scale_screenshot, 4, 0)
     self.page_seven_widget.setLayout(self.page_seven_layout)
     self.layout_list.append(self.page_seven_layout)
     self.pages_widget.addWidget(self.page_seven_widget)
