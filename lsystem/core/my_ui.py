@@ -560,18 +560,18 @@ class UIWidget(QWidget):
         while self.prods > num_rules:
             self.less_prods()
 
+        which_rule = 0
         for i, key in enumerate(grammar["rules"]):
             value = grammar["rules"][key]
             if isinstance(value, str):
-                self.prod_rules_edit[i].setText(key + ": " + value)
+                self.prod_rules_edit[which_rule].setText(key + ": " + value)
+                which_rule+=1
             else:
-                j = 0
                 for val in value:
                     print(val)
-                    self.prod_rules_edit[i + j].setText(key + ": " + val[0])
-                    self.prod_percent[i + j].setText(val[1])
-                    j += 1
-                i += j
+                    self.prod_rules_edit[which_rule].setText(key + ": " + val[0])
+                    self.prod_percent[which_rule].setText(val[1])
+                    which_rule+=1
 
         self.angle_edit.setText(str(grammar["angle"]))
         if self.made_angle:
