@@ -34,9 +34,10 @@ def read_substring(
     unit_step = curr_state['orientation_mat'][0]
     for char in lsys:
         if char == "F":
+            old_point = current_point
             current_point = np.add(current_point, unit_step)
             obj_ortientation = R.from_matrix(orientation_mat)
-            new_obj = obj(current_point, obj_ortientation.as_rotvec())
+            new_obj = obj(np.multiply(np.add(old_point,current_point),.5), obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
         elif char == "H":
             new_point = np.add(new_point, np.multiply(unit_step,.5))
