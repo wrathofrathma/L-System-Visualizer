@@ -55,25 +55,25 @@ def read_substring(
             rotation=R.from_rotvec(rotation_vector)
             orientation_mat = rotation.apply(orientation_mat)
             unit_step = orientation_mat[0]
-        elif char == "\\":
+        elif char == "<":
             #rolling left (about the turtle's forward axis)
             rotation_vector = np.array(orientation_mat[0])*turn_angle
             rotation=R.from_rotvec(rotation_vector)
             orientation_mat = rotation.apply(orientation_mat)
             unit_step = orientation_mat[0]
-        elif char == "/":
+        elif char == ">":
             #rolling right (about the turtle's forward axis)
             rotation_vector = np.array(orientation_mat[0])*turn_angle*(-1)
             rotation=R.from_rotvec(rotation_vector)
             orientation_mat = rotation.apply(orientation_mat)
             unit_step = orientation_mat[0]
-        elif char == "{":
+        elif char == "^":
             #pitch up (about the turtle's right axis)
             rotation_vector = np.array(orientation_mat[1])*turn_angle
             rotation=R.from_rotvec(rotation_vector)
             orientation_mat = rotation.apply(orientation_mat)
             unit_step = orientation_mat[0]
-        elif char == "}":
+        elif char == "&":
             #pitch down (about the turtle's right axis)
             rotation_vector = np.array(orientation_mat[1])*turn_angle*(-1)
             rotation=R.from_rotvec(rotation_vector)
