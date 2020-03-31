@@ -22,8 +22,8 @@ def read_substring(
 
     orientation_mat= curr_state['orientation_mat']
     obj_ortientation = R.from_matrix(orientation_mat)
-    new_obj = obj(current_point,obj_ortientation.as_rotvec()) # append first object
-    obj_container.append(new_obj)
+    #new_obj = obj(current_point,obj_ortientation.as_rotvec()) # append first object
+    #obj_container.append(new_obj)
     '''First row of the rotation matirx is the turtles forward
         direction vector in the absolute frame
         Second row of the rotation matrix is the turtles right
@@ -37,7 +37,7 @@ def read_substring(
             old_point = current_point
             current_point = np.add(current_point, unit_step)
             obj_ortientation = R.from_matrix(orientation_mat)
-            new_obj = obj(current_point, obj_ortientation.as_rotvec())
+            new_obj = obj(np.multiply(np.add(current_point,old_point),.5), obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
         elif char == "H":
             new_point = np.add(new_point, np.multiply(unit_step,.5))
@@ -145,8 +145,8 @@ def read_stack(stack, starting_pt, angle, obj):
             angle,
             obj,
         )
-        if len(array_of_objects) != 1:
-            twoD_array_objects.append(array_of_objects)
+        #if len(array_of_objects) == 1:
+        twoD_array_objects.append(array_of_objects)
         curr_state["point"] = array_of_objects[-1].opts['position']
     print("[ INFO ] Finshed finding vertices (", round(time() - t, 3), "s )")
     return twoD_array_objects
