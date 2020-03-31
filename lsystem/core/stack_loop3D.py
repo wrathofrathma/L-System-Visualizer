@@ -90,7 +90,7 @@ def read_stack(stack, starting_pt, angle, obj):
     Input list of strings (F, +, -)
     Output List of new vertices
     """
-
+    angle = angle*np.pi/180
     stack = stack.replace("G", "F")
     stack = stack.replace("g", "f")
     array_of_objects = []
