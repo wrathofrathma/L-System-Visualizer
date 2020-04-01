@@ -24,6 +24,7 @@ from lsystem.core.lsystem_utils import (
     generate_lsystem_2d,
     generate_lsystem_3d,
 )
+from PyQt5.QtGui import QIcon
 from lsystem.core.input_check import input_check
 
 from lsystem.core.lsystem_2d_widget import LSystem2DWidget
@@ -31,6 +32,8 @@ from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
 from lsystem.core.fractal_dim import fractal_dim_calc
 import copy
+
+import os
 
 class CustomLineEdit(QtWidgets.QLineEdit):
     """ Class that enables clicking in a text box """
@@ -204,8 +207,15 @@ class UIWidget(QWidget):
         self.scroll_area.setFixedWidth(150)
         self.scroll_area.setWidget(self.widget)
 
+        precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake', 
+            'KochIsland', 'PeanoCurve', 'DragonCurve', 'HilbertCurve',
+            'TreeExample', 'IslandsandLakes', 'CantorSet']
+
         for i, key in enumerate(self.saved_lsystems):
             self.examples.append(QPushButton(key))
+            if i < 10:
+              self.examples[i].setIcon(QIcon('{}/lsystem/assets/images/{}.png'.format(os.getcwd(), precons[i])))
+              self.examples[i].setIconSize(QtCore.QSize(140, 140))
             self.examples[i].clicked.connect(
                 lambda state, x=key: self.gen_example(str(x))
             )
