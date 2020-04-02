@@ -45,6 +45,7 @@ def read_substring(
             new_obj = obj(pos=current_point)#, rotation=obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
         elif char == "+":
+            #TODO: Change the relative position based on the turning angle and then shift 
             #turning left (about the turtle's down axis)
             rotation_vector = np.array(orientation_mat[2])*turn_angle
             rotation=R.from_rotvec(rotation_vector)
