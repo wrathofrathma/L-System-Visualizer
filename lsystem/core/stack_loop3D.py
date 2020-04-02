@@ -21,8 +21,8 @@ def read_substring(
     #Rotation matrix converts a vector in the abs frame to turtle frame
 
     orientation_mat= curr_state['orientation_mat']
-    obj_ortientation = R.from_matrix(orientation_mat)
-    #new_obj = obj(current_point,obj_ortientation.as_rotvec()) # append first object
+    rotation=obj_ortientation = R.from_matrix(orientation_mat)
+    #new_obj = obj(pos=current_point,rotation=obj_ortientation.as_rotvec()) # append first object
     #obj_container.append(new_obj)
     '''First row of the rotation matirx is the turtles forward
         direction vector in the absolute frame
@@ -36,13 +36,13 @@ def read_substring(
         if char == "F":
             old_point = current_point
             current_point = np.add(current_point, unit_step)
-            obj_ortientation = R.from_matrix(orientation_mat)
-            new_obj = obj(np.multiply(np.add(current_point,old_point),.5), obj_ortientation.as_rotvec())
+            rotation=obj_ortientation = R.from_matrix(orientation_mat)
+            new_obj = obj(pos=np.multiply(np.add(current_point,old_point),.5), rotation=obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
         elif char == "H":
             new_point = np.add(new_point, np.multiply(unit_step,.5))
-            obj_ortientation = R.from_matrix(orientation_mat)
-            new_obj = obj(current_point)#, obj_ortientation.as_rotvec())
+            rotation=obj_ortientation = R.from_matrix(orientation_mat)
+            new_obj = obj(pos=current_point)#, rotation=obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
         elif char == "+":
             #turning left (about the turtle's down axis)
@@ -126,8 +126,8 @@ def read_stack(stack, starting_pt, angle, obj):
                 char.replace("f", "")
             unit_step = curr_state['orientation_mat'][0]
             curr_state['point'] = np.add(curr_state['point'], np.multiply(unit_step,factor))
-            obj_ortientation = R.from_matrix(curr_state['orientation_mat'])
-            new_obj = obj(curr_state['point'], obj_ortientation.as_rotvec())
+            rotation=obj_ortientation = R.from_matrix(curr_state['orientation_mat'])
+            new_obj = obj(pos=curr_state['point'], rotation=obj_ortientation.as_rotvec())
         elif char[0] == "[":
             saved_states.append(
                 (curr_state["point"], curr_state["orientation_mat"])

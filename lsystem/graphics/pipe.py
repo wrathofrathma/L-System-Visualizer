@@ -5,7 +5,10 @@ from glm import vec3
 from lsystem.graphics.mesh import MeshObject
 
 class Pipe(MeshObject):
-  def __init__(self, pos=vec3(0.0), rotation=vec3(0.0)):
+  def __init__(self, start: vec3 = None, end: vec3 = None, pos=vec3(0.0), rotation=vec3(0.0)):
+    if(start is not None and end is not None):
+      pos = (start + end) / 2.0
+      
     MeshObject.__init__(self, position=pos, rotation=rotation)
     
     verts = np.array([(0, 0, 0), (0, 0, 1), (0.1, 0.0, 0), (0.07071067811865477, 0.07071067811865475, 0), (6.123233995736766e-18, 0.1, 0), (-0.07071067811865475,
