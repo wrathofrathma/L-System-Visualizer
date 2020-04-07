@@ -22,7 +22,8 @@ class LSystem3DWidget(GLViewWidget):
         # Production scene objects.
         self.mesh_list = []
         self.mesh_positions = []
-        
+        self.original_fov = self.opts['fov']
+        self.original_distance = self.opts['distance']
 
     def reset_camera(self):
         pass
@@ -32,6 +33,11 @@ class LSystem3DWidget(GLViewWidget):
 
     def zoom_out(self):
         pass
+
+    def reset_zoom(self):
+        self.opts['fov'] = self.original_fov
+        self.opts['distance']=self.original_distance
+        self.update()
 
     def screenshot(self, filename):
         print("[ INFO ] Intentionally broken at the moment. There is a bug in pyqtgraph's image exporter so we'll need to fork or do it ourselves")

@@ -35,7 +35,8 @@ class LSystem2DWidget(PlotWidget):
 
     def zoom_out(self):
         pass
-
+    def reset_zoom(self):
+        self.autoRange()
     def screenshot(self, filename):
         print("[ INFO ] Intentionally broken at the moment. There is a bug in pyqtgraph's image exporter so we'll need to fork or do it ourselves")
 

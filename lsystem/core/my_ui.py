@@ -123,7 +123,7 @@ class UIWidget(QWidget):
             ">",
             "<",
             " ",
-          
+
         ]
         self.ctrl_char = [
             "A",
@@ -207,7 +207,7 @@ class UIWidget(QWidget):
         self.scroll_area.setFixedWidth(150)
         self.scroll_area.setWidget(self.widget)
 
-        precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake', 
+        precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake',
             'KochIsland', 'PeanoCurve', 'DragonCurve', 'HilbertCurve',
             'TreeExample', 'IslandsandLakes', 'CantorSet']
 
@@ -596,3 +596,6 @@ class UIWidget(QWidget):
     def reset_text_box_color(self):
         for box in self.text_boxes:
             box.reset_color()
+    def reset_zoom(self):
+        self.two_d.reset_zoom()
+        self.three_d.reset_zoom() #built in function don't change to snake script
