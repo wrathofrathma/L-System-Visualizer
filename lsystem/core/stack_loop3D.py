@@ -132,9 +132,10 @@ def read_stack(stack, starting_pt, angle, obj):
                 factor = 1
                 char.replace("f", "")
             unit_step = curr_state['orientation_mat'][0]
+            prev_point = curr_state['point']
             curr_state['point'] = np.add(curr_state['point'], np.multiply(unit_step,factor))
             rotation=obj_ortientation = R.from_matrix(curr_state['orientation_mat'])
-            new_obj = obj(pos=curr_state['point'], rotation=obj_ortientation.as_rotvec())
+            new_obj = obj(start=prev_point, end=curr_state['point'], rotation=obj_ortientation.as_rotvec())
         elif char[0] == "[":
             saved_states.append(
                 (curr_state["point"], curr_state["orientation_mat"])
