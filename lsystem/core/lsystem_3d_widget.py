@@ -21,18 +21,8 @@ class LSystem3DWidget(GLViewWidget):
 
         # Production scene objects.
         self.mesh_list = []
+        self.mesh_positions = []
         
-        # self.run_test()
-
-
-
-    def run_test(self):
-        # Testing
-        self.add_mesh(Square(pos=(0, 0, 0)))
-        self.add_mesh(Square(pos=(3, 0, 0)))
-        self.add_mesh(Square(pos=(4, 0, 0)))
-        self.add_mesh(Square(pos=(7, 0, 0)))
-
 
     def reset_camera(self):
         pass
@@ -55,10 +45,25 @@ class LSystem3DWidget(GLViewWidget):
     def add_mesh(self, mesh_list):
         for m in mesh_list:
           for mesh in m:
+            self.mesh_positions.append(mesh.opts["position"])
             self.mesh_list.append(mesh)
             self.addItem(mesh)
+        self.center_meshes()
 
     def clear_meshes(self):
+        """Removes all mesh objects from the scene"""
+        self.mesh_positions.clear()
         for mesh in self.mesh_list:
             self.removeItem(mesh)
         self.mesh_list.clear()
+
+    def center_meshes(self):
+      """Centers the entire mesh list on the origin"""
+      positions = np.array(self.mesh_positions)
+      # print(positions.shape)
+      avg_x = np.average(positions[:, 0])
+      avg_y = np.average(positions[:, 1])
+      avg_z = np.average(positions[:, 2])
+      center = (avg_x, avg_y, avg_z)
+      for mesh in self.mesh_list:
+        mesh.set_position(mesh.opts["position"] - center)
