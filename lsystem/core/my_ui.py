@@ -209,13 +209,15 @@ class UIWidget(QWidget):
 
         precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake', 
             'KochIsland', 'PeanoCurve', 'DragonCurve', 'HilbertCurve',
-            'TreeExample', 'IslandsandLakes', 'CantorSet']
+            'TreeExample', 'IslandsandLakes']
 
         for i, key in enumerate(self.saved_lsystems):
-            self.examples.append(QPushButton(key))
-            if i < 10:
+            self.examples.append(QPushButton())
+            if i < len(precons):
               self.examples[i].setIcon(QIcon('{}/lsystem/assets/images/{}.png'.format(os.getcwd(), precons[i])))
-              self.examples[i].setIconSize(QtCore.QSize(140, 140))
+              self.examples[i].setIconSize(QtCore.QSize(120, 100))
+            else:
+              self.examples[i].setText(key)
             self.examples[i].clicked.connect(
                 lambda state, x=key: self.gen_example(str(x))
             )
