@@ -8,6 +8,7 @@ import PyQt5
 from glm import vec3, vec4
 from pyqtgraph.opengl import GLMeshItem, MeshData
 
+from scipy.spatial.transform import Rotation as R
 from lsystem.graphics.spatial_object import SpatialObject
 
 
@@ -23,7 +24,8 @@ class MeshObject(SpatialObject, GLMeshItem):
             "model_verts": None,
             "indices": None,
             "position": vec3(0.0),
-            "rotation": vec3(0.0),
+            "rot_vec": None,
+            "rot_quat": None,
             "scale": vec3(1.0),
             "smooth": True,
             "computeNormals": False,
@@ -35,8 +37,12 @@ class MeshObject(SpatialObject, GLMeshItem):
         }
         for k, v in kwds.items():
             self.opts[k] = v
+            
         self.set_position(self.opts["position"], False)
-        self.set_rotation(self.opts["rotation"], False)
+        if (self.opts["rot_quat"] is not None):
+          self.rotation = R.from_quat(self.opts["rot_quat"])
+        if (self.opts["rot_vec"] is not None):
+          self.rotation = R.from_rotvec(self.opts["rot_vec"])
         self.set_scale(self.opts["scale"], False)
         self.opts["meshdata"] = MeshData()
         self.set_vertexes(self.opts["vertexes"], False)
