@@ -145,6 +145,7 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
         )
         if len(vertices) != 1:
             vert_arr.append(vertices)
+        #print("vert_arr = ",vert_arr)
         curr_state["point"] = vertices[-1]
     print("[ INFO ] Finshed finding vertices (", round(time() - t, 3), "s )")
     return vert_arr

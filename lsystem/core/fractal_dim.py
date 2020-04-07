@@ -5,15 +5,14 @@ def gen_pixel_map(graph, size):
   #add one and multiply by size to get from world coord to pixel map
   pix_map = np.full((size,size),'.')
 
-
   for point in graph.adjacency_list.keys():
     #second coordinate pair
-    # print("point = ",point)
+    #print("point = ",point)
     x_old = point[0]*size #coordinates are stored as real numbers for precision
     y_old = point[1]*size
     pix_map[int(np.trunc(x_old)), int(np.trunc(y_old))]=1
     for point2 in graph.adjacency_list[point]["edges"]:
-      # print("point 2 = ",point2)
+      #print("point 2 = ",point2)
       x_new = point2[0]*size
       y_new = point2[1]*size
 
@@ -62,6 +61,8 @@ def fractal_dim_calc(graph,ending_size, num_sizes):
     ending_size = ending_size/2
 
     pix_map = pool_pixel_map(pix_map)
+    #if i>2:
+    #  print(pix_map)
     fractal_dim.insert(0,np.log(np.count_nonzero(pix_map == '1')))#/np.log(ending_size))
 
   return fractal_dim # JUST RETURNS log(N(E))
