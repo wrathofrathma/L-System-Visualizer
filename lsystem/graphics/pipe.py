@@ -7,10 +7,10 @@ from lsystem.graphics.mesh import MeshObject
 class Pipe(MeshObject):
   def __init__(self, start: vec3 = None, end: vec3 = None, pos=vec3(0.0), rotation=vec3(0.0)):
     if(start is not None and end is not None):
-      pos = (start + end) / 2.0
-      
+      pos = np.multiply(np.add(start,end),.5)
+
     MeshObject.__init__(self, position=pos, rotation=rotation)
-    
+
     verts = np.array([(0, 0, 0), (0, 0, 1), (0.1, 0.0, 0), (0.07071067811865477, 0.07071067811865475, 0), (6.123233995736766e-18, 0.1, 0), (-0.07071067811865475,
       0.07071067811865477, 0), (-0.1, 1.2246467991473533e-17, 0), (-0.07071067811865477, -0.07071067811865475, 0), (-1.8369701987210297e-17, -0.1, 0),
       (0.07071067811865474, -0.07071067811865477, 0), (0.1, 0.0, 1), (0.07071067811865477, 0.07071067811865475, 1), (6.123233995736766e-18, 0.1, 1),
@@ -28,7 +28,7 @@ class Pipe(MeshObject):
     self.divs = 8
     # self.height = 3 * self.radius
     self.height = 1
-    
+
     # Generate circles for top and bottom of the pipe
     bcircle = []
     tcircle = []
@@ -37,7 +37,7 @@ class Pipe(MeshObject):
       v = (self.radius * math.cos(d * cstep), self.radius * math.sin(d * cstep))
       bcircle.append((v[0], v[1], 0))
       tcircle.append((v[0], v[1], self.height))
-    
+
     # Origins Bottom      Top
     verts = [(0, 0, 0), (0, 0, self.height)]
     verts += (bcircle)
@@ -52,7 +52,7 @@ class Pipe(MeshObject):
       faces.append(bf)
       faces.append(tf)
     # Now that circle faces are complete, let's make the individual faces between them.
-    # We can do this by iterating through both top & bottom circles 2 verts at a time 
+    # We can do this by iterating through both top & bottom circles 2 verts at a time
     # and creating a divided square.
 
     for i in range(self.divs):

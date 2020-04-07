@@ -36,8 +36,12 @@ def read_substring(
         if char == "F":
             old_point = current_point
             current_point = np.add(current_point, unit_step)
-            rotation=obj_ortientation = R.from_matrix(orientation_mat)
-            new_obj = obj(pos=np.multiply(np.add(current_point,old_point),.5), rotation=obj_ortientation.as_rotvec())
+            obj_ortientation = R.from_matrix(orientation_mat)
+            print("old_point = ",old_point,"  new_point = ",current_point)
+            print("euler angle = ",obj_ortientation.as_euler('xyz',degrees=True))
+            print("rotation vector = ",obj_ortientation.as_rotvec())
+            print()
+            new_obj = obj(start = old_point, end = current_point, rotation=obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
         elif char == "H":
             new_point = np.add(new_point, np.multiply(unit_step,.5))
@@ -45,7 +49,6 @@ def read_substring(
             new_obj = obj(pos=current_point)#, rotation=obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
         elif char == "+":
-            #TODO: Change the relative position based on the turning angle and then shift 
             #turning left (about the turtle's down axis)
             rotation_vector = np.array(orientation_mat[2])*turn_angle
             rotation=R.from_rotvec(rotation_vector)
