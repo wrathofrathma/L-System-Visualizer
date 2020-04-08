@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>MainWindow &#8212; L System Visualizer 5/14/2020 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Utilities Documentation" href="utilities-toc.html" />
+    <link rel="prev" title="Window Documentation" href="windows-toc.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-lsystem.__main__">
+<span id="mainwindow"></span><h1>MainWindow<a class="headerlink" href="#module-lsystem.__main__" title="Permalink to this headline">¶</a></h1>
+<p>This file is the run.py that makes the application run</p>
+<dl class="class">
+<dt id="lsystem.__main__.MyMainWindow">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.__main__.</code><code class="sig-name descname">MyMainWindow</code><span class="sig-paren">(</span><em class="sig-param">parent=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.__main__.MyMainWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is the main UI Window that is the parent for the entire application</p>
+<dl class="method">
+<dt id="lsystem.__main__.MyMainWindow.close_event">
+<code class="sig-name descname">close_event</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.__main__.MyMainWindow.close_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes sure everything gets properly deleated upon closing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.__main__.MyMainWindow.init_window">
+<code class="sig-name descname">init_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.__main__.MyMainWindow.init_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the main window</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.__main__.MyMainWindow.reset_zoom">
+<code class="sig-name descname">reset_zoom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.__main__.MyMainWindow.reset_zoom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.__main__.MyMainWindow.toggle_dim2D">
+<code class="sig-name descname">toggle_dim2D</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.__main__.MyMainWindow.toggle_dim2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.__main__.MyMainWindow.toggle_dim3D">
+<code class="sig-name descname">toggle_dim3D</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.__main__.MyMainWindow.toggle_dim3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.core.settings">
+<span id="settings"></span><h1>Settings<a class="headerlink" href="#module-lsystem.core.settings" title="Permalink to this headline">¶</a></h1>
+<p>This file handles the popup settings window</p>
+<dl class="class">
+<dt id="lsystem.core.settings.PopupSettings">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.settings.</code><code class="sig-name descname">PopupSettings</code><span class="sig-paren">(</span><em class="sig-param">graphix</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.settings.PopupSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the window for the popup settings</p>
+<dl class="method">
+<dt id="lsystem.core.settings.PopupSettings.add_widgets">
+<code class="sig-name descname">add_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.settings.PopupSettings.add_widgets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the widgets to the settings layout</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.settings.PopupSettings.dim_state">
+<code class="sig-name descname">dim_state</code><span class="sig-paren">(</span><em class="sig-param">dim</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.settings.PopupSettings.dim_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the dimension state when changed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.settings.PopupSettings.init_UI">
+<code class="sig-name descname">init_UI</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.settings.PopupSettings.init_UI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the UI for the settings menu</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.settings.PopupSettings.init_buttons">
+<code class="sig-name descname">init_buttons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.settings.PopupSettings.init_buttons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the buttons and button states in the settings menu</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.core.getting_started">
+<span id="getting-started"></span><h1>Getting Started<a class="headerlink" href="#module-lsystem.core.getting_started" title="Permalink to this headline">¶</a></h1>
+<p>Tutorial Page</p>
+<dl class="class">
+<dt id="lsystem.core.getting_started.GettingStarted">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.getting_started.</code><code class="sig-name descname">GettingStarted</code><a class="headerlink" href="#lsystem.core.getting_started.GettingStarted" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.core.getting_started.GettingStarted.add_widgets">
+<code class="sig-name descname">add_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.getting_started.GettingStarted.add_widgets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.getting_started.GettingStarted.change_page">
+<code class="sig-name descname">change_page</code><span class="sig-paren">(</span><em class="sig-param">up</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.getting_started.GettingStarted.change_page" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.getting_started.GettingStarted.create_widgets">
+<code class="sig-name descname">create_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.getting_started.GettingStarted.create_widgets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.getting_started.GettingStarted.init_ui">
+<code class="sig-name descname">init_ui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.getting_started.GettingStarted.init_ui" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.core.glossary">
+<span id="glossary"></span><h1>Glossary<a class="headerlink" href="#module-lsystem.core.glossary" title="Permalink to this headline">¶</a></h1>
+<p>The glossary page</p>
+<dl class="class">
+<dt id="lsystem.core.glossary.Glossary">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.glossary.</code><code class="sig-name descname">Glossary</code><a class="headerlink" href="#lsystem.core.glossary.Glossary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class of the glossary</p>
+<dl class="method">
+<dt id="lsystem.core.glossary.Glossary.add_widgets">
+<code class="sig-name descname">add_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.glossary.Glossary.add_widgets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the labels to the layout</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.glossary.Glossary.init_ui">
+<code class="sig-name descname">init_ui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.glossary.Glossary.init_ui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets window title, layout, and adds widgets to the window</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.core.my_ui">
+<span id="ui"></span><h1>UI<a class="headerlink" href="#module-lsystem.core.my_ui" title="Permalink to this headline">¶</a></h1>
+<p>This file adds the graphics to the UI
+F(and G) draws a unit length line
+f(and g) moves forward a unit length
+H draws a half length line
+h moves forward half a unit length
+- turns counter-clockwise
++ turns clockwise
+[ starts branch
+] ends branch
+| reverses direction
+( decrements the angle by a turning angle
+) increments the angle by a turning angle</p>
+<dl class="class">
+<dt id="lsystem.core.my_ui.CustomLineEdit">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.my_ui.</code><code class="sig-name descname">CustomLineEdit</code><a class="headerlink" href="#lsystem.core.my_ui.CustomLineEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class that enables clicking in a text box</p>
+<dl class="method">
+<dt id="lsystem.core.my_ui.CustomLineEdit.clear_box">
+<code class="sig-name descname">clear_box</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.CustomLineEdit.clear_box" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.core.my_ui.CustomLineEdit.clicked">
+<code class="sig-name descname">clicked</code><a class="headerlink" href="#lsystem.core.my_ui.CustomLineEdit.clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.CustomLineEdit.mousePressEvent">
+<code class="sig-name descname">mousePressEvent</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">QMouseEvent</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.CustomLineEdit.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.CustomLineEdit.reset_box">
+<code class="sig-name descname">reset_box</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.CustomLineEdit.reset_box" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.CustomLineEdit.reset_color">
+<code class="sig-name descname">reset_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.CustomLineEdit.reset_color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lsystem.core.my_ui.UIWidget">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.my_ui.</code><code class="sig-name descname">UIWidget</code><a class="headerlink" href="#lsystem.core.my_ui.UIWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class that holds all of the widgets for viewing</p>
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.add_widgets">
+<code class="sig-name descname">add_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.add_widgets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.close_event">
+<code class="sig-name descname">close_event</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.close_event" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.gen_example">
+<code class="sig-name descname">gen_example</code><span class="sig-paren">(</span><em class="sig-param">example</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.gen_example" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.gen_rule_dict">
+<code class="sig-name descname">gen_rule_dict</code><span class="sig-paren">(</span><em class="sig-param">prod_rules</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.gen_rule_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>formats production rules as
+{“F”: [[p,rule],[p,rule]], “f”:[[p,rule],[p,rule]] … }</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.gen_sys">
+<code class="sig-name descname">gen_sys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.gen_sys" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the input is valid, iterates through productions
+and sends to graphics to be drawn</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.init_UI">
+<code class="sig-name descname">init_UI</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.init_UI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and adds all widgets in the viewport and sets the layout</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.init_buttons">
+<code class="sig-name descname">init_buttons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.init_buttons" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.init_text_boxes">
+<code class="sig-name descname">init_text_boxes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.init_text_boxes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Links all of the text boxes to buttons</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.less_prods">
+<code class="sig-name descname">less_prods</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.less_prods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes productions when - button is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.more_prods">
+<code class="sig-name descname">more_prods</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.more_prods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates more productions when + button is clicked</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.on_boxcount_button_clicked">
+<code class="sig-name descname">on_boxcount_button_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.on_boxcount_button_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.on_lsys_button_clicked">
+<code class="sig-name descname">on_lsys_button_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.on_lsys_button_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.onpick1">
+<code class="sig-name descname">onpick1</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.onpick1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.onpick2">
+<code class="sig-name descname">onpick2</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.onpick2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.reset_text_box_color">
+<code class="sig-name descname">reset_text_box_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.reset_text_box_color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.reset_zoom">
+<code class="sig-name descname">reset_zoom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.reset_zoom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.show_popup">
+<code class="sig-name descname">show_popup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.show_popup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.core.save_rules_window">
+<span id="save-rules"></span><h1>Save Rules<a class="headerlink" href="#module-lsystem.core.save_rules_window" title="Permalink to this headline">¶</a></h1>
+<p>This file handles the saving of rules</p>
+<dl class="class">
+<dt id="lsystem.core.save_rules_window.SaveRules">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.save_rules_window.</code><code class="sig-name descname">SaveRules</code><span class="sig-paren">(</span><em class="sig-param">ui</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.save_rules_window.SaveRules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the window that allows the user to save rules</p>
+<dl class="method">
+<dt id="lsystem.core.save_rules_window.SaveRules.add_widgets">
+<code class="sig-name descname">add_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.save_rules_window.SaveRules.add_widgets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the widgets to the layout</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.save_rules_window.SaveRules.init_ui">
+<code class="sig-name descname">init_ui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.save_rules_window.SaveRules.init_ui" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets the window title, layout, and adds widgets to the window</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.save_rules_window.SaveRules.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.save_rules_window.SaveRules.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the json file with the lsystem in it</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.core.lsystem_2d_widget">
+<span id="d-lsystemwidget"></span><h1>2D LsystemWidget<a class="headerlink" href="#module-lsystem.core.lsystem_2d_widget" title="Permalink to this headline">¶</a></h1>
+<p>This file handles the OpenGL Window actions</p>
+<dl class="class">
+<dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.lsystem_2d_widget.</code><code class="sig-name descname">LSystem2DWidget</code><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget.cleanup">
+<code class="sig-name descname">cleanup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget.clear_graph">
+<code class="sig-name descname">clear_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.clear_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget.reset_camera">
+<code class="sig-name descname">reset_camera</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.reset_camera" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget.reset_zoom">
+<code class="sig-name descname">reset_zoom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.reset_zoom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget.screenshot">
+<code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.screenshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget.set_graph">
+<code class="sig-name descname">set_graph</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.set_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget.zoom_in">
+<code class="sig-name descname">zoom_in</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.zoom_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget.zoom_out">
+<code class="sig-name descname">zoom_out</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.zoom_out" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lsystem.core.lsystem_3d_widget">
+<span id="id1"></span><h1>3D LsystemWidget<a class="headerlink" href="#module-lsystem.core.lsystem_3d_widget" title="Permalink to this headline">¶</a></h1>
+<p>This file handles the OpenGL Window actions</p>
+<dl class="class">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget">
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.lsystem_3d_widget.</code><code class="sig-name descname">LSystem3DWidget</code><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.add_mesh">
+<code class="sig-name descname">add_mesh</code><span class="sig-paren">(</span><em class="sig-param">mesh_list</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.add_mesh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.center_meshes">
+<code class="sig-name descname">center_meshes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.center_meshes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Centers the entire mesh list on the origin</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.cleanup">
+<code class="sig-name descname">cleanup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.clear_graph">
+<code class="sig-name descname">clear_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.clear_graph" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.clear_meshes">
+<code class="sig-name descname">clear_meshes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.clear_meshes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all mesh objects from the scene</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.reset_camera">
+<code class="sig-name descname">reset_camera</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.reset_camera" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.reset_zoom">
+<code class="sig-name descname">reset_zoom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.reset_zoom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.screenshot">
+<code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.screenshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.zoom_in">
+<code class="sig-name descname">zoom_in</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.zoom_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.zoom_out">
+<code class="sig-name descname">zoom_out</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.zoom_out" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">L System Visualizer</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="windows-toc.html">Window Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MainWindow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.settings">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.getting_started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.glossary">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.my_ui">UI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.save_rules_window">Save Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.lsystem_2d_widget">2D LsystemWidget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.lsystem_3d_widget">3D LsystemWidget</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utilities-toc.html">Utilities Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html">Fractal Dimention Calculator Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphics-toc.html">Graphics Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="windows-toc.html">Window Documentation</a><ul>
+      <li>Previous: <a href="windows-toc.html" title="previous chapter">Window Documentation</a></li>
+      <li>Next: <a href="utilities-toc.html" title="next chapter">Utilities Documentation</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Team BRAWT.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/windows.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
