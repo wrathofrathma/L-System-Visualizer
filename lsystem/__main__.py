@@ -1,7 +1,7 @@
 """This file is the run.py that makes the application run"""
 import sys
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import (QCheckBox, QToolBar, QLabel, QMainWindow, QApplication, QPushButton, QDialog, 
+from PyQt5.QtWidgets import (QCheckBox, QToolBar, QLabel, QMainWindow, QApplication, QPushButton, QDialog,
                              QActionGroup,QStatusBar, QMenuBar, QAction, QHBoxLayout, QWidget, QGridLayout)
 
 from PyQt5.QtWidgets import QAction, QApplication, QFileDialog, QMainWindow, QMenu
@@ -31,7 +31,7 @@ class MyMainWindow(QMainWindow):
         self.save_rules = SaveRules(self.ui_widget)
         self.getting_started = GettingStarted()
         self.init_window()
-         
+
         toolbar = QToolBar("Settings Toolbar")
         toolbar.setIconSize(QSize(16,16))
         self.addToolBar(toolbar)
@@ -41,7 +41,7 @@ class MyMainWindow(QMainWindow):
         self.button_action = QAction("2D", self)
         self.button_action.setStatusTip("Click to use 2D L-Systems!")
         self.button_action.triggered.connect(self.toggle_dim2D)
-        
+
         self.button_action2 = QAction("3D", self)
         self.button_action2.setStatusTip("Click to use 3D L-Systems!")
         self.button_action2.triggered.connect(self.toggle_dim3D)
@@ -58,11 +58,19 @@ class MyMainWindow(QMainWindow):
         self.tutorial.setStatusTip("Click here to see how to get started!")
         self.tutorial.triggered.connect(lambda: self.getting_started.show())
 
+        self.reset_zoom_button = QAction("Reset Zoom",self)
+        self.reset_zoom_button.setStatusTip("Click here to reset zoom!")
+        self.reset_zoom_button.triggered.connect(self.reset_zoom)
+
+        self.screenshot_button = QAction("Screenshot",self)
+        self.screenshot_button.setStatusTip("Click here to take a screenshot!")
+        self.screenshot_button.triggered.connect(self.screenshot)
 
         toolbar.addAction(self.tutorial)
         toolbar.addAction(self.glossary_action)
         toolbar.addAction(self.save_action)
-
+        toolbar.addAction(self.reset_zoom_button)
+        toolbar.addAction(self.screenshot_button)
 
         toolbar.addSeparator()
 
@@ -71,13 +79,13 @@ class MyMainWindow(QMainWindow):
         toolbar.addAction(self.button_action2)
 
         self.button_action.setCheckable(True)
-        self.button_action2.setCheckable(True) 
+        self.button_action2.setCheckable(True)
         self.button_action.setChecked(True)
 
         self.setStatusBar(QStatusBar(self))
-    
+
         self.setCentralWidget(self.ui_widget)
-    
+
 
     def toggle_dim2D(self, s):
         if(s):
@@ -97,19 +105,25 @@ class MyMainWindow(QMainWindow):
         else:
           self.button_action2.setChecked(True)
           print("Nothing should happen")
-        
-         
-   
+
+
+    def reset_zoom(self):
+        self.ui_widget.reset_zoom()
+    def screenshot(self):
+        pos = self.pos()
+        #pos.setY(self.pos().y()+self.height)
+        self.ui_widget.screenshot(pos)
+
     def init_window(self):
         """Shows the main window"""
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.setWindowTitle("L-System Generator")
         self.show()
 
-        ''' 
+        '''
 
         save_rule_act = QAction("Save your rules", self)
-        save_rule_act.triggered.connect(lambda: 
+        save_rule_act.triggered.connect(lambda:
         main_menu.addAction(save_rule_act)
 
         exit_action = QAction("Exit", self)

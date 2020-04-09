@@ -15,7 +15,7 @@ h moves forward half a unit length
 
 import matplotlib.pyplot as plt
 import numpy as np
-from PyQt5.QtWidgets import QStackedWidget, QVBoxLayout, QPushButton, QWidget, QGridLayout, QLabel
+from PyQt5.QtWidgets import QStackedWidget, QVBoxLayout, QPushButton, QWidget, QGridLayout, QLabel, QFileDialog
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import Qt
 from lsystem.core.lsystem_utils import (
@@ -123,7 +123,7 @@ class UIWidget(QWidget):
             ">",
             "<",
             " ",
-          
+
         ]
         self.ctrl_char = [
             "A",
@@ -207,7 +207,7 @@ class UIWidget(QWidget):
         self.scroll_area.setFixedWidth(150)
         self.scroll_area.setWidget(self.widget)
 
-        precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake', 
+        precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake',
             'KochIsland', 'PeanoCurve', 'DragonCurve', 'HilbertCurve',
             'TreeExample', 'IslandsandLakes']
 
@@ -598,3 +598,18 @@ class UIWidget(QWidget):
     def reset_text_box_color(self):
         for box in self.text_boxes:
             box.reset_color()
+    def reset_zoom(self):
+        self.two_d.reset_zoom()
+        self.three_d.reset_zoom() #built in function don't change to snake script
+    def screenshot(self, parent_pos):
+        #rel pos is the upper left pointof the widget relative to window
+        rel_pos = self.dims.pos()
+        #shift the y down by the total height - height of the widget (height of text boxes)
+        #1.1 factor added arbitrarily
+        rel_pos.setY((self.height()-self.dims.height())*1.1)
+        pos =  rel_pos+parent_pos
+        qfd = QFileDialog()
+        filter = "Images (*.png *.xpm *.jpg)"
+        filename, type = QFileDialog.getSaveFileName(self, "", "", filter)
+        if filename:
+            self.two_d.screenshot(filename,pos)
