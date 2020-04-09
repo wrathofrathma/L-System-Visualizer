@@ -609,4 +609,5 @@ class UIWidget(QWidget):
         qfd = QFileDialog()
         filter = "Images (*.png *.xpm *.jpg)"
         filename, type = QFileDialog.getSaveFileName(self, "", "", filter)
-        self.two_d.screenshot(filename,pos)
+        if filename:
+            self.two_d.screenshot(filename,pos)
