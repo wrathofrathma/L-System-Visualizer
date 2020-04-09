@@ -62,10 +62,15 @@ class MyMainWindow(QMainWindow):
         self.reset_zoom_button.setStatusTip("Click here to reset zoom!")
         self.reset_zoom_button.triggered.connect(self.reset_zoom)
 
+        self.screenshot_button = QAction("Screenshot",self)
+        self.screenshot_button.setStatusTip("Click here to take a screenshot!")
+        self.screenshot_button.triggered.connect(self.screenshot)
+
         toolbar.addAction(self.tutorial)
         toolbar.addAction(self.glossary_action)
         toolbar.addAction(self.save_action)
         toolbar.addAction(self.reset_zoom_button)
+        toolbar.addAction(self.screenshot_button)
 
         toolbar.addSeparator()
 
@@ -104,6 +109,10 @@ class MyMainWindow(QMainWindow):
 
     def reset_zoom(self):
         self.ui_widget.reset_zoom()
+    def screenshot(self):
+        pos = self.pos()
+        #pos.setY(self.pos().y()+self.height)
+        self.ui_widget.screenshot(pos)
 
     def init_window(self):
         """Shows the main window"""
