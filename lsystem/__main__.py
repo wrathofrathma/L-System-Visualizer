@@ -4,7 +4,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (QCheckBox, QToolBar, QLabel, QMainWindow, QApplication, QPushButton, QDialog,
                              QActionGroup,QStatusBar, QMenuBar, QAction, QHBoxLayout, QWidget, QGridLayout)
 
-from PyQt5.QtWidgets import QAction, QApplication, QFileDialog, QMainWindow, QMenu
+from PyQt5.QtWidgets import QAction, QApplication, QMainWindow, QMenu
 from PyQt5.QtCore import QSize, Qt
 from lsystem.core.getting_started import GettingStarted
 from lsystem.core.glossary import Glossary
