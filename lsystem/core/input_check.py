@@ -158,44 +158,21 @@ def print_error_message(obj, msg):
 def check_nd(obj):
     """determine if the percentages are valid"""
     valid = 1
-    prod_input = []
-    prod_percents = []
+    productions = dict()
     for rule in obj.prod_rules_edit:
+        temprule = rule.text().split(":")
+        productions[temprule[0]] = 0
+    for i,rule in enumerate(obj.prod_rules_edit):
         if rule.valid:
             temprule = rule.text().split(":")
-            if temprule[0] not in prod_input:
-                prod_input.append(temprule[0])
-    if obj.prod_percent:
-        for input_percent in obj.prod_percent:
-            if input_percent.valid:
-                try:
-                    float(input_percent.text())
-                except:
-                    valid = 0
-                    print_error_message(input_percent, "Invalid Inputs")
-                    return valid
-                temp_percent = float(input_percent.text())
-                if temp_percent > 1:
-                    print_error_message(input_percent, "The input is not valid")
-                    valid = 0
-    return valid
-
-
-def sum_nd(obj):
-    valid = 1
-    prod_input = []
-    prod_per
-    nts = []
-    pos = 0
-    if obj.prod_percent:
-       for input_percent in obj.prod_percent:
-           if input_percent.valid:
-               prod_percents.append(float(input_percent.text()))
-    for rule in obj.prod_rules_edit:
-        if rule.valid:
-            temprule = rule.text().split(":")
-            if temprule[0] not in prod_input:
-                prod_input.append(temprule[0])
-
-
+            try:
+                productions[temprule[0]] = productions[temprule[0]] + (float(obj.prod_percent[i].text()))
+            except:
+                print("[ ERROR ] ",obj.prod_percent[i].text()," is not a number.")
+                valid =0
+                return valid
+    for prod,perc in productions.items():
+        if perc != 1.0:
+            print("[ ERROR ] Invalid percent of ",perc," entered for ",prod)
+            valid = 0
     return valid
