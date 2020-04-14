@@ -31,6 +31,7 @@ from lsystem.core.lsystem_2d_widget import LSystem2DWidget
 from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
 from lsystem.core.fractal_dim import fractal_dim_calc
+from lsystem.core.fract_menu import FractalDimension
 import copy
 
 import os
@@ -77,6 +78,7 @@ class UIWidget(QWidget):
         self.prod_plus = QPushButton("+", self)
         self.lsys_button = QPushButton("Generate L System", self)
         self.boxcount_button = QPushButton("Fractal Dim", self)
+        
         self.widget = QWidget()
         self.scroll_area = QtWidgets.QScrollArea()
         self.layout_examples = QVBoxLayout(self.widget)
@@ -97,6 +99,7 @@ class UIWidget(QWidget):
         self.two_d = LSystem2DWidget()
         self.three_d = LSystem3DWidget()
 
+        self.fractal_menu = FractalDimension(self)
         self.dims = QStackedWidget()
         self.dims.addWidget(self.two_d)
         self.dims.addWidget(self.three_d)
@@ -232,7 +235,7 @@ class UIWidget(QWidget):
 
     def on_boxcount_button_clicked(self):
 
-
+        self.fractal_menu.show() 
         start_size = 8
         num_sizes = 7
         self.x_arr = []
@@ -242,7 +245,7 @@ class UIWidget(QWidget):
         temp_verts = copy.deepcopy(self.verts)
         fractal_dim = fractal_dim_calc(temp_verts, end_size, num_sizes)
         for i in range(num_sizes):
-            self.x_arr.append(np.log((start_size)))
+            self.x_arr.append(np.log2((start_size)))
             self.y_arr.append(fractal_dim[i])
 
             fract_avg.append(np.polyfit(self.x_arr, self.y_arr, 1)[0])

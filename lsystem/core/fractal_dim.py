@@ -56,13 +56,14 @@ def fractal_dim_calc(graph,ending_size, num_sizes):
 
 
   count= 0
-  fractal_dim.insert(0,np.log(np.count_nonzero(pix_map == '1')))#/np.log(ending_size))
+  fractal_dim.insert(0,np.log2(np.count_nonzero(pix_map == '1')))#/np.log(ending_size))
   for i in range(num_sizes-1):
+    print("STEPHS FRACT_CALC", ending_size)
     ending_size = ending_size/2
-
+    
     pix_map = pool_pixel_map(pix_map)
     #if i>2:
     #  print(pix_map)
-    fractal_dim.insert(0,np.log(np.count_nonzero(pix_map == '1')))#/np.log(ending_size))
+    fractal_dim.insert(0,np.log2(np.count_nonzero(pix_map == '1')))#/np.log(ending_size))
 
   return fractal_dim # JUST RETURNS log(N(E))
