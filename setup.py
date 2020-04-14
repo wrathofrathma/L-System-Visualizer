@@ -19,7 +19,7 @@ setuptools.setup(
         "Licence::TBD::TBD"
         "Operating System::OS Independent"
     ],
-    install_requires=["pyside2", "matplotlib", "numpy", "Pillow", "PyGLM", "PyOpenGL", "pyparsing", "pyqtgraph", "scipy"],
+    install_requires=["pyside2", "matplotlib", "numpy", "Pillow", "PyGLM", "PyOpenGL", "pyparsing", "pyqtgraph", "scipy", "pyscreenshot"],
     py_modules=['lsystem'],
     python_requires='>=3.7',
     package_data={
