@@ -612,6 +612,6 @@ class UIWidget(QWidget):
         qfd = QFileDialog()
         filter = "Images (*.png *.xpm *.jpg)"
         filename, type = QFileDialog.getSaveFileName(self, "", "", filter)
-from lsystem.boxcounting3d.calc import calc_fractal_dim3D
         if filename:
             self.two_d.screenshot(filename,pos)
+
