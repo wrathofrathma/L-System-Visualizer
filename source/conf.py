@@ -21,7 +21,6 @@ sys.path.insert(0, os.path.abspath('../../'))
 project = 'L System Visualizer'
 copyright = '2020, Team BRAWT'
 author = 'Team BRAWT'
-master_doc = 'index'
 
 # The full version, including alpha/beta/rc tags
 release = '5/14/2020'
