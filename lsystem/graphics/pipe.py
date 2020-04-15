@@ -19,6 +19,12 @@ class Pipe(MeshObject):
 )
     self.set_vertexes(np.array(verts), False)
     self.set_indices(np.array(faces))
+    self.start = start
+    self.end = end
+
+  def __reduce__(self):
+    """Reduction code allowing us to pickle this class, thus allowing it to be deepcopied"""
+    return (Pipe, (self.start, self.end))
 
 
   def _gen_pipe(self):
