@@ -120,33 +120,6 @@ class MyMainWindow(QMainWindow):
         self.setWindowTitle("L-System Generator")
         self.show()
 
-        '''
-
-        save_rule_act = QAction("Save your rules", self)
-        save_rule_act.triggered.connect(lambda:
-        main_menu.addAction(save_rule_act)
-
-        exit_action = QAction("Exit", self)
-        exit_action.setShortcut("Ctrl+Q")
-        exit_action.triggered.connect(lambda: self.close_event())
-
-        settings = QAction("Settings", self)
-        settings.triggered.connect(lambda: self.popup_settings.show())
-        settings.setShortcut("Ctrl+i")
-
-        glossary = QAction("Glossary", self)
-        glossary.setShortcut("Ctrl+g")
-        glossary.triggered.connect(lambda: self.glossary.show())
-
-        getting_started = QAction("Getting Started", self)
-        getting_started.setShortcut("Ctrl+h")
-        getting_started.triggered.connect(lambda: self.getting_started.show())
-
-        file_menu.addAction(exit_action)
-        options_menu.addAction(settings)
-        help_menu.addAction(getting_started)
-        help_menu.addAction(glossary)
-        '''
     def close_event(self):
         """Makes sure everything gets properly deleated upon closing"""
         print("[ INFO ] Exiting...")

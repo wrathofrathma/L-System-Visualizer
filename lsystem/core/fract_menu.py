@@ -10,12 +10,15 @@ class FractalDimension(QWidget):
         super().__init__()
         self.ui = ui
         # creates the widgets to be added to the window
-        self.start_prompt = QLabel("Start Size: ")
+        self.instructions = QLabel("Welcome to the fractal dimension calculator. We calculate based on powers of 2.")
+        self.start_prompt = QLabel("Start Power: ")
         self.start_size = QLineEdit()
-        self.end_prompt = QLabel("End Size: ")
+        self.end_prompt = QLabel("End Power: ")
         self.end_size = QLineEdit()
+        self.iters_prompt = QLabel("Number of calculations")
+        self.iters_num = QLineEdit()
         self.calc_button = QPushButton("Calculate")
-        self.calc_button.clicked.connect(lambda: self.calc(int(self.start_size.text()), int(self.end_size.text())))
+        self.calc_button.clicked.connect(lambda: self.calc())
 
         self.init_ui()
 
@@ -29,19 +32,27 @@ class FractalDimension(QWidget):
     def add_widgets(self):
         '''Adds the widgets to the layout'''
         # adds the widgets to the window
-        self.layout.addWidget(self.start_prompt, 0, 0)
-        self.layout.addWidget(self.start_size, 0, 1, 1, 2)
-        self.layout.addWidget(self.end_prompt, 1, 0)
-        self.layout.addWidget(self.end_size, 1, 1, 1, 2)
-        self.layout.addWidget(self.calc_button, 2, 3)
+        self.layout.addWidget(self.instructions, 0, 0, 1, 5)
+        self.layout.addWidget(self.start_prompt, 2, 0)
+        self.layout.addWidget(self.start_size, 2, 1, 1, 2)
+        self.layout.addWidget(self.end_prompt, 3, 0)
+        self.layout.addWidget(self.end_size, 3, 1, 1, 2)
+        self.layout.addWidget(self.iters_prompt, 4, 0)
+        self.layout.addWidget(self.iters_num, 4, 1, 1, 2)
+        self.layout.addWidget(self.calc_button, 5, 3)
 
-    def calc(self, start, end):
-        #TODO: MAKE CLOSEST POWER OF TWO and put in tutorial
-        fractal_dim = []
+    def calc(self):
+      all_dims = []
+      for i in range(int(self.iters_num.text())):
+        self.ui.gen_sys()
         verts = copy.deepcopy(self.ui.verts)
+        fractal_dim = []
         fract_avg = []
         x_arr = []
         y_arr = []
+
+        start = 2 ** int(self.start_size.text())
+        end = 2 ** int(self.end_size.text())
 
         print("Lela's code", verts)
         print("Start size = {}".format(self.start_size.text()))
@@ -50,7 +61,7 @@ class FractalDimension(QWidget):
         pix_map = gen_pixel_map(verts, end)
         fractal_dim.insert(0, np.log2(np.count_nonzero(pix_map == '1')))
         while(end >= start):
-            print("LELAS FRACT CALC", end)
+            print("LELAS FRACT CALC END STATE", end)
             end = end/2
             pix_map = pool_pixel_map(pix_map)
 
@@ -61,7 +72,8 @@ class FractalDimension(QWidget):
           x_arr.append(np.log2(start))
           y_arr.append(dim)
           start = start*2
-        print(np.polyfit(x_arr, y_arr, 1)[0])
+        all_dims.append(np.polyfit(x_arr, y_arr, 1)[0])
+      print(all_dims)
           
 
 
@@ -110,4 +122,23 @@ def pool_pixel_map(map):
       if (map[i,j] == '1' or map[i+1,j]=='1' or map[i,j+1]=='1' or map[i+1,j+1]=='1'):
         pix_map[int(i/2), int(j/2)]=1
   return pix_map
+def fractal_dim_calc(graph,ending_size, num_sizes):
+
+  fractal_dim = []
+  pix_map = gen_pixel_map(graph,ending_size)
+  np.set_printoptions(threshold=np.inf, linewidth = 2000)
+
+
+  count= 0
+  fractal_dim.insert(0,np.log2(np.count_nonzero(pix_map == '1')))#/np.log(ending_size))
+  for i in range(num_sizes-1):
+    print("STEPHS FRACT_CALC", ending_size)
+    ending_size = ending_size/2
+    
+    pix_map = pool_pixel_map(pix_map)
+    #if >2:
+    #  print(pix_map)
+    fractal_dim.insert(0,np.log2(np.count_nonzero(pix_map == '1')))#/np.log(ending_size))
+
+  return fractal_dim # JUST RETURNS log(N(E))
 
