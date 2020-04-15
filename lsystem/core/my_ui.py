@@ -30,15 +30,15 @@ from lsystem.core.input_check import input_check
 from lsystem.core.lsystem_2d_widget import LSystem2DWidget
 from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
-from lsystem.core.fractal_dim import fractal_dim_calc
-from lsystem.core.fract_menu import FractalDimension
+#from lsystem.core.fractal_dim import fractal_dim_calc
+from lsystem.core.fract_menu import FractalDimension, fractal_dim_calc
 from lsystem.boxcounting3d.calc import calc_fractal_dim3D
 import copy
 
 import os
 
 class CustomLineEdit(QtWidgets.QLineEdit):
-    """ Class that enables clicking in a text box """
+    """ Class that enables input in a text box """
 
     clicked = QtCore.pyqtSignal()
     def __init__(self):
@@ -343,11 +343,7 @@ class UIWidget(QWidget):
         self.reset_text_box_color()
         prod_rule = ""
         rules = ""
-        # repeat = ""
-        # index = []
         self.amount = 0
-        # Clearing any boxes
-
         for prod in self.prod_rules_edit:
             prod_rule += prod.text()
             temp = prod.text()
@@ -357,21 +353,6 @@ class UIWidget(QWidget):
             rules += " "
 
         all_prod_rule = prod_rule + self.axiom_edit.text()
-        # rules = rules.split(' ')[:-1]
-        # print(rules)
-        # counter = collections.Counter(rules)
-        # for key in counter:
-        #    if counter[key] > 1:
-        #        repeat += key
-        # for r in repeat:
-        #    index.append([i for i, x in enumerate(rules) if x == r])
-        # self.index = index
-        # for i in index:
-        #    for j in i:
-        #        self.prodPercent.append(customLineEdit())
-        #        self.prodPercent[self.amount].setFixedWidth(50)
-        #        self.layout.addWidget(self.prodPercent[self.amount], j+2, 9)
-        #        self.amount += 1
 
         if (")" in all_prod_rule or "(" in all_prod_rule) and self.made_angle is False:
             self.turn_angle = QLabel("Turning Angle")
@@ -631,5 +612,6 @@ class UIWidget(QWidget):
         qfd = QFileDialog()
         filter = "Images (*.png *.xpm *.jpg)"
         filename, type = QFileDialog.getSaveFileName(self, "", "", filter)
+from lsystem.boxcounting3d.calc import calc_fractal_dim3D
         if filename:
             self.two_d.screenshot(filename,pos)
