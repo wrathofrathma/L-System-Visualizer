@@ -1,0 +1,3 @@
+[submodule "lsystem/boxcounting3d"]
+	path = lsystem/boxcounting3d
+	url = https://github.com/wrathofrathma/box-counting-3d
