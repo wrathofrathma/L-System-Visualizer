@@ -32,6 +32,7 @@ from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
 from lsystem.core.fractal_dim import fractal_dim_calc
 from lsystem.core.fract_menu import FractalDimension
+from lsystem.boxcounting3d.calc import calc_fractal_dim3D
 import copy
 
 import os
@@ -231,11 +232,9 @@ class UIWidget(QWidget):
     def on_lsys_button_clicked(self):
         self.gen_sys()
 
-
-
-    def on_boxcount_button_clicked(self):
-
-        self.fractal_menu.show() 
+    def boxcount_2d(self):
+        """2 dimensional fractal dimension calculation code."""
+        self.fractal_menu.show()
         start_size = 8
         num_sizes = 7
         self.x_arr = []
@@ -264,8 +263,26 @@ class UIWidget(QWidget):
         plt.show()
         print("AVERAGE: ", np.average(fract_avg))
 
-    def onpick1(self, event):
+    def boxcount_3d(self):
+        """3 dimensional fractal dimension calc code. I'll have to do some data sanitization somewhere. Maybe here."""
+        mesh = self.graphix.mesh
+        if(mesh is not None):
+            calc_fractal_dim3D(mesh)
 
+
+    def is_2d(self):
+        """Returns true if 2D is loaded, false if 3D is loaded."""
+        if (self.dims.currentWidget().__class__.__name__ == 'LSystem3DWidget'):
+            return False
+        return True
+
+    def on_boxcount_button_clicked(self):
+        if(self.is_2d()):
+            self.boxcount_2d()
+        else:
+            self.boxcount_3d()
+
+    def onpick1(self, event):
         print("I am an EVENT1")
         #plt.close(fig=None)
         ind = event.ind[0]+1
