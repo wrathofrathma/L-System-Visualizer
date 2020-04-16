@@ -12,5 +12,20 @@ Fractal Dimention Calculator
 .. automodule:: lsystem.core.fractal_dim
    :members:
    :undoc-members:
+
    
- 
+   
+   
+   
+Box Counting Submodule
+---------------------------
+
+Calculation
+----------------------------------------------
+.. automodule:: lsystem.boxcounting3d.calc
+   :members:
+   :undoc-members:
+   
+Cubes
+----------------------------------------------
+.. automodule:: lsystem.boxcounting3d.cubes
