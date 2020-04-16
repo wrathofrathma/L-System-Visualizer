@@ -10,3 +10,4 @@ pyside2
 pyscreenshot
 PyQt5
 pywavefront
+pyrr
