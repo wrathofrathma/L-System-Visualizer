@@ -7,15 +7,7 @@ Fractal Dimention Menu
   :members:
   :undoc-members:
   
-Fractal Dimention Calculator
-----------------------------------------------
-.. automodule:: lsystem.core.fractal_dim
-   :members:
-   :undoc-members:
-
-   
-   
-   
+  
    
 Box Counting Submodule
 ---------------------------
