@@ -1,4 +1,4 @@
-Fractal Dimention Calculator Documentation
+Fractal Dimention Documentation
 -----------------------------------------------
 
 Fractal Dimention Menu
@@ -7,11 +7,6 @@ Fractal Dimention Menu
   :members:
   :undoc-members:
   
-  
-   
-Box Counting Submodule
----------------------------
-
 Calculation
 ----------------------------------------------
 .. automodule:: lsystem.boxcounting3d.calc
@@ -21,3 +16,5 @@ Calculation
 Cubes
 ----------------------------------------------
 .. automodule:: lsystem.boxcounting3d.cubes
+   :members:
+   :undoc-members:
