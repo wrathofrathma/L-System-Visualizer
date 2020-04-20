@@ -14,3 +14,5 @@ Calculation
 Cubes
 ----------------------------------------------
 .. automodule:: lsystem.boxcounting3d.cubes
+   :members:
+   :undoc-members:
