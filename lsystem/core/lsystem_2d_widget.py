@@ -48,14 +48,23 @@ class LSystem2DWidget(PlotWidget):
         im.save(filename)
 
     def set_graph(self, graph):
-        self.clear_graph()
+        """
+        Sets the graph object the scene uses to generate the mesh.
+
+        Parameters:
+        graph (Graph): Digraph used to generate the mesh.
+        """
+        self.clear()
         self.graph = graph
         (verts, adj) = self.graph.export_to_pyqtgraph()
         self.mesh = GraphItem()
         self.mesh.setData(pos=verts, adj=adj, symbol=None)
         self.addItem(self.mesh)
 
-    def clear_graph(self):
+    def clear(self):
+        """
+        Removes the mesh from the scene.
+        """
         if isinstance(self.mesh, GraphItem):
             self.removeItem(self.mesh)
         self.mesh = None

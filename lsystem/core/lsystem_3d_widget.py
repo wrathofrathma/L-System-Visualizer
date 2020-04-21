@@ -51,9 +51,12 @@ class LSystem3DWidget(GLViewWidget):
         self.grabFrameBuffer().save(filename)
         # self.renderPixmap().save(filename)
 
+    def clear(self):
+        """Removes all mesh objects from the scene."""
+        self.mesh_positions.clear()
+        if(self.mesh is not None):
+            self.removeItem(self.mesh)
 
-    def clear_graph(self):
-        self.clear_meshes()
 
     def add_mesh(self, mesh_list):
         """Sets the mesh of the scene to a combination of the list of meshes passed."""
@@ -82,12 +85,6 @@ class LSystem3DWidget(GLViewWidget):
             faces = faces.reshape(math.floor(faces.shape[0]/3),3)
         faces = faces.astype(int)
         return MeshObject(vertexes=verts, indices=faces)
-
-    def clear_meshes(self):
-        """Removes all mesh objects from the scene"""
-        self.mesh_positions.clear()
-        if(self.mesh is not None):
-            self.removeItem(self.mesh)
 
     def center_meshes(self):
       """Centers the entire mesh list on the origin"""
