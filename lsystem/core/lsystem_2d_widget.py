@@ -47,9 +47,6 @@ class LSystem2DWidget(PlotWidget):
         im = ImageGrab.grab(bbox=(rect.x(), rect.y(), rect.x()+rect.width(), rect.y()+rect.height())) # X1,Y1,X2,Y2
         im.save(filename)
 
-    def cleanup(self):
-        pass
-
     def set_graph(self, graph):
         self.clear_graph()
         self.graph = graph

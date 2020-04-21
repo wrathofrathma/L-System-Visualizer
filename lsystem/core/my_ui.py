@@ -430,7 +430,6 @@ class UIWidget(QWidget):
 
     def close_event(self):
         print("[ INFO ] Exiting...")
-        self.graphix.cleanup()
         exit()
 
     def more_prods(self):

@@ -51,8 +51,6 @@ class LSystem3DWidget(GLViewWidget):
         self.grabFrameBuffer().save(filename)
         # self.renderPixmap().save(filename)
 
-    def cleanup(self):
-        pass
 
     def clear_graph(self):
         self.clear_meshes()
