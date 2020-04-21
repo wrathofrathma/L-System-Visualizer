@@ -33,6 +33,17 @@ class MeshObject(SpatialObject, GLMeshItem):
     """
 
     def __init__(self, vertexes=None, indices=None, *args, **kwds):
+        """
+        Constructor for the MeshObject class.
+
+        Parameters:
+        vertexes (list): List of vertices used in the mesh.
+        indices (list): List of indices for the faces used in the mesh.
+        rot_quat (glm.quat): Quaternion defining the rotation of the object.
+        rot_vec (vec3): Vector3 defining the rotation of the object.
+        scale (vec3): Scale factor for each axis of the object. Defaults to (1.0, 1.0, 1.0)
+        position (vec3): Position of the object. Defaults to (0.0, 0.0, 0.0)
+        """
         GLMeshItem.__init__(self)
         SpatialObject.__init__(self)
         # Argument extraction
@@ -103,28 +114,47 @@ class MeshObject(SpatialObject, GLMeshItem):
         self.setMeshData(meshdata=self.opts["meshdata"])
 
     def set_position(self, pos, update=True):
-        """Sets the position and optionally triggers an update of the vertices."""
+        """Sets the position and optionally triggers an update of the vertices.
+
+        Parameters:
+        pos (vec3): 3 dimensional vector representing the new position of the object.
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         super(MeshObject, self).set_position(pos)
         self.opts["position"] = pos
         if update:
             self.update_vertices()
 
     def set_rotation(self, o, update=True):
-        """Sets the rotation and optionally triggers an update of the vertices."""
+        """Sets the rotation and optionally triggers an update of the vertices.
+
+        Parameters:
+        o (vec3): Vector3 representing the new orientation/rotation of the object.
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         super(MeshObject, self).set_rotation(o)
         self.opts["rotation"] = o
         if update:
             self.update_vertices()
 
     def set_scale(self, s, update=True):
-        """Sets the scale and optionally triggers an update of the vertices."""
+        """Sets the scale and optionally triggers an update of the vertices.
+
+        Parameters:
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         super(MeshObject, self).set_scale(s)
         self.opts["scale"] = s
         if update:
             self.update_vertices()
 
     def set_vertexes(self, v, update=True):
-        """Sets the array of vertexes and optionally triggers an update of the vertices."""
+        """Sets the array of vertexes and optionally triggers an update of the vertices.
+
+        Parameters:
+        v (list): List of vertices to use in the mesh.
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         if v is None:
             return
         # If these aren't floats, then there is an error in normal calculation
@@ -133,7 +163,12 @@ class MeshObject(SpatialObject, GLMeshItem):
             self.update_vertices()
 
     def set_indices(self, i, update=True):
-        """Sets the array of indices and optionally triggers an update of the vertices."""
+        """Sets the array of indices and optionally triggers an update of the vertices.
+
+        Parameters:
+        i (list): List of the vertex indices used to define the faces of the mesh.
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         if i is None:
             return
         self.opts["indices"] = np.array(i)
