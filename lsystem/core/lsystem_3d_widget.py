@@ -41,7 +41,7 @@ class LSystem3DWidget(GLViewWidget):
         """
         Resets the camera to the initial position & zoom level.
         """
-        reset_zoom()
+        self.reset_zoom()
 
     def reset_zoom(self):
         """
