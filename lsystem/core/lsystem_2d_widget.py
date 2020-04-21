@@ -31,11 +31,6 @@ class LSystem2DWidget(PlotWidget):
     def reset_camera(self):
         pass
 
-    def zoom_in(self):
-        pass
-
-    def zoom_out(self):
-        pass
     def reset_zoom(self):
         self.autoRange()
     def screenshot(self, filename,pos):

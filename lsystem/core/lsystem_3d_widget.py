@@ -29,12 +29,6 @@ class LSystem3DWidget(GLViewWidget):
     def reset_camera(self):
         pass
 
-    def zoom_in(self):
-        pass
-
-    def zoom_out(self):
-        pass
-
     def reset_zoom(self):
         self.opts['fov'] = self.original_fov
         self.opts['distance']=self.original_distance
