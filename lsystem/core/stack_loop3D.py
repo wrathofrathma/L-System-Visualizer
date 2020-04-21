@@ -8,13 +8,16 @@ def read_substring(
     lsys, curr_state, turn_angle, obj
 ):
     """
-    Input: readsubstring takes in a string of the current lsystem,
-    a starting point, the starting angle,
-    the dictinary of angle trig values,
-    current line scale,
-    and what the line scale would change by
+    This is a utility function for read_stack, takes in a string without
+    branching ([, ]) or move without draw (f)
 
-    Output: returns angle and vertices
+    Inputs:
+        lsys: a string
+        curr_state: a dictionary that has current point, and orientation
+        turn_angle: the degrees the angle should turn when seeing a +, -, ^, &, < or >
+        obj: the type of object that should be displayed, needs to be a mesh object
+    Outputs:
+        An array of type obj
     """
     obj_container = []  # make sure it's empty
     current_point = curr_state['point']  # initalize starting point
@@ -31,7 +34,7 @@ def read_substring(
         direction vector in the absolute frame
         Third row of the rotation matrix is the turtles down
         direction vector in the absolute frame
-         '''
+    '''
     unit_step = curr_state['orientation_mat'][0]
     for char in lsys:
         if char == "F":
@@ -39,17 +42,7 @@ def read_substring(
             current_point = np.add(current_point, unit_step)
             vertices.append(current_point)
             obj_ortientation = R.from_matrix(orientation_mat)
-            #print("old_point = ",old_point,"  new_point = ",current_point)
-            #print("euler angle = ",obj_ortientation.as_euler('xyz',degrees=True))
-            #print("rotation vector = ",obj_ortientation.as_rotvec())
-            #print()
             new_obj = obj(start = old_point, end = current_point, rotation=obj_ortientation.as_rotvec())
-            obj_container.append(new_obj)
-        #TODO: Fix H
-        elif char == "H":
-            new_point = np.add(new_point, np.multiply(unit_step,.5))
-            rotation=obj_ortientation = R.from_matrix(orientation_mat)
-            new_obj = obj(pos=current_point)#, rotation=obj_ortientation.as_rotvec())
             obj_container.append(new_obj)
         elif char == "+":
             #turning left (about the turtle's down axis)
@@ -94,8 +87,16 @@ def read_substring(
 
 def read_stack(stack, starting_pt, angle, obj):
     """
-    Input list of strings (F, +, -)
-    Output List of new vertices
+    This function converts a string into an array of objects placed at the vertices
+    determined by the turtle graphics interpretation of the string
+
+    Inputs:
+        stack: a string
+        starting_pt: the turtles starting_pt (the origin of your fractal)
+        angle: the degrees the angle should turn when seeing a +, -, ^, &, < or >
+        obj: the type of object that should be displayed, needs to be a mesh object
+    Outputs:
+        An array of type obj
     """
     angle = angle*np.pi/180
     stack = stack.replace("G", "F")
@@ -124,16 +125,11 @@ def read_stack(stack, starting_pt, angle, obj):
     # for each little f/h create a new array with the starting position and angle
     # initialized from the previous mesh
     for char in tmp_stack:
-        if char[0] == "f" or char[0] == "h":
-            if char[0] == "h":
-                factor = .5
-                char.replace("h", "")
-            else:
-                factor = 1
-                char.replace("f", "")
+        if char[0] == "f":
+            char.replace("f", "")
             unit_step = curr_state['orientation_mat'][0]
             prev_point = curr_state['point']
-            curr_state['point'] = np.add(curr_state['point'], np.multiply(unit_step,factor))
+            curr_state['point'] = np.add(curr_state['point'], unit_step)
             rotation=obj_ortientation = R.from_matrix(curr_state['orientation_mat'])
             new_obj = obj(start=prev_point, end=curr_state['point'], rotation=obj_ortientation.as_rotvec())
         elif char[0] == "[":
