@@ -9,13 +9,18 @@ def read_substring(
     lsys, curr_state, turn_angle, trig_dict,  line_scale
 ):
     """
-    Input: readsubstring takes in a string of the current lsystem,
-    a starting point, the starting angle,
-    the dictinary of angle trig values,
-    current line scale,
-    and what the line scale would change by
+    This is a utility function for read_stack, takes in a string without
+    branching ([, ]) or move without draw (f)
 
-    Output: returns angle and vertices
+    Inputs:
+        lsys: a string
+        curr_state: a dictionary that has current point, orientation, and line scale
+        turn_angle: the degrees the angle should increment by when seeing ( or )
+        trig_dict: a dictionary of all the already calculated trig necassary for step direction
+                   as well as the angle to turn by when seeing + or -
+        line_scale: the factor by which the line length should change when seeing < or >
+    Outputs1:
+        An array of vertices formatted as such:  [[x1,y1],[x2,y2],[x3,y3],...]
     """
     vert_container = []  # make sure it's empty
     new_point = curr_state['point']  # initalize starting point
@@ -64,8 +69,24 @@ def read_substring(
 
 def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
     """
-    Input list of strings (F, +, -)
-    Output List of new vertices
+    This function converts a string into an array of objects placed at the vertices
+    determined by the turtle graphics interpretation of the string
+
+    Inputs:
+        stack: a string
+        starting_pt: the turtles starting_pt (the origin of your fractal)
+        angle: the degrees the angle should turn when seeing a + or -
+        turn_angle: the degrees the angle should increment by when seeing ( or )
+        line_scale: the factor by which the line length should change when seeing < or >
+    Outputs:
+        An array of vertices formatted as such
+        [
+            [[x1,y1],[x2,y2],[x3,y3],...],
+            [[x4,y4],[x5,y5],[x6,y6],...]
+            ...
+        ]
+        where [x1,y1] is connected by a line to [x2,y2] which is connected by a line to [x3,y3]
+        and [x4,y4] marks the starting point of a separte line
     """
     stack = stack.replace("G", "F")
     stack = stack.replace("g", "f")

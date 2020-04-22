@@ -9,9 +9,16 @@ from scipy.spatial.transform import Rotation as R
 class Pipe(MeshObject):
   def __init__(self, start: vec3 = None, end: vec3 = None, rotation=vec3(0.0)):
     pos = np.multiply(np.add(start,end),.5)
-    rotation = glm.quatLookAt(vec3(end-start), vec3(0,1,0))
+    up = vec3(0,1,0)
+    if(vec3(end-start) != up and vec3(end-start) != up*-1):
+      rotation = glm.quatLookAt(vec3(end-start), up)
+      MeshObject.__init__(self, position=pos, rot_quat=rotation)
+    else:
+      up = vec3(0,0,1)
+      rotation = glm.quatLookAt(vec3(end-start), up)
+      MeshObject.__init__(self, position=pos, rot_quat=rotation)
 
-    MeshObject.__init__(self, position=pos, rot_quat=rotation)
+
      
     verts = np.array([(0, 0, -0.5), (0, 0, 0.5), (0.1, 0.0, 0.5), (0.07071067811865477, 0.07071067811865475, 0.5), (6.123233995736766e-18, 0.1, 0.5), (-0.07071067811865475, 0.07071067811865477, 0.5), (-0.1, 1.2246467991473533e-17, 0.5), (-0.07071067811865477, -0.07071067811865475, 0.5), (-1.8369701987210297e-17, -0.1, 0.5), (0.07071067811865474, -0.07071067811865477, 0.5), (0.1, 0.0, -0.5), (0.07071067811865477, 0.07071067811865475, -0.5), (6.123233995736766e-18, 0.1, -0.5), (-0.07071067811865475, 0.07071067811865477, -0.5), (-0.1, 1.2246467991473533e-17, -0.5), (-0.07071067811865477, -0.07071067811865475, -0.5), (-1.8369701987210297e-17, -0.1, -0.5), (0.07071067811865474, -0.07071067811865477, -0.5)]
 )

@@ -32,7 +32,16 @@ from lsystem.graphics.pipe import Pipe
 
 
 def get_saved_lsystem(key, saved_lsystems):
-    """ Gets the saved L-Systems """
+    """
+    Fetches a saved lsystem in our loaded lsystems by key.
+
+    Parameters:
+    key (string): Dictionary key used to identify a saved lsystem.
+    saved_lsystems (dict): Dictionary of loaded lsystems.
+
+    Returns:
+    dict: dictionary of the saved lsystem grammar, or None if it doesn't exist.
+    """
     if key in saved_lsystems:
         grammar = saved_lsystems[key]
         return grammar
@@ -42,7 +51,15 @@ def get_saved_lsystem(key, saved_lsystems):
 
 
 def generate_lsystem_2d(grammar):
-    """  Generates the L-System based off of the grammar """
+    """
+    Generates a 2D L-System based off of the grammar.
+
+    Parameters:
+    grammar (dict): Dictionary representing the grammar defining the lsystem.
+
+    Returns:
+    Graph: Graph object used to generate the mesh.
+    """
     grammar_copy = copy.deepcopy(grammar)
     graph = Graph()  # Adjacency list based graph.
     print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
@@ -92,7 +109,12 @@ def generate_lsystem_2d(grammar):
     return graph
 
 def generate_lsystem_3d(grammar):
-    """  Generates the L-System based off of the grammar """
+    """
+    Generates a 3D L-System based off of the grammar.
+
+    Parameters:
+    grammar (dict): Dictionary representing the grammar defining the lsystem.
+    """
     grammar_copy = copy.deepcopy(grammar)
     graph = Graph()  # Adjacency list based graph.
     print("[ INFO ] Generating L-System with the given grammar..." + str(grammar))
@@ -111,7 +133,11 @@ def generate_lsystem_3d(grammar):
     return mesh
 
 def get_saved_path():
-  """Returns the operating system dependent saved_lsystems.json path"""
+  """Gets the operating system dependent saved_lsystems.json path
+
+  Returns:
+  - os.path: Operating system dependent saved_lsystems.json path
+  """
   opsys = platform.system()
   if (opsys == 'Linux' or opsys == 'Darwin'):
     path = os.path.join(str(Path.home()), ".config/lsystem")
@@ -128,8 +154,15 @@ def get_saved_path():
 
 def save_lsystem(key, grammar):
     """
-        Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
-        Overwrites any previous lsystem defined with the same key.
+    Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
+    Overwrites any previous lsystem defined with the same key.
+
+    Parameters:
+    key (string): Key used to identify the lsystem.
+    grammar (dict): Dictionary of the grammar defining the lsystem.
+
+    Returns:
+    - dict: New dictionary of lsystems with the new addition.
     """
     saved_lsystems = {}
     saved_file = get_saved_path()
@@ -148,9 +181,13 @@ def save_lsystem(key, grammar):
     return saved_lsystems
 
 def load_saved_lsystems():
-    """ Loads the saved L Systems into our app """
+    """
+    Loads the pre-defined and user defined L'Systems.
+
+    Returns:
+    - dict: Dictionary of all saved lsystems in the form of {key:grammar, key:grammar}
+    """
     saved_lsystems = {}
-    #@TODO - Define a config/cache directory for the saved lsystem file.
     saved_file = get_saved_path()
     predef_file = os.path.join(os.path.dirname(__file__), "../assets/lsystems/predefined_lsystems.json")
     print(predef_file)
@@ -176,6 +213,9 @@ def load_saved_lsystems():
 def remove_saved_lsystem(key):
     """
     Deletes saved lsystem by key by loading the file into a json object, removing the key, then writing the file back to disk.
+
+    Parameters:
+    key (string): Key of the lsystem to remove.
     """
     saved_file = "assets/lsystems/saved_lsystems.json"
     # Check if the file exists.
@@ -193,12 +233,3 @@ def remove_saved_lsystem(key):
     # Then overwrite the file.
     with open(saved_file, "w") as sfile:
         json.dump(saved, sfile, indent=2)
-
-
-# We will remove this later when we have proper scaling/zooming.
-def normalize_coordinates(coords, bound=0):
-    """ Normalizes the coordinates such that the largest vertice bound is 1 or -1. """
-    if bound == 0:
-        bound = coords.max()
-    coords = coords / bound
-    return coords

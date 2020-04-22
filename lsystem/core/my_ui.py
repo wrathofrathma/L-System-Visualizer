@@ -430,7 +430,6 @@ class UIWidget(QWidget):
 
     def close_event(self):
         print("[ INFO ] Exiting...")
-        self.graphix.cleanup()
         exit()
 
     def more_prods(self):
@@ -541,12 +540,12 @@ class UIWidget(QWidget):
             }
             if (self.dims.currentWidget().__class__.__name__ == 'LSystem3DWidget'):
               self.mesh = generate_lsystem_3d(grammar)
-              self.graphix.clear_meshes()
+              self.graphix.clear()
               self.graphix.add_mesh(self.mesh)
             else:
               self.verts = generate_lsystem_2d(grammar)
               # Sets verts on graphics widget and draws
-              self.graphix.clear_graph()
+              self.graphix.clear()
               self.graphix.set_graph(self.verts)
             # for i in range(1,len(self.verts)):
             #  self.graphix.set_graph(self.verts[i],1) #split = true

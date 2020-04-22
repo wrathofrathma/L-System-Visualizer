@@ -1,16 +1,18 @@
-Fractal Dimention Calculator Documentation
------------------------------------------------
-
 Fractal Dimention Menu
 ----------------------------------------------
 .. automodule:: lsystem.core.fract_menu
   :members:
   :undoc-members:
-  
-Fractal Dimention Calculator
+
+
+Calculation
 ----------------------------------------------
-.. automodule:: lsystem.core.fractal_dim
+.. automodule:: lsystem.boxcounting3d.calc
    :members:
    :undoc-members:
    
- 
+Cubes
+----------------------------------------------
+.. automodule:: lsystem.boxcounting3d.cubes
+   :members:
+   :undoc-members:
