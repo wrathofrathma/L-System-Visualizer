@@ -114,6 +114,7 @@ def gen_pixel_map(graph, size):
   return pix_map
   #np.set_printoptions(threshold=np.inf)
   #print(pix_map)
+
 def pool_pixel_map(map):
   size = len(map)
   pix_map = np.full((int(size/2),int(size/2)),'.')

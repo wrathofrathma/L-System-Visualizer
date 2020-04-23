@@ -30,7 +30,6 @@ from lsystem.core.input_check import input_check
 from lsystem.core.lsystem_2d_widget import LSystem2DWidget
 from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
-#from lsystem.core.fractal_dim import fractal_dim_calc
 from lsystem.core.fract_menu import FractalDimension, fractal_dim_calc
 import copy
 
@@ -196,7 +195,7 @@ class UIWidget(QWidget):
         self.prod_plus.clicked.connect(self.more_prods)
 
     def init_buttons(self):
-
+        ''' This function adds all of the buttons tp the button functions '''
         # makes the lsys generator button
         self.lsys_button.clicked.connect(self.on_lsys_button_clicked)
         self.lsys_button.setAutoDefault(True)
@@ -306,7 +305,7 @@ class UIWidget(QWidget):
 
 
     def add_widgets(self):
-        # Adding widgets to window
+        ''' Adding widgets to window '''
         self.layout.addWidget(self.axiom, 1, 0)
         self.layout.addWidget(self.axiom_edit, 1, 1, 1, 10)
         self.layout.addWidget(self.prod_rules[0], 2, 0, 1, 1)
@@ -418,7 +417,7 @@ class UIWidget(QWidget):
 
     def more_prods(self):
         """ Creates more productions when + button is clicked """
-        if self.prods < 4:
+        if self.prods < 8:
             self.prods = self.prods + 1
             self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
             self.prod_rules_edit.append(CustomLineEdit())
