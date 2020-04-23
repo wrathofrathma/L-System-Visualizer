@@ -11,13 +11,6 @@ Mesh
 .. automodule:: lsystem.graphics.mesh
    :members:
    :undoc-members:
-
-Mesh interface
-----------------------------------------------
-
-.. automodule:: lsystem.graphics.mesh_interface
-   :members:
-   :undoc-members:
    
 OrbitalObject
 ----------------------------------------------
