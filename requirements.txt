@@ -9,3 +9,5 @@ scipy==1.2.1
 pyside2
 pyscreenshot
 PyQt5
+pywavefront
+pyrr

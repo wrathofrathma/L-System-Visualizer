@@ -123,7 +123,6 @@ class MyMainWindow(QMainWindow):
     def close_event(self):
         """Makes sure everything gets properly deleated upon closing"""
         print("[ INFO ] Exiting...")
-        self.ui_widget.graphix.cleanup()
         sys.exit()
 
 

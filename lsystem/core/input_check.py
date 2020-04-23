@@ -26,12 +26,18 @@ def check_in_alphabet(obj):
     for input_box in prod_input:
         if input_box.valid == True:
             for ch in input_box.text():
+                if obj.graphix == obj.three_d and (ch =='H' or ch =='h'):
+                    print_error_message(input_box, ch+" not allowed for 3D")
+                    valid =0
                 if not ch in obj.alphabet and not ch in obj.ctrl_char and not ch == ':':
                     print_error_message(input_box, ch + " not in obj.alphabet")
                     valid = 0
     for input_box in obj.alphabetic_inputs:
         if input_box.valid == True:
             for ch in input_box.text():
+                if obj.graphix == obj.three_d and (ch =='H' or ch =='h'):
+                    print_error_message(input_box, ch+" not allowed for 3D")
+                    valid =0
                 if not ch in obj.alphabet and not ch in obj.ctrl_char:
                     print_error_message(input_box, ch + " not in alphabet")
                     valid = 0

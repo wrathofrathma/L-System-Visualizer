@@ -88,48 +88,78 @@
 <span id="mesh"></span><h1>Mesh<a class="headerlink" href="#module-lsystem.graphics.mesh" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="lsystem.graphics.mesh.MeshObject">
-<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.mesh.</code><code class="sig-name descname">MeshObject</code><span class="sig-paren">(</span><em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to pyqtgraph’s GLMeshItem that allows us to scale and rotate the vertices.</p>
+<em class="property">class </em><code class="sig-prename descclassname">lsystem.graphics.mesh.</code><code class="sig-name descname">MeshObject</code><span class="sig-paren">(</span><em class="sig-param">vertexes=None</em>, <em class="sig-param">indices=None</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface to pyqtgraph’s GLMeshItem that allows us to scale and rotate the vertices.
+.. attribute:: opts</p>
+<blockquote>
+<div><p>Dictionary containing majority of the class’ variables. At one point this was necessary due to passing some kwargs to a parent class, but is now pointless.
+vertexes: Array of vertexes in world coordinates.
+model_verts: Array of vertexes in model coordinates
+indices: Indices of the faces.
+position: World position
+rot_vec: Current rotation in the vector form.
+rot_quat: Current rotation in quaternion form
+scale: Scale of the model
+smooth: I forget.
+computeNormals: Do we compute normals? Nah. No lighting no need.
+drawEdges: Do we draw edges?
+drawFaces: Do we draw faces?
+shader: Custom shader - Deprecated.
+color: Color of the mesh.
+edgeColor: Color of the edges of the mesh.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</div></blockquote>
 <dl class="method">
 <dt id="lsystem.graphics.mesh.MeshObject.get_faces">
 <code class="sig-name descname">get_faces</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject.get_faces" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns an array of face indices.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.graphics.mesh.MeshObject.get_vertices">
 <code class="sig-name descname">get_vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject.get_vertices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns an array of vertexes in world coordinates.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.graphics.mesh.MeshObject.set_indices">
 <code class="sig-name descname">set_indices</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">update=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject.set_indices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sets the array of indices and optionally triggers an update of the vertices.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.graphics.mesh.MeshObject.set_position">
 <code class="sig-name descname">set_position</code><span class="sig-paren">(</span><em class="sig-param">pos</em>, <em class="sig-param">update=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject.set_position" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sets the position and optionally triggers an update of the vertices.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.graphics.mesh.MeshObject.set_rotation">
 <code class="sig-name descname">set_rotation</code><span class="sig-paren">(</span><em class="sig-param">o</em>, <em class="sig-param">update=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject.set_rotation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets our rotation in radians.</p>
+<dd><p>Sets the rotation and optionally triggers an update of the vertices.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lsystem.graphics.mesh.MeshObject.set_scale">
 <code class="sig-name descname">set_scale</code><span class="sig-paren">(</span><em class="sig-param">s</em>, <em class="sig-param">update=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject.set_scale" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sets the scale and optionally triggers an update of the vertices.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.graphics.mesh.MeshObject.set_vertexes">
 <code class="sig-name descname">set_vertexes</code><span class="sig-paren">(</span><em class="sig-param">v</em>, <em class="sig-param">update=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject.set_vertexes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sets the array of vertexes and optionally triggers an update of the vertices.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.graphics.mesh.MeshObject.update_vertices">
 <code class="sig-name descname">update_vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.graphics.mesh.MeshObject.update_vertices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Updates the world vertices with the current scale/translation/rotation.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -339,7 +369,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="windows-toc.html">Window Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utilities-toc.html">Utilities Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractal.html">Fractal Dimention Calculator Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html">Fractal Dimention Menu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html#module-lsystem.boxcounting3d.calc">Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html#module-lsystem.boxcounting3d.cubes">Cubes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="graphics-toc.html">Graphics Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">colors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lsystem.graphics.mesh">Mesh</a></li>

@@ -13,9 +13,37 @@ from lsystem.graphics.spatial_object import SpatialObject
 
 
 class MeshObject(SpatialObject, GLMeshItem):
-    """Interface to pyqtgraph's GLMeshItem that allows us to scale and rotate the vertices."""
+    """Interface to pyqtgraph's GLMeshItem that allows us to scale and rotate the vertices.
+    Attributes:
+      opts (dict): Dictionary containing majority of the class' variables. At one point this was necessary due to passing some kwargs to a parent class, but is now pointless.
+            vertexes: Array of vertexes in world coordinates.
+            model_verts: Array of vertexes in model coordinates
+            indices: Indices of the faces.
+            position: World position
+            rot_vec: Current rotation in the vector form.
+            rot_quat: Current rotation in quaternion form
+            scale: Scale of the model
+            smooth: I forget.
+            computeNormals: Do we compute normals? Nah. No lighting no need.
+            drawEdges: Do we draw edges?
+            drawFaces: Do we draw faces?
+            shader: Custom shader - Deprecated.
+            color: Color of the mesh.
+            edgeColor: Color of the edges of the mesh.
+    """
 
-    def __init__(self, **kwds):
+    def __init__(self, vertexes=None, indices=None, *args, **kwds):
+        """
+        Constructor for the MeshObject class.
+
+        Parameters:
+        vertexes (list): List of vertices used in the mesh.
+        indices (list): List of indices for the faces used in the mesh.
+        rot_quat (glm.quat): Quaternion defining the rotation of the object.
+        rot_vec (vec3): Vector3 defining the rotation of the object.
+        scale (vec3): Scale factor for each axis of the object. Defaults to (1.0, 1.0, 1.0)
+        position (vec3): Position of the object. Defaults to (0.0, 0.0, 0.0)
+        """
         GLMeshItem.__init__(self)
         SpatialObject.__init__(self)
         # Argument extraction
@@ -37,6 +65,10 @@ class MeshObject(SpatialObject, GLMeshItem):
         }
         for k, v in kwds.items():
             self.opts[k] = v
+        if(vertexes is not None):
+            self.opts["vertexes"] = vertexes
+        if(indices is not None):
+            self.opts["indices"] = indices
             
         self.set_position(self.opts["position"], False)
         if (self.opts["rot_quat"] is not None):
@@ -50,18 +82,21 @@ class MeshObject(SpatialObject, GLMeshItem):
         if (self.opts["vertexes"] is not None):
             self.update_vertices()
 
-    # TODO - Override all of the translation/rotation/scaling functions
-    # and hook them into updating the mesh
-
     def get_vertices(self):
+        """Returns an array of vertexes in world coordinates."""
         return self.opts["vertexes"]
 
     def get_faces(self):
+        """Returns an array of face indices."""
         return self.opts["indices"]
 
-    # updates vertices with our scale/translation/rotation
+    def __reduce__(self):
+        """Necessary for pickling & deep copying"""
+
+        return (MeshObject, (self.get_vertices(), self.get_faces()))
+
     def update_vertices(self):
-        # TODO - Actually do what i said this function will do
+        """Updates the world vertices with the current scale/translation/rotation."""
         model = self.generate_model_matrix()
         rotation = self.get_rotation()
         verts = deepcopy(self.opts["model_verts"])
@@ -72,48 +107,54 @@ class MeshObject(SpatialObject, GLMeshItem):
             nv = nv[:3]
             nverts += [nv]
 
-        # for v in verts:
-        # nverts += [np.array((model * vec4(v, 1.0).xyz)), dtype = np.float32)]
         self.opts["vertexes"] = np.array(nverts, dtype=np.float32)
         self.opts["meshdata"].setVertexes(self.opts["vertexes"])
         if self.opts["indices"] is not None:
             self.opts["meshdata"].setFaces(self.opts["indices"])
         self.setMeshData(meshdata=self.opts["meshdata"])
 
-    # def translate(self, v, update=True):
-        # super(SpatialObject, self).translate(v)
-        # if update:
-            # self.update_vertices()
-
-    # def rotate(self, rotation, update=True):
-        # super(SpatialObject, self).rotate(rotation)
-        # if update:
-            # self.update_vertices()
-
-    # def scale(self, s, update=True):
-        # super(SpatialObject, self).scale(s)
-        # if update:
-            # self.update_vertices()
-
     def set_position(self, pos, update=True):
+        """Sets the position and optionally triggers an update of the vertices.
+
+        Parameters:
+        pos (vec3): 3 dimensional vector representing the new position of the object.
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         super(MeshObject, self).set_position(pos)
         self.opts["position"] = pos
         if update:
             self.update_vertices()
 
     def set_rotation(self, o, update=True):
+        """Sets the rotation and optionally triggers an update of the vertices.
+
+        Parameters:
+        o (vec3): Vector3 representing the new orientation/rotation of the object.
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         super(MeshObject, self).set_rotation(o)
         self.opts["rotation"] = o
         if update:
             self.update_vertices()
 
     def set_scale(self, s, update=True):
+        """Sets the scale and optionally triggers an update of the vertices.
+
+        Parameters:
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         super(MeshObject, self).set_scale(s)
         self.opts["scale"] = s
         if update:
             self.update_vertices()
 
     def set_vertexes(self, v, update=True):
+        """Sets the array of vertexes and optionally triggers an update of the vertices.
+
+        Parameters:
+        v (list): List of vertices to use in the mesh.
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         if v is None:
             return
         # If these aren't floats, then there is an error in normal calculation
@@ -122,52 +163,14 @@ class MeshObject(SpatialObject, GLMeshItem):
             self.update_vertices()
 
     def set_indices(self, i, update=True):
+        """Sets the array of indices and optionally triggers an update of the vertices.
+
+        Parameters:
+        i (list): List of the vertex indices used to define the faces of the mesh.
+        update (boolean): True/False for whether to update the graphics card. Useful for bulking together GPU changes instead of switching contexts a bunch.
+        """
         if i is None:
             return
         self.opts["indices"] = np.array(i)
         if update:
             self.update_vertices()
-
-
-if __name__ == "__main__":
-    pg.mkQApp()
-    view = gl.GLViewWidget()
-    view.show()
-    v = np.array([(0.0, 0.0, 0.0), (0.0, 1.0, 0.0), (1.0, 0.0, 0.0), (1.0, 1.0, 0.0)])
-    f = np.array([[0, 1, 2], [1, 2, 3]])
-    # f = np.array([[0, 1, 2, 1, 2, 3]])
-    # f = np.array([[1, 2, 3]])
-    # f = None
-    # f = np.array([[0, 1, 2]])
-    # print(f)
-    mesh = MeshObject(indices=f, vertexes=v)
-    # m = MeshData()
-    # m.setVertexes(v)
-    # m.setFaces(f)
-    # mesh = GLMeshItem(meshdata=m)
-    view.addItem(mesh)
-    mesh.set_position((0, 1, 0))
-    # mesh.set_rotation((np.sin(pi / 2), 0, 0))
-    # mesh.set_rotation((0, -pi / 2, 0))
-    mesh.set_rotation((0, radians(90), 0))
-    # mesh.rotate((0, radians(90), 0))
-    mesh.set_scale(vec3(2.0))
-    xgrid = gl.GLGridItem()
-    ygrid = gl.GLGridItem()
-    zgrid = gl.GLGridItem()
-    view.addItem(xgrid)
-    view.addItem(ygrid)
-    view.addItem(zgrid)
-
-    xgrid.rotate(90, 0, 1, 0)
-    ygrid.rotate(90, 1, 0, 0)
-
-    xgrid.scale(0.2, 0.1, 0.1)
-    ygrid.scale(0.2, 0.1, 0.1)
-    zgrid.scale(0.1, 0.2, 0.1)
-    print(mesh.get_vertices())
-    import sys
-    from pyqtgraph import QtCore
-
-    if sys.flags.interactive != 1 or not hasattr(QtCore, "PYQT_VERSION"):
-        pg.QtGui.QApplication.exec()

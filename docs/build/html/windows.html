@@ -57,6 +57,11 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="lsystem.__main__.MyMainWindow.screenshot">
+<code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.__main__.MyMainWindow.screenshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="lsystem.__main__.MyMainWindow.toggle_dim2D">
 <code class="sig-name descname">toggle_dim2D</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.__main__.MyMainWindow.toggle_dim2D" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -171,7 +176,7 @@ h moves forward half a unit length
 <dl class="class">
 <dt id="lsystem.core.my_ui.CustomLineEdit">
 <em class="property">class </em><code class="sig-prename descclassname">lsystem.core.my_ui.</code><code class="sig-name descname">CustomLineEdit</code><a class="headerlink" href="#lsystem.core.my_ui.CustomLineEdit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class that enables clicking in a text box</p>
+<dd><p>Class that enables input in a text box</p>
 <dl class="method">
 <dt id="lsystem.core.my_ui.CustomLineEdit.clear_box">
 <code class="sig-name descname">clear_box</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.CustomLineEdit.clear_box" title="Permalink to this definition">¶</a></dt>
@@ -207,6 +212,18 @@ h moves forward half a unit length
 <dt id="lsystem.core.my_ui.UIWidget.add_widgets">
 <code class="sig-name descname">add_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.add_widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.boxcount_2d">
+<code class="sig-name descname">boxcount_2d</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.boxcount_2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>2 dimensional fractal dimension calculation code.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.boxcount_3d">
+<code class="sig-name descname">boxcount_3d</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.boxcount_3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>3 dimensional fractal dimension calc code. I’ll have to do some data sanitization somewhere. Maybe here.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.my_ui.UIWidget.close_event">
@@ -250,6 +267,12 @@ and sends to graphics to be drawn</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.is_2d">
+<code class="sig-name descname">is_2d</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.is_2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if 2D is loaded, false if 3D is loaded.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="lsystem.core.my_ui.UIWidget.less_prods">
 <code class="sig-name descname">less_prods</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.less_prods" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes productions when - button is clicked</p>
@@ -289,6 +312,11 @@ and sends to graphics to be drawn</p>
 <dl class="method">
 <dt id="lsystem.core.my_ui.UIWidget.reset_zoom">
 <code class="sig-name descname">reset_zoom</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.reset_zoom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lsystem.core.my_ui.UIWidget.screenshot">
+<code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param">parent_pos</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.my_ui.UIWidget.screenshot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -355,7 +383,7 @@ and sends to graphics to be drawn</p>
 
 <dl class="method">
 <dt id="lsystem.core.lsystem_2d_widget.LSystem2DWidget.screenshot">
-<code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.screenshot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">pos</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_2d_widget.LSystem2DWidget.screenshot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -385,7 +413,8 @@ and sends to graphics to be drawn</p>
 <dd><dl class="method">
 <dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.add_mesh">
 <code class="sig-name descname">add_mesh</code><span class="sig-paren">(</span><em class="sig-param">mesh_list</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.add_mesh" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sets the mesh of the scene to a combination of the list of meshes passed.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.center_meshes">
@@ -410,6 +439,12 @@ and sends to graphics to be drawn</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.combine_meshes">
+<code class="sig-name descname">combine_meshes</code><span class="sig-paren">(</span><em class="sig-param">mesh_list: list</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.combine_meshes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combines mesh list into a singular mesh</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.reset_camera">
 <code class="sig-name descname">reset_camera</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.reset_camera" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -421,7 +456,7 @@ and sends to graphics to be drawn</p>
 
 <dl class="method">
 <dt id="lsystem.core.lsystem_3d_widget.LSystem3DWidget.screenshot">
-<code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.screenshot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">pos</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_3d_widget.LSystem3DWidget.screenshot" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -469,7 +504,9 @@ and sends to graphics to be drawn</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="utilities-toc.html">Utilities Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractal.html">Fractal Dimention Calculator Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html">Fractal Dimention Menu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html#module-lsystem.boxcounting3d.calc">Calculation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html#module-lsystem.boxcounting3d.cubes">Cubes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="graphics-toc.html">Graphics Documentation</a></li>
 </ul>
 
