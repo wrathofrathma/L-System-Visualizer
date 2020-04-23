@@ -339,6 +339,7 @@ class UIWidget(QWidget):
         self.layout.addWidget(self.lsys_button, 20, 0, 1, -1)
 
     def show_popup(self):
+      if self.is_2d():
         self.reset_text_box_color()
         prod_rule = ""
         rules = ""
