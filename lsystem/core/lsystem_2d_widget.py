@@ -63,22 +63,7 @@ class LSystem2DWidget(PlotWidget):
         bbox=(rect.x(), rect.y(), rect.x()+rect.width(), rect.y()+rect.height())
         if sys.platform == "win32":
           im = ImageGrab.grab(bbox=bbox) # X1,Y1,X2,Y2
-
-        if sys.platform == "darwin":
-          import os
-          import tempfile
-          fh, filepath = tempfile.mkstemp('.png')
-          os.close(fh)
-          width = bbox[2] - bbox[0]
-          height = bbox[3] - bbox[1]
-          command = "-R{},{},{},{}".format(bbox[0], bbox[1], width, height)
-          call(['screencapture', '-x', command, filepath])
-          im = Image.open(filepath)
-          im.load()
-          os.unlink(filepath)
-                  
-          #im = im.crop(bbox)
-        im.save(filename)
+          im.save(filename)
         return im
 
     def set_graph(self, graph):

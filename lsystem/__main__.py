@@ -61,16 +61,17 @@ class MyMainWindow(QMainWindow):
         self.reset_zoom_button = QAction("Reset Zoom",self)
         self.reset_zoom_button.setStatusTip("Click here to reset zoom!")
         self.reset_zoom_button.triggered.connect(self.reset_zoom)
-
-        self.screenshot_button = QAction("Screenshot",self)
-        self.screenshot_button.setStatusTip("Click here to take a screenshot!")
-        self.screenshot_button.triggered.connect(self.screenshot)
+        
+        if sys.platform == 'win32' :
+          self.screenshot_button = QAction("Screenshot",self)
+          self.screenshot_button.setStatusTip("Click here to take a screenshot!")
+          self.screenshot_button.triggered.connect(self.screenshot)
+          toolbar.addAction(self.screenshot_button)
 
         toolbar.addAction(self.tutorial)
         toolbar.addAction(self.glossary_action)
         toolbar.addAction(self.save_action)
         toolbar.addAction(self.reset_zoom_button)
-        toolbar.addAction(self.screenshot_button)
 
         toolbar.addSeparator()
 
