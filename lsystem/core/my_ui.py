@@ -228,9 +228,15 @@ class UIWidget(QWidget):
         self.layout_examples.addStretch(1)
 
     def reload_presets(self):
+        '''
+        pulls saved lsystems from file
+        '''
         self.saved_lsystems = load_saved_lsystems()
         self.set_presets()
     def set_presets(self):
+        ''' toggles the presets from 2d to 3d
+            (will set the presets to whatever the current dim is)
+        '''
         if self.is_2d():
             for widget in self.examples:
                 self.layout_examples.removeWidget(widget)
