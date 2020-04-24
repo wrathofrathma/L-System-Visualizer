@@ -78,7 +78,7 @@ class UIWidget(QWidget):
         self.prod_plus = QPushButton("+", self)
         self.lsys_button = QPushButton("Generate L System", self)
         self.boxcount_button = QPushButton("Fractal Dim", self)
-        
+
         self.widget = QWidget()
         self.scroll_area = QtWidgets.QScrollArea()
         self.layout_examples = QVBoxLayout(self.widget)
@@ -210,14 +210,14 @@ class UIWidget(QWidget):
         self.scroll_area.setFixedWidth(150)
         self.scroll_area.setWidget(self.widget)
 
-        precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake',
+        self.precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake',
             'KochIsland', 'PeanoCurve', 'DragonCurve', 'HilbertCurve',
             'TreeExample', 'IslandsandLakes']
 
-        for i, key in enumerate(self.saved_lsystems):
+        for i, key in enumerate(self.saved_lsystems["two-d"]):
             self.examples.append(QPushButton())
-            if i < len(precons):
-              self.examples[i].setIcon(QIcon('{}/lsystem/assets/images/{}.png'.format(os.getcwd(), precons[i])))
+            if i < len(self.precons):
+              self.examples[i].setIcon(QIcon('{}/lsystem/assets/images/{}.png'.format(os.getcwd(), self.precons[i])))
               self.examples[i].setIconSize(QtCore.QSize(120, 100))
             else:
               self.examples[i].setText(key)
@@ -226,6 +226,41 @@ class UIWidget(QWidget):
             )
             self.layout_examples.addWidget(self.examples[i])
         self.layout_examples.addStretch(1)
+
+    def reload_presets(self):
+        self.saved_lsystems = load_saved_lsystems()
+        self.set_presets()
+    def set_presets(self):
+        if self.is_2d():
+            for widget in self.examples:
+                self.layout_examples.removeWidget(widget)
+                widget.deleteLater()
+                widget=None
+            self.examples = []
+            for i, key in enumerate(self.saved_lsystems["two-d"]):
+                self.examples.append(QPushButton())
+                if i < len(self.precons):
+                  self.examples[i].setIcon(QIcon('{}/lsystem/assets/images/{}.png'.format(os.getcwd(), self.precons[i])))
+                  self.examples[i].setIconSize(QtCore.QSize(120, 100))
+                else:
+                  self.examples[i].setText(key)
+                self.examples[i].clicked.connect(
+                    lambda state, x=key: self.gen_example(str(x))
+                )
+                self.layout_examples.addWidget(self.examples[i])
+        elif not self.is_2d():
+            for widget in self.examples:
+                self.layout_examples.removeWidget(widget)
+                widget.deleteLater()
+                widget=None
+            self.examples = []
+            for i, key in enumerate(self.saved_lsystems["three-d"]):
+                self.examples.append(QPushButton())
+                self.examples[i].setText(key)
+                self.examples[i].clicked.connect(
+                    lambda state, x=key: self.gen_example(str(x))
+                )
+                self.layout_examples.addWidget(self.examples[i])
 
     @QtCore.pyqtSlot()
     def on_lsys_button_clicked(self):
@@ -558,7 +593,10 @@ class UIWidget(QWidget):
             prod.reset_box()
         self.angle_edit.reset_box()
         self.iters_edit.reset_box()
-        grammar = get_saved_lsystem(example, self.saved_lsystems)
+        if(self.is_2d()):
+            grammar = get_saved_lsystem(example, self.saved_lsystems["two-d"])
+        else:
+            grammar = get_saved_lsystem(example, self.saved_lsystems["three-d"])
         self.axiom_edit.setText(grammar["axiom"])
 
         num_rules = 0
@@ -613,4 +651,3 @@ class UIWidget(QWidget):
         filename, type = QFileDialog.getSaveFileName(self, "", "", filter)
         if filename:
             self.two_d.screenshot(filename,pos)
-

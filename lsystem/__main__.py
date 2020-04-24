@@ -61,7 +61,7 @@ class MyMainWindow(QMainWindow):
         self.reset_zoom_button = QAction("Reset Zoom",self)
         self.reset_zoom_button.setStatusTip("Click here to reset zoom!")
         self.reset_zoom_button.triggered.connect(self.reset_zoom)
-        
+
         if sys.platform == 'win32' :
           self.screenshot_button = QAction("Screenshot",self)
           self.screenshot_button.setStatusTip("Click here to take a screenshot!")
@@ -94,6 +94,7 @@ class MyMainWindow(QMainWindow):
           self.button_action2.setChecked(False)
           self.ui_widget.dims.setCurrentWidget(self.ui_widget.two_d)
           self.ui_widget.graphix = self.ui_widget.two_d
+          self.ui_widget.set_presets()
         else:
           self.button_action.setChecked(True)
           print("Nothing should happen :)")
@@ -103,6 +104,7 @@ class MyMainWindow(QMainWindow):
             self.button_action.setChecked(False)
             self.ui_widget.dims.setCurrentWidget(self.ui_widget.three_d)
             self.ui_widget.graphix = self.ui_widget.three_d
+            self.ui_widget.set_presets()
         else:
           self.button_action2.setChecked(True)
           print("Nothing should happen")

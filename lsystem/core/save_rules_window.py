@@ -68,6 +68,7 @@ class SaveRules(QWidget):
             grammar["axiom"] = self.ui.axiom_edit.text()
             grammar["iterations"] = int(self.ui.iters_edit.text())
             save_lsystem(name, grammar)
+            self.ui.reload_presets()
             print("[ INFO ] L-System " + str(name) + " saved to disk...")
             # make window disappear
             self.hide()
