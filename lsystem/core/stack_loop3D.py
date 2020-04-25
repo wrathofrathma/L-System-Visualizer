@@ -98,9 +98,12 @@ def read_stack(stack, starting_pt, angle, obj):
     Outputs:
         An array of type obj
     """
+
     angle = angle*np.pi/180
     stack = stack.replace("G", "F")
     stack = stack.replace("g", "f")
+    if not "F" in stack:
+        return -1
     array_of_objects = []
     twoD_array_objects = []
     tmp_stack = []

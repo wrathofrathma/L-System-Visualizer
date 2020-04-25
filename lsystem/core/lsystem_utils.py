@@ -75,6 +75,8 @@ def generate_lsystem_2d(grammar):
         grammar_copy["turnAngle"],
         grammar_copy["lineScale"],
     )
+    if verts_arr_temp == -1:
+        return -1
     verts_arr_temp = np.array(verts_arr_temp)
     # for now manually strip the x and y values from verts_arr_temp
     x_vals = []
@@ -122,6 +124,8 @@ def generate_lsystem_3d(grammar):
     tmp_stack = parsed_thread(
         grammar_copy["axiom"], grammar_copy["rules"], grammar_copy["iterations"]
     )
+    if tmp_stack == -1:
+        return -1
     # Generate vertics
     mesh = read_3d_stack(
         tmp_stack,

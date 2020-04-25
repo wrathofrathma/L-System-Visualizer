@@ -90,6 +90,8 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
     """
     stack = stack.replace("G", "F")
     stack = stack.replace("g", "f")
+    if not ("F" in stack or "H" in stack):
+        return -1
     vertices = []
     vert_arr = []
     tmp_stack = []
