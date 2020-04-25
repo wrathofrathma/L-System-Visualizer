@@ -41,8 +41,8 @@ def read_substring(
             vert_container.append(new_point)
         elif char == "H":
             new_point = [
-                new_point[0] + (scale * trig_dict[new_angle][0] / 2),
-                new_point[1] + (scale * trig_dict[new_angle][1] / 2),
+                new_point[0] + (curr_state['scale'] * trig_dict[new_angle][0] / 2),
+                new_point[1] + (curr_state['scale'] * trig_dict[new_angle][1] / 2),
                 0,
             ]
             vert_container.append(new_point)
