@@ -84,6 +84,7 @@ class UIWidget(QWidget):
         self.layout_examples = QVBoxLayout(self.widget)
         self.layout_examples.setAlignment(Qt.AlignTop)
 
+
         self.prods = 1
         self.prod_rules_edit = []
         self.examples = []
@@ -226,7 +227,6 @@ class UIWidget(QWidget):
                 lambda state, x=key: self.gen_example(str(x))
             )
             self.layout_examples.addWidget(self.examples[i])
-        self.layout_examples.addStretch(1)
 
     def reload_presets(self):
         '''
@@ -268,6 +268,7 @@ class UIWidget(QWidget):
                     lambda state, x=key: self.gen_example(str(x))
                 )
                 self.layout_examples.addWidget(self.examples[i])
+
 
     @QtCore.pyqtSlot()
     def on_lsys_button_clicked(self):
@@ -551,6 +552,10 @@ class UIWidget(QWidget):
             self.layout.addWidget(self.minuses, self.prods + 1, 10, 1, 1)
 
     def reset_input_boxes(self):
+        '''
+        Resets input text box interface back to orignal setup
+        does not clear fractal from the widget
+        '''
         while self.prods >1:
             self.less_prods()
         self.prod_rules_edit[-1].setText("")
@@ -558,7 +563,7 @@ class UIWidget(QWidget):
         self.prod_percent[0].setText("1")
         self.angle_edit.setText("")
         self.iters_edit.setText("")
-        
+
     def gen_sys(self):
 
         """
