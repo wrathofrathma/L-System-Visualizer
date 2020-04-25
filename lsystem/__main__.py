@@ -62,6 +62,10 @@ class MyMainWindow(QMainWindow):
         self.reset_zoom_button.setStatusTip("Click here to reset zoom!")
         self.reset_zoom_button.triggered.connect(self.reset_zoom)
 
+        self.reset_txtbox_button = QAction("Reset Rules",self)
+        self.reset_txtbox_button.setStatusTip("Click clear the rules!")
+        self.reset_txtbox_button.triggered.connect(self.ui_widget.reset_input_boxes)
+
         if sys.platform == 'win32' :
           self.screenshot_button = QAction("Screenshot",self)
           self.screenshot_button.setStatusTip("Click here to take a screenshot!")
@@ -72,6 +76,7 @@ class MyMainWindow(QMainWindow):
         toolbar.addAction(self.glossary_action)
         toolbar.addAction(self.save_action)
         toolbar.addAction(self.reset_zoom_button)
+        toolbar.addAction(self.reset_txtbox_button)
 
         toolbar.addSeparator()
 

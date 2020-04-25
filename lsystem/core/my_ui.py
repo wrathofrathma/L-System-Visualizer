@@ -82,6 +82,7 @@ class UIWidget(QWidget):
         self.widget = QWidget()
         self.scroll_area = QtWidgets.QScrollArea()
         self.layout_examples = QVBoxLayout(self.widget)
+        self.layout_examples.setAlignment(Qt.AlignTop)
 
         self.prods = 1
         self.prod_rules_edit = []
@@ -549,6 +550,15 @@ class UIWidget(QWidget):
             self.minuses.clicked.connect(self.less_prods)
             self.layout.addWidget(self.minuses, self.prods + 1, 10, 1, 1)
 
+    def reset_input_boxes(self):
+        while self.prods >1:
+            self.less_prods()
+        self.prod_rules_edit[-1].setText("")
+        self.axiom_edit.setText("")
+        self.prod_percent[0].setText("1")
+        self.angle_edit.setText("")
+        self.iters_edit.setText("")
+        
     def gen_sys(self):
 
         """
