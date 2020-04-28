@@ -10,10 +10,10 @@ Welcome to L System Visualizer's documentation!
    :maxdepth: 2
    :caption: Contents:
    
-   windows-toc
-   utilities-toc
+   windows
+   utilities
    fractal
-   graphics-toc
+   graphics
 
 Indices and tables
 ==================

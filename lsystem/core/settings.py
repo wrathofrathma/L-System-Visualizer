@@ -1,10 +1,9 @@
-"""This file handles the popup settings window"""
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QButtonGroup, QRadioButton
 
 
 
 class PopupSettings(QWidget):
-    """This is the window for the popup settings"""
+    """This is the window for the settings"""
 
     def __init__(self, graphix):
         """Initializes important variables for the settings window"""
@@ -16,7 +15,7 @@ class PopupSettings(QWidget):
         self.init_UI()
 
     def init_UI(self):
-        """Makes the UI for the settings menu"""
+        """Builds the UI for the settings menu"""
         self.setWindowTitle("L-systems Settings")
         self.layout = QGridLayout()
         self.init_buttons()

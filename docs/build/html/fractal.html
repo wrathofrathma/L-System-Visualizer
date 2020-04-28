@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Fractal Dimention Menu &#8212; L System Visualizer 5/14/2020 documentation</title>
+    <title>Fractal Dimension Documentation &#8212; L System Visualizer 5/14/2020 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Graphics Documentation" href="graphics-toc.html" />
-    <link rel="prev" title="Graph" href="utilities.html" />
+    <link rel="next" title="Graphics Documentation" href="graphics.html" />
+    <link rel="prev" title="Utility Documentation" href="utilities.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -32,13 +32,14 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-lsystem.core.fract_menu">
-<span id="fractal-dimention-menu"></span><h1>Fractal Dimention Menu<a class="headerlink" href="#module-lsystem.core.fract_menu" title="Permalink to this headline">¶</a></h1>
-<p>This file handles the saving of rules</p>
+  <div class="section" id="fractal-dimension-documentation">
+<h1>Fractal Dimension Documentation<a class="headerlink" href="#fractal-dimension-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-lsystem.core.fract_menu">
+<span id="fractal-dimension-menu"></span><h2>Fractal Dimension Menu<a class="headerlink" href="#module-lsystem.core.fract_menu" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lsystem.core.fract_menu.FractalDimension">
-<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.fract_menu.</code><code class="sig-name descname">FractalDimension</code><span class="sig-paren">(</span><em class="sig-param">ui</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.fract_menu.FractalDimension" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes the window that allows the user to save rules</p>
+<em class="property">class </em><code class="sig-name descname">FractalDimension</code><span class="sig-paren">(</span><em class="sig-param">ui</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.fract_menu.FractalDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the window that allows the user to calculate the fractal dimension of an L-System</p>
 <dl class="method">
 <dt id="lsystem.core.fract_menu.FractalDimension.add_widgets">
 <code class="sig-name descname">add_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.fract_menu.FractalDimension.add_widgets" title="Permalink to this definition">¶</a></dt>
@@ -48,7 +49,8 @@
 <dl class="method">
 <dt id="lsystem.core.fract_menu.FractalDimension.calc">
 <code class="sig-name descname">calc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.fract_menu.FractalDimension.calc" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Calculates the fractal dimension of an L-System</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.fract_menu.FractalDimension.init_ui">
@@ -58,45 +60,231 @@
 
 </dd></dl>
 
-<dl class="function">
-<dt id="lsystem.core.fract_menu.fractal_dim_calc">
-<code class="sig-prename descclassname">lsystem.core.fract_menu.</code><code class="sig-name descname">fractal_dim_calc</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">ending_size</em>, <em class="sig-param">num_sizes</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.fract_menu.fractal_dim_calc" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="lsystem.core.fract_menu.gen_pixel_map">
-<code class="sig-prename descclassname">lsystem.core.fract_menu.</code><code class="sig-name descname">gen_pixel_map</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.fract_menu.gen_pixel_map" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="lsystem.core.fract_menu.pool_pixel_map">
-<code class="sig-prename descclassname">lsystem.core.fract_menu.</code><code class="sig-name descname">pool_pixel_map</code><span class="sig-paren">(</span><em class="sig-param">map</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.fract_menu.pool_pixel_map" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="module-lsystem.boxcounting3d.calc">
-<span id="calculation"></span><h1>Calculation<a class="headerlink" href="#module-lsystem.boxcounting3d.calc" title="Permalink to this headline">¶</a></h1>
+<span id="calculation"></span><h2>Calculation<a class="headerlink" href="#module-lsystem.boxcounting3d.calc" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lsystem.boxcounting3d.calc.calc_fractal_dim">
-<code class="sig-prename descclassname">lsystem.boxcounting3d.calc.</code><code class="sig-name descname">calc_fractal_dim</code><span class="sig-paren">(</span><em class="sig-param">n: int</em>, <em class="sig-param">mesh</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.calc.calc_fractal_dim" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">calc_fractal_dim</code><span class="sig-paren">(</span><em class="sig-param">n: int</em>, <em class="sig-param">mesh</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.calc.calc_fractal_dim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the fractal dimensions for nxnxn cubes around the given mesh</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.boxcounting3d.calc.calc_fractal_dim3D">
-<code class="sig-prename descclassname">lsystem.boxcounting3d.calc.</code><code class="sig-name descname">calc_fractal_dim3D</code><span class="sig-paren">(</span><em class="sig-param">mesh</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.calc.calc_fractal_dim3D" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">calc_fractal_dim3D</code><span class="sig-paren">(</span><em class="sig-param">mesh</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.calc.calc_fractal_dim3D" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper function that calls calc_fractal_dim and narrows in on a good resolution for n</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.boxcounting3d.calc.center_mesh">
-<code class="sig-prename descclassname">lsystem.boxcounting3d.calc.</code><code class="sig-name descname">center_mesh</code><span class="sig-paren">(</span><em class="sig-param">mesh</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.calc.center_mesh" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">center_mesh</code><span class="sig-paren">(</span><em class="sig-param">mesh</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.calc.center_mesh" title="Permalink to this definition">¶</a></dt>
 <dd><p>Centers the 3d mesh in the space of our cube grid</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-lsystem.boxcounting3d.cubes">
-<span id="cubes"></span><h1>Cubes<a class="headerlink" href="#module-lsystem.boxcounting3d.cubes" title="Permalink to this headline">¶</a></h1>
+<span id="cubes"></span><h2>Cubes<a class="headerlink" href="#module-lsystem.boxcounting3d.cubes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lsystem.boxcounting3d.cubes.Cubes">
+<em class="property">class </em><code class="sig-name descname">Cubes</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a utility class to create a grid of cubes around a 3D mesh for the purposes of calculating the fractal dimension.
+.. attribute:: n</p>
+<blockquote>
+<div><p>number of sides on each face.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="attribute">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.r">
+<code class="sig-name descname">r</code><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.r" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls the radius of the cubes. Don’t touch this.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.cube_array">
+<code class="sig-name descname">cube_array</code><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.cube_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shared memory array for multiprocessing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.cubes">
+<code class="sig-name descname">cubes</code><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.cubes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of cubes tracking whether we’ve intersected them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.xy_rays">
+<code class="sig-name descname">xy_rays</code><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.xy_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of vectors used for raycasting the mesh vertices into faces of the cubes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.xz_rays">
+<code class="sig-name descname">xz_rays</code><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.xz_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of vectors used for raycasting the mesh vertices into faces of the cubes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.yz_rays">
+<code class="sig-name descname">yz_rays</code><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.yz_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array of vectors used for raycasting the mesh vertices into faces of the cubes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.max_t">
+<code class="sig-name descname">max_t</code><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.max_t" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum number of supported threads on the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.available_threads">
+<code class="sig-name descname">available_threads</code><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.available_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current number of available threads.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.check_bounds">
+<code class="sig-name descname">check_bounds</code><span class="sig-paren">(</span><em class="sig-param">verts</em>, <em class="sig-param">isec</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.check_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the bounds of the intersection with the min/max values of the min/max values of the mesh.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.check_intersection_xy">
+<code class="sig-name descname">check_intersection_xy</code><span class="sig-paren">(</span><em class="sig-param">isec</em>, <em class="sig-param">xy</em>, <em class="sig-param">verts</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.check_intersection_xy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks for intersections of a specifiy ray on the xy plane for the mesh</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.check_intersection_xz">
+<code class="sig-name descname">check_intersection_xz</code><span class="sig-paren">(</span><em class="sig-param">isec</em>, <em class="sig-param">xz</em>, <em class="sig-param">verts</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.check_intersection_xz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks for intersections of a specifiy ray on the xz plane for the mesh</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.check_intersection_yz">
+<code class="sig-name descname">check_intersection_yz</code><span class="sig-paren">(</span><em class="sig-param">isec</em>, <em class="sig-param">yz</em>, <em class="sig-param">verts</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.check_intersection_yz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks for intersections of a specifiy ray on the yz plane for the mesh</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.generate_grid">
+<code class="sig-name descname">generate_grid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.generate_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates cubes to be drawn in pyplot</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.generate_xy_rays">
+<code class="sig-name descname">generate_xy_rays</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.generate_xy_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates the xy_rays array with raycasting vectors on the xy plane from 0 to n</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.generate_xz_rays">
+<code class="sig-name descname">generate_xz_rays</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.generate_xz_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates the xz_rays array with raycasting vectors on the xz plane from 0 to n</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.generate_yz_rays">
+<code class="sig-name descname">generate_yz_rays</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.generate_yz_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates the yz_rays array with raycasting vectors on the yz plane from 0 to n</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.intersect_partition">
+<code class="sig-name descname">intersect_partition</code><span class="sig-paren">(</span><em class="sig-param">verts</em>, <em class="sig-param">part</em>, <em class="sig-param">count</em>, <em class="sig-param">mutex</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.intersect_partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Threaded portion of the mesh intersection</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.intersect_xy">
+<code class="sig-name descname">intersect_xy</code><span class="sig-paren">(</span><em class="sig-param">verts</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.intersect_xy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks for intersections with the xz vectors. It marks the cubes as intersected and returns the number of intersections.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.intersect_xz">
+<code class="sig-name descname">intersect_xz</code><span class="sig-paren">(</span><em class="sig-param">verts</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.intersect_xz" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks for intersections with the xz vectors. It marks the cubes as intersected and returns the number of intersections.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.intersect_yz">
+<code class="sig-name descname">intersect_yz</code><span class="sig-paren">(</span><em class="sig-param">verts</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.intersect_yz" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks for intersections with the yz vectors. It marks the cubes as intersected and returns the number of intersections.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.sub_generate_xy_rays">
+<code class="sig-name descname">sub_generate_xy_rays</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">queue</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.sub_generate_xy_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subprocess for generating xy rays.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.sub_generate_xz_rays">
+<code class="sig-name descname">sub_generate_xz_rays</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">queue</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.sub_generate_xz_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subprocess for generating xz rays.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.sub_generate_yz_rays">
+<code class="sig-name descname">sub_generate_yz_rays</code><span class="sig-paren">(</span><em class="sig-param">y</em>, <em class="sig-param">queue</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.sub_generate_yz_rays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subprocess for generating yz rays.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.sub_intersect_xy">
+<code class="sig-name descname">sub_intersect_xy</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">p</em>, <em class="sig-param">min_verts</em>, <em class="sig-param">max_verts</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.sub_intersect_xy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subprocess for calculating intersections on the xy plane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lsystem.boxcounting3d.cubes.Cubes.sub_intersect_xz">
+<code class="sig-name descname">sub_intersect_xz</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">p</em>, <em class="sig-param">min_verts</em>, <em class="sig-param">max_verts</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.boxcounting3d.cubes.Cubes.sub_intersect_xz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subprocess for calculating intersections on the xz plane.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -118,20 +306,23 @@
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="windows-toc.html">Window Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utilities-toc.html">Utilities Documentation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Fractal Dimention Menu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#module-lsystem.boxcounting3d.calc">Calculation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#module-lsystem.boxcounting3d.cubes">Cubes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="graphics-toc.html">Graphics Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="windows.html">Window Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utilities.html">Utility Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fractal Dimension Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.fract_menu">Fractal Dimension Menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.boxcounting3d.calc">Calculation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.boxcounting3d.cubes">Cubes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="graphics.html">Graphics Documentation</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="utilities.html" title="previous chapter">Graph</a></li>
-      <li>Next: <a href="graphics-toc.html" title="next chapter">Graphics Documentation</a></li>
+      <li>Previous: <a href="utilities.html" title="previous chapter">Utility Documentation</a></li>
+      <li>Next: <a href="graphics.html" title="next chapter">Graphics Documentation</a></li>
   </ul></li>
 </ul>
 </div>

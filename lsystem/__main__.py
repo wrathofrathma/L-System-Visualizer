@@ -1,4 +1,3 @@
-"""This file is the run.py that makes the application run"""
 import sys
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (QCheckBox, QToolBar, QLabel, QMainWindow, QApplication, QPushButton, QDialog,
@@ -16,7 +15,7 @@ from lsystem.core.lsystem_2d_widget import LSystem2DWidget
 from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
 class MyMainWindow(QMainWindow):
-    """This class is the main UI Window that is the parent for the entire application"""
+    """This class is the main UI Window, the parent widget for the entire application"""
 
     def __init__(self, parent=None):
         """Defaults the application window to be 500X500"""
@@ -94,6 +93,7 @@ class MyMainWindow(QMainWindow):
 
 
     def toggle_dim2D(self, s):
+        """Toggles dimensionality for the display widget"""
         if(s):
           print("I want 2D!")
           self.button_action2.setChecked(False)
@@ -103,7 +103,9 @@ class MyMainWindow(QMainWindow):
         else:
           self.button_action.setChecked(True)
           print("Nothing should happen :)")
+          
     def toggle_dim3D(self, s):
+        """Toggles dimentionality for the display widget"""
         if(s):
             print("I want 3D!")
             self.button_action.setChecked(False)
@@ -116,8 +118,11 @@ class MyMainWindow(QMainWindow):
 
 
     def reset_zoom(self):
+        """Resets the zoom level in the display widget"""
         self.ui_widget.reset_zoom()
+        
     def screenshot(self):
+        """Takes a screenshot of the display widget"""
         pos = self.pos()
         #pos.setY(self.pos().y()+self.height)
         self.ui_widget.screenshot(pos)

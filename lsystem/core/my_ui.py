@@ -1,16 +1,5 @@
 """
 This file adds the graphics to the UI
-F(and G) draws a unit length line
-f(and g) moves forward a unit length
-H draws a half length line
-h moves forward half a unit length
-- turns counter-clockwise
-+ turns clockwise
-[ starts branch
-] ends branch
-| reverses direction
-( decrements the angle by a turning angle
-) increments the angle by a turning angle
 """
 
 import matplotlib.pyplot as plt
@@ -37,26 +26,31 @@ import copy
 import os
 
 class CustomLineEdit(QtWidgets.QLineEdit):
-    """ Class that enables input in a text box """
+    """Class that enables input in a textbox by subclassing QLineEdit"""
 
     clicked = QtCore.pyqtSignal()
     def __init__(self):
+        """initializes variables"""
         super().__init__()
         self.valid = True
         self.error_message = "X"
 
     # Needs to be CamelCase
     def mousePressEvent(self, QMouseEvent):
+        """Triggers clicked.emit()"""
         self.clicked.emit()
 
     def reset_color(self):
+        """Resets the text color of the textbox"""
         self.setStyleSheet("color: black;")
 
     def clear_box(self):
+        """Clears input from the textbox"""
         self.setText("")
         self.setStyleSheet("color: black;")
 
     def reset_box(self):
+        """Resets the textbox"""
         self.reset_color()
         self.clear_box()
 
@@ -168,8 +162,7 @@ class UIWidget(QWidget):
         self.setGeometry(500, 500, 500, 500)
 
     def init_text_boxes(self):
-        '''Links all of the text boxes to buttons'''
-        # creates the labels for each text box
+        """Creates textboxes for the UI """
         self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
 
         # creates the text box for each label
@@ -198,7 +191,7 @@ class UIWidget(QWidget):
         self.prod_plus.clicked.connect(self.more_prods)
 
     def init_buttons(self):
-        ''' This function adds all of the buttons tp the button functions '''
+        """Creates buttons for the UI"""
         # makes the lsys generator button
         self.lsys_button.clicked.connect(self.on_lsys_button_clicked)
         self.lsys_button.setAutoDefault(True)
@@ -229,15 +222,11 @@ class UIWidget(QWidget):
             self.layout_examples.addWidget(self.examples[i])
 
     def reload_presets(self):
-        '''
-        pulls saved lsystems from file
-        '''
+        """pulls saved lsystems from file"""
         self.saved_lsystems = load_saved_lsystems()
         self.set_presets()
     def set_presets(self):
-        ''' toggles the presets from 2d to 3d
-            (will set the presets to whatever the current dim is)
-        '''
+        """Shows preset L-Systems for the appropriate dimention"""
         if self.is_2d():
             for widget in self.examples:
                 self.layout_examples.removeWidget(widget)
@@ -272,10 +261,11 @@ class UIWidget(QWidget):
 
     @QtCore.pyqtSlot()
     def on_lsys_button_clicked(self):
+        """Generates the L-System"""
         self.gen_sys()
 
     def boxcount_2d(self):
-        """2 dimensional fractal dimension calculation code."""
+        """Calculates the dimensionality of a 2D L-System"""
         self.fractal_menu.show()
         start_size = 8
         num_sizes = 7
@@ -306,7 +296,7 @@ class UIWidget(QWidget):
         print("AVERAGE: ", np.average(fract_avg))
 
     def boxcount_3d(self):
-        """3 dimensional fractal dimension calc code. I'll have to do some data sanitization somewhere. Maybe here."""
+        """Calculates the dimensionality of a 3D L-System"""
         mesh = self.graphix.mesh
         if(mesh is not None):
             calc_fractal_dim3D(mesh)
@@ -319,6 +309,7 @@ class UIWidget(QWidget):
         return True
 
     def on_boxcount_button_clicked(self):
+        """Determines which type of dimension checking is done"""
         if(self.is_2d()):
             self.boxcount_2d()
         else:
@@ -365,7 +356,7 @@ class UIWidget(QWidget):
 
 
     def add_widgets(self):
-        ''' Adding widgets to window '''
+        """Adds widgets to window"""
         self.layout.addWidget(self.axiom, 1, 0)
         self.layout.addWidget(self.axiom_edit, 1, 1, 1, 10)
         self.layout.addWidget(self.prod_rules[0], 2, 0, 1, 1)
@@ -382,6 +373,7 @@ class UIWidget(QWidget):
         self.layout.addWidget(self.lsys_button, 20, 0, 1, -1)
 
     def show_popup(self):
+      """Adds and removes extra textboxes as needed"""
       if self.is_2d():
         self.reset_text_box_color()
         prod_rule = ""
@@ -452,11 +444,12 @@ class UIWidget(QWidget):
             self.made_line = False
 
     # Probably doesn't need self as a param, can just be static.
-    # Generates a rule dictionary from an array of production rule strings taken from the UI
     def gen_rule_dict(self, prod_rules):
         """
+        Generates a rule dictionary from an array of production rules taken from the UI.
+        
         formats production rules as
-        {"F": [[p,rule],[p,rule]], "f":[[p,rule],[p,rule]] ... }
+        {Symbol1: [[probability,replacement],...], Symbol2: [[probability,replacement]... ], ...}
         """
         rules = {}
         for rule in prod_rules:
@@ -476,7 +469,7 @@ class UIWidget(QWidget):
         exit()
 
     def more_prods(self):
-        """ Creates more productions when + button is clicked """
+        """ Adds textboxes for additional production rules, maxiumum 8."""
         if self.prods < 8:
             self.prods = self.prods + 1
             self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
@@ -510,7 +503,7 @@ class UIWidget(QWidget):
             self.prod_percent[-1].setText("1")
 
     def less_prods(self):
-        """ Removes productions when - button is clicked """
+        """ Removes textboxes for production rules when less are needed, minimum 1."""
         if self.prods > 1:
             self.text_boxes.remove(self.prod_rules_edit[-1])
             self.text_boxes.remove(self.prod_percent[-1])
@@ -552,10 +545,7 @@ class UIWidget(QWidget):
             self.layout.addWidget(self.minuses, self.prods + 1, 10, 1, 1)
 
     def reset_input_boxes(self):
-        '''
-        Resets input text box interface back to orignal setup
-        does not clear fractal from the widget
-        '''
+        """Resets textboxes to initial configuration, does not clear the fractal from the widget."""
         while self.prods >1:
             self.less_prods()
         self.prod_rules_edit[-1].setText("")
@@ -565,11 +555,7 @@ class UIWidget(QWidget):
         self.iters_edit.setText("")
 
     def gen_sys(self):
-
-        """
-        If the input is valid, iterates through productions
-        and sends to graphics to be drawn
-        """
+        """Generates the L-System described by the production rules"""
         if input_check(self):
             axiom_input = self.axiom_edit.text()
             # prodInput = [self.prodrlesEdit.text()] #changed to array
@@ -615,6 +601,7 @@ class UIWidget(QWidget):
         self.graphix.reset_camera()
 
     def gen_example(self, example):
+        """Loads preset L-Systems"""
         self.axiom_edit.reset_box()
         for prod in self.prod_rules_edit:
             prod.reset_box()
@@ -661,12 +648,17 @@ class UIWidget(QWidget):
         self.gen_sys()
 
     def reset_text_box_color(self):
+        """resets the color of all textboxes"""
         for box in self.text_boxes:
             box.reset_color()
+            
     def reset_zoom(self):
+        """resets the zoom level in the display widget"""
         self.two_d.reset_zoom()
         self.three_d.reset_zoom() #built in function don't change to snake script
+        
     def screenshot(self, parent_pos):
+        """Takes a screenshot of the display window"""
         #rel pos is the upper left pointof the widget relative to window
         rel_pos = self.dims.pos()
         #shift the y down by the total height - height of the widget (height of text boxes)

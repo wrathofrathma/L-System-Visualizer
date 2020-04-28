@@ -1,12 +1,11 @@
-'''This file handles the saving of rules'''
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QLineEdit, QPushButton
 from lsystem.core.lsystem_utils import save_lsystem
 
 
 class SaveRules(QWidget):
-    '''Makes the window that allows the user to save rules'''
+    '''Builds the window that allows the user to save rules'''
     def __init__(self, ui):
-        '''Initing the name of the box and the ui'''
+        """Initializes variables for the window"""
         super().__init__()
         self.ui = ui
         # creates the widgets to be added to the window
@@ -26,16 +25,13 @@ class SaveRules(QWidget):
         self.setLayout(self.layout)
 
     def add_widgets(self):
-        '''Adds the widgets to the layout'''
-        # adds the widgets to the window
+        """Adds the widgets to the layout"""
         self.layout.addWidget(self.save_label, 1, 0)
         self.layout.addWidget(self.name_box, 1, 1, 1, 2)
         self.layout.addWidget(self.save_button, 1, 3)
 
     def save(self):
-        '''Saves the json file with the lsystem in it'''
-        # grabs the name of the lsystem from the namebox, grabs the grammar from the ui,
-        # and calls save_lsystem in lsystem_utils.py
+        """Saves the rules of the L-System in JSON format"""
         name = self.name_box.text()
         if len(name) > 0:
             grammar = {}

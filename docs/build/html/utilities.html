@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Graph &#8212; L System Visualizer 5/14/2020 documentation</title>
+    <title>Utility Documentation &#8212; L System Visualizer 5/14/2020 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -14,8 +14,8 @@
     <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Fractal Dimention Menu" href="fractal.html" />
-    <link rel="prev" title="Utilities Documentation" href="utilities-toc.html" />
+    <link rel="next" title="Fractal Dimension Documentation" href="fractal.html" />
+    <link rel="prev" title="Window Documentation" href="windows.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -32,186 +32,246 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-lsystem.core.graph">
-<span id="graph"></span><h1>Graph<a class="headerlink" href="#module-lsystem.core.graph" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="utility-documentation">
+<h1>Utility Documentation<a class="headerlink" href="#utility-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-lsystem.core.graph">
+<span id="graph"></span><h2>Graph<a class="headerlink" href="#module-lsystem.core.graph" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lsystem.core.graph.Graph">
-<em class="property">class </em><code class="sig-prename descclassname">lsystem.core.graph.</code><code class="sig-name descname">Graph</code><a class="headerlink" href="#lsystem.core.graph.Graph" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<em class="property">class </em><code class="sig-name descname">Graph</code><a class="headerlink" href="#lsystem.core.graph.Graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is an undirected graph implementation with utility methods for exporting to different mesh formats.</p>
+<p>Attributes:
+adjacency_list (dict): Dictionary of vertices and their connected partners.
+colors (list): List of vertex colors.
+vertices (list): List of vertices.</p>
+<dl class="method">
 <dt id="lsystem.core.graph.Graph.add_edge">
 <code class="sig-name descname">add_edge</code><span class="sig-paren">(</span><em class="sig-param">v1</em>, <em class="sig-param">v2</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.graph.Graph.add_edge" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Adds an edge between two vertices. Will add the vertices if they don’t already exist in the graph.</p>
+<p>Parameters:
+v1 (vec3): Vertex position 1
+v2 (vec3): Vertex position 2</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.graph.Graph.add_vertex">
 <code class="sig-name descname">add_vertex</code><span class="sig-paren">(</span><em class="sig-param">vertex</em>, <em class="sig-param">color=array([1</em>, <em class="sig-param">1</em>, <em class="sig-param">1</em>, <em class="sig-param">0])</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.graph.Graph.add_vertex" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Adds a vertex to the undirected graph.</p>
+<p>Parameters:
+vertex (vec3): Vertex to add.
+color (vec3): Color of the vertex.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.graph.Graph.clear">
 <code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.graph.Graph.clear" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Clears the graph.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.graph.Graph.edge_exists">
 <code class="sig-name descname">edge_exists</code><span class="sig-paren">(</span><em class="sig-param">v1</em>, <em class="sig-param">v2</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.graph.Graph.edge_exists" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Checks if an edge exists between two vertices.</p>
+<p>Parameters:
+v1 (vec3): Vertex 1
+v2 (vec3): Vertex 2</p>
+<p>Returns:
+- True/False for if it exists.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.graph.Graph.export_to_matplot2d">
 <code class="sig-name descname">export_to_matplot2d</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.graph.Graph.export_to_matplot2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Exports the graph to vertices matplotlib can use.</p>
+<p>Returns:
+- list: List of vertices.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.graph.Graph.export_to_ogl_indices">
 <code class="sig-name descname">export_to_ogl_indices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.graph.Graph.export_to_ogl_indices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates &amp; exports all vertex, color, and indice data needed for OpenGL Element drawing calls.</p>
+<p>Returns:
+- tuple(np.array, np.array, np.array)
+- - Array 0 is the array of vertices.
+- - Array 1 is the array of colors.
+- - Array 2 is the array of indices.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.graph.Graph.export_to_ogl_verts">
 <code class="sig-name descname">export_to_ogl_verts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.graph.Graph.export_to_ogl_verts" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Exports the graph vertices to a format OpenGL can use.</p>
+<p>Returns:
+- numpy.array: A numpy array of the vertices.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.graph.Graph.export_to_pyqtgraph">
 <code class="sig-name descname">export_to_pyqtgraph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.graph.Graph.export_to_pyqtgraph" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Exports the graph to a format MeshObject can use for pyqtgraph’s 3D mesh objects.</p>
+<p>Returns:
+- tuple: (verts, adj)</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="lsystem.core.graph.Graph.generate_indices">
 <code class="sig-name descname">generate_indices</code><span class="sig-paren">(</span><em class="sig-param">adjacency_list</em>, <em class="sig-param">vert_list</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.graph.Graph.generate_indices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates the indices of the vertices/adjacency list for OpenGL element drawing calls.</p>
+<p>Parameters:
+adjacency_list (dict): Dictionary of vertex-&gt;vertex mappings
+vert_list (list): List of all vertices.</p>
+<p>Returns:
+- list: List of indices.</p>
+</dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="module-lsystem.core.input_check">
-<span id="input-check"></span><h1>input_check<a class="headerlink" href="#module-lsystem.core.input_check" title="Permalink to this headline">¶</a></h1>
+<span id="input-check"></span><h2>input_check<a class="headerlink" href="#module-lsystem.core.input_check" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lsystem.core.input_check.check_blank_line">
-<code class="sig-prename descclassname">lsystem.core.input_check.</code><code class="sig-name descname">check_blank_line</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_blank_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_blank_line</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_blank_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the inputs are blank</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.input_check.check_branching">
-<code class="sig-prename descclassname">lsystem.core.input_check.</code><code class="sig-name descname">check_branching</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_branching" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_branching</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_branching" title="Permalink to this definition">¶</a></dt>
 <dd><p>determines if there is branching and if it is in a valid syntax</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.input_check.check_if_numeric">
-<code class="sig-prename descclassname">lsystem.core.input_check.</code><code class="sig-name descname">check_if_numeric</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_if_numeric" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_if_numeric</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_if_numeric" title="Permalink to this definition">¶</a></dt>
 <dd><p>determines if the inputs are numeric</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.input_check.check_in_alphabet">
-<code class="sig-prename descclassname">lsystem.core.input_check.</code><code class="sig-name descname">check_in_alphabet</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_in_alphabet" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_in_alphabet</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_in_alphabet" title="Permalink to this definition">¶</a></dt>
 <dd><p>determines if the characters are in the alphabet</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.input_check.check_nd">
-<code class="sig-prename descclassname">lsystem.core.input_check.</code><code class="sig-name descname">check_nd</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_nd" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_nd</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_nd" title="Permalink to this definition">¶</a></dt>
 <dd><p>determine if the percentages are valid</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.input_check.check_prod_rule_format">
-<code class="sig-prename descclassname">lsystem.core.input_check.</code><code class="sig-name descname">check_prod_rule_format</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_prod_rule_format" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_prod_rule_format</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_prod_rule_format" title="Permalink to this definition">¶</a></dt>
 <dd><p>determines if the production rules are in the proper format</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.input_check.check_valid_numeric">
-<code class="sig-prename descclassname">lsystem.core.input_check.</code><code class="sig-name descname">check_valid_numeric</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_valid_numeric" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_valid_numeric</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.check_valid_numeric" title="Permalink to this definition">¶</a></dt>
 <dd><p>determines if the numbers are valid</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.input_check.input_check">
-<code class="sig-prename descclassname">lsystem.core.input_check.</code><code class="sig-name descname">input_check</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.input_check" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">input_check</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.input_check" title="Permalink to this definition">¶</a></dt>
 <dd><p>collects all the input checks and determines if they are valid</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.input_check.print_error_message">
-<code class="sig-prename descclassname">lsystem.core.input_check.</code><code class="sig-name descname">print_error_message</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">msg</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.print_error_message" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">print_error_message</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">msg</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.input_check.print_error_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates there’s an error and invalidates the input from that textbox</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-lsystem.core.lsystem_utils">
-<span id="lsystem-utils"></span><h1>lsystem_utils<a class="headerlink" href="#module-lsystem.core.lsystem_utils" title="Permalink to this headline">¶</a></h1>
+<span id="lsystem-utils"></span><h2>lsystem_utils<a class="headerlink" href="#module-lsystem.core.lsystem_utils" title="Permalink to this headline">¶</a></h2>
 <p>This file for now is acting as a catch-all utility file.</p>
 <dl class="function">
 <dt id="lsystem.core.lsystem_utils.generate_lsystem_2d">
-<code class="sig-prename descclassname">lsystem.core.lsystem_utils.</code><code class="sig-name descname">generate_lsystem_2d</code><span class="sig-paren">(</span><em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.generate_lsystem_2d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates the L-System based off of the grammar</p>
+<code class="sig-name descname">generate_lsystem_2d</code><span class="sig-paren">(</span><em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.generate_lsystem_2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a 2D L-System based off of the grammar.</p>
+<p>Parameters:
+grammar (dict): Dictionary representing the grammar defining the lsystem.</p>
+<p>Returns:
+Graph: Graph object used to generate the mesh.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.lsystem_utils.generate_lsystem_3d">
-<code class="sig-prename descclassname">lsystem.core.lsystem_utils.</code><code class="sig-name descname">generate_lsystem_3d</code><span class="sig-paren">(</span><em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.generate_lsystem_3d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates the L-System based off of the grammar</p>
+<code class="sig-name descname">generate_lsystem_3d</code><span class="sig-paren">(</span><em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.generate_lsystem_3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a 3D L-System based off of the grammar.</p>
+<p>Parameters:
+grammar (dict): Dictionary representing the grammar defining the lsystem.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.lsystem_utils.get_saved_lsystem">
-<code class="sig-prename descclassname">lsystem.core.lsystem_utils.</code><code class="sig-name descname">get_saved_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">saved_lsystems</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.get_saved_lsystem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the saved L-Systems</p>
+<code class="sig-name descname">get_saved_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">saved_lsystems</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.get_saved_lsystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches a saved lsystem in our loaded lsystems by key.</p>
+<p>Parameters:
+key (string): Dictionary key used to identify a saved lsystem.
+saved_lsystems (dict): Dictionary of loaded lsystems.</p>
+<p>Returns:
+dict: dictionary of the saved lsystem grammar, or None if it doesn’t exist.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.lsystem_utils.get_saved_path">
-<code class="sig-prename descclassname">lsystem.core.lsystem_utils.</code><code class="sig-name descname">get_saved_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.get_saved_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the operating system dependent saved_lsystems.json path</p>
+<code class="sig-name descname">get_saved_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.get_saved_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the operating system dependent saved_lsystems.json path</p>
+<p>Returns:
+- os.path: Operating system dependent saved_lsystems.json path</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.lsystem_utils.load_saved_lsystems">
-<code class="sig-prename descclassname">lsystem.core.lsystem_utils.</code><code class="sig-name descname">load_saved_lsystems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.load_saved_lsystems" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads the saved L Systems into our app</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="lsystem.core.lsystem_utils.normalize_coordinates">
-<code class="sig-prename descclassname">lsystem.core.lsystem_utils.</code><code class="sig-name descname">normalize_coordinates</code><span class="sig-paren">(</span><em class="sig-param">coords</em>, <em class="sig-param">bound=0</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.normalize_coordinates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Normalizes the coordinates such that the largest vertice bound is 1 or -1.</p>
+<code class="sig-name descname">load_saved_lsystems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.load_saved_lsystems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the pre-defined and user defined L’Systems.</p>
+<p>Returns:
+- dict: Dictionary of all saved lsystems in the form of {key:grammar, key:grammar}</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.lsystem_utils.remove_saved_lsystem">
-<code class="sig-prename descclassname">lsystem.core.lsystem_utils.</code><code class="sig-name descname">remove_saved_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.remove_saved_lsystem" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">remove_saved_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.remove_saved_lsystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes saved lsystem by key by loading the file into a json object, removing the key, then writing the file back to disk.</p>
+<p>Parameters:
+key (string): Key of the lsystem to remove.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.lsystem_utils.save_lsystem">
-<code class="sig-prename descclassname">lsystem.core.lsystem_utils.</code><code class="sig-name descname">save_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.save_lsystem" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_lsystem</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">grammar</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.lsystem_utils.save_lsystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Saves a given lsystem to disk to “lsystem/saved_lsystems.json”
 Overwrites any previous lsystem defined with the same key.</p>
+<p>Parameters:
+key (string): Key used to identify the lsystem.
+grammar (dict): Dictionary of the grammar defining the lsystem.</p>
+<p>Returns:
+- dict: New dictionary of lsystems with the new addition.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-lsystem.core.parsing">
-<span id="parsing"></span><h1>parsing<a class="headerlink" href="#module-lsystem.core.parsing" title="Permalink to this headline">¶</a></h1>
+<span id="parsing"></span><h2>Parsing<a class="headerlink" href="#module-lsystem.core.parsing" title="Permalink to this headline">¶</a></h2>
 <p>This file performs all of the parsing</p>
 <dl class="function">
 <dt id="lsystem.core.parsing.nd_choice">
-<code class="sig-prename descclassname">lsystem.core.parsing.</code><code class="sig-name descname">nd_choice</code><span class="sig-paren">(</span><em class="sig-param">prods</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.parsing.nd_choice" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">nd_choice</code><span class="sig-paren">(</span><em class="sig-param">prods</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.parsing.nd_choice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomly selects the rule in nondeterminism</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.parsing.parsed_thread">
-<code class="sig-prename descclassname">lsystem.core.parsing.</code><code class="sig-name descname">parsed_thread</code><span class="sig-paren">(</span><em class="sig-param">strings</em>, <em class="sig-param">prods</em>, <em class="sig-param">iters</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.parsing.parsed_thread" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parsed_thread</code><span class="sig-paren">(</span><em class="sig-param">strings</em>, <em class="sig-param">prods</em>, <em class="sig-param">iters</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.parsing.parsed_thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Takes in an axiom set of prods and number of iterations and generates the new string</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.parsing.string_parse">
-<code class="sig-prename descclassname">lsystem.core.parsing.</code><code class="sig-name descname">string_parse</code><span class="sig-paren">(</span><em class="sig-param">strings</em>, <em class="sig-param">prod_rules</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.parsing.string_parse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">string_parse</code><span class="sig-paren">(</span><em class="sig-param">strings</em>, <em class="sig-param">prod_rules</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.parsing.string_parse" title="Permalink to this definition">¶</a></dt>
 <dd><p>NOTE: Context sensitive reads left to right, with longest key getting priority</p>
 <p>str_temp is the current string
 it will be used to keep track of what parts of the string still need proccessing
@@ -225,48 +285,86 @@ add prod[key] to the new string
 
 </div>
 <div class="section" id="module-lsystem.core.stack_loop">
-<span id="stack-loop-2d"></span><h1>stack_loop 2D<a class="headerlink" href="#module-lsystem.core.stack_loop" title="Permalink to this headline">¶</a></h1>
+<span id="stack-loop-2d"></span><h2>stack_loop 2D<a class="headerlink" href="#module-lsystem.core.stack_loop" title="Permalink to this headline">¶</a></h2>
 <p>This module makes the stack loop</p>
 <dl class="function">
 <dt id="lsystem.core.stack_loop.read_stack">
-<code class="sig-prename descclassname">lsystem.core.stack_loop.</code><code class="sig-name descname">read_stack</code><span class="sig-paren">(</span><em class="sig-param">stack</em>, <em class="sig-param">starting_pt</em>, <em class="sig-param">angle</em>, <em class="sig-param">turn_angle</em>, <em class="sig-param">line_scale</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.stack_loop.read_stack" title="Permalink to this definition">¶</a></dt>
-<dd><p>Input list of strings (F, +, -)
-Output List of new vertices</p>
+<code class="sig-name descname">read_stack</code><span class="sig-paren">(</span><em class="sig-param">stack</em>, <em class="sig-param">starting_pt</em>, <em class="sig-param">angle</em>, <em class="sig-param">turn_angle</em>, <em class="sig-param">line_scale</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.stack_loop.read_stack" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function converts a string into an array of objects placed at the vertices
+determined by the turtle graphics interpretation of the string</p>
+<dl>
+<dt>Inputs:</dt><dd><p>stack: a string
+starting_pt: the turtles starting_pt (the origin of your fractal)
+angle: the degrees the angle should turn when seeing a + or -
+turn_angle: the degrees the angle should increment by when seeing ( or )
+line_scale: the factor by which the line length should change when seeing &lt; or &gt;</p>
+</dd>
+<dt>Outputs:</dt><dd><p>An array of vertices formatted as such
+[[[x1,y1],[x2,y2],[x3,y3]],</p>
+<blockquote>
+<div><p>[[x4,y4],[x5,y5],[x6,y6]]…]</p>
+</div></blockquote>
+<p>where [x1,y1] is connected by a line to [x2,y2] which is connected by a line to [x3,y3]
+and [x4,y4] marks the starting point of a separte line</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.stack_loop.read_substring">
-<code class="sig-prename descclassname">lsystem.core.stack_loop.</code><code class="sig-name descname">read_substring</code><span class="sig-paren">(</span><em class="sig-param">lsys</em>, <em class="sig-param">curr_state</em>, <em class="sig-param">turn_angle</em>, <em class="sig-param">trig_dict</em>, <em class="sig-param">line_scale</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.stack_loop.read_substring" title="Permalink to this definition">¶</a></dt>
-<dd><p>Input: readsubstring takes in a string of the current lsystem,
-a starting point, the starting angle,
-the dictinary of angle trig values,
-current line scale,
-and what the line scale would change by</p>
-<p>Output: returns angle and vertices</p>
+<code class="sig-name descname">read_substring</code><span class="sig-paren">(</span><em class="sig-param">lsys</em>, <em class="sig-param">curr_state</em>, <em class="sig-param">turn_angle</em>, <em class="sig-param">trig_dict</em>, <em class="sig-param">line_scale</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.stack_loop.read_substring" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a utility function for read_stack, takes in a string without branching ([, ]) or move without draw (f,g,h)
+Inputs:</p>
+<blockquote>
+<div><p>lsys: a string
+curr_state: a dictionary that has current point, orientation, and line scale
+turn_angle: the degrees the angle should increment by when seeing ( or )
+trig_dict: a dictionary of all the already calculated trig necassary for step direction as well as the angle to turn by when seeing + or -
+line_scale: the factor by which the line length should change when seeing &lt; or &gt;</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Outputs:</dt><dd><p>An array of vertices formatted as such:  [[x1,y1],[x2,y2],[x3,y3],…]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 <div class="section" id="module-lsystem.core.stack_loop3D">
-<span id="stack-loop-3d"></span><h1>stack_loop 3D<a class="headerlink" href="#module-lsystem.core.stack_loop3D" title="Permalink to this headline">¶</a></h1>
+<span id="stack-loop-3d"></span><h2>stack_loop 3D<a class="headerlink" href="#module-lsystem.core.stack_loop3D" title="Permalink to this headline">¶</a></h2>
 <p>This module makes the stack loop</p>
 <dl class="function">
 <dt id="lsystem.core.stack_loop3D.read_stack">
-<code class="sig-prename descclassname">lsystem.core.stack_loop3D.</code><code class="sig-name descname">read_stack</code><span class="sig-paren">(</span><em class="sig-param">stack</em>, <em class="sig-param">starting_pt</em>, <em class="sig-param">angle</em>, <em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.stack_loop3D.read_stack" title="Permalink to this definition">¶</a></dt>
-<dd><p>Input list of strings (F, +, -)
-Output List of new vertices</p>
+<code class="sig-name descname">read_stack</code><span class="sig-paren">(</span><em class="sig-param">stack</em>, <em class="sig-param">starting_pt</em>, <em class="sig-param">angle</em>, <em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.stack_loop3D.read_stack" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function converts a string into an array of objects placed at the vertices
+determined by the turtle graphics interpretation of the string</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><p>stack: a string
+starting_pt: the turtles starting_pt (the origin of your fractal)
+angle: the degrees the angle should turn when seeing a +, -, ^, &amp;, &lt; or &gt;
+obj: the type of object that should be displayed, needs to be a mesh object</p>
+</dd>
+<dt>Outputs:</dt><dd><p>An array of type obj</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="lsystem.core.stack_loop3D.read_substring">
-<code class="sig-prename descclassname">lsystem.core.stack_loop3D.</code><code class="sig-name descname">read_substring</code><span class="sig-paren">(</span><em class="sig-param">lsys</em>, <em class="sig-param">curr_state</em>, <em class="sig-param">turn_angle</em>, <em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.stack_loop3D.read_substring" title="Permalink to this definition">¶</a></dt>
-<dd><p>Input: readsubstring takes in a string of the current lsystem,
-a starting point, the starting angle,
-the dictinary of angle trig values,
-current line scale,
-and what the line scale would change by</p>
-<p>Output: returns angle and vertices</p>
+<code class="sig-name descname">read_substring</code><span class="sig-paren">(</span><em class="sig-param">lsys</em>, <em class="sig-param">curr_state</em>, <em class="sig-param">turn_angle</em>, <em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#lsystem.core.stack_loop3D.read_substring" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a utility function for read_stack, takes in a string without
+branching ([, ]) or move without draw (f)</p>
+<dl class="simple">
+<dt>Inputs:</dt><dd><p>lsys: a string
+curr_state: a dictionary that has current point, and orientation
+turn_angle: the degrees the angle should turn when seeing a +, -, ^, &amp;, &lt; or &gt;
+obj: the type of object that should be displayed, needs to be a mesh object</p>
+</dd>
+<dt>Outputs:</dt><dd><p>An array of type obj</p>
+</dd>
+</dl>
 </dd></dl>
 
+</div>
 </div>
 
 
@@ -288,30 +386,26 @@ and what the line scale would change by</p>
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="windows-toc.html">Window Documentation</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="utilities-toc.html">Utilities Documentation</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="windows.html">Window Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utility Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.graph">Graph</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.input_check">input_check</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.lsystem_utils">lsystem_utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.parsing">parsing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.parsing">Parsing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.stack_loop">stack_loop 2D</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lsystem.core.stack_loop3D">stack_loop 3D</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="fractal.html">Fractal Dimention Menu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractal.html#module-lsystem.boxcounting3d.calc">Calculation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fractal.html#module-lsystem.boxcounting3d.cubes">Cubes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="graphics-toc.html">Graphics Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fractal.html">Fractal Dimension Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="graphics.html">Graphics Documentation</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-  <li><a href="utilities-toc.html">Utilities Documentation</a><ul>
-      <li>Previous: <a href="utilities-toc.html" title="previous chapter">Utilities Documentation</a></li>
-      <li>Next: <a href="fractal.html" title="next chapter">Fractal Dimention Menu</a></li>
-  </ul></li>
+      <li>Previous: <a href="windows.html" title="previous chapter">Window Documentation</a></li>
+      <li>Next: <a href="fractal.html" title="next chapter">Fractal Dimension Documentation</a></li>
   </ul></li>
 </ul>
 </div>
