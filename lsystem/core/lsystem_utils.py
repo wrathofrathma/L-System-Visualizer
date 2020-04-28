@@ -211,7 +211,7 @@ def load_saved_lsystems():
         saved = json.load(open(saved_file, "r"))
         # For every key(aka lsystem definition), add it to our saved lsystems.
         # User saved lsystems get saved to both dimension presets
-        for dim in predef.keys():
+        for dim in saved.keys():
             for key in saved.keys():
                 saved_lsystems[dim][key] = saved[key]
     return saved_lsystems
