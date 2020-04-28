@@ -13,12 +13,24 @@ The L-System Visualizer can be installed with the following command.
 ```
 pip install L-System-Visualizer
 ```
+
 ### Running the Application
 Run the following command in a terminal to run the application
 
 ```
 python -m lsystem
 ```
+### Alternative method
+You can also clone the repository locally and run.
+
+```
+python ./__main__.py
+```
+
+
+### Using the Application
+Follow the tutorial instructions found in the built in tutorial button.
+
 
 [Read the Docs](https://l-system-visualizer.readthedocs.io/en/latest/)
 
