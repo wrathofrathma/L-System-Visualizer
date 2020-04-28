@@ -1,10 +1,9 @@
-'''This file handles the saving of rules'''
 from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel, QLineEdit, QPushButton
 import numpy as np
 import copy
 
 class FractalDimension(QWidget):
-    '''Makes the window that allows the user to save rules'''
+    '''Makes the window that allows the user to calculate the fractal dimension of an L-System'''
     def __init__(self, ui):
         '''Initing the name of the box and the ui'''
         super().__init__()
@@ -30,7 +29,7 @@ class FractalDimension(QWidget):
         self.setLayout(self.layout)
 
     def add_widgets(self):
-        '''Adds the widgets to the layout'''
+        """Adds the widgets to the layout"""
         # adds the widgets to the window
         self.layout.addWidget(self.instructions, 0, 0, 1, 5)
         self.layout.addWidget(self.start_prompt, 2, 0)
@@ -42,6 +41,7 @@ class FractalDimension(QWidget):
         self.layout.addWidget(self.calc_button, 5, 3)
 
     def calc(self):
+      """Calculates the fractal dimension of an L-System"""
       all_dims = []
       for i in range(int(self.iters_num.text())):
         self.ui.gen_sys()
@@ -114,6 +114,7 @@ def gen_pixel_map(graph, size):
   return pix_map
   #np.set_printoptions(threshold=np.inf)
   #print(pix_map)
+
 def pool_pixel_map(map):
   size = len(map)
   pix_map = np.full((int(size/2),int(size/2)),'.')

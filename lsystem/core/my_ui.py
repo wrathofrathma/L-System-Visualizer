@@ -1,16 +1,5 @@
 """
 This file adds the graphics to the UI
-F(and G) draws a unit length line
-f(and g) moves forward a unit length
-H draws a half length line
-h moves forward half a unit length
-- turns counter-clockwise
-+ turns clockwise
-[ starts branch
-] ends branch
-| reverses direction
-( decrements the angle by a turning angle
-) increments the angle by a turning angle
 """
 
 import matplotlib.pyplot as plt
@@ -30,7 +19,6 @@ from lsystem.core.input_check import input_check
 from lsystem.core.lsystem_2d_widget import LSystem2DWidget
 from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
-#from lsystem.core.fractal_dim import fractal_dim_calc
 from lsystem.core.fract_menu import FractalDimension, fractal_dim_calc
 from lsystem.boxcounting3d.calc import calc_fractal_dim3D
 import copy
@@ -38,26 +26,31 @@ import copy
 import os
 
 class CustomLineEdit(QtWidgets.QLineEdit):
-    """ Class that enables input in a text box """
+    """Class that enables input in a textbox by subclassing QLineEdit"""
 
     clicked = QtCore.pyqtSignal()
     def __init__(self):
+        """initializes variables"""
         super().__init__()
         self.valid = True
         self.error_message = "X"
 
     # Needs to be CamelCase
     def mousePressEvent(self, QMouseEvent):
+        """Triggers clicked.emit()"""
         self.clicked.emit()
 
     def reset_color(self):
+        """Resets the text color of the textbox"""
         self.setStyleSheet("color: black;")
 
     def clear_box(self):
+        """Clears input from the textbox"""
         self.setText("")
         self.setStyleSheet("color: black;")
 
     def reset_box(self):
+        """Resets the textbox"""
         self.reset_color()
         self.clear_box()
 
@@ -79,10 +72,12 @@ class UIWidget(QWidget):
         self.prod_plus = QPushButton("+", self)
         self.lsys_button = QPushButton("Generate L System", self)
         self.boxcount_button = QPushButton("Fractal Dim", self)
-        
+
         self.widget = QWidget()
         self.scroll_area = QtWidgets.QScrollArea()
         self.layout_examples = QVBoxLayout(self.widget)
+        self.layout_examples.setAlignment(Qt.AlignTop)
+
 
         self.prods = 1
         self.prod_rules_edit = []
@@ -167,8 +162,7 @@ class UIWidget(QWidget):
         self.setGeometry(500, 500, 500, 500)
 
     def init_text_boxes(self):
-        '''Links all of the text boxes to buttons'''
-        # creates the labels for each text box
+        """Creates textboxes for the UI """
         self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
 
         # creates the text box for each label
@@ -197,7 +191,7 @@ class UIWidget(QWidget):
         self.prod_plus.clicked.connect(self.more_prods)
 
     def init_buttons(self):
-
+        """Creates buttons for the UI"""
         # makes the lsys generator button
         self.lsys_button.clicked.connect(self.on_lsys_button_clicked)
         self.lsys_button.setAutoDefault(True)
@@ -211,14 +205,14 @@ class UIWidget(QWidget):
         self.scroll_area.setFixedWidth(150)
         self.scroll_area.setWidget(self.widget)
 
-        precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake',
+        self.precons = ['SierpinksiTriangle', 'KochCurve', 'KochSnowflake',
             'KochIsland', 'PeanoCurve', 'DragonCurve', 'HilbertCurve',
             'TreeExample', 'IslandsandLakes']
 
-        for i, key in enumerate(self.saved_lsystems):
+        for i, key in enumerate(self.saved_lsystems["two-d"]):
             self.examples.append(QPushButton())
-            if i < len(precons):
-              self.examples[i].setIcon(QIcon('{}/lsystem/assets/images/{}.png'.format(os.getcwd(), precons[i])))
+            if i < len(self.precons):
+              self.examples[i].setIcon(QIcon('{}/lsystem/assets/images/{}.png'.format(os.getcwd(), self.precons[i])))
               self.examples[i].setIconSize(QtCore.QSize(120, 100))
             else:
               self.examples[i].setText(key)
@@ -226,14 +220,52 @@ class UIWidget(QWidget):
                 lambda state, x=key: self.gen_example(str(x))
             )
             self.layout_examples.addWidget(self.examples[i])
-        self.layout_examples.addStretch(1)
+
+    def reload_presets(self):
+        """pulls saved lsystems from file"""
+        self.saved_lsystems = load_saved_lsystems()
+        self.set_presets()
+    def set_presets(self):
+        """Shows preset L-Systems for the appropriate dimention"""
+        if self.is_2d():
+            for widget in self.examples:
+                self.layout_examples.removeWidget(widget)
+                widget.deleteLater()
+                widget=None
+            self.examples = []
+            for i, key in enumerate(self.saved_lsystems["two-d"]):
+                self.examples.append(QPushButton())
+                if i < len(self.precons):
+                  self.examples[i].setIcon(QIcon('{}/lsystem/assets/images/{}.png'.format(os.getcwd(), self.precons[i])))
+                  self.examples[i].setIconSize(QtCore.QSize(120, 100))
+                else:
+                  self.examples[i].setText(key)
+                self.examples[i].clicked.connect(
+                    lambda state, x=key: self.gen_example(str(x))
+                )
+                self.layout_examples.addWidget(self.examples[i])
+        elif not self.is_2d():
+            for widget in self.examples:
+                self.layout_examples.removeWidget(widget)
+                widget.deleteLater()
+                widget=None
+            self.examples = []
+            for i, key in enumerate(self.saved_lsystems["three-d"]):
+                self.examples.append(QPushButton())
+                self.examples[i].setText(key)
+                self.examples[i].clicked.connect(
+                    lambda state, x=key: self.gen_example(str(x))
+                )
+                self.layout_examples.addWidget(self.examples[i])
+
 
     @QtCore.pyqtSlot()
     def on_lsys_button_clicked(self):
+        """Generates the L-System"""
         self.gen_sys()
 
     def boxcount_2d(self):
-        """2 dimensional fractal dimension calculation code."""
+        """Calculates the dimensionality of a 2D L-System"""
         self.fractal_menu.show()
         start_size = 8
         num_sizes = 7
@@ -264,7 +296,7 @@ class UIWidget(QWidget):
         print("AVERAGE: ", np.average(fract_avg))
 
     def boxcount_3d(self):
-        """3 dimensional fractal dimension calc code. I'll have to do some data sanitization somewhere. Maybe here."""
+        """Calculates the dimensionality of a 3D L-System"""
         mesh = self.graphix.mesh
         if(mesh is not None):
             calc_fractal_dim3D(mesh)
@@ -277,6 +309,7 @@ class UIWidget(QWidget):
         return True
 
     def on_boxcount_button_clicked(self):
+        """Determines which type of dimension checking is done"""
         if(self.is_2d()):
             self.boxcount_2d()
         else:
@@ -323,7 +356,7 @@ class UIWidget(QWidget):
 
 
     def add_widgets(self):
-        # Adding widgets to window
+        """Adds widgets to window"""
         self.layout.addWidget(self.axiom, 1, 0)
         self.layout.addWidget(self.axiom_edit, 1, 1, 1, 10)
         self.layout.addWidget(self.prod_rules[0], 2, 0, 1, 1)
@@ -340,6 +373,8 @@ class UIWidget(QWidget):
         self.layout.addWidget(self.lsys_button, 20, 0, 1, -1)
 
     def show_popup(self):
+      """Adds and removes extra textboxes as needed"""
+      if self.is_2d():
         self.reset_text_box_color()
         prod_rule = ""
         rules = ""
@@ -409,11 +444,12 @@ class UIWidget(QWidget):
             self.made_line = False
 
     # Probably doesn't need self as a param, can just be static.
-    # Generates a rule dictionary from an array of production rule strings taken from the UI
     def gen_rule_dict(self, prod_rules):
         """
+        Generates a rule dictionary from an array of production rules taken from the UI.
+        
         formats production rules as
-        {"F": [[p,rule],[p,rule]], "f":[[p,rule],[p,rule]] ... }
+        {Symbol1: [[probability,replacement],...], Symbol2: [[probability,replacement]... ], ...}
         """
         rules = {}
         for rule in prod_rules:
@@ -433,8 +469,8 @@ class UIWidget(QWidget):
         exit()
 
     def more_prods(self):
-        """ Creates more productions when + button is clicked """
-        if self.prods < 4:
+        """ Adds textboxes for additional production rules, maxiumum 8."""
+        if self.prods < 8:
             self.prods = self.prods + 1
             self.prod_rules.append(QLabel("Production Rule " + str(self.prods)))
             self.prod_rules_edit.append(CustomLineEdit())
@@ -467,7 +503,7 @@ class UIWidget(QWidget):
             self.prod_percent[-1].setText("1")
 
     def less_prods(self):
-        """ Removes productions when - button is clicked """
+        """ Removes textboxes for production rules when less are needed, minimum 1."""
         if self.prods > 1:
             self.text_boxes.remove(self.prod_rules_edit[-1])
             self.text_boxes.remove(self.prod_percent[-1])
@@ -508,12 +544,18 @@ class UIWidget(QWidget):
             self.minuses.clicked.connect(self.less_prods)
             self.layout.addWidget(self.minuses, self.prods + 1, 10, 1, 1)
 
-    def gen_sys(self):
+    def reset_input_boxes(self):
+        """Resets textboxes to initial configuration, does not clear the fractal from the widget."""
+        while self.prods >1:
+            self.less_prods()
+        self.prod_rules_edit[-1].setText("")
+        self.axiom_edit.setText("")
+        self.prod_percent[0].setText("1")
+        self.angle_edit.setText("")
+        self.iters_edit.setText("")
 
-        """
-        If the input is valid, iterates through productions
-        and sends to graphics to be drawn
-        """
+    def gen_sys(self):
+        """Generates the L-System described by the production rules"""
         if input_check(self):
             axiom_input = self.axiom_edit.text()
             # prodInput = [self.prodrlesEdit.text()] #changed to array
@@ -540,25 +582,35 @@ class UIWidget(QWidget):
             }
             if (self.dims.currentWidget().__class__.__name__ == 'LSystem3DWidget'):
               self.mesh = generate_lsystem_3d(grammar)
-              self.graphix.clear()
-              self.graphix.add_mesh(self.mesh)
+              if self.mesh ==-1:
+                  print("[ ERROR ] Invalid input no vertices generated.")
+              else:
+                  self.graphix.clear()
+                  self.graphix.add_mesh(self.mesh)
             else:
               self.verts = generate_lsystem_2d(grammar)
-              # Sets verts on graphics widget and draws
-              self.graphix.clear()
-              self.graphix.set_graph(self.verts)
+              if self.verts ==-1:
+                  print("[ ERROR ] Invalid input no vertices generated.")
+              else:
+                  # Sets verts on graphics widget and draws
+                  self.graphix.clear()
+                  self.graphix.set_graph(self.verts)
             # for i in range(1,len(self.verts)):
             #  self.graphix.set_graph(self.verts[i],1) #split = true
         self.graphix.update()
         self.graphix.reset_camera()
 
     def gen_example(self, example):
+        """Loads preset L-Systems"""
         self.axiom_edit.reset_box()
         for prod in self.prod_rules_edit:
             prod.reset_box()
         self.angle_edit.reset_box()
         self.iters_edit.reset_box()
-        grammar = get_saved_lsystem(example, self.saved_lsystems)
+        if(self.is_2d()):
+            grammar = get_saved_lsystem(example, self.saved_lsystems["two-d"])
+        else:
+            grammar = get_saved_lsystem(example, self.saved_lsystems["three-d"])
         self.axiom_edit.setText(grammar["axiom"])
 
         num_rules = 0
@@ -596,12 +648,17 @@ class UIWidget(QWidget):
         self.gen_sys()
 
     def reset_text_box_color(self):
+        """resets the color of all textboxes"""
         for box in self.text_boxes:
             box.reset_color()
+            
     def reset_zoom(self):
+        """resets the zoom level in the display widget"""
         self.two_d.reset_zoom()
         self.three_d.reset_zoom() #built in function don't change to snake script
+        
     def screenshot(self, parent_pos):
+        """Takes a screenshot of the display window"""
         #rel pos is the upper left pointof the widget relative to window
         rel_pos = self.dims.pos()
         #shift the y down by the total height - height of the widget (height of text boxes)
@@ -613,4 +670,3 @@ class UIWidget(QWidget):
         filename, type = QFileDialog.getSaveFileName(self, "", "", filter)
         if filename:
             self.two_d.screenshot(filename,pos)
-

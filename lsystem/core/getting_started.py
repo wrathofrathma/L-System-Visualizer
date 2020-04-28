@@ -1,5 +1,3 @@
-''' Tutorial Page '''
-
 from PyQt5.QtWidgets import (
   QWidget,
   QGridLayout,
@@ -12,14 +10,16 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QPixmap
 
 class GettingStarted(QWidget):
+  """This defines the window for the tutorial"""
   def __init__(self):
+      """initializes the window"""
       super().__init__()
       self.page_number = 0
       self.layout_list = []
       self.init_ui()
 
   def init_ui(self):
-    #sets window title, layout, and adds the widgets to the window
+    """sets window title, layout, and adds the widgets to the window"""
     self.setWindowTitle('L-System Help')
     self.main_layout = QVBoxLayout()
     self.button_layout = QHBoxLayout()
@@ -56,7 +56,7 @@ class GettingStarted(QWidget):
     self.setLayout(self.main_layout)
 
   def create_widgets(self):
-    # creates labels and buttons for the window
+    """creates labels and buttons for the window"""
     self.axiom_title = QLabel('Axiom', objectName = 'title')
     self.axiom_one = QLabel('The axiom is where your L-System starts.')
     self.axiom_two = QLabel('Use production rules to transform your axiom into an L-System.')
@@ -125,7 +125,7 @@ class GettingStarted(QWidget):
     
   
   def add_widgets(self):
-    # adds widgets to the window
+    """adds widgets to the window"""
     self.button_layout.addWidget(self.previous_button)
     self.button_layout.addStretch()
     self.button_layout.addWidget(self.next_button)
@@ -199,6 +199,11 @@ class GettingStarted(QWidget):
     self.main_layout.addLayout(self.button_layout)
 
   def change_page(self, up):
+    """Changes the page displayed.
+    
+    Inputs
+      up - the number of pages to move in the tutorial. Can be negative
+    """
     if(up):
       self.page_number+=1
       self.page_number%=len(self.layout_list)

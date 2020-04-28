@@ -1,6 +1,6 @@
 """This file handles the OpenGL Window actions"""
 from time import time
-
+from subprocess import call
 # Other includes
 import numpy as np
 # Lsystem includes
@@ -14,8 +14,10 @@ from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
 
 # from graphics.graph_mesh import GraphObject
 from lsystem.core.graph import Graph
+from PIL import Image
 
-import pyscreenshot as ImageGrab
+import sys
+
 
 class LSystem2DWidget(PlotWidget):
     """
@@ -55,13 +57,14 @@ class LSystem2DWidget(PlotWidget):
         filename (str): Filename to save to.
         pos (???): Nani the fuck is this shit?
         """
-        #print("[ INFO ] Intentionally broken at the moment. There is a bug in pyqtgraph's image exporter so we'll need to fork or do it ourselves")
-        #rect is the rectange (x,y,width,height) of the widget
         rect = self.frameGeometry()
         #shift over to get absl. pos
         rect.translate(pos)
-        im = ImageGrab.grab(bbox=(rect.x(), rect.y(), rect.x()+rect.width(), rect.y()+rect.height())) # X1,Y1,X2,Y2
-        im.save(filename)
+        bbox=(rect.x(), rect.y(), rect.x()+rect.width(), rect.y()+rect.height())
+        if sys.platform == "win32":
+          im = ImageGrab.grab(bbox=bbox) # X1,Y1,X2,Y2
+          im.save(filename)
+        return im
 
     def set_graph(self, graph):
         """
@@ -82,5 +85,5 @@ class LSystem2DWidget(PlotWidget):
         Removes the mesh from the scene.
         """
         if isinstance(self.mesh, GraphItem):
-            self.removeItem(self.mesh)
+          self.removeItem(self.mesh)
         self.mesh = None

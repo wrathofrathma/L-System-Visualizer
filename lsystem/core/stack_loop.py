@@ -9,17 +9,14 @@ def read_substring(
     lsys, curr_state, turn_angle, trig_dict,  line_scale
 ):
     """
-    This is a utility function for read_stack, takes in a string without
-    branching ([, ]) or move without draw (f)
-
+    This is a utility function for read_stack, takes in a string without branching ([, ]) or move without draw (f,g,h)
     Inputs:
         lsys: a string
         curr_state: a dictionary that has current point, orientation, and line scale
         turn_angle: the degrees the angle should increment by when seeing ( or )
-        trig_dict: a dictionary of all the already calculated trig necassary for step direction
-                   as well as the angle to turn by when seeing + or -
+        trig_dict: a dictionary of all the already calculated trig necassary for step direction as well as the angle to turn by when seeing + or -
         line_scale: the factor by which the line length should change when seeing < or >
-    Outputs1:
+    Outputs:
         An array of vertices formatted as such:  [[x1,y1],[x2,y2],[x3,y3],...]
     """
     vert_container = []  # make sure it's empty
@@ -41,8 +38,8 @@ def read_substring(
             vert_container.append(new_point)
         elif char == "H":
             new_point = [
-                new_point[0] + (scale * trig_dict[new_angle][0] / 2),
-                new_point[1] + (scale * trig_dict[new_angle][1] / 2),
+                new_point[0] + (curr_state['scale'] * trig_dict[new_angle][0] / 2),
+                new_point[1] + (curr_state['scale'] * trig_dict[new_angle][1] / 2),
                 0,
             ]
             vert_container.append(new_point)
@@ -80,16 +77,15 @@ def read_stack(stack, starting_pt, angle, turn_angle, line_scale):
         line_scale: the factor by which the line length should change when seeing < or >
     Outputs:
         An array of vertices formatted as such
-        [
-            [[x1,y1],[x2,y2],[x3,y3],...],
-            [[x4,y4],[x5,y5],[x6,y6],...]
-            ...
-        ]
+        [[[x1,y1],[x2,y2],[x3,y3]],
+         [[x4,y4],[x5,y5],[x6,y6]]...]
         where [x1,y1] is connected by a line to [x2,y2] which is connected by a line to [x3,y3]
         and [x4,y4] marks the starting point of a separte line
     """
     stack = stack.replace("G", "F")
     stack = stack.replace("g", "f")
+    if not ("F" in stack or "H" in stack):
+        return -1
     vertices = []
     vert_arr = []
     tmp_stack = []

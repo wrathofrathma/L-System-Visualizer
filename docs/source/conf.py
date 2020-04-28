@@ -22,6 +22,8 @@ project = 'L System Visualizer'
 copyright = '2020, Team BRAWT'
 author = 'Team BRAWT'
 master_doc = 'index'
+add_module_names = False
+
 
 # The full version, including alpha/beta/rc tags
 release = '5/14/2020'
@@ -55,4 +57,4 @@ html_theme = 'alabaster'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = []

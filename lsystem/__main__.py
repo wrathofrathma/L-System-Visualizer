@@ -1,4 +1,3 @@
-"""This file is the run.py that makes the application run"""
 import sys
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (QCheckBox, QToolBar, QLabel, QMainWindow, QApplication, QPushButton, QDialog,
@@ -16,7 +15,7 @@ from lsystem.core.lsystem_2d_widget import LSystem2DWidget
 from lsystem.core.lsystem_3d_widget import LSystem3DWidget
 
 class MyMainWindow(QMainWindow):
-    """This class is the main UI Window that is the parent for the entire application"""
+    """This class is the main UI Window, the parent widget for the entire application"""
 
     def __init__(self, parent=None):
         """Defaults the application window to be 500X500"""
@@ -62,15 +61,21 @@ class MyMainWindow(QMainWindow):
         self.reset_zoom_button.setStatusTip("Click here to reset zoom!")
         self.reset_zoom_button.triggered.connect(self.reset_zoom)
 
-        self.screenshot_button = QAction("Screenshot",self)
-        self.screenshot_button.setStatusTip("Click here to take a screenshot!")
-        self.screenshot_button.triggered.connect(self.screenshot)
+        self.reset_txtbox_button = QAction("Reset Rules",self)
+        self.reset_txtbox_button.setStatusTip("Click here to clear the rules!")
+        self.reset_txtbox_button.triggered.connect(self.ui_widget.reset_input_boxes)
+
+        if sys.platform == 'win32' :
+          self.screenshot_button = QAction("Screenshot",self)
+          self.screenshot_button.setStatusTip("Click here to take a screenshot!")
+          self.screenshot_button.triggered.connect(self.screenshot)
+          toolbar.addAction(self.screenshot_button)
 
         toolbar.addAction(self.tutorial)
         toolbar.addAction(self.glossary_action)
         toolbar.addAction(self.save_action)
         toolbar.addAction(self.reset_zoom_button)
-        toolbar.addAction(self.screenshot_button)
+        toolbar.addAction(self.reset_txtbox_button)
 
         toolbar.addSeparator()
 
@@ -88,28 +93,36 @@ class MyMainWindow(QMainWindow):
 
 
     def toggle_dim2D(self, s):
+        """Toggles dimensionality for the display widget"""
         if(s):
           print("I want 2D!")
           self.button_action2.setChecked(False)
           self.ui_widget.dims.setCurrentWidget(self.ui_widget.two_d)
           self.ui_widget.graphix = self.ui_widget.two_d
+          self.ui_widget.set_presets()
         else:
           self.button_action.setChecked(True)
           print("Nothing should happen :)")
+          
     def toggle_dim3D(self, s):
+        """Toggles dimentionality for the display widget"""
         if(s):
             print("I want 3D!")
             self.button_action.setChecked(False)
             self.ui_widget.dims.setCurrentWidget(self.ui_widget.three_d)
             self.ui_widget.graphix = self.ui_widget.three_d
+            self.ui_widget.set_presets()
         else:
           self.button_action2.setChecked(True)
           print("Nothing should happen")
 
 
     def reset_zoom(self):
+        """Resets the zoom level in the display widget"""
         self.ui_widget.reset_zoom()
+        
     def screenshot(self):
+        """Takes a screenshot of the display widget"""
         pos = self.pos()
         #pos.setY(self.pos().y()+self.height)
         self.ui_widget.screenshot(pos)

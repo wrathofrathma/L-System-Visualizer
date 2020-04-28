@@ -75,6 +75,8 @@ def generate_lsystem_2d(grammar):
         grammar_copy["turnAngle"],
         grammar_copy["lineScale"],
     )
+    if verts_arr_temp == -1:
+        return -1
     verts_arr_temp = np.array(verts_arr_temp)
     # for now manually strip the x and y values from verts_arr_temp
     x_vals = []
@@ -122,6 +124,8 @@ def generate_lsystem_3d(grammar):
     tmp_stack = parsed_thread(
         grammar_copy["axiom"], grammar_copy["rules"], grammar_copy["iterations"]
     )
+    if tmp_stack == -1:
+        return -1
     # Generate vertics
     mesh = read_3d_stack(
         tmp_stack,
@@ -197,16 +201,20 @@ def load_saved_lsystems():
         # If it does, then load it as a json object.
         predef = json.load(open(predef_file, "r"))
         # For every key(aka lsystem definition), add it to our saved lsystems.
-        for key in predef.keys():
-            saved_lsystems[key] = predef[key]
+        for dim in predef.keys():
+            saved_lsystems[dim] = {}
+            for key in predef[dim].keys():
+                saved_lsystems[dim][key] = predef[dim][key]
 
     # Check if the file exists.
     if os.path.exists(saved_file):
         # If it does, then load it as a json object.
         saved = json.load(open(saved_file, "r"))
         # For every key(aka lsystem definition), add it to our saved lsystems.
-        for key in saved.keys():
-            saved_lsystems[key] = saved[key]
+        # User saved lsystems get saved to both dimension presets
+        for dim in predef.keys():
+            for key in saved.keys():
+                saved_lsystems[dim][key] = saved[key]
     return saved_lsystems
 
 
