@@ -7,7 +7,16 @@ from lsystem.graphics.mesh import MeshObject
 from scipy.spatial.transform import Rotation as R
 
 class Pipe(MeshObject):
+  """This class is a subclass of MeshObject and implements utility method for generating Pipe meshes.
+  """
   def __init__(self, start: vec3 = None, end: vec3 = None, rotation=vec3(0.0)):
+    """Constructor for the Pipe class.
+
+    Parameters:
+    start (vec3): Starting position of the pipe.
+    end (vec3): Ending position of the pipe.
+    rotation (vec3): DEPRECATED - Used to specify rotation manually. Now we calculate it with start & end.
+    """
     pos = np.multiply(np.add(start,end),.5)
     up = vec3(0,1,0)
     if(vec3(end-start) != up and vec3(end-start) != up*-1):
@@ -30,7 +39,7 @@ class Pipe(MeshObject):
     self.end = end
 
   def __reduce__(self):
-    """Reduction code allowing us to pickle this class, thus allowing it to be deepcopied"""
+    """Reduction code allowing us to pickle this class, thus allowing it to be deep copied"""
     return (Pipe, (self.start, self.end))
 
 

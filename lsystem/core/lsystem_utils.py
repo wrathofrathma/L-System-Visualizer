@@ -10,7 +10,6 @@ from lsystem.core.parsing import parsed_thread
 from lsystem.core.stack_loop import read_stack as read_2d_stack
 from lsystem.core.stack_loop3D import read_stack as read_3d_stack
 from lsystem.core.graph import Graph
-from lsystem.graphics.square import Square
 from lsystem.graphics.pipe import Pipe
 
 # At the moment the most important definitions are
