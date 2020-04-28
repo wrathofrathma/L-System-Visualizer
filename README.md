@@ -20,7 +20,7 @@ Run the following command in a terminal to run the application
 python -m lsystem
 ```
 
-[id]:https://l-system-visualizer.readthedocs.io/en/latest/ "Read the Docs"
+[Read the Docs](https://l-system-visualizer.readthedocs.io/en/latest/)
 
 ### Contributers
 - Chris Arausa @wrathofrathma
