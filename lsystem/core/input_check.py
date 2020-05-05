@@ -158,7 +158,7 @@ def input_check(obj):
 def print_error_message(obj, msg):
     """Indicates there's an error and invalidates the input from that textbox"""
     obj.setStyleSheet("color: red;")
-    print("[ Error ] ", msg)
+    print("[ ERROR ] ", msg)
     obj.valid = False
 
 

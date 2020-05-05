@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QWidget, QGridLayout, QLabel
 
 class Glossary(QWidget):
     ''' Class of the glossary '''
-    def __init__(self):
+    def __init__(self, dim):
         ''' Initializes the glossary class with all of the labels  '''
         super().__init__()
         self.big_f = QLabel('F: draws a line of unit length.')
@@ -30,12 +30,30 @@ class Glossary(QWidget):
             '>: multiplies the line length by the length factor.')
         self.control = QLabel(
             'A-E, I-Z: Control characters to control how the curve advances')
+        self.plus_3D = QLabel('+: turns counter-clockwise on the xy-plane')
+        self.minus_3D = QLabel('-: turns clockwise on the xy-plane')
+        self.left_angle_3D = QLabel('<: turns counter-clockwise on the xz-plane')
+        self.right_angle_3D = QLabel('>: turns clockwise on the xz-plane')
+        self.carat_3D = QLabel('^: turns counter-clockwise on the yz-plane')
+        self.ampersand_3D = QLabel('&: turns clockwise on the yz-plane')
+        self.dim = dim
         self.init_ui()
 
     def init_ui(self):
         ''' Sets window title, layout, and adds widgets to the window '''
         self.setWindowTitle('Symbol Glossary')
-        self.layout = QGridLayout()
+        self.layout = QGridLayout() 
+        self.setStyleSheet('''
+              QLabel#title{
+                font-weight: bold;
+                font-size: 16px;
+                text-decoration: underline;
+                text-align: center;}
+
+                QLabel{
+                    font-size: 14px;
+                    }
+        ''')
         self.add_widgets()
         self.setLayout(self.layout)
 
@@ -45,14 +63,24 @@ class Glossary(QWidget):
         self.layout.addWidget(self.little_f, 2, 0)
         self.layout.addWidget(self.big_g, 3, 0)
         self.layout.addWidget(self.little_g, 4, 0)
-        self.layout.addWidget(self.big_h, 5, 0)
-        self.layout.addWidget(self.little_h, 6, 0)
-        self.layout.addWidget(self.plus, 7, 0)
-        self.layout.addWidget(self.minus, 8, 0)
-        self.layout.addWidget(self.left_bracket, 9, 0)
-        self.layout.addWidget(self.right_bracket, 10, 0)
-        self.layout.addWidget(self.left_parenthesis, 11, 0)
-        self.layout.addWidget(self.right_parenthesis, 12, 0)
-        self.layout.addWidget(self.left_angle, 13, 0)
-        self.layout.addWidget(self.right_angle, 14, 0)
+        self.layout.addWidget(self.left_bracket, 5, 0)
+        self.layout.addWidget(self.right_bracket, 6, 0)
+        if self.dim == 2:
+            self.layout.addWidget(QLabel("2D Symbols", objectName = 'title'), 0, 0);
+            self.layout.addWidget(self.big_h, 7, 0)
+            self.layout.addWidget(self.little_h, 8, 0)
+            self.layout.addWidget(self.plus, 9, 0)
+            self.layout.addWidget(self.minus, 10, 0)
+            self.layout.addWidget(self.left_parenthesis, 11, 0)
+            self.layout.addWidget(self.right_parenthesis, 12, 0)
+            self.layout.addWidget(self.left_angle, 13, 0)
+            self.layout.addWidget(self.right_angle, 14, 0)
+        else:
+            self.layout.addWidget(QLabel("3D Symbols", objectName = 'title'), 0, 0);
+            self.layout.addWidget(self.plus_3D, 7, 0)
+            self.layout.addWidget(self.minus_3D, 8, 0)
+            self.layout.addWidget(self.left_angle_3D, 9, 0)
+            self.layout.addWidget(self.right_angle_3D, 10, 0)
+            self.layout.addWidget(self.carat_3D, 11, 0)
+            self.layout.addWidget(self.ampersand_3D, 12, 0)
         self.layout.addWidget(self.control, 15, 0)
