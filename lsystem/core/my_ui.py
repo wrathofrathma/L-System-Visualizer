@@ -12,6 +12,7 @@ from lsystem.core.lsystem_utils import (
     get_saved_lsystem,
     generate_lsystem_2d,
     generate_lsystem_3d,
+    remove_saved_lsystem,
 )
 from PyQt5.QtGui import QIcon
 from lsystem.core.input_check import input_check
@@ -216,6 +217,8 @@ class UIWidget(QWidget):
               self.examples[i].setIconSize(QtCore.QSize(120, 100))
             else:
               self.examples[i].setText(key)
+              self.examples[i].setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+              self.examples[i].customContextMenuRequested.connect(lambda state, x=key: self.del_example(str(x)))
             self.examples[i].clicked.connect(
                 lambda state, x=key: self.gen_example(str(x))
             )
@@ -239,6 +242,8 @@ class UIWidget(QWidget):
                   self.examples[i].setIcon(QIcon('{}/lsystem/assets/images/{}.png'.format(os.getcwd(), self.precons[i])))
                   self.examples[i].setIconSize(QtCore.QSize(120, 100))
                 else:
+                  self.examples[i].setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+                  self.examples[i].customContextMenuRequested.connect(lambda state, x=key: self.del_example(str(x)))
                   self.examples[i].setText(key)
                 self.examples[i].clicked.connect(
                     lambda state, x=key: self.gen_example(str(x))
@@ -500,7 +505,7 @@ class UIWidget(QWidget):
             self.minuses = QPushButton("-", self)
             self.minuses.clicked.connect(self.less_prods)
             self.layout.addWidget(self.minuses, self.prods + 1, 10, 1, 1)
-            self.prod_percent[-1].setText("1")
+            self.prod_percent[-1].setText("100%")
 
     def less_prods(self):
         """ Removes textboxes for production rules when less are needed, minimum 1."""
@@ -646,6 +651,13 @@ class UIWidget(QWidget):
             self.line_scale_edit.setText(str(grammar["line_scale"]))
         self.iters_edit.setText(str(grammar["iterations"]))
         self.gen_sys()
+
+    def del_example(self, example):
+        remove_saved_lsystem(example)
+        print(example, " was deleted from disk")
+        self.reload_presets()
+
+        
 
     def reset_text_box_color(self):
         """resets the color of all textboxes"""
