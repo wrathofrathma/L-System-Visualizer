@@ -173,9 +173,9 @@ def check_nd(obj):
         if rule.valid:
             temprule = rule.text().split(":")
             try:
-                productions[temprule[0]] = productions[temprule[0]] + (float(obj.prod_percent[i].text()))
+                productions[temprule[0]] = productions[temprule[0]] + (float(obj.prod_percent[i].text().split("%")[0])/100)
             except:
-                print("[ ERROR ] ",obj.prod_percent[i].text()," is not a number.")
+                print("[ ERROR ] ",obj.prod_percent[i].text()," is not a percentage.")
                 valid =0
                 return valid
     for prod,perc in productions.items():

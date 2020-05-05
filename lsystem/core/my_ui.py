@@ -180,7 +180,7 @@ class UIWidget(QWidget):
 
         self.prod_percent.append(CustomLineEdit())
         self.prod_percent[0].setFixedWidth(50)
-        self.prod_percent[0].setText("1")
+        self.prod_percent[0].setText("100%")
 
         self.text_boxes.append(self.prod_percent[-1])
         self.angle_edit.returnPressed.connect(self.lsys_button.click)
@@ -466,7 +466,7 @@ class UIWidget(QWidget):
             rule = rule.text()
             rule = rule.replace(" ", "")
             prod = rule.split(":")
-            rules[prod[0]].append([float(self.prod_percent[i].text()), prod[1]])
+            rules[prod[0]].append([float(self.prod_percent[i].text().split("%")[0])/100, prod[1]])
         return rules
 
     def close_event(self):
