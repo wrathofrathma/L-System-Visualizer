@@ -180,6 +180,6 @@ def check_nd(obj):
                 return valid
     for prod,perc in productions.items():
         if perc != 1.0:
-            print("[ ERROR ] Invalid percent of ",perc," entered for ",prod)
+            print("[ ERROR ] Invalid percent of ",perc*100,"% entered for ",prod)
             valid = 0
     return valid
