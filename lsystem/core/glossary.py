@@ -71,10 +71,11 @@ class Glossary(QWidget):
             self.layout.addWidget(self.little_h, 8, 0)
             self.layout.addWidget(self.plus, 9, 0)
             self.layout.addWidget(self.minus, 10, 0)
-            self.layout.addWidget(self.left_parenthesis, 11, 0)
-            self.layout.addWidget(self.right_parenthesis, 12, 0)
-            self.layout.addWidget(self.left_angle, 13, 0)
-            self.layout.addWidget(self.right_angle, 14, 0)
+            self.layout.addWidget(self.pipe, 11, 0)
+            self.layout.addWidget(self.left_parenthesis, 12, 0)
+            self.layout.addWidget(self.right_parenthesis, 13, 0)
+            self.layout.addWidget(self.left_angle, 14, 0)
+            self.layout.addWidget(self.right_angle, 15, 0)
         else:
             self.layout.addWidget(QLabel("3D Symbols", objectName = 'title'), 0, 0);
             self.layout.addWidget(self.plus_3D, 7, 0)

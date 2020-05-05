@@ -72,11 +72,11 @@ class GettingStarted(QWidget):
     self.prod_rule_title = QLabel('Production Rules', objectName = 'title')
     self.prod_rule_one = QLabel('Production rules are part of how you transform your axiom into an L-System.')
     self.prod_rule_two = QLabel('This string will then be used to generate your L-System.')
-    self.prod_rule_three = QLabel('Valid rules are in the form X:Y where X is a character or characters in your L-System ' +
-                                  'and Y is which character(s) you want to replace it with.')
+    self.prod_rule_three = QLabel('Valid rules are in the form X: Y.\nX is one or more characters in your L-System.\n' +
+                                  'Y is one ore more characters you want to replace it with.')
     self.prod_rule_four = QLabel('The box on the right side is for the weight of the rule.\n' +
-                                 'If you only have one rule for a symbol than this box does nothing, ' +
-                                 'if you have multiple rules with the same symbol on the left side ' +
+                                 'If you only have one rule for a symbol than this box does nothing.\n' +
+                                 'If you have multiple rules with the same symbol on the left side ' +
                                  'you can weight them so one is chosen more often than the others.')
     self.prod_rule_five = QLabel('The sum of all boxes for a left side must add up to 100.')
     self.prod_rule_six = QLabel('The plus buttons on the right can be used to add up to 7 more production rules to your L-System for a total of 8 rules.')
