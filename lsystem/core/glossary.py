@@ -84,4 +84,4 @@ class Glossary(QWidget):
             self.layout.addWidget(self.right_angle_3D, 10, 0)
             self.layout.addWidget(self.carat_3D, 11, 0)
             self.layout.addWidget(self.ampersand_3D, 12, 0)
-        self.layout.addWidget(self.control, 15, 0)
+        self.layout.addWidget(self.control, 16, 0)
