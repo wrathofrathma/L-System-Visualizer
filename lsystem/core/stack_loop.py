@@ -56,10 +56,9 @@ def read_substring(
             trig_dict["angle"] = round((trig_dict["angle"] + turn_angle) % 360, 5)
             # new_angle = round((new_angle + turn_angle)%360,5)
         elif char == ">":
-            curr_state['scale'] *= curr_state['scale']
+            curr_state['scale'] *= line_scale
         elif char == "<":
-            curr_state['scale']  /= curr_state['scale']
-
+            curr_state['scale']  /= line_scale
     # returns angle that string left off on, array of vertices, and the new angle
     return new_angle, vert_container, curr_state['scale']
 
