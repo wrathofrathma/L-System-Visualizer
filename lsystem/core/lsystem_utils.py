@@ -155,7 +155,7 @@ def get_saved_path():
   return path
 
 
-def save_lsystem(key, grammar):
+def save_lsystem(key, grammar, dim):
     """
     Saves a given lsystem to disk to "lsystem/saved_lsystems.json"
     Overwrites any previous lsystem defined with the same key.
@@ -174,10 +174,13 @@ def save_lsystem(key, grammar):
         # If it does, then load all saved data and replace/insert the new data to the dict.
         with open(saved_file, "r") as sfile:
             saved = json.load(sfile)
-            saved[key] = grammar
+            if dim in saved.keys():
+                saved[dim][key] = grammar
+            else:
+                saved[dim] = {key: grammar}
     else:
         # if it doesn't exist, we just create a new dict
-        saved = {key: grammar}
+        saved = { dim : {key: grammar} }
     # Then overwrite the file.
     with open(saved_file, "w") as sfile:
         json.dump(saved, sfile, indent=2)
@@ -212,8 +215,8 @@ def load_saved_lsystems():
         # For every key(aka lsystem definition), add it to our saved lsystems.
         # User saved lsystems get saved to both dimension presets
         for dim in saved.keys():
-            for key in saved.keys():
-                saved_lsystems[dim][key] = saved[key]
+            for key in saved[dim].keys():
+                saved_lsystems[dim][key] = saved[dim][key]
     return saved_lsystems
 
 
@@ -224,7 +227,7 @@ def remove_saved_lsystem(key):
     Parameters:
     key (string): Key of the lsystem to remove.
     """
-    saved_file = "assets/lsystems/saved_lsystems.json"
+    saved_file = get_saved_path()
     # Check if the file exists.
     if os.path.exists(saved_file):
         # If it does, then load all saved data and delete the data, then resave it.
