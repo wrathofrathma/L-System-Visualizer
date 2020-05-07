@@ -26,7 +26,7 @@ class MyMainWindow(QMainWindow):
         self.height = 500
         self.ui_widget = UIWidget()
         self.popup_settings = PopupSettings(self.ui_widget.graphix)
-        self.glossary = Glossary()
+        self.glossary = Glossary(2)
         self.save_rules = SaveRules(self.ui_widget)
         self.getting_started = GettingStarted()
         self.init_window()
@@ -100,6 +100,7 @@ class MyMainWindow(QMainWindow):
           self.ui_widget.dims.setCurrentWidget(self.ui_widget.two_d)
           self.ui_widget.graphix = self.ui_widget.two_d
           self.ui_widget.set_presets()
+          self.glossary = Glossary(2)
         else:
           self.button_action.setChecked(True)
           print("Nothing should happen :)")
@@ -112,6 +113,7 @@ class MyMainWindow(QMainWindow):
             self.ui_widget.dims.setCurrentWidget(self.ui_widget.three_d)
             self.ui_widget.graphix = self.ui_widget.three_d
             self.ui_widget.set_presets()
+            self.glossary = Glossary(3)
         else:
           self.button_action2.setChecked(True)
           print("Nothing should happen")

@@ -63,7 +63,11 @@ class SaveRules(QWidget):
                 grammar["line_scale"] = 0
             grammar["axiom"] = self.ui.axiom_edit.text()
             grammar["iterations"] = int(self.ui.iters_edit.text())
-            save_lsystem(name, grammar)
+            if(self.ui.is_2d()):
+                save_lsystem(name, grammar, "two-d")
+            else:
+                save_lsystem(name, grammar, "three-d")
+
             self.ui.reload_presets()
             print("[ INFO ] L-System " + str(name) + " saved to disk...")
             # make window disappear

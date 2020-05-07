@@ -31,9 +31,13 @@ class GettingStarted(QWidget):
             text-decoration: underline;
             text-align: center;}
 
+            QLabel#warning{
+              font-size: 14px;
+              color: #FF0000;
+              text-decoration: underline;}
+
             QLabel{
-                font-size: 14px;
-                }
+                font-size: 14px;}
     ''')
     
     self.page_one_widget = QWidget() #axiom
@@ -62,29 +66,29 @@ class GettingStarted(QWidget):
     self.axiom_two = QLabel('Use production rules to transform your axiom into an L-System.')
     self.axiom_three = QLabel('See the symbols glossary for valid inputs.')
     self.axiom_screenshot = QLabel(self)
-    self.axiom_pic = QPixmap("assets/screenshots/axiom.PNG");
+    self.axiom_pic = QPixmap('lsystem/assets/screenshots/axiom.PNG')
     self.axiom_screenshot.setPixmap(self.axiom_pic)
 
     self.prod_rule_title = QLabel('Production Rules', objectName = 'title')
     self.prod_rule_one = QLabel('Production rules are part of how you transform your axiom into an L-System.')
     self.prod_rule_two = QLabel('This string will then be used to generate your L-System.')
-    self.prod_rule_three = QLabel('Valid rules are in the form X:Y where X is a character or characters in your L-System ' +
-                                  'and Y is which character(s) you want to replace it with.')
+    self.prod_rule_three = QLabel('Valid rules are in the form X: Y.\nX is one or more characters in your L-System.\n' +
+                                  'Y is one ore more characters you want to replace it with.')
     self.prod_rule_four = QLabel('The box on the right side is for the weight of the rule.\n' +
-                                 'If you only have one rule for a symbol than this box does nothing, ' +
-                                 'if you have multiple rules with the same symbol on the left side ' +
+                                 'If you only have one rule for a symbol than this box does nothing.\n' +
+                                 'If you have multiple rules with the same symbol on the left side ' +
                                  'you can weight them so one is chosen more often than the others.')
-    self.prod_rule_five = QLabel('The sum of all boxes for a left side must add up to 1.')
-    self.prod_rule_six = QLabel('The plus buttons on the right can be used to add up to 3 more production rules to your L-System')
+    self.prod_rule_five = QLabel('The sum of all boxes for a left side must add up to 100.')
+    self.prod_rule_six = QLabel('The plus buttons on the right can be used to add up to 7 more production rules to your L-System for a total of 8 rules.')
     self.prod_rule_screenshot = QLabel(self)
-    self.prod_rule_pic = QPixmap("assets/screenshots/prod_rules.PNG");
+    self.prod_rule_pic = QPixmap('lsystem/assets/screenshots/prod_rules.png')
     self.prod_rule_screenshot.setPixmap(self.prod_rule_pic)
     
     self.angle_title = QLabel('Angle', objectName = 'title')
-    self.angle_one = QLabel('The angle determines how steep the turns are in your L-System when you use + or -.')
+    self.angle_one = QLabel('The angle determines how large the turns are in your L-System.')
     self.angle_two = QLabel('Valid inputs are any number from -360 to 360')
     self.angle_screenshot = QLabel(self)
-    self.angle_pic = QPixmap("assets/screenshots/angles.PNG");
+    self.angle_pic = QPixmap('lsystem/assets/screenshots/angles.png')
     self.angle_screenshot.setPixmap(self.angle_pic)
 
     self.iteration_title = QLabel('Iterations', objectName = 'title')
@@ -92,7 +96,7 @@ class GettingStarted(QWidget):
     self.iteration_two = QLabel('The more iterations, the more defined the shape of your L-System becomes.')
     self.iteration_three = QLabel('Valid inputs are any number greater than 0.')
     self.iteration_screenshot = QLabel(self)
-    self.iteration_pic = QPixmap("assets/screenshots/iterations.PNG");
+    self.iteration_pic = QPixmap('lsystem/assets/screenshots/iterations.png')
     self.iteration_screenshot.setPixmap(self.iteration_pic)
 
     self.branching_title = QLabel('Branching', objectName = 'title')
@@ -105,7 +109,7 @@ class GettingStarted(QWidget):
     self.turn_angle_two = QLabel('( decreases the angle by the turning angle and ) increases it.')
     self.turn_angle_three = QLabel('Valid inputs are any number between 0 and 360.')
     self.turn_angle_screenshot = QLabel(self)
-    self.turn_angle_pic = QPixmap("assets/screenshots/turn_angle.PNG");
+    self.turn_angle_pic = QPixmap('lsystem/assets/screenshots/turn_angle.png')
     self.turn_angle_screenshot.setPixmap(self.turn_angle_pic)
 
     self.line_scale_title = QLabel('Line Scaling', objectName = 'title')
@@ -113,9 +117,12 @@ class GettingStarted(QWidget):
     self.line_scale_two = QLabel('< divides the length of all subsequent lines by the line scaling factor and > increases it.')
     self.line_scale_three = QLabel('Valid inputs are any number')
     self.line_scale_screenshot = QLabel(self)
-    self.line_scale_pic = QPixmap("assets/screenshots/line_scale.PNG");
+    self.line_scale_pic = QPixmap('lsystem/assets/screenshots/line_scale.png')
     self.line_scale_screenshot.setPixmap(self.line_scale_pic)
-    
+
+    self.noThreeD_one = QLabel("This feature is not available in 3D mode.", objectName = 'warning')
+    self.noThreeD_two = QLabel("This feature is not available in 3D mode.", objectName = 'warning')
+    #cant have the same label in two layouts for some reason
     self.next_button = QPushButton("Next Page");
     self.next_button.setShortcut('Ctrl+N')
     self.next_button.clicked.connect(lambda: self.change_page(True))
@@ -180,7 +187,8 @@ class GettingStarted(QWidget):
     self.page_six_layout.addWidget(self.turn_angle_one, 1, 0)
     self.page_six_layout.addWidget(self.turn_angle_two, 2, 0)
     self.page_six_layout.addWidget(self.turn_angle_three, 3, 0)
-    self.page_six_layout.addWidget(self.turn_angle_screenshot, 4, 0)
+    self.page_six_layout.addWidget(self.noThreeD_one, 4, 0)
+    self.page_six_layout.addWidget(self.turn_angle_screenshot, 5, 0)
     self.page_six_widget.setLayout(self.page_six_layout)
     self.layout_list.append(self.page_six_widget)
     self.pages_widget.addWidget(self.page_six_widget)
@@ -189,7 +197,8 @@ class GettingStarted(QWidget):
     self.page_seven_layout.addWidget(self.line_scale_one, 1 ,0)
     self.page_seven_layout.addWidget(self.line_scale_two, 2, 0)
     self.page_seven_layout.addWidget(self.line_scale_three, 3, 0)
-    self.page_seven_layout.addWidget(self.line_scale_screenshot, 4, 0)
+    self.page_seven_layout.addWidget(self.noThreeD_two, 4, 0)
+    self.page_seven_layout.addWidget(self.line_scale_screenshot, 5, 0)
     self.page_seven_widget.setLayout(self.page_seven_layout)
     self.layout_list.append(self.page_seven_layout)
     self.pages_widget.addWidget(self.page_seven_widget)
