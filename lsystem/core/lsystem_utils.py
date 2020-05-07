@@ -220,7 +220,7 @@ def load_saved_lsystems():
     return saved_lsystems
 
 
-def remove_saved_lsystem(key):
+def remove_saved_lsystem(key, dim):
     """
     Deletes saved lsystem by key by loading the file into a json object, removing the key, then writing the file back to disk.
 
@@ -234,7 +234,7 @@ def remove_saved_lsystem(key):
         with open(saved_file, "r") as sfile:
             saved = json.load(sfile)
             try:
-                del saved[key]
+                del saved[dim][key]
             except KeyError:
                 print("[ ERROR ] Key " + str(key) + " not found in saved lsystems")
     else:

@@ -218,7 +218,7 @@ class UIWidget(QWidget):
             else:
               self.examples[i].setText(key)
               self.examples[i].setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-              self.examples[i].customContextMenuRequested.connect(lambda state, x=key: self.del_example(str(x)))
+              self.examples[i].customContextMenuRequested.connect(lambda state, x=key: self.del_example(str(x), "two-d"))
             self.examples[i].clicked.connect(
                 lambda state, x=key: self.gen_example(str(x))
             )
@@ -243,7 +243,7 @@ class UIWidget(QWidget):
                   self.examples[i].setIconSize(QtCore.QSize(120, 100))
                 else:
                   self.examples[i].setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-                  self.examples[i].customContextMenuRequested.connect(lambda state, x=key: self.del_example(str(x)))
+                  self.examples[i].customContextMenuRequested.connect(lambda state, x=key: self.del_example(str(x),"two-d"))
                   self.examples[i].setText(key)
                 self.examples[i].clicked.connect(
                     lambda state, x=key: self.gen_example(str(x))
@@ -652,8 +652,8 @@ class UIWidget(QWidget):
         self.iters_edit.setText(str(grammar["iterations"]))
         self.gen_sys()
 
-    def del_example(self, example):
-        remove_saved_lsystem(example)
+    def del_example(self, example, dim):
+        remove_saved_lsystem(example, dim)
         print(example, " was deleted from disk")
         self.reload_presets()
 
