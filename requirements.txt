@@ -6,7 +6,6 @@ PyOpenGL==3.1.5
 pyparsing==2.4.6
 pyqtgraph==0.10.0
 scipy==1.2.1
-pyside2
 pyscreenshot
 PyQt5
 pywavefront
