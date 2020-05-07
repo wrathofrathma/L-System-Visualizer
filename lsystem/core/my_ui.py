@@ -262,6 +262,9 @@ class UIWidget(QWidget):
                     lambda state, x=key: self.gen_example(str(x))
                 )
                 self.layout_examples.addWidget(self.examples[i])
+                if(i>1): # TODO - This is temporary until we have a manner of separting 3d precons from 2d precons
+                  self.examples[i].setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+                  self.examples[i].customContextMenuRequested.connect(lambda state, x=key: self.del_example(str(x),"three-d"))
 
 
     @QtCore.pyqtSlot()
