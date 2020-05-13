@@ -558,7 +558,7 @@ class UIWidget(QWidget):
             self.less_prods()
         self.prod_rules_edit[-1].setText("")
         self.axiom_edit.setText("")
-        self.prod_percent[0].setText("1")
+        self.prod_percent[0].setText("100%")
         self.angle_edit.setText("")
         self.iters_edit.setText("")
 
